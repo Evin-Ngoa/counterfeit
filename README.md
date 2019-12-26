@@ -1,2 +1,2 @@
 # counterfeit
-Counterfeit System for books Using htperledger fabric
+Counterfeit System for books Using hyperledger fabric
