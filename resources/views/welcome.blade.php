@@ -96,4 +96,6 @@
             </div>
         </div>
     </body>
+    <!-- AngularJS Application Scripts -->
+    <script src="<?= asset('js/app.js') ?>"></script>
 </html>
