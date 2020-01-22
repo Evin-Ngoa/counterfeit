@@ -10,10 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// https://www.itsolutionstuff.com/post/guzzle-http-client-request-tutorial-with-laravel-58example.html
+// https://desertebs.com/laravel/how-to-consume-external-third-party-api-in-laravel-5
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dash', function () {
+    return view('layout.theme-dash');
+});
+
+Route::resource('book', 'BookController');
 
 Route::get('qrcode', function () {
     return QrCode::size(300)->generate('A basic example of QR code!');

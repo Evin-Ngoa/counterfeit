@@ -1,0 +1,9 @@
+<link href="{{ asset("css/css-api.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("vendor/select2/dist/css/select2.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("vendor/bootstrap-daterangepicker/daterangepicker.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("vendor/dropzone/dist/dropzone.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("vendor/datatables.net-bs/css/dataTables.bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("vendor/fullcalendar/dist/fullcalendar.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("vendor/perfect-scrollbar/css/perfect-scrollbar.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("vendor/slick-carousel/slick/slick.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("css/main5739.css") }}" rel="stylesheet" type="text/css" />
