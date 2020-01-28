@@ -1,9 +1,9 @@
 <?php
-namespace App\Util;
+namespace App\Utils;
 
 use GuzzleHttp\Client;
 
-class Book
+class Utils
 {
     protected $client;
 
@@ -12,17 +12,21 @@ class Book
 		$this->client = $client;
     }
     
-    public function all()
+    /**
+     * callURL = '/Book'
+     */
+    public function all($callURL)
 	{
-        return $this->endpointRequest('/Book');
-        // $response = $this->client->request('GET', 'http://localhost:3000/api/Book');
+        return $this->endpointRequest($callURL);
         
-        // return $this->response_handler($response->getBody()->getContents());
     }
     
-    public function findById($id)
+    /**
+     * callURL = '/Book/'
+     */
+    public function findById($callURL,$id)
 	{
-		return $this->endpointRequest('/Book/'.$id);
+		return $this->endpointRequest($callURL.$id);
 	}
 
 	public function endpointRequest($url)

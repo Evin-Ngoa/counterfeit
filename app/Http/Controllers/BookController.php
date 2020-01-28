@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\PageTitles;
 use Illuminate\Http\Request;
-use App\Util\Book;
+use App\Utils\Book;
+use App\Utils\Utils;
 
 class BookController extends Controller
 {
     protected $book;
 
-    public function __construct(Book $book)
+    public function __construct(Utils $book)
     {
     	$this->book = $book;
     }
@@ -22,9 +24,9 @@ class BookController extends Controller
     {
         // $roles = Role::all();//Get all roles
 
-        // $page_title = PageTitles::ROLES;
+        // $page_title = PageTitles::BOOKS;
 
-        // $breadcrumbs = PageTitles::ROLES;
+        // $breadcrumbs = PageTitles::BOOKS;
 
         // return view('roles.index')->with(compact('roles', 'page_title','breadcrumbs'));
 
@@ -36,10 +38,9 @@ class BookController extends Controller
         // dd($response);
 
         // Get all the post
-    	$books = $this->book->all();
-        // dd($books[0]->id);
-        dd($books);
+    	$books = $this->book->all('/Book');
 
+         return view('books.index')->with(compact('books'));
     
     }
 }

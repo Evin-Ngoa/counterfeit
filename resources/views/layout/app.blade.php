@@ -37,7 +37,7 @@
                             <div class="onboarding-content with-gradient">
                                 <h4 class="onboarding-title">Example Request Information</h4>
                                 <div class="onboarding-text">In this example you can see a form where you can request some additional information from the customer when they land on the app page.</div>
-                                <form>
+                                <form >
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
