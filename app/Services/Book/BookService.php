@@ -24,8 +24,11 @@ class BookService
      */
 	public function getBookSupplyChain($id){
 		
-		// Get specific book to track
+        // Get specific book to track
         $book = $this->utils->findById('/Book/', $id);
+
+        // $bookRelationResolve = $this->utils->findByIdRelationResolved('/Book/', $id);
+        // dd($bookRelationResolve);
 
         $shipment = explode('#', $book->shipment);
         $shipId = $shipment[1];

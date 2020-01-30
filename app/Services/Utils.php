@@ -29,6 +29,17 @@ class Utils
 		return $this->endpointRequest($callURL.$id);
 	}
 
+	
+	/**
+	 * http://localhost:3000/api/Book/?filter={"where":{"id":"BOOK_001"}, "include":"resolve"}
+	 * Help resolve the relationships
+	 */
+	public function findByIdRelationResolved($callURL,$id)
+	{
+		return $this->endpointRequest($callURL.'?filter={"where":{"id":"'.$id.'"}, "include":"resolve"}');
+	}
+
+
 	public function endpointRequest($url)
 	{
 		try {
