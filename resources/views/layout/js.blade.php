@@ -29,5 +29,6 @@
     <script src="{{ asset ("vendor/bootstrap/js/dist/popover.js") }}"></script>
     <script src="{{ asset ("js/demo_customizer5739.js") }}"></script>
     <script src="{{ asset ("js/main5739.js") }}"></script>
+    <script src="{{ asset ("js/api.js") }}"></script>
 
    

@@ -9,7 +9,7 @@
                                 <ul>
                                     <li>
                                         <a href="#">
-                                            <div class="user-avatar-w"><img alt="" src="img/avatar1.jpg"></div>
+                                            <div class="user-avatar-w"><img alt="" src="/img/avatar1.jpg"></div>
                                             <div class="message-content">
                                                 <h6 class="message-from">John Mayers</h6>
                                                 <h6 class="message-title">Account Update</h6></div>
@@ -17,7 +17,7 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <div class="user-avatar-w"><img alt="" src="img/avatar2.jpg"></div>
+                                            <div class="user-avatar-w"><img alt="" src="/img/avatar2.jpg"></div>
                                             <div class="message-content">
                                                 <h6 class="message-from">Phil Jones</h6>
                                                 <h6 class="message-title">Secutiry Updates</h6></div>
@@ -25,7 +25,7 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <div class="user-avatar-w"><img alt="" src="img/avatar3.jpg"></div>
+                                            <div class="user-avatar-w"><img alt="" src="/img/avatar3.jpg"></div>
                                             <div class="message-content">
                                                 <h6 class="message-from">Bekky Simpson</h6>
                                                 <h6 class="message-title">Vacation Rentals</h6></div>
@@ -33,7 +33,7 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <div class="user-avatar-w"><img alt="" src="img/avatar4.jpg"></div>
+                                            <div class="user-avatar-w"><img alt="" src="/img/avatar4.jpg"></div>
                                             <div class="message-content">
                                                 <h6 class="message-from">Alice Priskon</h6>
                                                 <h6 class="message-title">Payment Confirmation</h6></div>
@@ -55,10 +55,10 @@
                         </div>
                         <div class="logged-user-w">
                             <div class="logged-user-i">
-                                <div class="avatar-w"><img alt="" src="img/avatar1.jpg"></div>
+                                <div class="avatar-w"><img alt="" src="/img/avatar1.jpg"></div>
                                 <div class="logged-user-menu color-style-bright">
                                     <div class="logged-user-avatar-info">
-                                        <div class="avatar-w"><img alt="" src="img/avatar1.jpg"></div>
+                                        <div class="avatar-w"><img alt="" src="/img/avatar1.jpg"></div>
                                         <div class="logged-user-info-w">
                                             <div class="logged-user-name">Maria Gomez</div>
                                             <div class="logged-user-role">Administrator</div>

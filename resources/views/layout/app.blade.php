@@ -26,14 +26,14 @@
                     <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Skip Intro</span><span class="os-icon os-icon-close"></span></button>
                     <div class="onboarding-slider-w">
                         <div class="onboarding-slide">
-                            <div class="onboarding-media"><img alt="" src="img/bigicon2.png" width="200px"></div>
+                            <div class="onboarding-media"><img alt="" src="/img/bigicon2.png" width="200px"></div>
                             <div class="onboarding-content with-gradient">
                                 <h4 class="onboarding-title">Example of onboarding screen!</h4>
                                 <div class="onboarding-text">This is an example of a multistep onboarding screen, you can use it to introduce your customers to your app, or collect additional information from them before they start using your app.</div>
                             </div>
                         </div>
                         <div class="onboarding-slide">
-                            <div class="onboarding-media"><img alt="" src="img/bigicon5.png" width="200px"></div>
+                            <div class="onboarding-media"><img alt="" src="/img/bigicon5.png" width="200px"></div>
                             <div class="onboarding-content with-gradient">
                                 <h4 class="onboarding-title">Example Request Information</h4>
                                 <div class="onboarding-text">In this example you can see a form where you can request some additional information from the customer when they land on the app page.</div>
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="onboarding-slide">
-                            <div class="onboarding-media"><img alt="" src="img/bigicon6.png" width="200px"></div>
+                            <div class="onboarding-media"><img alt="" src="/img/bigicon6.png" width="200px"></div>
                             <div class="onboarding-content with-gradient">
                                 <h4 class="onboarding-title">Showcase App Features</h4>
                                 <div class="onboarding-text">In this example you can showcase some of the features of your application, it is very handy to make new users aware of your hidden features. You can use boostrap columns to split them up.</div>
@@ -103,11 +103,11 @@
                     <div class="ssg-content">
                         <div class="ssg-items ssg-items-boxed">
                             <a class="ssg-item" href="users_profile_big.html">
-                                <div class="item-media" style="background-image: url(img/company6.png)"></div>
+                                <div class="item-media" style="background-image: url(/img/company6.png)"></div>
                                 <div class="item-name">Integ<span>ration</span> with API</div>
                             </a>
                             <a class="ssg-item" href="users_profile_big.html">
-                                <div class="item-media" style="background-image: url(img/company7.png)"></div>
+                                <div class="item-media" style="background-image: url(/img/company7.png)"></div>
                                 <div class="item-name">Deve<span>lopm</span>ent Project</div>
                             </a>
                         </div>
@@ -124,15 +124,15 @@
                     <div class="ssg-content">
                         <div class="ssg-items ssg-items-list">
                             <a class="ssg-item" href="users_profile_big.html">
-                                <div class="item-media" style="background-image: url(img/avatar1.jpg)"></div>
+                                <div class="item-media" style="background-image: url(/img/avatar1.jpg)"></div>
                                 <div class="item-name">John Ma<span>yer</span>s</div>
                             </a>
                             <a class="ssg-item" href="users_profile_big.html">
-                                <div class="item-media" style="background-image: url(img/avatar2.jpg)"></div>
+                                <div class="item-media" style="background-image: url(/img/avatar2.jpg)"></div>
                                 <div class="item-name">Th<span>omas</span> Mullier</div>
                             </a>
                             <a class="ssg-item" href="users_profile_big.html">
-                                <div class="item-media" style="background-image: url(img/avatar3.jpg)"></div>
+                                <div class="item-media" style="background-image: url(/img/avatar3.jpg)"></div>
                                 <div class="item-name">Kim C<span>olli</span>ns</div>
                             </a>
                         </div>

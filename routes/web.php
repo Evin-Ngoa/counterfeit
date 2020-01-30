@@ -22,6 +22,13 @@ Route::get('/dash', function () {
 
 Route::resource('book', 'BookController');
 
+//Import Users
+Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
+
+    Route::get('/book/{id}', ['as' => 'book', 'uses' => 'BookController@verify']);
+
+});
+
 Route::get('qrcode', function () {
     return QrCode::size(300)->generate('456');
 });

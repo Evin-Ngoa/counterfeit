@@ -1,13 +1,21 @@
 @extends('layout.app')
 
-@section('title', 'Books | Default theme')
+@section('title', 'Books | Books Records')
 
 @section('content-box')
 <div class="content-box">
     <div class="row pt-4">
         <div class="col-sm-12">
             <div class="element-wrapper">
-                <h6 class="element-header">Recent Ticket Comments</h6>
+                <div class="element-actions">
+                    <a class="btn btn-primary btn-sm" href="{{ route('book.create') }}">
+                        <i class="os-icon os-icon-ui-22"></i><span>Add Book</span>
+                    </a>
+                    <!-- <a class="btn btn-primary btn-sm" href="#">
+                        <i class="os-icon os-icon-grid-10"></i><span>Make Payment</span>
+                    </a> -->
+                </div>
+                <h6 class="element-header">My Books Records</h6>
                 <div class="element-box-tp">
                     <div class="table-responsive">
                         <table class="table table-padded">
@@ -24,40 +32,40 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            
-                                @if(!empty($books))
-                                    @foreach($books as $book)
 
-                                    <tr>
-                                        <td class="text-center">
-                                            <input class="form-control" type="checkbox">
-                                        </td>
-                                        <td>
-                                            <div class="user-with-avatar">
-                                                <img alt="" src="img/avatar1.jpg">
-                                                <span class="smaller">{{ $book->author }}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="smaller text-center">{{ $book->description }}</div>
-                                        </td>
-                                        <td><span class="text-center">{{ $book->id }}</span></td>
-                                        <td><span class="text-center">{{ $book->type }}</span></td>
-                                        @if($book->sold)
-                                        <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
-                                        @else
-                                        <td class="text-center"><a class="badge badge-success-inverted" href="#">Not Sold</a></td>
-                                        @endif
-                                        <td class="nowrap"><span>{{ $book->price }}</span></td>
-                                        <td class="row-actions"><a href="#"><i class="os-icon os-icon-grid-10"></i></a><a href="#"><i class="os-icon os-icon-ui-44"></i></a><a class="danger" href="#"><i class="os-icon os-icon-ui-15"></i></a></td>
-                                    </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <div class="alert alert-info" role="alert">
-                                            <strong>Sorry! </strong>No Records at the moment.
+                                @if(!empty($books))
+                                @foreach($books as $book)
+
+                                <tr>
+                                    <td class="text-center">
+                                        <input class="form-control" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <div class="user-with-avatar">
+                                            <img alt="" src="img/avatar1.jpg">
+                                            <span class="smaller">{{ $book->author }}</span>
                                         </div>
-                                    </tr>
+                                    </td>
+                                    <td>
+                                        <div class="smaller text-center">{{ $book->description }}</div>
+                                    </td>
+                                    <td><span class="text-center">{{ $book->id }}</span></td>
+                                    <td><span class="text-center">{{ $book->type }}</span></td>
+                                    @if($book->sold)
+                                    <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
+                                    @else
+                                    <td class="text-center"><a class="badge badge-success-inverted" href="#">Not Sold</a></td>
+                                    @endif
+                                    <td class="nowrap"><span>{{ $book->price }}</span></td>
+                                    <td class="row-actions"><a href="#"><i class="os-icon os-icon-grid-10"></i></a><a href="#"><i class="os-icon os-icon-ui-44"></i></a><a class="danger" href="#"><i class="os-icon os-icon-ui-15"></i></a></td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <div class="alert alert-info" role="alert">
+                                        <strong>Sorry! </strong>No Records at the moment.
+                                    </div>
+                                </tr>
                                 @endif
                             </tbody>
                         </table>

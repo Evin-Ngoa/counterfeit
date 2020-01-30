@@ -7,3 +7,4 @@
     <link href="{{ asset("vendor/perfect-scrollbar/css/perfect-scrollbar.min.css") }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset("vendor/slick-carousel/slick/slick.css") }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset("css/main5739.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("css/custom.css") }}" rel="stylesheet" type="text/css" />
