@@ -21,6 +21,7 @@ Route::get('/dash', function () {
 });
 
 Route::resource('book', 'BookController');
+Route::resource('transaction', 'TransactionController');
 
 //Import Users
 Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {

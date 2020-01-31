@@ -1,6 +1,6 @@
 <div class="menu-mobile menu-activated-on-click color-scheme-dark">
                 <div class="mm-logo-buttons-w">
-                    <a class="mm-logo" href="index-2.html"><img src="img/logo.png"><span>Clean Admin</span></a>
+                    <a class="mm-logo" href="index-2.html"><img src="/img/logo.png"><span>Book Counterfeit</span></a>
                     <div class="mm-buttons">
                         <div class="content-panel-open">
                             <div class="os-icon os-icon-grid-circles"></div>
@@ -12,7 +12,7 @@
                 </div>
                 <div class="menu-and-user">
                     <div class="logged-user-w">
-                        <div class="avatar-w"><img alt="" src="img/avatar1.jpg"></div>
+                        <div class="avatar-w"><img alt="" src="/img/avatar1.jpg"></div>
                         <div class="logged-user-info-w">
                             <div class="logged-user-name">Maria Gomez</div>
                             <div class="logged-user-role">Administrator</div>

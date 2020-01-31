@@ -1,7 +1,6 @@
 <?php
 namespace App\Services\Book;
 
-use GuzzleHttp\Client;
 use App\Services\Utils;
 
 class BookService

@@ -19,6 +19,16 @@ class Utils
 	{
         return $this->endpointRequest($callURL);
         
+	}
+	
+    public function allRelations($callURL)
+	{
+        return $this->endpointRequest($callURL.'?filter={"include":"resolve"}');
+        // return $this->endpointRequest($callURL.'?filter[order]=id%20ASC');
+        // return $this->endpointRequest($callURL.'?filter={"order": "transactionTimestamp <ASC|DESC>"}');
+        // return $this->endpointRequest($callURL.'?filter={"order: ["transactionTimestamp <ASC>"]}');
+        // return $this->endpointRequest($callURL.'?filter={"order": "transactionTimestamp <DESC>"}');
+        
     }
     
     /**
