@@ -24,23 +24,10 @@ class BookService
      */
 	public function getBookSupplyChain($id){
 		
-        // Get specific book to track
-        $book = $this->utils->findById('/Book/', $id);
-
-        // $bookRelationResolve = $this->utils->findByIdRelationResolved('/Book/', $id);
-        // dd($bookRelationResolve);
-
-        $shipment = explode('#', $book->shipment);
-        $shipId = $shipment[1];
-        $class = $shipment[0];
-
-        // Get specific Shipment and check ownership
-        $shipmentDetails = $this->utils->findById('/Shipment/', $shipId);
-
-        // dd($shipmentDetails->shipOwnership);
-        $owners = $shipmentDetails->shipOwnership;
-
-        return $owners;
+        $bookRelations = $this->utils->findByIdRelationResolved('/Book/', $id);
+        // dd($bookRelations);
+        
+        return $bookRelations;
 	}
    
 }

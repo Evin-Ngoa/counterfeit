@@ -26,8 +26,9 @@
                                     <th class="text-center">Book Decription</th>
                                     <th class="text-center">Book ID</th>
                                     <th class="text-center">Book Type</th>
-                                    <th class="text-center">Sold</th>
                                     <th class="text-center">Price</th>
+                                    <th class="text-center">Edition</th>
+                                    <th class="text-center">Sold</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -51,13 +52,16 @@
                                     </td>
                                     <td><span class="text-center">{{ $book->id }}</span></td>
                                     <td><span class="text-center">{{ $book->type }}</span></td>
+                                    <td class="nowrap"><span>{{ $book->price }}</span></td>
+                                    <td class="nowrap"><span>{{ $book->edition }}</span></td>
                                     @if($book->sold)
                                     <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
                                     @else
                                     <td class="text-center"><a class="badge badge-success-inverted" href="#">Not Sold</a></td>
                                     @endif
-                                    <td class="nowrap"><span>{{ $book->price }}</span></td>
-                                    <td class="row-actions"><a href="#"><i class="os-icon os-icon-grid-10"></i></a><a href="#"><i class="os-icon os-icon-ui-44"></i></a><a class="danger" href="#"><i class="os-icon os-icon-ui-15"></i></a></td>
+                                    <td class="row-actions">
+                                        <a href="{{ route('verify.book', $book->id) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit Book"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete Book"><i class="os-icon os-icon-ui-15"></i></a>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @else

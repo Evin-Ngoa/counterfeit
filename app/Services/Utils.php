@@ -36,7 +36,7 @@ class Utils
 	 */
 	public function findByIdRelationResolved($callURL,$id)
 	{
-		return $this->endpointRequest($callURL.'?filter={"where":{"id":"'.$id.'"}, "include":"resolve"}');
+		return $this->endpointRequest($callURL.$id.'?filter={"where":{"id":"'.$id.'"}, "include":"resolve"}');
 	}
 
 
