@@ -67,8 +67,8 @@
                 </div><span>Orders</span>
             </a>
         </li>
-        <li class="selected">
-            <a href="#">
+        <li class="selected {!! classActivePath('shipment') !!}">
+            <a href="{{ route('shipment.index') }}">
                 <div class="icon-w">
                     <div class="os-icon os-icon-globe"></div>
                 </div><span>Shipments</span>
