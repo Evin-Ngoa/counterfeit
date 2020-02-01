@@ -181,11 +181,7 @@
             <div class="content-w">
                 <!-- Topbar -->
                 @include('layout.top-bar')
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="index-2.html">Products</a></li>
-                    <li class="breadcrumb-item"><span>Laptop with retina screen</span></li>
-                </ul>
+                @yield('breadcrumb')
                 <div class="content-panel-toggler"><i class="os-icon os-icon-grid-squares-22"></i><span>Sidebar</span></div>
                 <div class="content-i">
                     @yield('content-box')
