@@ -48,7 +48,7 @@
                                         <div class="smaller text-center">{{ $order->buyer->name }}</div>
                                     </td>
                                     <td><span class="smaller text-center">{{ $order->seller->name }}</span></td>
-                                    <td><span class="smaller text-center">{{ $order->arrivalDateTime }}</span></td>
+                                    <td><span class="smaller text-center">{{ Carbon\Carbon::parse($order->arrivalDateTime)->isoFormat('MMM Do YYYY dddd')  }}</span></td>
                                     @if($order->payOnArrival)
                                     <td><span class="smaller text-center">Yes</span></td>
                                     @else
@@ -123,7 +123,7 @@
                                         <div class="smaller text-center">{{ $order->buyer->name }}</div>
                                     </td>
                                     <td>{{ $order->seller->name }}</td>
-                                    <td>{{ $order->arrivalDateTime }}</td>
+                                    <td>{{ Carbon\Carbon::parse($order->arrivalDateTime)->isoFormat('MMM Do YYYY dddd')  }}</td>
                                     @if($order->payOnArrival)
                                     <td>Yes</td>
                                     @else
