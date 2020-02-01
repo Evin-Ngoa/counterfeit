@@ -25,6 +25,7 @@ Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
 Route::resource('distributor', 'DistributorController');
 Route::resource('customer', 'CustomerController');
+Route::resource('order', 'OrderController');
 
 //Import Users
 Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {

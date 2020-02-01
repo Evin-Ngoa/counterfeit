@@ -38,7 +38,7 @@
     <h1 class="menu-page-header">Page Header</h1>
     <ul class="main-menu">
         <li class="sub-header"><span>Menu</span></li>
-        <li class="selected has-sub-menu {!! classActivePath('book') !!}">
+        <li class="selected has-sub-menu">
             <a href="{{ route('book.index') }}">
                 <div class="icon-w">
                     <div class="os-icon os-icon-book"></div>
@@ -60,8 +60,8 @@
             </div>
         </li>
         <li class="sub-header"><span>Activities</span></li>
-        <li class="selected">
-            <a href="">
+        <li class="selected {!! classActivePath('order') !!}">
+            <a href="{{ route('order.index') }}">
                 <div class="icon-w">
                     <div class="os-icon os-icon-mail-14"></div>
                 </div><span>Orders</span>
