@@ -23,10 +23,10 @@
                         <table class="table table-padded">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>QR Code</th>
                                     <th class="text-center">Author</th>
                                     <th class="text-center">Book Decription</th>
-                                    <th class="text-center">Book ID</th>
+                                    <!-- <th class="text-center">Book ID</th> -->
                                     <th class="text-center">Book Type</th>
                                     <th class="text-center">Price</th>
                                     <th class="text-center">Edition</th>
@@ -38,7 +38,7 @@
                                 @foreach($books as $book)
                                 <tr>
                                     <td class="text-center">
-                                        <input class="form-control" type="checkbox">
+                                    {!! QrCode::size(100)->generate($book->id); !!}
                                     </td>
                                     <td>
                                         <div class="user-with-avatar">
@@ -49,7 +49,7 @@
                                     <td>
                                         <div class="smaller text-center">{{ $book->description }}</div>
                                     </td>
-                                    <td><span class="text-center">{{ $book->id }}</span></td>
+                                    <!-- <td><span class="text-center">{{ $book->id }}</span></td> -->
                                     <td><span class="text-center">{{ $book->type }}</span></td>
                                     <td class="nowrap"><span>{{ $book->price }}</span></td>
                                     <td class="nowrap"><span>{{ $book->edition }}</span></td>

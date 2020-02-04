@@ -67,9 +67,7 @@ var Api = function () {
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
-                    // msgHTML = '<div class="alert alert-danger" role="alert">'
-                    //     + errors.error.message
-                    //     + '</div>';
+                
                     console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
                     console.log("Errors >>!!!!!!! " + JSON.stringify(errors.messages));
                     $("#add-book-msgs").hide();
