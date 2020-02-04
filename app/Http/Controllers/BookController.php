@@ -81,7 +81,6 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->input(), array(
-            "id" => "required",
             "type" => "required",
             "author" => "required",
             "edition" => "required ",
@@ -98,10 +97,32 @@ class BookController extends Controller
             ], 422);
         }
 
+        // Generate Book Id and merge
+        $genBookId = $this->random_strings(10);
+
+        $request->merge(['id' => $genBookId]);
+
         return response()->json([
             'error' => false,
-            'data'  => 'task',
+            'data'  => $request->input(),
         ], 200);
+    }
+
+    // This function will return a random 
+    // string of specified length 
+    function random_strings($length_of_string)
+    {
+
+        // String of all alphanumeric character 
+        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+        // Shufle the $str_result and returns substring 
+        // of specified length 
+        return substr(
+            str_shuffle($str_result),
+            0,
+            $length_of_string
+        );
     }
 
     /**

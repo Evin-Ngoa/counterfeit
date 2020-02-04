@@ -51,6 +51,8 @@ var Api = function () {
                 dataType: 'json',
                 success: function (data) {
                     console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-error-bag").hide();
+                    $("#add-book-msgs").show();
                     msgHTML = '<div class="alert alert-primary" role="alert">'
                         + 'Record Added Successfuly '
                         + '</div>';
@@ -70,6 +72,7 @@ var Api = function () {
                     //     + '</div>';
                     console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
                     console.log("Errors >>!!!!!!! " + JSON.stringify(errors.messages));
+                    $("#add-book-msgs").hide();
                     // $('#add-book-msgs').html(msgHTML);
                     $('#add-book-errors').html('');
                     $.each(errors.messages, function (key, value) {

@@ -14,6 +14,13 @@
     <link href="favicon.png" rel="shortcut icon">
     <link href="apple-touch-icon.png" rel="apple-touch-icon">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     <!-- CSS -->
     @include('layout.css')
 
@@ -38,7 +45,7 @@
                             <div class="onboarding-content with-gradient">
                                 <h4 class="onboarding-title">Example Request Information</h4>
                                 <div class="onboarding-text">In this example you can see a form where you can request some additional information from the customer when they land on the app page.</div>
-                                <form >
+                                <form>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -167,7 +174,8 @@
                             </a>
                         </div>
                         <div class="ssg-nothing-found">
-                            <div class="icon-w"><i class="os-icon os-icon-eye-off"></i></div><span>No files were found. Try changing your query...</span></div>
+                            <div class="icon-w"><i class="os-icon os-icon-eye-off"></i></div><span>No files were found. Try changing your query...</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,14 +196,14 @@
                     @yield('content-box')
 
                     @yield('content-panel')
-    
+
                 </div>
             </div>
         </div>
         <div class="display-type"></div>
     </div>
-<!-- JS -->
-@include('layout.js')
+    <!-- JS -->
+    @include('layout.js')
 </body>
 <!-- Mirrored from light.pinsupreme.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 22 Jan 2020 04:03:03 GMT -->
 
