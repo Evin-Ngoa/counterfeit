@@ -39,11 +39,6 @@
                                 <tr>
                                     <td class="text-center">
                                         {!! QrCode::size(100)->generate($book->id); !!}
-                                        <h5>Qr Code with Image</h5>
-                                        <!-- <img src="data:image/png;base64, 
-                                        {!! base64_encode(QrCode::format('png')->merge('https://www.w3adda.com/wp-content/uploads/2019/07/laravel.png', 0.3, true)
-                        ->size(200)->errorCorrection('H')
-                        ->generate('W3Adda Laravel Tutorial')) !!} "> -->
                                     </td>
                                     <td>
                                         <div class="user-with-avatar">
@@ -55,9 +50,9 @@
                                         <div class="smaller text-center">{{ $book->description }}</div>
                                     </td>
                                     <!-- <td><span class="text-center">{{ $book->id }}</span></td> -->
-                                    <td><span class="text-center">{{ $book->type }}</span></td>
-                                    <td class="nowrap"><span>{{ $book->price }}</span></td>
-                                    <td class="nowrap"><span>{{ $book->edition }}</span></td>
+                                    <td><div class="smaller text-center">{{ $book->type }}</div></td>
+                                    <td class="nowrap"><div class="smaller text-center">{{ $book->price }}</div></td>
+                                    <td class="nowrap"><div class="smaller text-center">{{ $book->edition }}</div></td>
                                     @if($book->sold)
                                     <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
                                     @else
