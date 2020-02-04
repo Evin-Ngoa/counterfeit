@@ -102,14 +102,20 @@ class BookController extends Controller
 
         $request->merge(['id' => $genBookId]);
 
+         // Save all the post
+         $books = $this->bookservice->storeBook($request);
+
         return response()->json([
             'error' => false,
-            'data'  => $request->input(),
+            'data_sent'  => $request->input(),
+            'response'  => $books
         ], 200);
     }
 
-    // This function will return a random 
-    // string of specified length 
+    /**
+     * This function will return a random 
+     * string of specified length 
+     */
     function random_strings($length_of_string)
     {
 

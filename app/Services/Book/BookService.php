@@ -27,6 +27,17 @@ class BookService
         // dd($bookRelations);
         
         return $bookRelations;
+    }
+    
+    /**
+     * Track Book Ownership
+     */
+	public function storeBook($request){
+		
+        $bookRelations = $this->utils->storeItem('/Book/', $request);
+        // dd($bookRelations);
+        
+        return $bookRelations;
 	}
    
 }

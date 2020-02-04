@@ -36,7 +36,7 @@
                                 <div class="form-group">
                                     <label for="type">Subject</label>
                                     <input name="type" id="type" class="form-control" placeholder="Book Subject...Eg Kiswahili" value="Geography">
-                                    <input type="hidden" name="id" id="id" class="form-control" value="BOOK_006">
+                                    <!-- <input type="hidden" name="id" id="id" class="form-control" value="BOOK_006"> -->
                                     <input type="hidden" name="sold" id="sold" class="form-control" value="false">
                                     <!-- "$class": "org.evin.book.track.Book", -->
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.Book">

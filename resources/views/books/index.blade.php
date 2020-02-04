@@ -38,7 +38,12 @@
                                 @foreach($books as $book)
                                 <tr>
                                     <td class="text-center">
-                                    {!! QrCode::size(100)->generate($book->id); !!}
+                                        {!! QrCode::size(100)->generate($book->id); !!}
+                                        <h5>Qr Code with Image</h5>
+                                        <!-- <img src="data:image/png;base64, 
+                                        {!! base64_encode(QrCode::format('png')->merge('https://www.w3adda.com/wp-content/uploads/2019/07/laravel.png', 0.3, true)
+                        ->size(200)->errorCorrection('H')
+                        ->generate('W3Adda Laravel Tutorial')) !!} "> -->
                                     </td>
                                     <td>
                                         <div class="user-with-avatar">
@@ -76,8 +81,8 @@
         </div>
     </div>
 </div>
-    <!-- Modal -->
-    @include('partials.books.books_add')
+<!-- Modal -->
+@include('partials.books.books_add')
 @endsection
 
 @section('content-panel')

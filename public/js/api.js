@@ -1,8 +1,8 @@
 var Api = function () {
     // http://localhost:3000/api/Book
     var domainUrl = 'http://localhost:3000/api';
-    // var postBookURL = domainUrl + '/Book';
-    var postBookURL = '/book';
+    var postBookURL = domainUrl + '/Book';
+    // var postBookURL = '/book';
 
     // FOrms
     var bookForm = $("#book_form")
@@ -13,6 +13,7 @@ var Api = function () {
     var handlePostBook = function () {
         console.log("Post");
         $("#add-error-bag").hide();
+        var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
         bookSbtBtn.on('click', function () {
             var json = bookForm.serializeArray();
@@ -21,6 +22,10 @@ var Api = function () {
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
             });
+
+            // Append ID
+            jsonData["id"] = bookId;
+
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
             // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
@@ -83,6 +88,12 @@ var Api = function () {
 
         });
     };
+
+    function randomString(length, chars) {
+        var result = '';
+        for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+        return result;
+    }
 
     return {
         //main function to initiate the theme
