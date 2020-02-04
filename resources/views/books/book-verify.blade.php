@@ -14,18 +14,24 @@
         <div class="element-box-tp">
             <div class="activity-boxes-w">
                 @if($groupOwners)
-                @foreach ($groupOwners->shipment->shipOwnership as $groupOwner)
-                <div class="activity-box-w">
-                    <div class="activity-time">{{ Carbon\Carbon::parse($groupOwner->timestamp)->isoFormat('MMM Do YYYY dddd')  }}</div>
-                    <div class="activity-box">
-                        <div class="activity-avatar"><img alt="" src="/img/avatar1.jpg"></div>
-                        <div class="activity-info">
-                            <div class="activity-role">{{ $groupOwner->owner->name }}</div>
-                            <strong class="activity-title">{{ $groupOwner->owner->address->country}} , {{ $groupOwner->owner->address->county }} , {{ $groupOwner->owner->address->street }}</strong>
+                    @if(isset($groupOwners->shipment->shipOwnership))
+                        @foreach ($groupOwners->shipment->shipOwnership as $groupOwner)
+                        <div class="activity-box-w">
+                            <div class="activity-time">{{ Carbon\Carbon::parse($groupOwner->timestamp)->isoFormat('MMM Do YYYY dddd')  }}</div>
+                            <div class="activity-box">
+                                <div class="activity-avatar"><img alt="" src="/img/avatar1.jpg"></div>
+                                <div class="activity-info">
+                                    <div class="activity-role">{{ $groupOwner->owner->name }}</div>
+                                    <strong class="activity-title">{{ $groupOwner->owner->address->country}} , {{ $groupOwner->owner->address->county }} , {{ $groupOwner->owner->address->street }}</strong>
+                                </div>
+                            </div>
                         </div>
+                        @endforeach
+                    @else
+                    <div class="alert alert-success">
+                        @lang('No Related Data Found.')
                     </div>
-                </div>
-                @endforeach
+                    @endif
                 @else
                 <div class="alert alert-success">
                     @lang('No Related Data Found.')

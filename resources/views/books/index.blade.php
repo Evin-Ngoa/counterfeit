@@ -8,7 +8,8 @@
         <div class="col-sm-12">
             <div class="element-wrapper">
                 <div class="element-actions">
-                    <a class="btn btn-primary btn-sm" href="{{ route('book.create') }}">
+                    <!-- <a class="btn btn-primary btn-sm" data-target="#onboardingWideFormModal" data-toggle="modal" href="{{ route('book.create') }}"> -->
+                    <a class="btn btn-primary btn-sm" data-target="#onboardingWideFormModal" data-toggle="modal" href="#">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Book</span>
                     </a>
                     <!-- <a class="btn btn-primary btn-sm" href="#">
@@ -18,6 +19,7 @@
                 <h6 class="element-header">My Books Records</h6>
                 <div class="element-box-tp">
                     <div class="table-responsive">
+                        @if(!empty($books))
                         <table class="table table-padded">
                             <thead>
                                 <tr>
@@ -33,10 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @if(!empty($books))
                                 @foreach($books as $book)
-
                                 <tr>
                                     <td class="text-center">
                                         <input class="form-control" type="checkbox">
@@ -64,23 +63,21 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                @else
-                                <tr>
-                                    <div class="alert alert-info" role="alert">
-                                        <strong>Sorry! </strong>No Records at the moment.
-                                    </div>
-                                </tr>
-                                @endif
                             </tbody>
                         </table>
+                        @else
+                        <div class="alert alert-info" role="alert">
+                            <strong>Sorry! </strong>No Records at the moment.
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
+    <!-- Modal -->
+    @include('partials.books.books_add')
 @endsection
 
 @section('content-panel')
