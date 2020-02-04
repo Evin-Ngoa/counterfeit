@@ -13,6 +13,7 @@
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <link href="favicon.png" rel="shortcut icon">
     <link href="apple-touch-icon.png" rel="apple-touch-icon">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- CSS -->
     @include('layout.css')
 

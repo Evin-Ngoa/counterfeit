@@ -16,11 +16,15 @@
                                 <!-- <div class="alert alert-info" role="alert">
                                     <strong>Sorry! </strong>No Records at the moment.
                                 </div> -->
+                                <div class="alert alert-danger" id="add-error-bag">
+                                    <ul id="add-book-errors">
+                                    </ul>
+                                </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="">Select Publisher</label>
-                                    <select class="form-control" name="initialOwner">
+                                    <select class="form-control" name="initialOwner" id="initialOwner">
                                         <option value="">-Select-</option>
                                         <option value="longhorn publishers" selected>Longhorn</option>
                                         <option value="KLB publishers">KLB</option>
