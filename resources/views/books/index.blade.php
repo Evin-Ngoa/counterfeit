@@ -59,7 +59,7 @@
                                     <td class="text-center"><a class="badge badge-success-inverted" href="#">Not Sold</a></td>
                                     @endif
                                     <td class="row-actions">
-                                        <a href="{{ route('verify.book', $book->id) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editBookForm('{{$book->id}}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Book"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete Book"><i class="os-icon os-icon-ui-15"></i></a>
+                                        <a href="{{ route('verify.book', $book->id) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editBookForm('{{$book->id}}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Book"><i class="os-icon os-icon-edit"></i></a><a class="danger" onclick="event.preventDefault();deleteBookForm('{{$book->id}}');" href="#" data-placement="top" data-toggle="tooltip" title="Delete Book"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -79,6 +79,7 @@
 <!-- Modal -->
 @include('partials.books.books_add')
 @include('partials.books.books_edit')
+@include('partials.books.books_delete')
 @endsection
 
 @section('content-panel')

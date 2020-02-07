@@ -139,7 +139,12 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        return redirect('roles');
+        $book = $this->bookservice->getSingleBook($id);
+
+        return response()->json([
+            'error' => false,
+            'book'  => $book,
+        ], 200);
     }
 
     /**

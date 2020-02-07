@@ -1,7 +1,7 @@
 
 /**
  * Show edit form with the values
-* @param {*} task_id 
+* @param {*} book_id 
 */
 function editBookForm(book_id) {
     console.log("Clicked Edit form");
@@ -24,6 +24,25 @@ function editBookForm(book_id) {
             $('#editBookModal').modal('show');
         },
         error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+/**
+ * Get data
+ * @param {*} book_id 
+ */
+function deleteBookForm(book_id) {
+    $.ajax({
+        type: 'GET',
+        url: '/book/' + book_id,
+        success: function(data) {
+            $("#frmDeleteBook #delete-title").html("Delete Book (" + data.book.id + ")?");
+            $("#frmDeleteBook input[name=book_id]").val(data.book.id);
+            $('#deleteBookModal').modal('show');
+        },
+        error: function(data) {
             console.log(data);
         }
     });
