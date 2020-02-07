@@ -12,12 +12,12 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                                <div id="add-book-msgs"></div>
+                                <div id="edit-book-msgs"></div>
                                 <!-- <div class="alert alert-info" role="alert">
                                     <strong>Sorry! </strong>No Records at the moment.
                                 </div> -->
                                 <div class="alert alert-danger" id="edit-error-bag">
-                                    <ul id="add-book-errors">
+                                    <ul id="edit-book-errors">
                                     </ul>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
 
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal" type="button"> Close</button>
-                    <button class="btn btn-primary btn-add-book" type="button" value="Save Book"> Save Book</button>
+                    <button class="btn btn-primary btn-edit-book" type="button" value="Edit Book">Edit Book</button>
                 </div>
             </form>
         </div>

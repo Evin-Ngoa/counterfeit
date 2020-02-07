@@ -9,7 +9,7 @@ function editBookForm(book_id) {
         type: 'GET',
         url: '/book/' + book_id + '/edit',
         success: function (data) {
-            console.log("Data Edit" + data.book.id);
+            console.log("Data Edit +>" + data.book.id);
             $("#edit-error-bag").hide();
             $("#id").val(data.book.id);
             // $("#frmEditBook input[name=id]").val(data.book.id);
