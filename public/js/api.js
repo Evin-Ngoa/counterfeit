@@ -42,17 +42,7 @@ var Api = function () {
             $.ajax({
                 type: 'POST',
                 url: postBookURL,
-                data:  jsonData,
-                // data: {
-                //     initialOwner: $("#book_form select[name=initialOwner]").val(),
-                //     type: $("#book_form input[name=type]").val(),
-                //     id: $("#book_form input[name=id]").val(),
-                //     sold: $("#book_form input[name=sold]").val(),
-                //     author: $("#book_form input[name=author]").val(),
-                //     edition: $("#book_form input[name=edition]").val(),
-                //     price: $("#book_form input[name=price]").val(),
-                //     description: $("#book_form textarea[name=description]").val()
-                // },
+                data: jsonData,
                 dataType: 'json',
                 success: function (data) {
                     console.log("Success +++> " + JSON.stringify(data));
@@ -72,7 +62,7 @@ var Api = function () {
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
-                
+
                     console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
                     console.log("Errors >>!!!!!!! " + JSON.stringify(errors.messages));
                     $("#add-book-msgs").hide();
@@ -88,18 +78,32 @@ var Api = function () {
 
         });
     };
-
+    /**
+     * Function to generate random numbers for books
+     * @param {*} length 
+     * @param {*} chars 
+     */
     function randomString(length, chars) {
         var result = '';
         for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
         return result;
     }
 
+    /**
+     * Posting the edit form
+     */
+    var handleEditBook = function () {
+            console.log("handleEditBook");
+
+    };
+
+
     return {
         //main function to initiate the theme
         init: function (Args) {
             args = Args;
             handlePostBook();
+            handleEditBook();
 
         }
     }

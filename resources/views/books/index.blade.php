@@ -9,7 +9,7 @@
             <div class="element-wrapper">
                 <div class="element-actions">
                     <!-- <a class="btn btn-primary btn-sm" data-target="#onboardingWideFormModal" data-toggle="modal" href="{{ route('book.create') }}"> -->
-                    <a class="btn btn-primary btn-sm" data-target="#onboardingWideFormModal" data-toggle="modal" href="#">
+                    <a class="btn btn-primary btn-sm" data-target="#addBookModal" data-toggle="modal" href="#">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Book</span>
                     </a>
                     <!-- <a class="btn btn-primary btn-sm" href="#">
@@ -59,7 +59,7 @@
                                     <td class="text-center"><a class="badge badge-success-inverted" href="#">Not Sold</a></td>
                                     @endif
                                     <td class="row-actions">
-                                        <a href="{{ route('verify.book', $book->id) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit Book"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete Book"><i class="os-icon os-icon-ui-15"></i></a>
+                                        <a href="{{ route('verify.book', $book->id) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editBookForm('{{$book->id}}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Book"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete Book"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -78,6 +78,7 @@
 </div>
 <!-- Modal -->
 @include('partials.books.books_add')
+@include('partials.books.books_edit')
 @endsection
 
 @section('content-panel')

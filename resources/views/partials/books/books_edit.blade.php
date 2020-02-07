@@ -1,8 +1,8 @@
 <!-- Modal -->
-<div aria-hidden="true" class="onboarding-modal modal fade animated" id="addBookModal" role="dialog" tabindex="-1">
+<div aria-hidden="true" class="onboarding-modal modal fade animated" id="editBookModal" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg modal-centered" role="document">
         <div class="modal-content text-center">
-            <form id="book_form">
+            <form id="frmEditBook">
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Close</span><span class="os-icon os-icon-close"></span></button>
                 <div class="onboarding-side-by-side">
                     <div class="onboarding-media"><img alt="" src="img/bigicon5.png" width="200px"></div>
@@ -16,7 +16,7 @@
                                 <!-- <div class="alert alert-info" role="alert">
                                     <strong>Sorry! </strong>No Records at the moment.
                                 </div> -->
-                                <div class="alert alert-danger" id="add-error-bag">
+                                <div class="alert alert-danger" id="edit-error-bag">
                                     <ul id="add-book-errors">
                                     </ul>
                                 </div>
@@ -35,9 +35,9 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="type">Subject</label>
-                                    <input name="type" id="type" class="form-control" placeholder="Book Subject...Eg Kiswahili" value="Geography">
-                                    <!-- <input type="hidden" name="id" id="id" class="form-control" value="BOOK_006"> -->
-                                    <input type="hidden" name="sold" id="sold" class="form-control" value="false">
+                                    <input name="type" id="type" class="form-control" placeholder="Book Subject...Eg Kiswahili" value="">
+                                    <input type="hidden" name="id" id="id" class="form-control" value="">
+                                    <input type="hidden" name="sold" id="sold" class="form-control" value="">
                                     <!-- "$class": "org.evin.book.track.Book", -->
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.Book">
                                 </div>
@@ -45,26 +45,26 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="author">Author</label>
-                                    <input name="author" id="author" class="form-control" placeholder="Enter Book Author" value="Evingtone">
+                                    <input name="author" id="author" class="form-control" placeholder="Enter Book Author" value="">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="edition">Edition</label>
-                                    <input name="edition" id="edition" class="form-control" placeholder="Enter Edition...Eg 3rd Edition" value="6TH Edition">
+                                    <input name="edition" id="edition" class="form-control" placeholder="Enter Edition...Eg 3rd Edition" value="">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="price">Book Price</label>
-                                    <input name="price" id="price" class="form-control" placeholder="Enter Price..." value="550">
+                                    <input name="price" id="price" class="form-control" placeholder="Enter Price..." value="">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="description">Book Description</label>
                                     <!-- <input name="description" id="description" class="form-control" placeholder="Any addition..." value=""> -->
-                                    <textarea name="description" id="description" class="form-control" value="Testing Book Description">Any addition...</textarea>
+                                    <textarea name="description" id="description" class="form-control" value=""></textarea>
                                 </div>
                             </div>
                             <!-- <div class="col-sm-6">

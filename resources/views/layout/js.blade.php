@@ -30,6 +30,7 @@
     <script src="{{ asset ("js/demo_customizer5739.js") }}"></script>
     <script src="{{ asset ("js/main5739.js") }}"></script>
     <script src="{{ asset ("js/api.js") }}"></script>
+    <script src="{{ asset ("js/helper-api.js") }}"></script>
 
     <script>
         Api.init();

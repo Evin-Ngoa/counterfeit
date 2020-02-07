@@ -155,6 +155,13 @@ class BookController extends Controller
         // $page_title = "Roles";
 
         // return view('roles.edit', compact('role', 'permissions'));
+
+        $book = $this->bookservice->getSingleBook($id);
+
+        return response()->json([
+            'error' => false,
+            'book'  => $book,
+        ], 200);
     }
 
     /**

@@ -15,7 +15,12 @@ class BookService
      * Get all Book Records
      */
     public function getAllBooks(){
+        // dd($this->utils->all('/Book'));
         return $this->utils->all('/Book');
+    }
+
+    public function getSingleBook($id){
+        return $this->utils->findById('/Book/', $id);
     }
     
     /**
