@@ -59,9 +59,9 @@ var Api = function () {
                     // + '</div>';
                     $('#add-book-msgs').html(msgHTML);
 
-                    // $('#book_form').trigger("reset");
-                    // $("#book_form .close").click();
-                    // window.location.reload();
+                    $('#book_form').trigger("reset");
+                    $("#book_form .close").click();
+                    window.location.reload();
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
@@ -137,7 +137,7 @@ var Api = function () {
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#edit-error-bag").hide();
                     $("#edit-book-msgs").show();
-                    
+
                     msgHTML = '<div class="alert alert-primary" role="alert">'
                         + 'Record Added Successfuly '
                         + '</div>';
