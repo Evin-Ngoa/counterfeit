@@ -56,6 +56,42 @@ function deleteBookForm(book_id) {
     });
 }
 
+/**
+ * Show edit form with the values
+* @param {*} order_id 
+*/
+function editOrderForm(order_id) {
+    console.log("Clicked Order Edit form");
+    var qrCodeEdit = '';
+    $.ajax({
+        type: 'GET',
+        url: '/order/' + order_id + '/edit',
+        success: function (data) {
+            var orderID = data.order.contractId;
+            console.log("Data Edit +>" + orderID);
+
+            $("#edit-error-bag").hide();
+            $("#contractId").val(orderID);
+            $("#IdOrder").text(orderID);
+            // $("#frmEditOrder input[name=id]").val(BookID);
+            $("#frmEditOrder input[name=buyer]").val(data.order.buyer);
+            $("#frmEditOrder input[name=seller]").val(data.order.seller);
+            $("#frmEditOrder input[name=arrivalDateTime]").val(data.order.arrivalDateTime);
+            $("#frmEditOrder input[name=payOnArrival]").val(data.order.payOnArrival);
+            $("#frmEditOrder textarea[name=destinationAddress]").val(data.order.destinationAddress);
+            $("#frmEditOrder input[name=unitPrice]").val(data.order.unitPrice);
+            $("#frmEditOrder input[name=quantity]").val(data.order.quantity);
+            $("#frmEditOrder input[name=lateArrivalPenaltyFactor]").val(data.order.lateArrivalPenaltyFactor);
+            $("#frmEditOrder input[name=damagedPenaltyFactor]").val(data.order.damagedPenaltyFactor);
+            $("#frmEditOrder input[name=lostPenaltyFactor]").val(data.order.lostPenaltyFactor);
+
+            $('#editOrderModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
 
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',

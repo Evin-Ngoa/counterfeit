@@ -61,7 +61,7 @@
                                     <td><span class="smaller text-center">{{ $order->damagedPenaltyFactor }}</span></td>
                                     <td><span class="smaller text-center">{{ $order->lostPenaltyFactor }}</span></td> -->
                                     <td class="row-actions">
-                                        <a href="{{ route('verify.book', $order->contractId) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                        <a style="display: none;" href="{{ route('verify.book', $order->contractId) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editOrderForm('{{ $order->contractId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -159,5 +159,7 @@
 
 <!-- Modal -->
 @include('partials.orders.orders_add')
+@include('partials.orders.orders_edit')
+
 @endsection
 

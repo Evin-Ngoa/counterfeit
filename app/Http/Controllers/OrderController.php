@@ -68,6 +68,12 @@ class OrderController extends Controller
     public function edit($id)
     {
         //
+        $order = $this->orderservice->getSingleOrder($id);
+
+        return response()->json([
+            'error' => false,
+            'order'  => $order,
+        ], 200);
     }
 
     /**
