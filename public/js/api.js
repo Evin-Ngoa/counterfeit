@@ -11,6 +11,7 @@ var Api = function () {
     var frmEditBook = $("#frmEditBook");
 
     var frmAddOrder = $("#frmAddOrder");
+    var frmEditOrder = $("#frmEditOrder");
 
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
@@ -18,6 +19,7 @@ var Api = function () {
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
 
     var orderSbtBtn = $('#frmAddOrder .btn-add-order');
+    var orderEditSbtBtn = $('#frmEditOrder .btn-edit-order');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -100,7 +102,7 @@ var Api = function () {
     }
 
     /**
-     * Posting the edit form
+     * Posting the book edit form
      */
     var handleEditBook = function () {
         console.log("handleEditBook");
@@ -292,6 +294,82 @@ var Api = function () {
         });
     };
 
+    /**
+     * Posting the order edit form
+     */
+    var handleEditOrder = function () {
+        console.log("handleEditOrder");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        orderEditSbtBtn.on('click', function () {
+            var json = frmEditOrder.serializeArray();
+            var OrderId = $('#contractId').val();
+            console.log('Order ID Edit ==> ' + OrderId);
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+            console.log('Order ID Edit jsonData ==> ' + jsonData.contractId);
+
+            console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
+            var putEditOrderURL = domainUrl + '/OrderContract/' + OrderId;
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'PUT',
+                url: putEditOrderURL,
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#edit-error-bag").hide();
+                    $("#edit-order-msgs").show();
+
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+
+                    $('#edit-order-msgs').html(msgHTML);
+
+                    $('#frmEditOrder').trigger("reset");
+                    $("#frmEditOrder .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    if (status == 500) {
+                        $('#add-order-errors').html(errors.error.message);
+                    } else {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-order-msgs").hide();
+                        // $('#add-order-msgs').html(msgHTML);
+                        $('#add-order-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+                    }
+                    $("#edit-error-bag").show();
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
     return {
         //main function to initiate the theme
         init: function (Args) {
@@ -303,6 +381,7 @@ var Api = function () {
 
             // Handle Order EndPoints
             handlePostOrder();
+            handleEditOrder();
         }
     }
 
