@@ -204,6 +204,7 @@
     </div>
     <!-- JS -->
     @include('layout.js')
+    @yield('footer_scripts')
 </body>
 <!-- Mirrored from light.pinsupreme.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 22 Jan 2020 04:03:03 GMT -->
 

@@ -29,7 +29,7 @@
                                     <!-- <th class="text-center">Book ID</th> -->
                                     <th class="text-center">Book Type</th>
                                     <th class="text-center">Price</th>
-                                    <th class="text-center">Edition</th>
+                                    <th class="text-center">initial Owner</th>
                                     <th class="text-center">Sold</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -39,6 +39,7 @@
                                 <tr>
                                     <td class="text-center">
                                         {!! QrCode::size(100)->generate($book->id); !!}
+                                        <span class="smaller">{{ $book->id }}</span>
                                     </td>
                                     <td>
                                         <div class="user-with-avatar">
@@ -49,10 +50,12 @@
                                     <td>
                                         <div class="smaller text-center">{{ $book->description }}</div>
                                     </td>
-                                    <!-- <td><span class="text-center">{{ $book->id }}</span></td> -->
-                                    <td><div class="smaller text-center">{{ $book->type }}</div></td>
+                                    <td>
+                                        <div class="smaller text-center">{{ $book->type }}</div>
+                                        <div class="smaller text-center">({{ $book->edition }})</div>
+                                    </td>
                                     <td class="nowrap"><div class="smaller text-center">{{ $book->price }}</div></td>
-                                    <td class="nowrap"><div class="smaller text-center">{{ $book->edition }}</div></td>
+                                    <td class="nowrap"><div class="smaller text-center">{{ $book->initialOwner }}</div></td>
                                     @if($book->sold)
                                     <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
                                     @else
@@ -81,6 +84,7 @@
 @include('partials.books.books_edit')
 @include('partials.books.books_delete')
 @endsection
+
 
 @section('content-panel')
 <div class="content-panel" style="display:none;">
@@ -227,3 +231,4 @@
     </div>
 </div>
 @endsection
+

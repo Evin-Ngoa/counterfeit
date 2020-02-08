@@ -1,14 +1,14 @@
 <!-- Modal -->
 <div aria-hidden="true" class="onboarding-modal modal fade animated" id="addBookModal" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-centered" role="document">
+    <div class="modal-dialog modal-md modal-centered" role="document">
         <div class="modal-content text-center">
             <form id="book_form">
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Close</span><span class="os-icon os-icon-close"></span></button>
                 <div class="onboarding-side-by-side">
-                    <div class="onboarding-media"><img alt="" src="img/bigicon5.png" width="200px"></div>
+                    <div class="onboarding-media" style="display: none;"><img alt="" src="img/bigicon5.png" width="200px"></div>
                     <div class="onboarding-content with-gradient">
-                        <h4 class="onboarding-title">Example Request Information</h4>
-                        <div class="onboarding-text">In this example you can see a form where you can request some additional information from the customer when they land on the app page.</div>
+                        <h4 class="onboarding-title">Create Book</h4>
+                        <div class="onboarding-text" style="display: none;">In this example you can see a form where you can request some additional information from the customer when they land on the app page.</div>
 
                         <div class="row">
                             <div class="col-sm-12">
