@@ -56,3 +56,10 @@ function deleteBookForm(book_id) {
     });
 }
 
+
+$('.datetime').datetimepicker({
+    // format: 'DD/MM/YYYY',
+    format: 'YYYY-MM-DD',
+    useCurrent: false, //Important! See issue #
+    minDate:new Date(),
+});

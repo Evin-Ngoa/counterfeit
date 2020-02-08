@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <div class="element-wrapper">
                 <div class="element-actions">
-                    <a class="btn btn-primary btn-sm" href="{{ route('order.create') }}">
+                    <a class="btn btn-primary btn-sm" href="#" data-target="#addOrderModal" data-toggle="modal">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Order</span>
                     </a>
                 </div>
@@ -155,7 +155,9 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
+<!-- Modal -->
+@include('partials.orders.orders_add')
 @endsection
+

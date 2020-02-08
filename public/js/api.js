@@ -2,17 +2,22 @@ var Api = function () {
     // http://localhost:3000/api/Book
     var domainUrl = 'http://localhost:3000/api';
     var postBookURL = domainUrl + '/Book';
-  
+    var postOrderURL = domainUrl + '/OrderContract';
+
     // var postBookURL = '/book';
 
     // FOrms
-    var bookForm = $("#book_form")
-    var frmEditBook = $("#frmEditBook")
+    var bookForm = $("#book_form");
+    var frmEditBook = $("#frmEditBook");
+
+    var frmAddOrder = $("#frmAddOrder");
 
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
+
+    var orderSbtBtn = $('#frmAddOrder .btn-add-order');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -82,6 +87,7 @@ var Api = function () {
 
         });
     };
+
     /**
      * Function to generate random numbers for books
      * @param {*} length 
@@ -119,7 +125,7 @@ var Api = function () {
 
             // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
             console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
-            var postEditBookURL = domainUrl +'/Book/'+ BookId;
+            var postEditBookURL = domainUrl + '/Book/' + BookId;
 
             var msgHTML = "";
 
@@ -142,7 +148,7 @@ var Api = function () {
                     msgHTML = '<div class="alert alert-primary" role="alert">'
                         + 'Record Added Successfuly '
                         + '</div>';
-                   
+
                     $('#edit-book-msgs').html(msgHTML);
 
                     $('#frmEditBook').trigger("reset");
@@ -172,7 +178,7 @@ var Api = function () {
     /**
      * Posting the Delete Form
      */
-    var handleDeleteBook = function () {  
+    var handleDeleteBook = function () {
         console.log("handleDeleteBook");
         $("#edit-error-bag").hide();
         // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -184,7 +190,7 @@ var Api = function () {
 
             console.log("Delete Book ID => " + BookId);
 
-            var postEditBookURL = domainUrl +'/Book/'+ BookId;
+            var postEditBookURL = domainUrl + '/Book/' + BookId;
 
             $.ajaxSetup({
                 headers: {
@@ -205,22 +211,98 @@ var Api = function () {
                     var errors = $.parseJSON(data.responseText);
                     console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
                     console.log("Errors >>!!!!!!! " + JSON.stringify(data));
-        
+
                 }
             }); // END Ajax
 
         }); // END OnClick Submit
-            
+
+    };
+
+    var handlePostOrder = function () {
+        console.log("handlePostOrder");
+        $("#add-error-bag").hide();
+        var orderId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        orderSbtBtn.on('click', function () {
+            var json = frmAddOrder.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            jsonData["contractId"] = orderId;
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'POST',
+                url: postOrderURL,
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-error-bag").hide();
+                    $("#add-order-msgs").show();
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+                    // msgHTML = '<div class="alert alert-primary" role="alert">'
+                    // + JSON.stringify(data)
+                    // + '</div>';
+                    $('#add-order-msgs').html(msgHTML);
+
+                    $('#frmAddOrder').trigger("reset");
+                    $("#frmAddOrder .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    if (status == 500) {
+                        $('#add-order-errors').html(errors.error.message);
+                    } else {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-order-msgs").hide();
+                        // $('#add-order-msgs').html(msgHTML);
+                        $('#add-order-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+                    }
+
+                    $("#add-error-bag").show();
+                }
+            });
+
+        });
     };
 
     return {
         //main function to initiate the theme
         init: function (Args) {
             args = Args;
+            // Handle Book EndPoints
             handlePostBook();
             handleEditBook();
             handleDeleteBook();
 
+            // Handle Order EndPoints
+            handlePostOrder();
         }
     }
 

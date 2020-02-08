@@ -26,6 +26,7 @@
     <script src="{{ asset ("vendor/bootstrap/js/dist/tab.js") }}"></script>
     <script src="{{ asset ("vendor/bootstrap/js/dist/tooltip.js") }}"></script>
     <script src="{{ asset ("vendor/bootstrap/js/dist/popover.js") }}"></script>
+    <script src="{{ asset ("vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js") }}"></script>
     <script src="{{ asset ("js/dataTables.bootstrap4.min.js") }}"></script>
     <script src="{{ asset ("js/demo_customizer5739.js") }}"></script>
     <script src="{{ asset ("js/main5739.js") }}"></script>
