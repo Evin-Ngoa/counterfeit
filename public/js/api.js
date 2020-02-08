@@ -20,6 +20,7 @@ var Api = function () {
 
     var orderSbtBtn = $('#frmAddOrder .btn-add-order');
     var orderEditSbtBtn = $('#frmEditOrder .btn-edit-order');
+    var orderDeleteSbtBtn = $('#frmDeleteOrder .btn-delete-order');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -370,6 +371,66 @@ var Api = function () {
 
     };
 
+    /**
+     * Posting the Delete Form
+     */
+    var handleDeleteOrder = function () {
+        console.log("handleDeleteOrder");
+        $("#delete-error-bag").hide();
+     
+        orderDeleteSbtBtn.on('click', function () {
+
+            var json = frmEditBook.serializeArray();
+            var OrderId = $('#order_id').val();
+
+            console.log("Delete Order ID => " + OrderId);
+
+            var postDeleteOrderURL = domainUrl + '/OrderContract/' + OrderId;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'DELETE',
+                url: postDeleteOrderURL,
+                dataType: 'json',
+                success: function (data) {
+                    $("#delete-error-bag").hide();
+
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#frmDeleteOrder .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#delete-order-msgs").hide();
+                      
+                        $('#delete-order-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#delete-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+                        
+                    } else {
+                        $('#delete-order-errors').html(errors.error.message);
+                    }
+                    $("#delete-error-bag").show();
+
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
     return {
         //main function to initiate the theme
         init: function (Args) {
@@ -382,6 +443,7 @@ var Api = function () {
             // Handle Order EndPoints
             handlePostOrder();
             handleEditOrder();
+            handleDeleteOrder();
         }
     }
 

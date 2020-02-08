@@ -93,6 +93,26 @@ function editOrderForm(order_id) {
     });
 }
 
+/**
+ * Delete Order
+ * @param {*} order_id 
+ */
+function deleteOrderForm(order_id) {
+    $.ajax({
+        type: 'GET',
+        url: '/order/' + order_id,
+        success: function(data) {
+            var OrderID = data.order.contractId;
+            $("#frmDeleteOrder #delete-title").html("Delete Order (" + OrderID + ")?");
+            $("#frmDeleteOrder input[name=order_id]").val(OrderID);
+            $('#deleteOrderModal').modal('show');
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+}
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
