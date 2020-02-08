@@ -12,9 +12,10 @@ var Api = function () {
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
+    var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
 
     var handlePostBook = function () {
-        console.log("Post");
+        console.log("handlePostBook");
         $("#add-error-bag").hide();
         var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
@@ -162,12 +163,55 @@ var Api = function () {
                     });
                     $("#edit-error-bag").show();
                 }
-            });
+            }); // END Ajax
 
-        });
+        }); // END OnClick Submit
 
     };
 
+    /**
+     * Posting the Delete Form
+     */
+    var handleDeleteBook = function () {  
+        console.log("handleDeleteBook");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        bookDeleteSbtBtn.on('click', function () {
+
+            var json = frmEditBook.serializeArray();
+            var BookId = $('#book_id').val();
+
+            console.log("Delete Book ID => " + BookId);
+
+            var postEditBookURL = domainUrl +'/Book/'+ BookId;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'DELETE',
+                url: postEditBookURL,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#frmDeleteBook .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(data));
+        
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+            
+    };
 
     return {
         //main function to initiate the theme
@@ -175,6 +219,7 @@ var Api = function () {
             args = Args;
             handlePostBook();
             handleEditBook();
+            handleDeleteBook();
 
         }
     }

@@ -5,14 +5,18 @@
 */
 function editBookForm(book_id) {
     console.log("Clicked Edit form");
+    var qrCodeEdit = '';
     $.ajax({
         type: 'GET',
         url: '/book/' + book_id + '/edit',
         success: function (data) {
-            console.log("Data Edit +>" + data.book.id);
+            var BookID = data.book.id;
+            console.log("Data Edit +>" + BookID);
+
             $("#edit-error-bag").hide();
-            $("#id").val(data.book.id);
-            // $("#frmEditBook input[name=id]").val(data.book.id);
+            $("#id").val(BookID);
+            $("#IdBook").text(BookID);
+            // $("#frmEditBook input[name=id]").val(BookID);
             $("#frmEditBook input[name=type]").val(data.book.type);
             $("#frmEditBook input[name=author]").val(data.book.author);
             $("#frmEditBook input[name=edition]").val(data.book.edition);
@@ -21,6 +25,9 @@ function editBookForm(book_id) {
             $("#frmEditBook input[name=sold]").val(data.book.sold);
             $("#frmEditBook input[name=price]").val(data.book.price);
             // $("#frmEditBook input[name=$class]").val(data.book.$class);
+
+            $("#qrEditBox").html(qrCodeEdit);
+
             $('#editBookModal').modal('show');
         },
         error: function (data) {
@@ -38,8 +45,9 @@ function deleteBookForm(book_id) {
         type: 'GET',
         url: '/book/' + book_id,
         success: function(data) {
-            $("#frmDeleteBook #delete-title").html("Delete Book (" + data.book.id + ")?");
-            $("#frmDeleteBook input[name=book_id]").val(data.book.id);
+            var BookID = data.book.id;
+            $("#frmDeleteBook #delete-title").html("Delete Book (" + BookID + ")?");
+            $("#frmDeleteBook input[name=book_id]").val(BookID);
             $('#deleteBookModal').modal('show');
         },
         error: function(data) {
@@ -47,3 +55,4 @@ function deleteBookForm(book_id) {
         }
     });
 }
+
