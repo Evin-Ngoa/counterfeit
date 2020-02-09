@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <div class="element-wrapper">
                 <div class="element-actions">
-                    <a class="btn btn-primary btn-sm" href="{{ route('shipment.create') }}">
+                    <a class="btn btn-primary btn-sm"  data-target="#addShipmentModal" data-toggle="modal" href="#">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Shipment</span>
                     </a>
                 </div>
@@ -61,6 +61,7 @@
                     </div>
                 </div>
 
+                @include('partials.shipments.shipments_add')
 
 
                 <!-- <div class="element-box" style="display: none;">

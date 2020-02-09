@@ -113,6 +113,22 @@ function deleteOrderForm(order_id) {
     });
 }
 
+/**
+ * Show create shipment modal from order
+ * @param {*} contractId 
+ * @param {*} quantity 
+ */
+function createShipmentOrder(contractId, quantity){
+
+    console.log("Clicked createShipmentOrder");
+
+    $("#contract").val(contractId);
+    $("#unitCount").val(quantity);
+
+    $("#add-error-bag").hide();
+    $('#addShipmentModal').modal('show');
+}
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
