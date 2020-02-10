@@ -9,14 +9,14 @@
             <div class="element-wrapper">
                 <div class="element-actions">
                     <!-- <a class="btn btn-primary btn-sm" data-target="#onboardingWideFormModal" data-toggle="modal" href="{{ route('book.create') }}"> -->
-                    <a class="btn btn-primary btn-sm" data-target="#addBookModal" data-toggle="modal" href="#">
+                    <a class="btn btn-success btn-sm" data-target="#addBookModal" data-toggle="modal" href="#">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Book</span>
                     </a>
                     <!-- <a class="btn btn-primary btn-sm" href="#">
                         <i class="os-icon os-icon-grid-10"></i><span>Make Payment</span>
                     </a> -->
                 </div>
-                <h6 class="element-header">My Books Records</h6>
+                <h6 class="element-header">My Book Records</h6>
                 <div class="element-box-tp">
                     <div class="table-responsive">
                         @if(!empty($books))

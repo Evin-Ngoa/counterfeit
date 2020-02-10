@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div aria-hidden="true" class="onboarding-modal modal fade animated" id="addBookModal" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-md modal-centered" role="document">
+    <div class="modal-dialog modal-lg modal-centered" role="document">
         <div class="modal-content text-center">
             <form id="book_form">
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Close</span><span class="os-icon os-icon-close"></span></button>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="description">Book Description</label>
+                                    <label for="description">Additional Description</label>
                                     <!-- <input name="description" id="description" class="form-control" placeholder="Any addition..." value=""> -->
                                     <textarea name="description" id="description" class="form-control" value="Testing Book Description">Any addition...</textarea>
                                 </div>

@@ -26,10 +26,10 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Shipment ID</th>
+                                    <th class="text-center">Order</th>
                                     <th class="text-center">Shipment Status</th>
                                     <th class="text-center">Item Status</th>
                                     <th class="text-center">Unit Count</th>
-                                    <th class="text-center">contract</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -38,12 +38,12 @@
                                 @foreach($shipments as $shipment)
                                 <tr>
                                     <td><div class="smaller text-center">{{ $shipment->shipmentId }}</div></td>
+                                    <td><div class="smaller text-center">{{ $shipment->contract->contractId }}</div></td>
                                     <td>
                                         <div class="smaller text-center">{{ $shipment->shipmentStatus }}</div>
                                     </td>
                                     <td><div class="smaller text-center">{{ $shipment->itemStatus }}</div></td>
                                     <td><div class="smaller text-center">{{ $shipment->unitCount }}</div></td>
-                                    <td><div class="smaller text-center">{{ $shipment->contract->contractId }}</div></td>
                                     <td class="row-actions">
                                         <a href="{{ route('verify.book', $shipment->shipmentId) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
