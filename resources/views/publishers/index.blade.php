@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <div class="element-wrapper">
                 <div class="element-actions">
-                    <a class="btn btn-primary btn-sm" href="{{ route('publisher.create') }}">
+                    <a class="btn btn-primary btn-sm" href="#" data-target="#addPublisherModal" data-toggle="modal">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Publisher</span>
                     </a>
                 </div>
@@ -25,7 +25,7 @@
                         <table class="table table-padded">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <!-- <th></th> -->
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Member ID</th>
@@ -37,9 +37,9 @@
                                 @if(!empty($publishers))
                                     @foreach($publishers as $publisher)
                                     <tr>
-                                        <td class="text-center">
+                                        <!-- <td class="text-center">
                                             <input class="form-control" type="checkbox">
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <div class="user-with-avatar">
                                                 <img alt="" src="img/avatar1.jpg">
@@ -58,7 +58,7 @@
                                             </span>
                                         </td>
                                         <td class="row-actions">
-                                            <a href="{{ route('verify.book', $publisher->memberId) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                            <a href="#" data-placement="top" data-toggle="tooltip" title="Placeholder"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -76,7 +76,8 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
+<!-- Modal -->
+@include('partials.publishers.publishers_add')
 @endsection

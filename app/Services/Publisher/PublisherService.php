@@ -17,5 +17,12 @@ class PublisherService
     public function getAllPublishers(){
         return $this->utils->all('/Publisher');
     }
+
+    /**
+     * Get Single Publisher 
+     */
+    public function getSinglePublisher($id){
+        return $this->utils->findById('/Publisher/', $id);
+    }
    
 }
