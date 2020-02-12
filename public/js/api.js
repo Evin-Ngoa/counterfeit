@@ -6,6 +6,7 @@ var Api = function () {
     var postShipmentURL = domainUrl + '/Shipment';
     var updateOrderStatusURL = domainUrl + '/updateOrderStatus';
     var shipOwnershipURL = domainUrl + '/ShipOwnership';
+    var postPublisherURL = domainUrl + '/Publisher';
 
     // var postBookURL = '/book';
 
@@ -23,6 +24,9 @@ var Api = function () {
     // Shipment
     var frmAddShipment = $("#frmAddShipment");
 
+    // Publisher
+    var frmAddPublisher = $("#frmAddPublisher");
+
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
@@ -33,6 +37,8 @@ var Api = function () {
     var orderDeleteSbtBtn = $('#frmDeleteOrder .btn-delete-order');
 
     var shipmentSbtBtn = $('#frmAddShipment .btn-add-shipment');
+
+    var publisherSbtBtn = $('#frmAddPublisher .btn-add-publisher');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -603,6 +609,97 @@ var Api = function () {
         });
     };
 
+    var handlePostPublisher = function () {
+        console.log("===================");
+        console.log("handlePostPublisher");
+        $("#add-error-bag").hide();
+        var memberId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        publisherSbtBtn.on('click', function () {
+            var json = frmAddPublisher.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            jsonData["memberId"] = memberId;
+
+            // Append Address
+            jsonData["address"] =  {
+                "$class": "org.evin.book.track.Address",
+                "county": $("#county").val(),
+                "country": $("#country").val(),
+                "street": $("#street").val(),
+                "zip": "string"
+              };
+
+            // Delete unwanted keys
+            delete jsonData['county'];
+            delete jsonData['country'];
+            delete jsonData['street'];
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'POST',
+                url: postPublisherURL,
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-error-bag").hide();
+                    $("#add-publisher-msgs").show();
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+                    // msgHTML = '<div class="alert alert-primary" role="alert">'
+                    // + JSON.stringify(data)
+                    // + '</div>';
+                    $('#add-publisher-msgs').html(msgHTML);
+
+                    $('#frmAddPublisher').trigger("reset");
+                    $("#frmAddPublisher .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-publisher-msgs").hide();
+
+                        $('#add-publisher-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-publisher-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        $('#add-publisher-errors').html(errors.error.message);
+                    }
+                    $("#add-error-bag").show();
+                }
+            });
+
+        });
+    };
+
     return {
         //main function to initiate the theme
         init: function (Args) {
@@ -619,6 +716,9 @@ var Api = function () {
 
             // Handle Shipment
             handlePostShipment();
+
+            // Handle Publisher
+            handlePostPublisher();
         }
     }
 

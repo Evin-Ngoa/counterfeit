@@ -121,12 +121,50 @@ function deleteOrderForm(order_id) {
 function createShipmentOrder(contractId, quantity){
 
     console.log("Clicked createShipmentOrder");
+    $(".alert-danger").hide();
 
     $("#contract").val(contractId);
     $("#unitCount").val(quantity);
 
-    $("#add-error-bag").hide();
+
     $('#addShipmentModal').modal('show');
+}
+
+/**
+ * Show edit form with the values
+* @param {*} publisher_id 
+*/
+function editPublisherForm(publisher_id) {
+    console.log("Clicked editPublisherForm form");
+    var qrCodeEdit = '';
+    $.ajax({
+        type: 'GET',
+        url: '/publisher/' + publisher_id + '/edit',
+        success: function (data) {
+            var PublisherID = data.publisher.memberId;
+            console.log("Data Edit +>" + PublisherID);
+
+            $("#edit-error-bag").hide();
+            $("#id").val(PublisherID);
+            $("#IdBook").text(PublisherID);
+            // $("#frmEditBook input[name=id]").val(BookID);
+            $("#frmEditBook input[name=email]").val(data.publisher.email);
+            $("#frmEditBook input[name=name]").val(data.publisher.name);
+            $("#frmEditBook input[name=country]").val(data.publisher.address.country);
+            $("#frmEditBook textarea[name=county]").val(data.publisher.address.county);
+            $("#frmEditBook input[name=street]").val(data.publisher.address.street);
+            // $("#frmEditBook input[name=sold]").val(data.publisher.sold);
+            // $("#frmEditBook input[name=price]").val(data.publisher.price);
+            // $("#frmEditBook input[name=$class]").val(data.publisher.$class);
+
+            $("#qrEditBox").html(qrCodeEdit);
+
+            $('#editBookModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
 }
 
 $('.datetime').datetimepicker({
