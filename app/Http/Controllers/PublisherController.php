@@ -66,7 +66,12 @@ class PublisherController extends Controller
      */
     public function edit($id)
     {
-        //
+        $publisher = $this->publisherservice->getSinglePublisher($id);
+
+        return response()->json([
+            'error' => false,
+            'publisher'  => $publisher,
+        ], 200);
     }
 
     /**
