@@ -45,7 +45,7 @@
                                     <td><div class="smaller text-center">{{ $shipment->itemStatus }}</div></td>
                                     <td><div class="smaller text-center">{{ $shipment->unitCount }}</div></td>
                                     <td class="row-actions">
-                                        <a href="{{ route('verify.book', $shipment->shipmentId) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                        <a href="#" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
