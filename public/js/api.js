@@ -629,13 +629,13 @@ var Api = function () {
             jsonData["memberId"] = memberId;
 
             // Append Address
-            jsonData["address"] =  {
+            jsonData["address"] = {
                 "$class": "org.evin.book.track.Address",
                 "county": $("#county").val(),
                 "country": $("#country").val(),
                 "street": $("#street").val(),
                 "zip": "string"
-              };
+            };
 
             // Delete unwanted keys
             delete jsonData['county'];
@@ -677,7 +677,7 @@ var Api = function () {
                     window.location.reload();
                 },
                 error: function (data) {
-                
+
                     var errors = $.parseJSON(data.responseText);
                     var status = errors.error.statusCode;
                     // if (status == 500) {
@@ -712,7 +712,7 @@ var Api = function () {
 
         publisherEditSbtBtn.on('click', function () {
             var json = frmEditPublisher.serializeArray();
-            var memberId = $('#memberId').val();
+            var memberId = $('#email').val();
             console.log('Publisher memberId Edit ==> ' + memberId);
             var jsonData = {};
 
@@ -721,7 +721,21 @@ var Api = function () {
             });
 
             // Append ID
-            // jsonData["id"] = bookId;
+            // jsonData["memberId"] = memberId;
+
+            // Append Address
+            jsonData["address"] = {
+                "$class": "org.evin.book.track.Address",
+                "county": $("#county").val(),
+                "country": $("#country").val(),
+                "street": $("#street").val(),
+                "zip": "string"
+            };
+
+            // Delete unwanted keys
+            delete jsonData['county'];
+            delete jsonData['country'];
+            delete jsonData['street'];
 
             console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
             console.log('Publisher ID Edit jsonData ==> ' + jsonData.id);
