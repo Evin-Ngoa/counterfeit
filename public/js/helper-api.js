@@ -165,6 +165,26 @@ function editPublisherForm(publisher_id) {
     });
 }
 
+/**
+ * Get data
+ * @param {*} publisherEmail 
+ */
+function deletePublisherForm(publisherEmail) {
+    $.ajax({
+        type: 'GET',
+        url: '/publisher/' + publisherEmail,
+        success: function(data) {
+            var PublisherID = data.publisher.email;
+            $("#frmDeleteBook #delete-title").html("Delete Book (" + PublisherID + ")?");
+            $("#frmDeleteBook input[name=email]").val(PublisherID);
+            $('#deletePublisherModal').modal('show');
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+}
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',

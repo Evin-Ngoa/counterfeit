@@ -27,6 +27,7 @@ var Api = function () {
     // Publisher
     var frmAddPublisher = $("#frmAddPublisher");
     var frmEditPublisher = $("#frmEditPublisher");
+    var frmDeletePublisher = $("#frmDeletePublisher");
 
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
@@ -41,6 +42,7 @@ var Api = function () {
 
     var publisherSbtBtn = $('#frmAddPublisher .btn-add-publisher');
     var publisherEditSbtBtn = $('#frmEditPublisher .btn-edit-publisher');
+    var publisherDeleteSbtBtn = $('#frmDeletePublisher .btn-delete-publisher');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -798,6 +800,49 @@ var Api = function () {
 
     };
 
+        /**
+     * Posting the Delete Publisher Form
+     */
+    var handleDeletePublisher = function () {
+        console.log("handleDeletePublisher");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        publisherDeleteSbtBtn.on('click', function () {
+
+            var publisherEmail = $('#email').val();
+
+            console.log("Delete Publisher ID => " + publisherEmail);
+
+            var postDeletePublisherURL = domainUrl + '/Publisher/' + publisherEmail;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'DELETE',
+                url: postDeletePublisherURL,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#frmDeletePublisher .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(data));
+
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
 
     return {
         //main function to initiate the theme
@@ -819,6 +864,7 @@ var Api = function () {
             // Handle Publisher
             handlePostPublisher();
             handleEditPublisher();
+            handleDeletePublisher();
         }
     }
 
