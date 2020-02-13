@@ -58,7 +58,7 @@
                                             </span>
                                         </td>
                                         <td class="row-actions">
-                                            <a href="#" data-placement="top" data-toggle="tooltip" title="Placeholder"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                            <a href="#" data-placement="top" data-toggle="tooltip" title="Placeholder"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editPublisherForm('{{ $publisher->email }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -80,4 +80,5 @@
 
 <!-- Modal -->
 @include('partials.publishers.publishers_add')
+@include('partials.publishers.publishers_edit')
 @endsection

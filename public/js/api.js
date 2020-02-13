@@ -26,6 +26,7 @@ var Api = function () {
 
     // Publisher
     var frmAddPublisher = $("#frmAddPublisher");
+    var frmEditPublisher = $("#frmEditPublisher");
 
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
@@ -39,6 +40,7 @@ var Api = function () {
     var shipmentSbtBtn = $('#frmAddShipment .btn-add-shipment');
 
     var publisherSbtBtn = $('#frmAddPublisher .btn-add-publisher');
+    var publisherEditSbtBtn = $('#frmEditPublisher .btn-edit-publisher');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -700,6 +702,89 @@ var Api = function () {
         });
     };
 
+    /**
+     * Posting the Publisher edit form
+     */
+    var handleEditPublisher = function () {
+        console.log("handleEditPublisher");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        publisherEditSbtBtn.on('click', function () {
+            var json = frmEditPublisher.serializeArray();
+            var memberId = $('#memberId').val();
+            console.log('Publisher memberId Edit ==> ' + memberId);
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            // jsonData["id"] = bookId;
+
+            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+            console.log('Publisher ID Edit jsonData ==> ' + jsonData.id);
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
+            var postEditBookURL = domainUrl + '/Publisher/' + memberId;
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'PUT',
+                url: postEditBookURL,
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#edit-error-bag").hide();
+                    $("#edit-publisher-msgs").show();
+
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+
+                    $('#edit-publisher-msgs').html(msgHTML);
+
+                    $('#frmEditPublisher').trigger("reset");
+                    $("#frmEditPublisher .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#edit-publisher-msgs").hide();
+
+                        $('#edit-publisher-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#edit-publisher-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        $('#edit-publisher-errors').html(errors.error.message);
+                    }
+                    $("#edit-error-bag").show();
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
+
     return {
         //main function to initiate the theme
         init: function (Args) {
@@ -719,6 +804,7 @@ var Api = function () {
 
             // Handle Publisher
             handlePostPublisher();
+            handleEditPublisher();
         }
     }
 

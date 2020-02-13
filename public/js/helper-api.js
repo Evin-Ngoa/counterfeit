@@ -147,19 +147,17 @@ function editPublisherForm(publisher_id) {
             $("#edit-error-bag").hide();
             $("#id").val(PublisherID);
             $("#IdBook").text(PublisherID);
-            // $("#frmEditBook input[name=id]").val(BookID);
-            $("#frmEditBook input[name=email]").val(data.publisher.email);
-            $("#frmEditBook input[name=name]").val(data.publisher.name);
-            $("#frmEditBook input[name=country]").val(data.publisher.address.country);
-            $("#frmEditBook textarea[name=county]").val(data.publisher.address.county);
-            $("#frmEditBook input[name=street]").val(data.publisher.address.street);
-            // $("#frmEditBook input[name=sold]").val(data.publisher.sold);
-            // $("#frmEditBook input[name=price]").val(data.publisher.price);
-            // $("#frmEditBook input[name=$class]").val(data.publisher.$class);
 
-            $("#qrEditBox").html(qrCodeEdit);
+            $("#frmEditPublisher input[name=memberId]").val(data.publisher.memberId);
+            $("#frmEditPublisher input[name=email]").val(data.publisher.email);
+            $("#frmEditPublisher input[name=name]").val(data.publisher.name);
+            $("#frmEditPublisher input[name=telephone]").val(data.publisher.telephone);
+            $("#frmEditPublisher input[name=accountBalance]").val(data.publisher.accountBalance);
+            $("#frmEditPublisher input[name=country]").val(data.publisher.address.country);
+            $("#frmEditPublisher input[name=county]").val(data.publisher.address.county);
+            $("#frmEditPublisher input[name=street]").val(data.publisher.address.street);
 
-            $('#editBookModal').modal('show');
+            $('#editPublisherModal').modal('show');
         },
         error: function (data) {
             console.log(data);
