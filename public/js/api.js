@@ -613,7 +613,7 @@ var Api = function () {
         console.log("===================");
         console.log("handlePostPublisher");
         $("#add-error-bag").hide();
-        var memberId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        var memberId = "P-" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
         publisherSbtBtn.on('click', function () {
             var json = frmAddPublisher.serializeArray();
