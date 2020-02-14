@@ -52,6 +52,7 @@ var Api = function () {
 
     var distributorSbtBtn = $('#frmAddDistributor .btn-add-distributor');
     var distributorEditSbtBtn = $('#frmEditDistributor .btn-edit-distributor');
+    var distributorDeleteSbtBtn = $('#frmDeleteDistributor .btn-delete-distributor');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -809,7 +810,7 @@ var Api = function () {
 
     };
 
-        /**
+    /**
      * Posting the Delete Publisher Form
      */
     var handleDeletePublisher = function () {
@@ -946,7 +947,6 @@ var Api = function () {
         });
     };
 
-    
     /**
      * Posting the Distributor edit form
      */
@@ -1043,6 +1043,49 @@ var Api = function () {
 
     };
 
+        /**
+     * Posting the Delete Publisher Form
+     */
+    var handleDeleteDistributor = function () {
+        console.log("handleDeleteDistributor");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        distributorDeleteSbtBtn.on('click', function () {
+
+            var distributorEmail = $('#email').val();
+
+            console.log("Delete Distributor ID => " + distributorEmail);
+
+            var postDeleteDistributorURL = domainUrl + '/Distributor/' + distributorEmail;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'DELETE',
+                url: postDeleteDistributorURL,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#frmDeleteDistributor .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(data));
+
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
 
     return {
         //main function to initiate the theme
@@ -1069,7 +1112,7 @@ var Api = function () {
              // Handle Distributor
              handlePostDistributor();
              handleEditDistributor();
-            //  handleDeleteDistributor();
+             handleDeleteDistributor();
         }
     }
 

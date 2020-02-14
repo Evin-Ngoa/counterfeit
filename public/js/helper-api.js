@@ -220,6 +220,26 @@ function editDistributorForm(distributor_id) {
     });
 }
 
+/**
+ * Get data
+ * @param {*} distributorEmail 
+ */
+function deleteDistributorForm(distributorEmail) {
+    $.ajax({
+        type: 'GET',
+        url: '/distributor/' + distributorEmail,
+        success: function(data) {
+            var DistributorID = data.distributor.email;
+            $("#frmDeleteBook #delete-title").html("Delete Book (" + DistributorID + ")?");
+            $("#frmDeleteBook input[name=email]").val(DistributorID);
+            $('#deleteDistributorModal').modal('show');
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+}
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
