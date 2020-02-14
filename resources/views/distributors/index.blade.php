@@ -58,7 +58,7 @@
                                             </span>
                                         </td>
                                         <td class="row-actions">
-                                            <a href="{{ route('verify.book', $distributor->memberId) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                            <a href="#" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editDistributorForm('{{ $distributor->email }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -81,4 +81,5 @@
 </div>
 <!-- Modal -->
 @include('partials.distributors.distributors_add')
+@include('partials.distributors.distributors_edit')
 @endsection

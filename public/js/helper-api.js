@@ -185,6 +185,41 @@ function deletePublisherForm(publisherEmail) {
     });
 }
 
+/**
+ * Show edit form with the values
+* @param {*} distributor_id 
+*/
+function editDistributorForm(distributor_id) {
+    console.log("Clicked editPublisherForm form");
+    var qrCodeEdit = '';
+    $.ajax({
+        type: 'GET',
+        url: '/distributor/' + distributor_id + '/edit',
+        success: function (data) {
+            var PublisherID = data.distributor.memberId;
+            console.log("Data Edit +>" + PublisherID);
+
+            $("#edit-error-bag").hide();
+            $("#id").val(PublisherID);
+            $("#IdBook").text(PublisherID);
+
+            $("#frmEditDistributor input[name=memberId]").val(data.distributor.memberId);
+            $("#frmEditDistributor input[name=email]").val(data.distributor.email);
+            $("#frmEditDistributor input[name=name]").val(data.distributor.name);
+            $("#frmEditDistributor input[name=telephone]").val(data.distributor.telephone);
+            $("#frmEditDistributor input[name=accountBalance]").val(data.distributor.accountBalance);
+            $("#frmEditDistributor input[name=country]").val(data.distributor.address.country);
+            $("#frmEditDistributor input[name=county]").val(data.distributor.address.county);
+            $("#frmEditDistributor input[name=street]").val(data.distributor.address.street);
+
+            $('#editDistributorModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',

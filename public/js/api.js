@@ -51,6 +51,7 @@ var Api = function () {
     var publisherDeleteSbtBtn = $('#frmDeletePublisher .btn-delete-publisher');
 
     var distributorSbtBtn = $('#frmAddDistributor .btn-add-distributor');
+    var distributorEditSbtBtn = $('#frmEditDistributor .btn-edit-distributor');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -752,7 +753,7 @@ var Api = function () {
 
             // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
             console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
-            var postEditBookURL = domainUrl + '/Publisher/' + memberId;
+            var postEditPublisherURL = domainUrl + '/Publisher/' + memberId;
 
             var msgHTML = "";
 
@@ -764,7 +765,7 @@ var Api = function () {
             // data:  JSON.stringify(jsonData),
             $.ajax({
                 type: 'PUT',
-                url: postEditBookURL,
+                url: postEditPublisherURL,
                 data: jsonData,
                 dataType: 'json',
                 success: function (data) {
@@ -945,6 +946,103 @@ var Api = function () {
         });
     };
 
+    
+    /**
+     * Posting the Distributor edit form
+     */
+    var handleEditDistributor = function () {
+        console.log("handleEditDistributor");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        distributorEditSbtBtn.on('click', function () {
+            var json = frmEditDistributor.serializeArray();
+            var memberId = $('#email').val();
+            console.log('Distributor memberId Edit ==> ' + memberId);
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            // jsonData["memberId"] = memberId;
+
+            // Append Address
+            jsonData["address"] = {
+                "$class": "org.evin.book.track.Address",
+                "county": $("#county").val(),
+                "country": $("#country").val(),
+                "street": $("#street").val(),
+                "zip": "string"
+            };
+
+            // Delete unwanted keys
+            delete jsonData['county'];
+            delete jsonData['country'];
+            delete jsonData['street'];
+
+            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+            console.log('Distributor ID Edit jsonData ==> ' + jsonData.id);
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
+            var postEditDistributorURL = domainUrl + '/Distributor/' + memberId;
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'PUT',
+                url: postEditDistributorURL,
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#edit-error-bag").hide();
+                    $("#edit-distributor-msgs").show();
+
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+
+                    $('#edit-distributor-msgs').html(msgHTML);
+
+                    $('#frmEditDistributor').trigger("reset");
+                    $("#frmEditDistributor .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#edit-distributor-msgs").hide();
+
+                        $('#edit-distributor-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#edit-distributor-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        $('#edit-distributor-errors').html(errors.error.message);
+                    }
+                    $("#edit-error-bag").show();
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
 
     return {
         //main function to initiate the theme
@@ -970,7 +1068,7 @@ var Api = function () {
 
              // Handle Distributor
              handlePostDistributor();
-            //  handleEditDistributor();
+             handleEditDistributor();
             //  handleDeleteDistributor();
         }
     }
