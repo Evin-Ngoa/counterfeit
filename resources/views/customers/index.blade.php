@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <div class="element-wrapper">
                 <div class="element-actions">
-                    <a class="btn btn-primary btn-sm" href="{{ route('customer.create') }}">
+                    <a class="btn btn-primary btn-sm" href="#" data-target="#addCustomerModal" data-toggle="modal">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Customer</span>
                     </a>
                 </div>
@@ -25,7 +25,7 @@
                         <table class="table table-padded">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <!-- <th></th> -->
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Member ID</th>
@@ -37,9 +37,9 @@
                                 @if(!empty($customers))
                                 @foreach($customers as $customer)
                                 <tr>
-                                    <td class="text-center">
+                                    <!-- <td class="text-center">
                                         <input class="form-control" type="checkbox">
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <div class="user-with-avatar">
                                             <img alt="" src="img/avatar1.jpg">
@@ -76,7 +76,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
+@include('partials.customers.customers_add')
 @endsection
