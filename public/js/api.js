@@ -7,6 +7,7 @@ var Api = function () {
     var updateOrderStatusURL = domainUrl + '/updateOrderStatus';
     var shipOwnershipURL = domainUrl + '/ShipOwnership';
     var postPublisherURL = domainUrl + '/Publisher';
+    var postDistributorURL = domainUrl + '/Distributor';
 
     // var postBookURL = '/book';
 
@@ -29,6 +30,11 @@ var Api = function () {
     var frmEditPublisher = $("#frmEditPublisher");
     var frmDeletePublisher = $("#frmDeletePublisher");
 
+    // Distributor
+    var frmAddDistributor = $("#frmAddDistributor");
+    var frmEditDistributor = $("#frmEditDistributor");
+    var frmDeleteDistributor = $("#frmDeleteDistributor");
+
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
@@ -43,6 +49,8 @@ var Api = function () {
     var publisherSbtBtn = $('#frmAddPublisher .btn-add-publisher');
     var publisherEditSbtBtn = $('#frmEditPublisher .btn-edit-publisher');
     var publisherDeleteSbtBtn = $('#frmDeletePublisher .btn-delete-publisher');
+
+    var distributorSbtBtn = $('#frmAddDistributor .btn-add-distributor');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -843,6 +851,100 @@ var Api = function () {
 
     };
 
+    /**
+     * Posting the Distributor add form
+     */
+    var handlePostDistributor = function () {
+        console.log("===================");
+        console.log("handlePostDistributor");
+        $("#add-error-bag").hide();
+        var memberId = "D-" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        distributorSbtBtn.on('click', function () {
+            var json = frmAddDistributor.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            jsonData["memberId"] = memberId;
+
+            // Append Address
+            jsonData["address"] = {
+                "$class": "org.evin.book.track.Address",
+                "county": $("#county").val(),
+                "country": $("#country").val(),
+                "street": $("#street").val(),
+                "zip": "string"
+            };
+
+            // Delete unwanted keys
+            delete jsonData['county'];
+            delete jsonData['country'];
+            delete jsonData['street'];
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'POST',
+                url: postDistributorURL,
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-error-bag").hide();
+                    $("#add-distributor-msgs").show();
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+                    // msgHTML = '<div class="alert alert-primary" role="alert">'
+                    // + JSON.stringify(data)
+                    // + '</div>';
+                    $('#add-distributor-msgs').html(msgHTML);
+
+                    $('#frmAddDistributor').trigger("reset");
+                    $("#frmAddDistributor .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-distributor-msgs").hide();
+
+                        $('#add-distributor-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-distributor-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        $('#add-distributor-errors').html(errors.error.message);
+                    }
+                    $("#add-error-bag").show();
+                }
+            });
+
+        });
+    };
+
 
     return {
         //main function to initiate the theme
@@ -865,6 +967,11 @@ var Api = function () {
             handlePostPublisher();
             handleEditPublisher();
             handleDeletePublisher();
+
+             // Handle Distributor
+             handlePostDistributor();
+            //  handleEditDistributor();
+            //  handleDeleteDistributor();
         }
     }
 

@@ -56,7 +56,12 @@ class DistributorController extends Controller
      */
     public function show($id)
     {
-        //
+        $distributor = $this->distributorservice->getSingleDistributor($id);
+
+        return response()->json([
+            'error' => false,
+            'distributor'  => $distributor,
+        ], 200);
     }
 
     /**
@@ -67,7 +72,12 @@ class DistributorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $distributor = $this->distributorservice->getSingleDistributor($id);
+
+        return response()->json([
+            'error' => false,
+            'distributor'  => $distributor,
+        ], 200);
     }
 
     /**

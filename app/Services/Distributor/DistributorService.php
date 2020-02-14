@@ -17,5 +17,12 @@ class DistributorService
     public function getAllDistributors(){
         return $this->utils->all('/Distributor');
     }
+
+    /**
+     * Get Single Distributor 
+     */
+    public function getSingleDistributor($id){
+        return $this->utils->findById('/Distributor/', $id);
+    }
    
 }
