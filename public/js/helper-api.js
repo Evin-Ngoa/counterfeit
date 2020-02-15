@@ -227,9 +227,9 @@ function editDistributorForm(distributor_id) {
 function deleteDistributorForm(distributorEmail) {
     $.ajax({
         type: 'GET',
-        url: '/distributor/' + distributorEmail,
+        url: '/customer/' + customerEmail,
         success: function(data) {
-            var DistributorID = data.distributor.email;
+            var DistributorID = data.customer.email;
             $("#frmDeleteBook #delete-title").html("Delete Book (" + DistributorID + ")?");
             $("#frmDeleteBook input[name=email]").val(DistributorID);
             $('#deleteDistributorModal').modal('show');
@@ -238,7 +238,28 @@ function deleteDistributorForm(distributorEmail) {
             console.log(data);
         }
     });
-}
+} 
+
+/**
+ * //deleteCustomerForm
+ * Get data
+ * @param {*} customerEmail 
+ */
+function deleteCustomerForm(customerEmail) {
+    $.ajax({
+        type: 'GET',
+        url: '/customer/' + customerEmail,
+        success: function(data) {
+            var CustomerID = data.customer.email;
+            $("#frmDeleteCustomer #delete-title").html("Delete Book (" + CustomerID + ")?");
+            $("#frmDeleteCustomer input[name=email]").val(CustomerID);
+            $('#deleteCustomerModal').modal('show');
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+} //deleteCustomerForm
 
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',

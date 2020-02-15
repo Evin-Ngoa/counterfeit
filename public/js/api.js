@@ -59,6 +59,7 @@ var Api = function () {
     var distributorDeleteSbtBtn = $('#frmDeleteDistributor .btn-delete-distributor');
 
     var customerSbtBtn = $('#frmAddCustomer .btn-add-customer');
+    var customerDeleteSbtBtn = $('#frmDeleteCustomer .btn-delete-customer');
 
     var handlePostBook = function () {
         console.log("handlePostBook");
@@ -1186,6 +1187,49 @@ var Api = function () {
         });
     };
 
+     /**
+     * Posting the Delete Customer Form
+     */
+    var handleDeleteCustomer = function () {
+        console.log("handleDeleteCustomer");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        customerDeleteSbtBtn.on('click', function () {
+
+            var customerEmail = $('#email').val();
+
+            console.log("Delete Customer ID => " + customerEmail);
+
+            var postDeleteCustomerURL = domainUrl + '/Customer/' + customerEmail;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'DELETE',
+                url: postDeleteCustomerURL,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#frmDeleteCustomer .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(data));
+
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
 
     return {
         //main function to initiate the theme
@@ -1216,6 +1260,7 @@ var Api = function () {
 
             // Handle Customer
             handlePostCustomer();
+            handleDeleteCustomer();
         }
     }
 

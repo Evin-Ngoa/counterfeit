@@ -56,7 +56,12 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = $this->customerservice->getSingleCustomer($id);
+
+        return response()->json([
+            'error' => false,
+            'customer'  => $customer,
+        ], 200);
     }
 
     /**
@@ -67,7 +72,12 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = $this->customerservice->getSingleCustomer($id);
+
+        return response()->json([
+            'error' => false,
+            'customer'  => $customer,
+        ], 200);
     }
 
     /**

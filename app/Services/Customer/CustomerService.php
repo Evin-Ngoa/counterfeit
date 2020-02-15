@@ -17,5 +17,12 @@ class CustomerService
     public function getAllCustomers(){
         return $this->utils->all('/Customer');
     }
+
+    /**
+     * Get Single Customer 
+     */
+    public function getSingleCustomer($id){
+        return $this->utils->findById('/Customer/', $id);
+    }
    
 }
