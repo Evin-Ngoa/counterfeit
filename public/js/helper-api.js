@@ -241,6 +241,41 @@ function deleteDistributorForm(distributorEmail) {
 } 
 
 /**
+ * Show edit form with the values
+* @param {*} customer_id 
+*/
+function editCustomerForm(customer_id) {
+    console.log("Clicked editCustomerForm form");
+    var qrCodeEdit = '';
+    $.ajax({
+        type: 'GET',
+        url: '/customer/' + customer_id + '/edit',
+        success: function (data) {
+            var PublisherID = data.customer.memberId;
+            console.log("Data Edit +>" + PublisherID);
+
+            $("#edit-error-bag").hide();
+            $("#id").val(PublisherID);
+            $("#IdBook").text(PublisherID);
+
+            $("#frmEditCustomer input[name=memberId]").val(data.customer.memberId);
+            $("#frmEditCustomer input[name=email]").val(data.customer.email);
+            $("#frmEditCustomer input[name=name]").val(data.customer.name);
+            $("#frmEditCustomer input[name=telephone]").val(data.customer.telephone);
+            $("#frmEditCustomer input[name=accountBalance]").val(data.customer.accountBalance);
+            $("#frmEditCustomer input[name=country]").val(data.customer.address.country);
+            $("#frmEditCustomer input[name=county]").val(data.customer.address.county);
+            $("#frmEditCustomer input[name=street]").val(data.customer.address.street);
+
+            $('#editCustomerModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+/**
  * //deleteCustomerForm
  * Get data
  * @param {*} customerEmail 

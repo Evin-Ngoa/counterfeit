@@ -38,6 +38,7 @@ var Api = function () {
 
     // Customer
     var frmAddCustomer = $("#frmAddCustomer");
+    var frmEditCustomer = $("#frmEditCustomer");
 
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
@@ -59,6 +60,7 @@ var Api = function () {
     var distributorDeleteSbtBtn = $('#frmDeleteDistributor .btn-delete-distributor');
 
     var customerSbtBtn = $('#frmAddCustomer .btn-add-customer');
+    var customerEditSbtBtn = $('#frmEditCustomer .btn-edit-customer');
     var customerDeleteSbtBtn = $('#frmDeleteCustomer .btn-delete-customer');
 
     var handlePostBook = function () {
@@ -1187,6 +1189,102 @@ var Api = function () {
         });
     };
 
+       /**
+     * Posting the Customer edit form
+     */
+    var handleEditCustomer = function () {
+        console.log("handleEditCustomer");
+        $("#edit-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        customerEditSbtBtn.on('click', function () {
+            var json = frmEditCustomer.serializeArray();
+            var memberId = $('#email').val();
+            console.log('Customer memberId Edit ==> ' + memberId);
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            // jsonData["memberId"] = memberId;
+
+            // Append Address
+            jsonData["address"] = {
+                "$class": "org.evin.book.track.Address",
+                "county": $("#county").val(),
+                "country": $("#country").val(),
+                "street": $("#street").val(),
+                "zip": "string"
+            };
+
+            // Delete unwanted keys
+            delete jsonData['county'];
+            delete jsonData['country'];
+            delete jsonData['street'];
+
+            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+            console.log('Customer ID Edit jsonData ==> ' + jsonData.id);
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
+            var postEditCustomerURL = domainUrl + '/Customer/' + memberId;
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'PUT',
+                url: postEditCustomerURL,
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#edit-error-bag").hide();
+                    $("#edit-customer-msgs").show();
+
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+
+                    $('#edit-customer-msgs').html(msgHTML);
+
+                    $('#frmEditCustomer').trigger("reset");
+                    $("#frmEditCustomer .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#edit-customer-msgs").hide();
+
+                        $('#edit-customer-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#edit-customer-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        $('#edit-customer-errors').html(errors.error.message);
+                    }
+                    $("#edit-error-bag").show();
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
      /**
      * Posting the Delete Customer Form
      */
@@ -1260,6 +1358,7 @@ var Api = function () {
 
             // Handle Customer
             handlePostCustomer();
+            handleEditCustomer();
             handleDeleteCustomer();
         }
     }
