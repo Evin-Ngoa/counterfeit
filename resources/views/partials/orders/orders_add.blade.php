@@ -47,16 +47,26 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="unitPrice">Agreed Unit Price</label>
                                     <input name="unitPrice" id="unitPrice" class="form-control" placeholder="Enter Price" value="300">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="quantity">Quantity</label>
                                     <input name="quantity" id="quantity" class="form-control" placeholder="Enter Price..." value="120">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="orderStatus">Order Status</label>
+                                    <select class="form-control" name="orderStatus" id="orderStatus">
+                                        <option value="">-Select-</option>
+                                        <option value="WAITING" selected>WAITING</option>
+                                        <option value="PROCESSED">PROCESSED</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">

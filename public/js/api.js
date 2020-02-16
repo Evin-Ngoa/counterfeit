@@ -316,22 +316,24 @@ var Api = function () {
                     window.location.reload();
                 },
                 error: function (data) {
+                    
                     var errors = $.parseJSON(data.responseText);
                     var status = errors.error.statusCode;
-                    if (status == 500) {
-                        $('#add-order-errors').html(errors.error.message);
-                    } else {
+                    // if (status == 500) {
+                    if (status == 422) {
                         console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                         console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
                         $("#add-order-msgs").hide();
-                        // $('#add-order-msgs').html(msgHTML);
+
                         $('#add-order-errors').html('');
                         $.each(errors.error.details.messages, function (key, value) {
                             console.log('Error Value' + value + ' Key ' + key);
                             $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
                         });
-                    }
 
+                    } else {
+                        $('#add-order-errors').html(errors.error.message);
+                    }
                     $("#add-error-bag").show();
                 }
             });
@@ -394,18 +396,20 @@ var Api = function () {
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
                     var status = errors.error.statusCode;
-                    if (status == 500) {
-                        $('#add-order-errors').html(errors.error.message);
-                    } else {
+                    // if (status == 500) {
+                    if (status == 422) {
                         console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                         console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                        $("#add-order-msgs").hide();
-                        // $('#add-order-msgs').html(msgHTML);
-                        $('#add-order-errors').html('');
+                        $("#edit-order-msgs").hide();
+
+                        $('#edit-order-errors').html('');
                         $.each(errors.error.details.messages, function (key, value) {
                             console.log('Error Value' + value + ' Key ' + key);
-                            $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                            $('#edit-order-errors').append('<li>' + key + ' ' + value + '</li>');
                         });
+
+                    } else {
+                        $('#edit-order-errors').html(errors.error.message);
                     }
                     $("#edit-error-bag").show();
                 }
