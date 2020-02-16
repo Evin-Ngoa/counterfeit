@@ -971,7 +971,7 @@ var Api = function () {
 
         distributorEditSbtBtn.on('click', function () {
             var json = frmEditDistributor.serializeArray();
-            var memberId = $('#email').val();
+            // var memberId = $('#email').val();
             console.log('Distributor memberId Edit ==> ' + memberId);
             var jsonData = {};
 
@@ -995,6 +995,7 @@ var Api = function () {
             delete jsonData['county'];
             delete jsonData['country'];
             delete jsonData['street'];
+            var memberId = jsonData['email'];
 
             console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
             console.log('Distributor ID Edit jsonData ==> ' + jsonData.id);
