@@ -51,8 +51,8 @@
                                         <div class="smaller text-center">{{ $distributor->email }}</div>
                                     </td>
                                     <td><span class="smaller text-center">{{ $distributor->memberId }}</span></td>
-                                    @if(isset( $publisher->telephone ))
-                                    <td><span class="smaller text-center">{{ $publisher->telephone }}</span></td>
+                                    @if(isset( $distributor->telephone ))
+                                    <td><span class="smaller text-center">{{ $distributor->telephone }}</span></td>
                                     @else
                                     <td><span class="smaller text-center">Unknown</span></td>
                                     @endif
