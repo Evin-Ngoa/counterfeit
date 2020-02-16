@@ -737,7 +737,7 @@ var Api = function () {
 
         publisherEditSbtBtn.on('click', function () {
             var json = frmEditPublisher.serializeArray();
-            var memberId = $('#email').val();
+            // var memberId = $('#email').val();
             console.log('Publisher memberId Edit ==> ' + memberId);
             var jsonData = {};
 
@@ -761,6 +761,7 @@ var Api = function () {
             delete jsonData['county'];
             delete jsonData['country'];
             delete jsonData['street'];
+            var memberId = jsonData['email'];
 
             console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
             console.log('Publisher ID Edit jsonData ==> ' + jsonData.id);
