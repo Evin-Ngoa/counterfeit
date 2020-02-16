@@ -29,6 +29,7 @@
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Member ID</th>
+                                    <th class="text-center">Tel</th>
                                     <th class="text-center">Address</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -50,6 +51,11 @@
                                         <div class="smaller text-center">{{ $customer->email }}</div>
                                     </td>
                                     <td><span class="smaller text-center">{{ $customer->memberId }}</span></td>
+                                    @if(isset( $publisher->telephone ))
+                                    <td><span class="smaller text-center">{{ $publisher->telephone }}</span></td>
+                                    @else
+                                    <td><span class="smaller text-center">Unknown</span></td>
+                                    @endif
                                     <td>
                                         <span class="smaller text-center">
                                             {{ $customer->address->country }},
