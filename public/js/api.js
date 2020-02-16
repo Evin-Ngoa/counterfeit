@@ -1205,7 +1205,7 @@ var Api = function () {
 
         customerEditSbtBtn.on('click', function () {
             var json = frmEditCustomer.serializeArray();
-            var memberId = $('#email').val();
+            // var memberId = $('#email').val();
             console.log('Customer memberId Edit ==> ' + memberId);
             var jsonData = {};
 
@@ -1229,6 +1229,8 @@ var Api = function () {
             delete jsonData['county'];
             delete jsonData['country'];
             delete jsonData['street'];
+
+            var memberId = jsonData['email'];
 
             console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
             console.log('Customer ID Edit jsonData ==> ' + jsonData.id);
