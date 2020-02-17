@@ -18,6 +18,11 @@
                                 <div class="alert alert-warning">
                                     Are you sure you want to delete this customer?
                                 </div>
+                                <div id="delete-customer-msgs"></div>
+                                <div class="alert alert-danger" id="delete-error-bag">
+                                    <ul id="delete-customer-errors">
+                                    </ul>
+                                </div>
                                 <p class="text-danger">
                                     <small>
                                         This action cannot be undone.
