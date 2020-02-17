@@ -602,7 +602,12 @@ var Api = function () {
                 url: postShipmentURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmAddShipment .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    
                     console.log("Success +++> " + JSON.stringify(data));
 
                     var orderstatusData = {
@@ -629,6 +634,7 @@ var Api = function () {
                                 data: orderstatusData,
                                 dataType: 'json',
                                 success: function (data) {
+                                    $("#loader").hide();
                                     console.log("Success updateOrderStatusURL");
 
                                     $("#add-error-bag").hide();
@@ -662,6 +668,8 @@ var Api = function () {
                                     } else {
                                         $('#add-shipment-errors').html(errors.error.message);
                                     }
+                                    $("#loader").hide();
+                                    $('#addShipmentModal').modal('show');
                                     $("#add-error-bag").show();
                                 }
                             }); // end ajax 3
@@ -669,6 +677,23 @@ var Api = function () {
                         },
                         error: function (data) {
                             console.log(data);
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-shipment-msgs").hide();
+
+                                $('#add-shipment-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                $('#add-shipment-errors').html(errors.error.message);
+                            }
+                            $("#loader").hide();
+                            $('#addShipmentModal').modal('show');
+                            $("#add-error-bag").show();
                         }
                     }); // end Ajax 2
                 },
