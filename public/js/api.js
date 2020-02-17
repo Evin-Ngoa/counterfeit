@@ -951,15 +951,36 @@ var Api = function () {
                 type: 'DELETE',
                 url: postDeletePublisherURL,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmDeletePublisher .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#frmDeletePublisher .close").click();
                     window.location.reload();
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
-                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
-                    console.log("Errors >>!!!!!!! " + JSON.stringify(data));
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#delete-publisher-msgs").hide();
+
+                        $('#delete-publisher-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#delete-publisher-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+                    } else {
+                        $('#delete-publisher-errors').html(errors.error.message);
+                    }
+                    $("#loader").hide();
+                    $('#deletePublisherModal').modal('show');
+                    $("#delete-error-bag").show();
 
                 }
             }); // END Ajax
