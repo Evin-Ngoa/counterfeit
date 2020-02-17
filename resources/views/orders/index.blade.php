@@ -29,7 +29,7 @@
                                     <th class="text-center">Buyer</th>
                                     <th class="text-center">Seller</th>
                                     <th class="text-center">Arrival Date</th>
-                                    <th class="text-center">Pay On Arrival</th>
+                                    <!-- <th class="text-center">Pay On Arrival</th> -->
                                     <th class="text-center">Agreed Unit Price</th>
                                     <th class="text-center">Quantity</th>
                                     <th class="text-center">Destination Address</th>
@@ -60,12 +60,15 @@
                                         @endif
                                     </td>
                                     <td><span class="smaller text-center">{{ Carbon\Carbon::parse($order->arrivalDateTime)->isoFormat('MMM Do YYYY dddd')  }}</span></td>
+                                    
+                                    <td><span class="smaller text-center">
+                                        {{ $order->unitPrice }} <br>
                                     @if($order->payOnArrival)
-                                    <td><span class="smaller text-center">Yes</span></td>
+                                        Pay On Arrival:<br>( Yes )
                                     @else
-                                    <td><span class="smaller text-center">No</span></td>
+                                        Pay On Arrival:<br>( No )
                                     @endif
-                                    <td><span class="smaller text-center">{{ $order->unitPrice }}</span></td>
+                                    </span></td>
                                     <td><span class="smaller text-center">{{ $order->quantity }}</span></td>
                                     <td><span class="smaller text-center">{{ $order->destinationAddress }}</span></td>
                                     @if($order->orderStatus == 'WAITING')
