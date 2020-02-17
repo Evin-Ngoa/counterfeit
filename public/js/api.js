@@ -500,7 +500,12 @@ var Api = function () {
                 type: 'DELETE',
                 url: postDeleteOrderURL,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmDeleteOrder .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     $("#delete-error-bag").hide();
 
                     console.log("Success +++> " + JSON.stringify(data));
@@ -525,6 +530,8 @@ var Api = function () {
                     } else {
                         $('#delete-order-errors').html(errors.error.message);
                     }
+                    $("#loader").hide();
+                    $('#deleteOrderModal').modal('show');
                     $("#delete-error-bag").show();
 
                 }
