@@ -1050,12 +1050,11 @@ var Api = function () {
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#add-error-bag").hide();
                     $("#add-distributor-msgs").show();
+
                     msgHTML = '<div class="alert alert-primary" role="alert">'
                         + 'Record Added Successfuly '
                         + '</div>';
-                    // msgHTML = '<div class="alert alert-primary" role="alert">'
-                    // + JSON.stringify(data)
-                    // + '</div>';
+
                     $('#add-distributor-msgs').html(msgHTML);
 
                     $('#frmAddDistributor').trigger("reset");
@@ -1146,7 +1145,12 @@ var Api = function () {
                 url: postEditDistributorURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmEditDistributor .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#edit-error-bag").hide();
                     $("#edit-distributor-msgs").show();
@@ -1179,6 +1183,8 @@ var Api = function () {
                     } else {
                         $('#edit-distributor-errors').html(errors.error.message);
                     }
+                    $("#loader").hide();
+                    $('#editDistributorModal').modal('show');
                     $("#edit-error-bag").show();
                 }
             }); // END Ajax
