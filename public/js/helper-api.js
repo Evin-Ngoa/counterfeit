@@ -227,11 +227,11 @@ function editDistributorForm(distributor_id) {
 function deleteDistributorForm(distributorEmail) {
     $.ajax({
         type: 'GET',
-        url: '/customer/' + customerEmail,
+        url: '/distributor/' + distributorEmail,
         success: function(data) {
-            var DistributorID = data.customer.email;
-            $("#frmDeleteBook #delete-title").html("Delete Book (" + DistributorID + ")?");
-            $("#frmDeleteBook input[name=email]").val(DistributorID);
+            var DistributorID = data.distributor.email;
+            $("#frmDeleteDistributor #delete-title").html("Delete Distributor (" + DistributorID + ")?");
+            $("#frmDeleteDistributor input[name=email]").val(DistributorID);
             $('#deleteDistributorModal').modal('show');
         },
         error: function(data) {
