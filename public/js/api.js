@@ -279,9 +279,13 @@ var Api = function () {
                 type: 'DELETE',
                 url: postEditBookURL,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmDeleteBook .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
                     console.log("Success +++> " + JSON.stringify(data));
-                    $("#frmDeleteBook .close").click();
+                    $("#loader").hide();
                     window.location.reload();
                 },
                 error: function (data) {
