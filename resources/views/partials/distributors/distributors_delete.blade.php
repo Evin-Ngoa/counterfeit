@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <input id="email" name="email" type="hidden" value="">
+                    <input id="distributor_email_del" name="email" type="hidden" value="">
                     <button class="btn btn-secondary" data-dismiss="modal" type="button"> Close</button>
                     <button class="btn btn-primary btn-delete-distributor" id="btn-delete" type="button" value="Delete Distributor">Delete Distributor</button>
                 </div>

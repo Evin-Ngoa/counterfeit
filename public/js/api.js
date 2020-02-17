@@ -1203,7 +1203,7 @@ var Api = function () {
 
         distributorDeleteSbtBtn.on('click', function () {
 
-            var distributorEmail = $('#email').val();
+            var distributorEmail = $('#distributor_email_del').val();
 
             console.log("Delete Distributor ID => " + distributorEmail);
 
