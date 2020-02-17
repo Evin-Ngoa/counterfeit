@@ -1415,7 +1415,12 @@ var Api = function () {
                 url: postEditCustomerURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmEditCustomer .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#edit-error-bag").hide();
                     $("#edit-customer-msgs").show();
@@ -1448,6 +1453,9 @@ var Api = function () {
                     } else {
                         $('#edit-customer-errors').html(errors.error.message);
                     }
+
+                    $("#loader").hide();
+                    $('#editCustomerModal').modal('show');
                     $("#edit-error-bag").show();
                 }
             }); // END Ajax
