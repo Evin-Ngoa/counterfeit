@@ -181,6 +181,19 @@
             </div>
         </div>
         <div class="layout-w">
+            <!-- Loader -->
+            <div class="bookshelf_wrapper" id="loader">
+                <ul class="books_list">
+                    <li class="book_item first"></li>
+                    <li class="book_item second"></li>
+                    <li class="book_item third"></li>
+                    <li class="book_item fourth"></li>
+                    <li class="book_item fifth"></li>
+                    <li class="book_item sixth"></li>
+                </ul>
+                <div class="shelf"></div>
+            </div>
+
             <!-- Mobile Sidebar -->
             @include('layout.mob-sidebar')
 
