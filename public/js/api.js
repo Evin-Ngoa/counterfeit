@@ -772,7 +772,12 @@ var Api = function () {
                 url: postPublisherURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmAddPublisher .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#add-error-bag").hide();
                     $("#add-publisher-msgs").show();
@@ -807,6 +812,8 @@ var Api = function () {
                     } else {
                         $('#add-publisher-errors').html(errors.error.message);
                     }
+                    $("#loader").hide();
+                    $('#addPublisherModal').modal('show');
                     $("#add-error-bag").show();
                 }
             });
