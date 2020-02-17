@@ -336,16 +336,20 @@ var Api = function () {
                 url: postOrderURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmAddOrder .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#add-error-bag").hide();
                     $("#add-order-msgs").show();
                     msgHTML = '<div class="alert alert-primary" role="alert">'
                         + 'Record Added Successfuly '
                         + '</div>';
-                    // msgHTML = '<div class="alert alert-primary" role="alert">'
-                    // + JSON.stringify(data)
-                    // + '</div>';
+
                     $('#add-order-msgs').html(msgHTML);
 
                     $('#frmAddOrder').trigger("reset");
@@ -371,6 +375,11 @@ var Api = function () {
                     } else {
                         $('#add-order-errors').html(errors.error.message);
                     }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addOrderModal').modal('show');
                     $("#add-error-bag").show();
                 }
             });
