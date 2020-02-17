@@ -424,7 +424,13 @@ var Api = function () {
                 url: putEditOrderURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmEditOrder .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
+
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#edit-error-bag").hide();
                     $("#edit-order-msgs").show();
@@ -457,6 +463,9 @@ var Api = function () {
                     } else {
                         $('#edit-order-errors').html(errors.error.message);
                     }
+                    
+                    $("#loader").hide();
+                    $('#editOrderModal').modal('show');
                     $("#edit-error-bag").show();
                 }
             }); // END Ajax
