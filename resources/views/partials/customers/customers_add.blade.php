@@ -7,15 +7,13 @@
                 <div class="onboarding-side-by-side">
                     <div class="onboarding-media" style="display: none;"><img alt="" src="img/bigicon5.png" width="200px"></div>
                     <div class="onboarding-content with-gradient">
-                        <h4 class="onboarding-title"><i class="os-icon os-icon-documents-17"></i> Add Customer</h4>
+                        <h4 class="onboarding-title"><i class="os-icon os-icon-ui-93"></i> Add Customer</h4>
                         <div class="onboarding-text" style="display: none;">In this example you can see a form where you can request some additional information from the customer when they land on the app page.</div>
 
                         <div class="row">
                             <div class="col-sm-12">
                                 <div id="add-customer-msgs"></div>
-                                <!-- <div class="alert alert-info" role="alert">
-                                    <strong>Sorry! </strong>No Records at the moment.
-                                </div> -->
+                                
                                 <div class="alert alert-danger" id="add-error-bag">
                                     <ul id="add-customer-errors">
                                     </ul>

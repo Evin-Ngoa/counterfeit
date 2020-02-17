@@ -1309,7 +1309,12 @@ var Api = function () {
                 url: postCustomerURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmAddCustomer .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#add-error-bag").hide();
                     $("#add-customer-msgs").show();
@@ -1344,6 +1349,8 @@ var Api = function () {
                     } else {
                         $('#add-customer-errors').html(errors.error.message);
                     }
+                    $("#loader").hide();
+                    $('#addCustomerModal').modal('show');
                     $("#add-error-bag").show();
                 }
             });
