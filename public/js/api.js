@@ -1206,15 +1206,36 @@ var Api = function () {
                 type: 'DELETE',
                 url: postDeleteDistributorURL,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmDeleteDistributor .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#frmDeleteDistributor .close").click();
                     window.location.reload();
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
-                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
-                    console.log("Errors >>!!!!!!! " + JSON.stringify(data));
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#delete-distributor-msgs").hide();
+
+                        $('#delete-distributor-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#delete-distributor-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+                    } else {
+                        $('#delete-distributor-errors').html(errors.error.message);
+                    }
+                    $("#loader").hide();
+                    $('#deleteDistributorModal').modal('show');
+                    $("#delete-error-bag").show();
 
                 }
             }); // END Ajax

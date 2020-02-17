@@ -18,6 +18,11 @@
                                 <div class="alert alert-warning">
                                     Are you sure you want to delete this distributor?
                                 </div>
+                                <div id="delete-distributor-msgs"></div>
+                                <div class="alert alert-danger" id="delete-error-bag">
+                                    <ul id="delete-distributor-errors">
+                                    </ul>
+                                </div>
                                 <p class="text-danger">
                                     <small>
                                         This action cannot be undone.
