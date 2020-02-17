@@ -1041,7 +1041,12 @@ var Api = function () {
                 url: postDistributorURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmAddDistributor .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#add-error-bag").hide();
                     $("#add-distributor-msgs").show();
@@ -1076,6 +1081,8 @@ var Api = function () {
                     } else {
                         $('#add-distributor-errors').html(errors.error.message);
                     }
+                    $("#loader").hide();
+                    $('#addDistributorModal').modal('show');
                     $("#add-error-bag").show();
                 }
             });
