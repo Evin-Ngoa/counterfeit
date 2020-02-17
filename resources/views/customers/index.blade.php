@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <div class="element-wrapper">
                 <div class="element-actions">
-                    <a class="btn btn-primary btn-sm" href="#" data-target="#addCustomerModal" data-toggle="modal">
+                    <a class="btn btn-success btn-sm" href="#" data-target="#addCustomerModal" data-toggle="modal">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Customer</span>
                     </a>
                 </div>
