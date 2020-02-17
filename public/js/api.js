@@ -935,7 +935,7 @@ var Api = function () {
 
         publisherDeleteSbtBtn.on('click', function () {
 
-            var publisherEmail = $('#email').val();
+            var publisherEmail = $('#publisher_email_del').val();
 
             console.log("Delete Publisher ID => " + publisherEmail);
 
