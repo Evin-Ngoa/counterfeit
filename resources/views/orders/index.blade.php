@@ -80,7 +80,7 @@
 
                                     @if($order->orderStatus == 'WAITING')
                                     <td class="row-actions">
-                                        <a href="#" onclick="event.preventDefault();createShipmentOrder('{{ $order->contractId }}', '{{ $order->quantity }}');" data-placement="top" data-toggle="tooltip" title="Create Shipment"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editOrderForm('{{ $order->contractId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" onclick="event.preventDefault();deleteOrderForm('{{ $order->contractId }}');" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                        <a href="#" onclick="event.preventDefault();createShipmentOrder('{{ $order->contractId }}', '{{ $order->quantity }}');" data-placement="top" data-toggle="tooltip" title="Create Shipment"><i class="os-icon os-icon-globe"></i></a><a onclick="event.preventDefault();editOrderForm('{{ $order->contractId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" onclick="event.preventDefault();deleteOrderForm('{{ $order->contractId }}');" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
                                     @endif
 
