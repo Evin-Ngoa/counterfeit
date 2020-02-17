@@ -877,7 +877,12 @@ var Api = function () {
                 url: postEditPublisherURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmEditPublisher .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#edit-error-bag").hide();
                     $("#edit-publisher-msgs").show();
@@ -910,6 +915,8 @@ var Api = function () {
                     } else {
                         $('#edit-publisher-errors').html(errors.error.message);
                     }
+                    $("#loader").hide();
+                    $('#editPublisherModal').modal('show');
                     $("#edit-error-bag").show();
                 }
             }); // END Ajax
