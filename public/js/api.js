@@ -97,7 +97,7 @@ var Api = function () {
                 url: postBookURL,
                 data: jsonData,
                 dataType: 'json',
-                beforeSend: function() {//calls the loader id tag
+                beforeSend: function () {//calls the loader id tag
                     $("#book_form .close").click();
                     $("#loader").show();
                 },
@@ -199,7 +199,13 @@ var Api = function () {
                 url: postEditBookURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmEditBook .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    // hide loader
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#edit-error-bag").hide();
                     $("#edit-book-msgs").show();
@@ -216,16 +222,28 @@ var Api = function () {
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
 
-                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
-                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.messages));
-                    $("#edit-book-msgs").hide();
-                    // $('#edit-book-msgs').html(msgHTML);
-                    $('#edit-book-errors').html('');
-                    $.each(errors.messages, function (key, value) {
-                        console.log('Error Value' + value);
-                        $('#edit-book-errors').append('<li>' + value + '</li>');
-                    });
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#edit-book-msgs").hide();
+
+                        $('#edit-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#edit-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#edit-book-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#editBookModal').modal('show');
                     $("#edit-error-bag").show();
                 }
             }); // END Ajax
@@ -331,7 +349,7 @@ var Api = function () {
                     window.location.reload();
                 },
                 error: function (data) {
-                    
+
                     var errors = $.parseJSON(data.responseText);
                     var status = errors.error.statusCode;
                     // if (status == 500) {
@@ -1210,9 +1228,9 @@ var Api = function () {
         });
     };
 
-       /**
-     * Posting the Customer edit form
-     */
+    /**
+  * Posting the Customer edit form
+  */
     var handleEditCustomer = function () {
         console.log("handleEditCustomer");
         $("#edit-error-bag").hide();
@@ -1308,9 +1326,9 @@ var Api = function () {
 
     };
 
-     /**
-     * Posting the Delete Customer Form
-     */
+    /**
+    * Posting the Delete Customer Form
+    */
     var handleDeleteCustomer = function () {
         console.log("handleDeleteCustomer");
         $("#edit-error-bag").hide();
