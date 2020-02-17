@@ -15,7 +15,8 @@
         <div class="col-sm-12">
             <div class="element-wrapper">
                 <div class="element-actions">
-                    <a class="btn btn-primary btn-sm"  data-target="#addShipmentModal" data-toggle="modal" href="#">
+                    <!-- <a class="btn btn-primary btn-sm"  data-target="#addShipmentModal" data-toggle="modal" href="#"> -->
+                    <a class="btn btn-primary btn-sm"  data-target="#shipment403MsgModal" data-toggle="modal" href="#">
                         <i class="os-icon os-icon-ui-22"></i><span>Add Shipment</span>
                     </a>
                 </div>
@@ -62,6 +63,7 @@
                 </div>
 
                 @include('partials.shipments.shipments_add')
+                @include('partials.shipments.shipments_403')
 
 
                 <!-- <div class="element-box" style="display: none;">
