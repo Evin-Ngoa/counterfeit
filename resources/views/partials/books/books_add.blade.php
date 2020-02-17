@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="">Select Publisher</label>
+                                    <label for="">Select Publisher - Initial Owner</label>
                                     <select class="form-control" name="initialOwner" id="initialOwner">
                                         <option value="">-Select-</option>
                                         <option value="longhorn publishers" selected>Longhorn</option>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="type">Subject</label>
+                                    <label for="type">Subject / Type</label>
                                     <input name="type" id="type" class="form-control" placeholder="Book Subject...Eg Kiswahili" value="Geography">
                                     <!-- <input type="hidden" name="id" id="id" class="form-control" value="BOOK_006"> -->
                                     <input type="hidden" name="sold" id="sold" class="form-control" value="false">

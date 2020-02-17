@@ -97,16 +97,19 @@ var Api = function () {
                 url: postBookURL,
                 data: jsonData,
                 dataType: 'json',
+                beforeSend: function() {//calls the loader id tag
+                    $("#book_form .close").click();
+                    $("#loader").show();
+                },
                 success: function (data) {
+                    $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#add-error-bag").hide();
                     $("#add-book-msgs").show();
                     msgHTML = '<div class="alert alert-primary" role="alert">'
                         + 'Record Added Successfuly '
                         + '</div>';
-                    // msgHTML = '<div class="alert alert-primary" role="alert">'
-                    // + JSON.stringify(data)
-                    // + '</div>';
+
                     $('#add-book-msgs').html(msgHTML);
 
                     $('#book_form').trigger("reset");
@@ -115,16 +118,28 @@ var Api = function () {
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
 
-                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error));
-                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.messages));
-                    $("#add-book-msgs").hide();
-                    // $('#add-book-msgs').html(msgHTML);
-                    $('#add-book-errors').html('');
-                    $.each(errors.messages, function (key, value) {
-                        console.log('Error Value' + value);
-                        $('#add-book-errors').append('<li>' + value + '</li>');
-                    });
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-book-msgs").hide();
+
+                        $('#add-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-book-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addBookModal').modal('show');
                     $("#add-error-bag").show();
                 }
             });
