@@ -46,9 +46,19 @@
                                 <tr>
                                     <td><span class="smaller text-center">{{ $order->contractId }}</span></td>
                                     <td>
+                                        @if(isset($order->buyer->name))
                                         <div class="smaller text-center">{{ $order->buyer->name }}</div>
+                                        @else
+                                        <div class="smaller text-center">Unknown</div>
+                                        @endif
                                     </td>
-                                    <td><span class="smaller text-center">{{ $order->seller->name }}</span></td>
+                                    <td>
+                                        @if(isset($order->seller->name))
+                                        <div class="smaller text-center">{{ $order->seller->name }}</div>
+                                        @else
+                                        <div class="smaller text-center">Unknown</div>
+                                        @endif
+                                    </td>
                                     <td><span class="smaller text-center">{{ Carbon\Carbon::parse($order->arrivalDateTime)->isoFormat('MMM Do YYYY dddd')  }}</span></td>
                                     @if($order->payOnArrival)
                                     <td><span class="smaller text-center">Yes</span></td>
@@ -90,69 +100,6 @@
 
 
 
-                <!-- <div class="element-box" style="display: none;">
-                    <div class="table-responsive">
-                        <table id="dataTable1" width="100%" class="table table-striped table-lightfont">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Buyer</th>
-                                    <th>Seller</th>
-                                    <th>Arrival Date</th>
-                                    <th>Pay On Arrival</th>
-                                    <th>Agreed Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Destination Address</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Buyer</th>
-                                    <th>Seller</th>
-                                    <th>Arrival Date</th>
-                                    <th>Pay On Arrival</th>
-                                    <th>Agreed Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Destination Address</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                            @if(!empty($orders))
-                                @foreach($orders as $order)
-                                <tr>
-                                    <td>{{ $order->contractId }}</td>
-                                    <td>
-                                        <div class="smaller text-center">{{ $order->buyer->name }}</div>
-                                    </td>
-                                    <td>{{ $order->seller->name }}</td>
-                                    <td>{{ Carbon\Carbon::parse($order->arrivalDateTime)->isoFormat('MMM Do YYYY dddd')  }}</td>
-                                    @if($order->payOnArrival)
-                                    <td>Yes</td>
-                                    @else
-                                    <td>No</td>
-                                    @endif
-                                    <td>{{ $order->unitPrice }}</td>
-                                    <td>{{ $order->quantity }}</td>
-                                    <td>{{ $order->destinationAddress }}</td>
-                                    <td class="row-actions">
-                                        <a href="{{ route('verify.book', $order->contractId) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <div class="alert alert-info" role="alert">
-                                        <strong>Sorry! </strong>No Records at the moment.
-                                    </div>
-                                </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
