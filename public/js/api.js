@@ -1459,7 +1459,7 @@ var Api = function () {
 
         customerDeleteSbtBtn.on('click', function () {
 
-            var customerEmail = $('#email').val();
+            var customerEmail = $('#customer_email_del').val();
 
             console.log("Delete Customer ID => " + customerEmail);
 

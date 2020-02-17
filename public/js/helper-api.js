@@ -286,7 +286,7 @@ function deleteCustomerForm(customerEmail) {
         url: '/customer/' + customerEmail,
         success: function(data) {
             var CustomerID = data.customer.email;
-            $("#frmDeleteCustomer #delete-title").html("Delete Book (" + CustomerID + ")?");
+            $("#frmDeleteCustomer #delete-title").html("Delete Customer (" + CustomerID + ")?");
             $("#frmDeleteCustomer input[name=email]").val(CustomerID);
             $('#deleteCustomerModal').modal('show');
         },
