@@ -296,6 +296,22 @@ function deleteCustomerForm(customerEmail) {
     });
 } //deleteCustomerForm
 
+/**
+ * Register Book Form
+ * @param {*} shipmentId 
+ */
+function openAddBookForm(shipmentId) {
+
+    $('#registerBookShipmentModal').modal('show');
+
+    console.log("shipmentId --> " + shipmentId);
+
+    $('#shipment_id').html('<i class="os-icon os-icon-globe"></i> Add Book To Shipment ' + shipmentId);
+
+    $('#shipment').val('resource:org.evin.book.track.Shipment#' + shipmentId);
+
+} 
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
