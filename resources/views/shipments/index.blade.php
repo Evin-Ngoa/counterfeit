@@ -30,7 +30,8 @@
                                     <th class="text-center">Order</th>
                                     <th class="text-center">Shipment Status</th>
                                     <th class="text-center">Item Status</th>
-                                    <th class="text-center">Unit Count</th>
+                                    <th class="text-center">Units Ordered</th>
+                                    <th class="text-center">Units Added</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -45,8 +46,10 @@
                                     </td>
                                     <td><div class="smaller text-center">{{ $shipment->itemStatus }}</div></td>
                                     <td><div class="smaller text-center">{{ $shipment->unitCount }}</div></td>
+                                    <td><div class="smaller text-center">{{ count($shipment->bookRegisterShipment) }}</div></td>
                                     <td class="row-actions">
-                                        <a href="#" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                        <a href="#" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a><a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a>
+                                        <a href="#" onclick="event.preventDefault();openAddBookForm('{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Register Book To This Shipment"><i class="os-icon os-icon-book"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -62,6 +65,7 @@
                     </div>
                 </div>
 
+                @include('partials.shipments.add_books')
                 @include('partials.shipments.shipments_add')
                 @include('partials.shipments.shipments_403')
 
