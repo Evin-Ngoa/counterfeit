@@ -8,7 +8,10 @@
                     <div class="onboarding-media" style="display: none;"><img alt="" src="img/bigicon5.png" width="200px"></div>
                     <div class="onboarding-content with-gradient">
                         <h4 class="onboarding-title"><div id="shipment_id"></div></h4>
-                        <div class="onboarding-text" style="display: none;">In this example you can see a form where you can request some additional information from the customer when they land on the app page.</div>
+                        <div class="onboarding-text" >
+                            You can only <code class="highlighter-rouge">select distributor [<i class="os-icon os-icon-truck"></i>]</code> once the books are registered in the shipment.
+                            The <code class="highlighter-rouge">UNITS ORDERED</code> <strong> MUST BE</strong> equal to <code class="highlighter-rouge">UNITS ADDED</code> Column   
+                        </div>
 
                         <div class="row">
                             <div class="col-sm-12">
