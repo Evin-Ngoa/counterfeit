@@ -2,6 +2,7 @@ var Api = function () {
     // http://localhost:3000/api/Book
     var domainUrl = 'http://localhost:3000/api';
     var postBookURL = domainUrl + '/Book';
+    var postBookShipmentURL = domainUrl + '/BookRegisterShipment';
     var postOrderURL = domainUrl + '/OrderContract';
     var postShipmentURL = domainUrl + '/Shipment';
     var updateOrderStatusURL = domainUrl + '/updateOrderStatus';
@@ -17,6 +18,7 @@ var Api = function () {
      */
     // Book
     var bookForm = $("#book_form");
+    var bookShipmentForm = $("#frmregisterBookShipment");
     var frmEditBook = $("#frmEditBook");
 
     // Order
@@ -42,6 +44,7 @@ var Api = function () {
 
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
+    var bookShipmentSbtBtn = $('#frmregisterBookShipment .btn-add-book-shipment');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
 
@@ -140,6 +143,128 @@ var Api = function () {
 
                     // Show modal to display error showed
                     $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
+                }
+            });
+
+        });
+    };
+
+    /**
+     * Post Books in Shipment
+     */
+    var handlePostBookShipment = function () {
+        console.log("handlePostBookShipment");
+        $("#add-error-bag").hide();
+
+        bookShipmentSbtBtn.on('click', function () {
+            var json = bookShipmentForm.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            var checkBookAvailabilityURL =  domainUrl + '/Book/' + jsonData["book"];
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // Check 
+            $.ajax({
+                type: 'GET',
+                url: checkBookAvailabilityURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmregisterBookShipment .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    // Send final 
+                    $.ajax({
+                        type: 'POST',
+                        url: postBookShipmentURL,
+                        data: jsonData,
+                        dataType: 'json',
+                        beforeSend: function () {//calls the loader id tag
+                            $("#frmregisterBookShipment .close").click();
+                            $("#loader").show();
+                        },
+                        success: function (data) {
+                            $("#loader").hide();
+                            console.log("Success +++> " + JSON.stringify(data));
+                            $("#add-error-bag").hide();
+                            $("#add-book-shipment-msgs").show();
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + 'Record Added Successfuly '
+                                + '</div>';
+        
+                            $('#add-book-shipment-msgs').html(msgHTML);
+        
+                            $('#frmregisterBookShipment').trigger("reset");
+                            $("#frmregisterBookShipment .close").click();
+                            window.location.reload();
+                        },
+                        error: function (data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+        
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-book-msgs").hide();
+        
+                                $('#add-book-shipment-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+        
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-book-shipment-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+        
+                            // Show modal to display error showed
+                            $('#registerBookShipmentModal').modal('show');
+                            $("#add-error-bag").show();
+                        }
+                    });
+        
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-book-msgs").hide();
+
+                        $('#add-book-shipment-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-book-shipment-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#registerBookShipmentModal').modal('show');
                     $("#add-error-bag").show();
                 }
             });
@@ -1545,6 +1670,7 @@ var Api = function () {
 
             // Handle Shipment
             handlePostShipment();
+            handlePostBookShipment();
 
             // Handle Publisher
             handlePostPublisher();
