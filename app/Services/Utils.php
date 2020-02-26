@@ -46,7 +46,16 @@ class Utils
 	 */
 	public function findByIdRelationResolved($callURL, $id)
 	{
-		return $this->endpointRequest($callURL . $id . '?filter={"where":{"id":"' . $id . '"}, "include":"resolve"}');
+		return $this->endpointRequest($callURL . $id . '?filter={"where":{"id":"' . $id . '"},"include":"resolve"}');
+	}
+
+	/**
+	 * Query Get [Search] Item by value dynamically just in case
+	 * Like is no supported in composer
+	 */
+	public function findByItemRelationResolved($callURL, $itemName, $itemValue)
+	{
+		return $this->endpointRequest($callURL . '?filter={"where":{'.$itemName.':"' . $itemValue . '"},"include":"resolve"}');
 	}
 
 	/**
