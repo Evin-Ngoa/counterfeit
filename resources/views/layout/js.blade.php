@@ -35,26 +35,31 @@
 
     <script>
         Api.init();
-        $(".select2-container--default").css("width", "100%");
-
+            
         $(document).ready(function() {
             $("#selectDistributor").select2({
                 width: '100%',
                 ajax: {
-                    url: "http://localhost:3000/api/Distributor",
-                    type: "post",
+                   url: function(params) {
+                    console.log("params url " + JSON.stringify(params));
+                        return 'http://localhost:3000/api/Distributor?filter={\"where\":{\"email\":\"' + params.term + '\"},\"include\":\"resolve\"}';
+                    },
+                    type: "GET",
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
-                        console.log("params " + JSON.stringify(params));
+                        // console.log("params " + JSON.stringify(params));
                         return {
                             searchTerm: params.term // search term
                         };
                     },
                     processResults: function(response) {
-                        console.log("response " + JSON.stringify(response));
+                        // console.log("response " + JSON.stringify(response));
+                        // console.log("response email" + JSON.stringify(response[0].email));
+                        var rearranged= [{"id":response[0].email,"text": response[0].name }];
+                        // console.log("rearranged --> " + JSON.stringify(rearranged));
                         return {
-                            results: response
+                            results: rearranged
                         };
                     },
                     cache: true
