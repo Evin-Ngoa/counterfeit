@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="selectDistributor" class="">Book Identifier</label>
+                                    <label for="selectDistributor" class="">Select Distributor</label>
 
                                     <select class="form-control" name="distributor" id="selectDistributor">
                                         <option selected="true">Select</option>
