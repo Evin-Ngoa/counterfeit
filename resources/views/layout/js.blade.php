@@ -35,6 +35,30 @@
 
     <script>
         Api.init();
-    </script>
+        $(".select2-container--default").css("width", "100%");
 
-   
+        $(document).ready(function() {
+            $("#selectDistributor").select2({
+                width: '100%',
+                ajax: {
+                    url: "http://localhost:3000/api/Distributor",
+                    type: "post",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        console.log("params " + JSON.stringify(params));
+                        return {
+                            searchTerm: params.term // search term
+                        };
+                    },
+                    processResults: function(response) {
+                        console.log("response " + JSON.stringify(response));
+                        return {
+                            results: response
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
+    </script>

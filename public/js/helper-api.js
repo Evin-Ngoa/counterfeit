@@ -312,6 +312,77 @@ function openAddBookForm(shipmentId) {
 
 } 
 
+/**
+ * 
+ * @param {*} unitsOrdered 
+ * @param {*} unitsAdded 
+ */
+function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
+    var diff = 0;
+    var message = '';
+    $("#add-error-bag").hide();
+    $('#shipment_title').html('<i class="os-icon os-icon-truck"></i> Choose distributor for shipment ' + shipmentId);
+    if(unitsOrdered > unitsAdded){
+
+        diff = unitsOrdered - unitsAdded;
+        message = "Add more "+ diff +" books in the shipment before being able to select ditributor.";
+
+        message = '<div class="alert alert-warning" >'
+                      + message               
+                    +'</div>';
+
+        console.log("Add more "+ diff +" books in the shipment.");
+        $("#add-error-bag").hide();
+        $("#selectorMsgId").html(message);
+        $('#selectDistributorModal').modal('show');
+
+    }else if(unitsOrdered < unitsAdded){
+        diff = unitsAdded - unitsOrdered;
+        message = "You have registered more "+ diff +" books.";
+        console.log("You have registered more "+ diff +" books.");
+        $("#add-error-bag").hide();
+        $("#selectorMsgId").html(message);
+        $('#selectDistributorModal').modal('show');
+
+    }else{
+        var selectOption = '';
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:3000/api/Distributor/',
+            success: function(data) {
+                console.log("DATA ->" + JSON.stringify(data));
+
+                // for(i in data){
+                //     console.log("Data Loop " + data[i].email);
+                //     selectOption +='<option>'+ data[i].email +'</option>'
+                // }
+                // $("#selectDistributor").html(selectOption);
+                // https://makitweb.com/loading-data-remotely-in-select2-with-ajax/
+                var citizenship = document.getElementById("selectDistributor")
+                for (var i = 0; i < data.length; i++) {
+                    var option = document.createElement("OPTION"),
+                        txt = document.createTextNode(data[i].name);
+                    option.appendChild(txt);
+                    option.setAttribute("value", data[i].email);
+                    citizenship.insertBefore(option, citizenship.lastChild);
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+
+        console.log("Equal can continue coding " + diff);
+        $("#add-error-bag").hide();
+
+        message = "You have registered more "+ diff +" books.";
+
+        $("#selectorMsgId").html(message);
+        $('#selectDistributorModal').modal('show');
+    }
+
+} 
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
