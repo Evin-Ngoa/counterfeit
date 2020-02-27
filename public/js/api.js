@@ -53,6 +53,7 @@ var Api = function () {
     var orderDeleteSbtBtn = $('#frmDeleteOrder .btn-delete-order');
 
     var shipmentSbtBtn = $('#frmAddShipment .btn-add-shipment');
+    var shipmentSelectDistributorSbtBtn = $('#frmSelectDistributor .btn-add-ship-ownership');
 
     var publisherSbtBtn = $('#frmAddPublisher .btn-add-publisher');
     var publisherEditSbtBtn = $('#frmEditPublisher .btn-edit-publisher');
@@ -1653,6 +1654,86 @@ var Api = function () {
 
     };
 
+    /**
+     * Function to save 
+     * 
+     */
+    var handlePostSelectDistributor = function(){
+        console.log("handlePostSelectDistributor");
+        $("#add-ship-ownership-error-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        shipmentSelectDistributorSbtBtn.on('click', function () {
+
+            var shipment = $('#shipment_owner').val();
+            var owner = $('#selectDistributor').val();
+
+            var shipmentClass = "resource:org.evin.book.track.Shipment#" + shipment;
+            var ownerClass = "resource:org.evin.book.track.Distributor#" + owner;
+
+            var json = frmAddCustomer.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            jsonData["shipment"] = shipmentClass;
+            jsonData["owner"] = ownerClass;
+
+            console.log("Save New Owner ID => " + shipment + " " + owner);
+
+            var postSelectDistributorURL = domainUrl + '/ShipOwnership';
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'POST',
+                url: postSelectDistributorURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmSelectDistributor .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    $("#loader").hide();
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#frmSelectDistributor .close").click();
+                    // window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-ship-ownership-msgs").hide();
+
+                        $('#add-ship-ownership-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-ship-ownership-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+                    } else {
+                        $('#add-ship-ownership-errors').html(errors.error.message);
+                    }
+                    $("#loader").hide();
+                    $('#selectDistributorModal').modal('show');
+                    $("#add-ship-ownership-error-bag").show();
+
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
 
     return {
         //main function to initiate the theme
@@ -1671,6 +1752,7 @@ var Api = function () {
             // Handle Shipment
             handlePostShipment();
             handlePostBookShipment();
+            handlePostSelectDistributor();
 
             // Handle Publisher
             handlePostPublisher();
