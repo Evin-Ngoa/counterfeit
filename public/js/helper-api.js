@@ -320,7 +320,10 @@ function openAddBookForm(shipmentId) {
 function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
     var diff = 0;
     var message = '';
-    $("#add-error-bag").hide();
+    $("#add-ship-ownership-error-bag").hide();
+    // Set ID 
+    $("#shipment_owner").val(shipmentId);
+
     $('#shipment_title').html('<i class="os-icon os-icon-truck"></i> Choose distributor for shipment ' + shipmentId);
     if(unitsOrdered > unitsAdded){
 
@@ -332,7 +335,7 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
                     +'</div>';
 
         console.log("Add more "+ diff +" books in the shipment.");
-        $("#add-error-bag").hide();
+        $("#add-ship-ownership-error-bag").hide();
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
 
@@ -340,7 +343,7 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
         diff = unitsAdded - unitsOrdered;
         message = "You have registered more "+ diff +" books.";
         console.log("You have registered more "+ diff +" books.");
-        $("#add-error-bag").hide();
+        $("#add-ship-ownership-error-bag").hide();
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
 
@@ -352,10 +355,6 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
             success: function(data) {
                 console.log("DATA ->" + JSON.stringify(data));
 
-                // for(i in data){
-                //     console.log("Data Loop " + data[i].email);
-                //     selectOption +='<option>'+ data[i].email +'</option>'
-                // }
                 // $("#selectDistributor").html(selectOption);
                 // https://makitweb.com/loading-data-remotely-in-select2-with-ajax/
                 var citizenship = document.getElementById("selectDistributor")
@@ -373,7 +372,7 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
         });
 
         console.log("Equal can continue coding " + diff);
-        $("#add-error-bag").hide();
+        $("#add-ship-ownership-error-bag").hide();
 
         message = "You have registered more "+ diff +" books.";
 
