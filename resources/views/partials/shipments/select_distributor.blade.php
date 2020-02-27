@@ -17,12 +17,10 @@
 
                         <div class="row" style="">
                             <div class="col-sm-12">
-                                <div id="add-book-shipment-msgs"></div>
-                                <!-- <div class="alert alert-info" role="alert">
-                                    <strong>Sorry! </strong>No Records at the moment.
-                                </div> -->
-                                <div class="alert alert-danger" id="add-error-bag" style="display: none">
-                                    <ul id="add-book-shipment-errors">
+                                <div id="add-ship-ownership-msgs"></div>
+                    
+                                <div class="alert alert-danger" id="add-ship-ownership-error-bag" style="display: none">
+                                    <ul id="add-ship-ownership-errors">
                                     </ul>
                                 </div>
                             </div>
@@ -30,15 +28,15 @@
                                 <div class="form-group">
                                     <label for="selectDistributor" class="">Select Distributor</label>
 
-                                    <select class="form-control" name="distributor" id="selectDistributor">
+                                    <select class="form-control" name="owner" id="selectDistributor">
                                         <option selected="true">Select</option>
                                         
                                     </select>
 
-                                    <!-- <input type="hidden" name="id" id="id" class="form-control" value="BOOK_006"> -->
+                                    <input type="hidden" name="shipment" id="shipment_owner" class="form-control" value="">
                                     <!-- <input type="hidden" name="sold" id="sold" class="form-control" value="false"> -->
                                     <!-- "$class": "org.evin.book.track.Shipment", -->
-                                    <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.BookRegisterShipment">
+                                    <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.ShipOwnership">
                                     <input type="hidden" name="shipment" id="shipment" value="">
                                 </div>
                             </div>
@@ -48,7 +46,7 @@
 
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal" type="button"> Close</button>
-                    <button class="btn btn-primary btn-add-book-shipment" type="button" value="Save Book"> Save Book To Shipment</button>
+                    <button class="btn btn-primary btn-add-ship-ownership" type="button" value="Save Book"> Save Book To Shipment</button>
                 </div>
             </form>
         </div>
