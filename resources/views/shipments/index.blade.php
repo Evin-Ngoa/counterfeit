@@ -48,7 +48,7 @@
                                     <td><div class="smaller text-center">{{ $shipment->unitCount }}</div></td>
                                     <td><div class="smaller text-center">{{ count($shipment->bookRegisterShipment) }}</div></td>
                                     <td class="row-actions">
-                                        <a href="#" onclick="event.preventDefault();openAddBookForm('{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Register Book To This Shipment"><i class="os-icon os-icon-book"></i></a><a href="#" onclick="event.preventDefault();selectDistributorForm(100,100,'{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a>
+                                        <a href="#" onclick="event.preventDefault();openAddBookForm('{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Register Book To This Shipment"><i class="os-icon os-icon-book"></i></a><a href="#" onclick="event.preventDefault();selectDistributorForm('{{ $shipment->unitCount }}','{{ count($shipment->bookRegisterShipment) }}','{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a>
                                         <a href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
                                 </tr>
