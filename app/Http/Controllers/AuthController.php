@@ -17,6 +17,14 @@ class AuthController extends Controller
     }
 
     /**
+     * 
+     */
+    public function register()
+    {
+        return view('auth.register');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
