@@ -20,6 +20,13 @@ Route::get('/dash', function () {
     return view('layout.theme-dash');
 });
 
+// Authentication
+Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+
+    Route::get('/login', ['as' => 'login', 'uses' => 'AuthController@index']);
+
+});
+
 Route::resource('book', 'BookController');
 Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
