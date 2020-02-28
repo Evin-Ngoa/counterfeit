@@ -38,7 +38,7 @@
     <div class="all-wrapper menu-side with-pattern">
         <div class="auth-box-w">
             <div class="logo-w">
-                <a href="index-2.html"><img alt="" src="/img/logo-big.png"></a>
+                <a href="#"><img alt="" src="/img/logo-big.png"></a>
             </div>
             <h4 class="auth-header">Login Form</h4>
             <form action="#">
