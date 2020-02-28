@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
-<!-- Mirrored from light.pinsupreme.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 22 Jan 2020 04:03:03 GMT -->
-
 <head>
     <!-- <title>Admin Dashboard HTML Template</title> -->
     <title>@yield('title', config('app.name', 'en'))</title>
     <meta charset="utf-8">
     <meta content="ie=edge" http-equiv="x-ua-compatible">
     <meta content="template language" name="keywords">
-    <meta content="Tamerlan Soziev" name="author">
-    <meta content="Admin dashboard html template" name="description">
+    <meta content="Evingtone Ngoa" name="author">
+    <meta content="Book Counterfeit" name="description">
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <link href="favicon.png" rel="shortcut icon">
     <link href="apple-touch-icon.png" rel="apple-touch-icon">
@@ -219,6 +217,5 @@
     @include('layout.js')
     @yield('footer_scripts')
 </body>
-<!-- Mirrored from light.pinsupreme.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 22 Jan 2020 04:03:03 GMT -->
 
 </html>
