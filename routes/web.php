@@ -24,6 +24,7 @@ Route::get('/dash', function () {
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 
     Route::get('/login', ['as' => 'login', 'uses' => 'AuthController@index']);
+    Route::get('/register', ['as' => 'register', 'uses' => 'AuthController@register']);
 
 });
 
