@@ -54,8 +54,12 @@
                                         <div class="smaller text-center">{{ $book->type }}</div>
                                         <div class="smaller text-center">({{ $book->edition }})</div>
                                     </td>
-                                    <td class="nowrap"><div class="smaller text-center">{{ $book->price }}</div></td>
-                                    <td class="nowrap"><div class="smaller text-center">{{ $book->initialOwner }}</div></td>
+                                    <td class="nowrap">
+                                        <div class="smaller text-center">{{ $book->price }}</div>
+                                    </td>
+                                    <td class="nowrap">
+                                        <div class="smaller text-center">{{ $book->initialOwner }}</div>
+                                    </td>
                                     @if($book->sold)
                                     <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
                                     @else
@@ -83,6 +87,13 @@
 @include('partials.books.books_add')
 @include('partials.books.books_edit')
 @include('partials.books.books_delete')
+
+<script type="text/javascript">
+    window.onload = function() {
+        // setToken();
+   };
+</script>
+
 @endsection
 
 
@@ -231,4 +242,3 @@
     </div>
 </div>
 @endsection
-
