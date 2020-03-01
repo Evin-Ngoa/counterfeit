@@ -42,11 +42,15 @@ var Api = function () {
     var frmAddCustomer = $("#frmAddCustomer");
     var frmEditCustomer = $("#frmEditCustomer");
 
+    // Login
+    var frmLogin = $("#frmLogin");
+
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookShipmentSbtBtn = $('#frmregisterBookShipment .btn-add-book-shipment');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
+    var loginSbtBtn = $('#frmLogin .btn-login');
 
     var orderSbtBtn = $('#frmAddOrder .btn-add-order');
     var orderEditSbtBtn = $('#frmEditOrder .btn-edit-order');
@@ -1735,6 +1739,98 @@ var Api = function () {
 
     };
 
+    var handlePostLogin = function () {
+        console.log("handlePostLogin");
+        $("#add-error-bag").hide();
+        var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        loginSbtBtn.on('click', function () {
+            var json = frmLogin.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            // jsonData["id"] = bookId;
+
+            console.log("LOGIN JSON SENT => " + JSON.stringify(jsonData));
+            
+            // Seeting token
+            setToken();
+
+            var authToken = localStorage.getItem('auth_token');
+            var authTokenParsedData = JSON.parse(authToken);
+
+            // check if token is set
+            if(authTokenParsedData != undefined && authTokenParsedData != null){
+                console.log("Token -> " + JSON.stringify(authToken));
+                console.log("Parsed Token -> " + authTokenParsedData.token);
+                window.location.assign('/book');
+            }
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            // $.ajax({
+            //     type: 'POST',
+            //     url: postBookURL,
+            //     data: jsonData,
+            //     dataType: 'json',
+            //     beforeSend: function () {//calls the loader id tag
+            //         $("#book_form .close").click();
+            //         $("#loader").show();
+            //     },
+            //     success: function (data) {
+            //         $("#loader").hide();
+            //         console.log("Success +++> " + JSON.stringify(data));
+            //         $("#add-error-bag").hide();
+            //         $("#add-book-msgs").show();
+            //         msgHTML = '<div class="alert alert-primary" role="alert">'
+            //             + 'Record Added Successfuly '
+            //             + '</div>';
+
+            //         $('#add-book-msgs').html(msgHTML);
+
+            //         $('#book_form').trigger("reset");
+            //         $("#book_form .close").click();
+            //         window.location.reload();
+            //     },
+            //     error: function (data) {
+            //         var errors = $.parseJSON(data.responseText);
+            //         var status = errors.error.statusCode;
+
+            //         if (status == 422) {
+            //             console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+            //             console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+            //             $("#add-book-msgs").hide();
+
+            //             $('#add-book-errors').html('');
+            //             $.each(errors.error.details.messages, function (key, value) {
+            //                 console.log('Error Value' + value + ' Key ' + key);
+            //                 $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+            //             });
+
+            //         } else {
+            //             console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+            //             $('#add-book-errors').html(errors.error.message);
+            //         }
+            //         // hide loader
+            //         $("#loader").hide();
+
+            //         // Show modal to display error showed
+            //         $('#addBookModal').modal('show');
+            //         $("#add-error-bag").show();
+            //     }
+            // });
+
+        });
+    };
+
     return {
         //main function to initiate the theme
         init: function (Args) {
@@ -1768,6 +1864,9 @@ var Api = function () {
             handlePostCustomer();
             handleEditCustomer();
             handleDeleteCustomer();
+
+            // Login
+            handlePostLogin();
         }
     }
 
