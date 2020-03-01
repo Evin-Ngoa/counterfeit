@@ -382,9 +382,37 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
 
 } 
 
+/**
+ * Set Token Login
+ */
+function setToken(){
+    console.log("Setting Token... ");
+
+    var jsonData = {
+        "token":"34334trgggtrhtytyu5u5"
+    };
+
+    var jsonDataStringified = JSON.stringify(jsonData);
+
+    localStorage.setItem('auth_token', jsonDataStringified);
+}
+
+/**
+ * Unseting token Logout
+ */
+function UnSetToken(){
+
+    console.log("Unsetting Token... ");
+
+    localStorage.removeItem('auth_token');
+
+    window.location.reload();
+}
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
     useCurrent: false, //Important! See issue #
     minDate:new Date(),
 });
+
