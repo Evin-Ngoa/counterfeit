@@ -42,11 +42,6 @@
             </div>
             <h4 class="auth-header" style="margin-bottom: 0px;">Create new account</h4>
             <form id="frmRegister">
-                <!-- <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger"><b>Error!</b> Testing 123</div>
-                    </div>
-                </div> -->
                 <div class="alert alert-danger" id="add-error-reg-bag" style="display: none;">
                     <ul id="add-reg-errors">
                     </ul>
