@@ -6,7 +6,7 @@
     <title>@yield('title', 'Book Counterfiet Login')</title>
     <meta charset="utf-8">
     <meta content="ie=edge" http-equiv="x-ua-compatible">
-    <meta content="template language" name="keywords">
+    <meta content="Counterfeit Book Recogntition" name="keywords">
     <meta content="Evingtone Ngoa" name="author">
     <meta content="Book Counterfeit" name="description">
     <meta content="width=device-width,initial-scale=1" name="viewport">
@@ -40,20 +40,54 @@
             <div class="logo-w" style="padding: 5%;">
                 <a href="#"><img alt="" src="/img/logo-big.png"></a>
             </div>
-            <h4 class="auth-header">Login Form</h4>
+            <h4 class="auth-header" style="margin-bottom: 0rem;">Login Form</h4>
             <form id="frmLogin">
+                <div class="alert alert-danger" id="add-error-login-bag" style="display: none;">
+                    <ul id="add-login-errors">
+                    </ul>
+                </div>
+                <div id="msgAlert"></div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Select User Type You Registerd With:</label>
+                    <div class="col-sm-12">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input checked="" class="form-check-input" name="participant" type="radio" id="Customer" value="Customer">Customer
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" name="participant" type="radio" id="Distributor" value="Distributor">Distributor
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" name="participant" type="radio" id="Publisher" value="Publisher">Publisher
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label for="">Username</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username">
-                    <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                    <label for=""> Email address</label>
+                    <input class="form-control" data-error="Your email address is invalid" name="email" id="email" placeholder="Enter email" type="email" required>
+                    <div class="pre-icon os-icon os-icon-email-2-at2"></div>
+                    <div class="help-block form-text with-errors form-control-feedback"></div>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" >
+                    <input type="password" name="secret" id="secret" class="form-control" placeholder="Enter your password">
                     <div class="pre-icon os-icon os-icon-fingerprint"></div>
                 </div>
                 <div class="buttons-w">
-                    <button class="btn btn-primary btn-login" type="button">Log me in</button>
+                    <button class="mr-2 mb-2 btn btn-outline-primary btn-login" type="button">
+                        <i class="os-icon os-icon-log-in"></i> Submit Log In
+                    </button>
+
+                    <button class="mr-2 mb-2 btn btn-outline-primary" type="button" onclick="window.location.href ='/auth/register'">
+                        <i class="os-icon os-icon-user-plus"></i> Register
+                    </button>
+                </div>
+                <div class="buttons-w" style="display: none;">
                     <div class="form-check-inline">
                         <label class="form-check-label">
                             <input class="form-check-input" type="checkbox">Remember Me</label>
@@ -100,7 +134,15 @@
 
     <script>
         Api.init();
+    </script>
+    <script>
+        window.onload = function() {
+            var userType = $("input[name='participant']").val();
 
+            console.log("LEAD =>" + userType);
+
+            $('#frmLogin').validator();
+        }
     </script>
 </body>
 
