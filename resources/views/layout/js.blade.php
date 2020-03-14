@@ -32,6 +32,10 @@
     <script src="{{ asset ("js/main5739.js") }}"></script>
     <script src="{{ asset ("js/api.js") }}"></script>
     <script src="{{ asset ("js/helper-api.js") }}"></script>
+    <script src="{{ asset ("js/jwt/core.js") }}"></script>
+    <script src="{{ asset ("js/jwt/enc-base64.js") }}"></script>
+    <script src="{{ asset ("js/jwt/hmac.js") }}"></script>
+    <script src="{{ asset ("js/jwt/sha256.js") }}"></script>
 
     <script>
         Api.init();
@@ -71,7 +75,7 @@
         });
 
         // Always check token 
-        var authToken = localStorage.getItem('auth_token');
+        var authToken = localStorage.getItem('logged_in_user');
         var authTokenParsedData = JSON.parse(authToken);
 
         // check if token is set
