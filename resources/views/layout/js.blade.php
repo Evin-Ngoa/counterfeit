@@ -81,8 +81,17 @@
         // check if token is set
         if (authTokenParsedData == undefined && authTokenParsedData == null) {
             window.location.assign('/auth/login');
-        }else{
+        } else {
             console.log("Token -> " + JSON.stringify(authToken));
-            console.log("Parsed Token -> " + authTokenParsedData.token);
+            console.log("Parsed Token -> " + authTokenParsedData.$class);
+            if (authTokenParsedData.$class == "org.evin.book.track.Publisher" || authTokenParsedData.$class == "org.evin.book.track.Distributor") {
+                // update Names & Role in dashboard 
+                $(".logged-user-name").text(authTokenParsedData.name);
+                $(".logged-user-role").text('Publisher');
+            } else {
+                $(".logged-user-name").text(authTokenParsedData.firstName + " " + authTokenParsedData.lastName);
+                $(".logged-user-role").text('Customer');
+            }
+
         }
     </script>
