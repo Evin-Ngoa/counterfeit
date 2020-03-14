@@ -64,8 +64,8 @@
                     <div class="logged-user-avatar-info">
                         <div class="avatar-w"><img alt="" src="/img/avatar1.jpg"></div>
                         <div class="logged-user-info-w">
-                            <div class="logged-user-name">Maria Gomez</div>
-                            <div class="logged-user-role">Administrator</div>
+                            <div class="logged-user-name">{ user.name }</div>
+                            <div class="logged-user-role">{ user.role }</div>
                         </div>
                     </div>
                     <div class="bg-icon"><i class="os-icon os-icon-wallet-loaded"></i></div>
