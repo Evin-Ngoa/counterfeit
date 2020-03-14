@@ -1970,7 +1970,68 @@ var Api = function () {
                         $("#add-error-reg-bag").show();
                     }
                 });
-            } 
+            } else {
+                // Publisher
+
+                // remove individual name
+                delete jsonData["firstName"];
+                delete jsonData["lastName"];
+                delete jsonData["participant"];
+
+                jsonData["memberId"] = "P-" + memberID;
+
+                $.ajax({
+                    type: 'POST',
+                    url: postPublisherURL,
+                    data: jsonData,
+                    dataType: 'json',
+                    beforeSend: function () {//calls the loader id tag
+                        // $("#book_form .close").click();
+                        // $("#loader").show();
+                    },
+                    success: function (data) {
+                        // $("#loader").hide();
+                        console.log("Success +++> " + JSON.stringify(data));
+                        $("#add-error-reg-bag").hide();
+
+                        msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + data.name +' Added Successfuly. You will be redirected to Login momentarily'
+                        + '</div>';
+
+                        $('#msgAlert').html(msgHTML);
+    
+                        window.setTimeout(function () {
+                            // Move to a new location or you can do something else
+                            window.location.href = "/auth/login";
+                        }, 5000);
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+
+                            $('#add-reg-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-reg-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-reg-errors').html(errors.error.message);
+                        }
+                        // hide loader
+                        // $("#loader").hide();
+
+                        // Show modal to display error showed
+                        // $('#addBookModal').modal('show');
+                        $("#add-error-reg-bag").show();
+                    }
+                });
+            }
 
             // Append ID
             // jsonData["id"] = bookId;
