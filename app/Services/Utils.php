@@ -42,6 +42,7 @@ class Utils
 
 	/**
 	 * http://localhost:3000/api/Book/?filter={"where":{"id":"BOOK_001"}, "include":"resolve"}
+	 * http://localhost:3000/api/Book/BOOK_001/?filter={include":"resolve"}
 	 * Help resolve the relationships
 	 */
 	public function findByIdRelationResolved($callURL, $id)
