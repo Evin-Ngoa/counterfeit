@@ -1755,23 +1755,7 @@ var Api = function () {
                 jsonData[field.name] = field.value;
             });
 
-            // Append ID
-            // jsonData["id"] = bookId;
-
             console.log("LOGIN JSON SENT => " + JSON.stringify(jsonData));
-
-            // Seeting token
-            // setToken();
-
-            // var authToken = localStorage.getItem('auth_token');
-            // var authTokenParsedData = JSON.parse(authToken);
-
-            // // check if token is set
-            // if (authTokenParsedData != undefined && authTokenParsedData != null) {
-            //     console.log("Token -> " + JSON.stringify(authToken));
-            //     console.log("Parsed Token -> " + authTokenParsedData.token);
-            //     window.location.assign('/book');
-            // }
 
             $.ajaxSetup({
                 headers: {
