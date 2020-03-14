@@ -1745,7 +1745,7 @@ var Api = function () {
     var handlePostLogin = function () {
         console.log("handlePostLogin");
         $("#add-error-bag").hide();
-        var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        var msgHTML = '';
 
         loginSbtBtn.on('click', function () {
             var json = frmLogin.serializeArray();
@@ -1761,75 +1761,102 @@ var Api = function () {
             console.log("LOGIN JSON SENT => " + JSON.stringify(jsonData));
 
             // Seeting token
-            setToken();
+            // setToken();
 
-            var authToken = localStorage.getItem('auth_token');
-            var authTokenParsedData = JSON.parse(authToken);
+            // var authToken = localStorage.getItem('auth_token');
+            // var authTokenParsedData = JSON.parse(authToken);
 
-            // check if token is set
-            if (authTokenParsedData != undefined && authTokenParsedData != null) {
-                console.log("Token -> " + JSON.stringify(authToken));
-                console.log("Parsed Token -> " + authTokenParsedData.token);
-                window.location.assign('/book');
-            }
+            // // check if token is set
+            // if (authTokenParsedData != undefined && authTokenParsedData != null) {
+            //     console.log("Token -> " + JSON.stringify(authToken));
+            //     console.log("Parsed Token -> " + authTokenParsedData.token);
+            //     window.location.assign('/book');
+            // }
 
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // data:  JSON.stringify(jsonData),
-            // $.ajax({
-            //     type: 'POST',
-            //     url: postBookURL,
-            //     data: jsonData,
-            //     dataType: 'json',
-            //     beforeSend: function () {//calls the loader id tag
-            //         $("#book_form .close").click();
-            //         $("#loader").show();
-            //     },
-            //     success: function (data) {
-            //         $("#loader").hide();
-            //         console.log("Success +++> " + JSON.stringify(data));
-            //         $("#add-error-bag").hide();
-            //         $("#add-book-msgs").show();
-            //         msgHTML = '<div class="alert alert-primary" role="alert">'
-            //             + 'Record Added Successfuly '
-            //             + '</div>';
 
-            //         $('#add-book-msgs').html(msgHTML);
+            if (jsonData["participant"] == "Customer") {
+                customerLoginUrl = domainUrl + "/Customer/" + jsonData["email"];
 
-            //         $('#book_form').trigger("reset");
-            //         $("#book_form .close").click();
-            //         window.location.reload();
-            //     },
-            //     error: function (data) {
-            //         var errors = $.parseJSON(data.responseText);
-            //         var status = errors.error.statusCode;
+                // delete participant object
+                delete jsonData["participant"];
 
-            //         if (status == 422) {
-            //             console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-            //             console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-            //             $("#add-book-msgs").hide();
+                console.log("CUSTOMER LOGIN");
 
-            //             $('#add-book-errors').html('');
-            //             $.each(errors.error.details.messages, function (key, value) {
-            //                 console.log('Error Value' + value + ' Key ' + key);
-            //                 $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
-            //             });
+                $.ajax({
+                    type: 'GET',
+                    url: customerLoginUrl,
+                    data: jsonData,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        // calls the loader id tag
+                        // $("#book_form .close").click();
+                        // $("#loader").show();
+                    },
+                    success: function (data) {
+                        // $("#loader").hide();
 
-            //         } else {
-            //             console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-            //             $('#add-book-errors').html(errors.error.message);
-            //         }
-            //         // hide loader
-            //         $("#loader").hide();
+                        // Setting token
+                        setToken(data);
 
-            //         // Show modal to display error showed
-            //         $('#addBookModal').modal('show');
-            //         $("#add-error-bag").show();
-            //     }
-            // });
+                        console.log("Success +++> " + JSON.stringify(data));
+                        $("#add-error-login-bag").hide();
+
+                        if (data.secret == jsonData["secret"]) {
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + ' Login Successfuly. You will be redirected to Dashboard'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+                        } else {
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + 'Invalid Email / Password'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+                        }
+
+                        // window.setTimeout(function () {
+                        //     // Move to a new location or you can do something else
+                        //     window.location.href = "/auth/login";
+                        // }, 5000);
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+
+                            $('#add-login-errors').html('');
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + '<ul>';
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                msgHTML += '<li>' + key + ' ' + value + '</li>';
+                                // $('#add-login-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+                            msgHTML += '</ul>'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML)
+
+                        } else {
+                            // console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + 'Invalid Email / Password'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+                        }
+                    }
+                });
+            } 
 
         });
     };
@@ -1875,11 +1902,11 @@ var Api = function () {
                         $("#add-error-reg-bag").hide();
 
                         msgHTML = '<div class="alert alert-primary" role="alert">'
-                        + data.firstName +' Added Successfuly. You will be redirected to Login momentarily'
-                        + '</div>';
+                            + data.firstName + ' Added Successfuly. You will be redirected to Login momentarily'
+                            + '</div>';
 
                         $('#msgAlert').html(msgHTML);
-    
+
                         window.setTimeout(function () {
                             // Move to a new location or you can do something else
                             window.location.href = "/auth/login";
@@ -1934,11 +1961,11 @@ var Api = function () {
                         $("#add-error-reg-bag").hide();
 
                         msgHTML = '<div class="alert alert-primary" role="alert">'
-                        + data.name +' Added Successfuly. You will be redirected to Login momentarily'
-                        + '</div>';
+                            + data.name + ' Added Successfuly. You will be redirected to Login momentarily'
+                            + '</div>';
 
                         $('#msgAlert').html(msgHTML);
-    
+
                         window.setTimeout(function () {
                             // Move to a new location or you can do something else
                             window.location.href = "/auth/login";
@@ -1995,11 +2022,11 @@ var Api = function () {
                         $("#add-error-reg-bag").hide();
 
                         msgHTML = '<div class="alert alert-primary" role="alert">'
-                        + data.name +' Added Successfuly. You will be redirected to Login momentarily'
-                        + '</div>';
+                            + data.name + ' Added Successfuly. You will be redirected to Login momentarily'
+                            + '</div>';
 
                         $('#msgAlert').html(msgHTML);
-    
+
                         window.setTimeout(function () {
                             // Move to a new location or you can do something else
                             window.location.href = "/auth/login";
