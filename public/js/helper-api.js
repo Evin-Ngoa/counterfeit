@@ -382,19 +382,38 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
 
 } 
 
+function getBase64Encoded(rawStr) {
+    var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
+    var result = CryptoJS.enc.Base64.stringify(wordArray);
+
+    return result;
+}
+
+function getBase64Decoded(encStr) {
+    var wordArray = CryptoJS.enc.Base64.parse(encStr);
+    var result = wordArray.toString(CryptoJS.enc.Utf8);
+
+    return result;
+}
+
 /**
  * Set Token Login
  */
-function setToken(){
-    console.log("Setting Token... ");
+function setToken(detailsData){
+    console.log("Generating Token... ");
+
+    var txtHeader = document.getElementById("txtHeader");
+    var txtPayload = document.getElementById("txtPayload");
+    var txtSecret = document.getElementById("txtSecret");
 
     var jsonData = {
         "token":"34334trgggtrhtytyu5u5"
     };
 
-    var jsonDataStringified = JSON.stringify(jsonData);
+    // var jsonDataStringified = JSON.stringify(jsonData);
+    var jsonDataStringified = JSON.stringify(detailsData);
 
-    localStorage.setItem('auth_token', jsonDataStringified);
+    localStorage.setItem('logged_in_user', jsonDataStringified);
 }
 
 /**
@@ -404,9 +423,9 @@ function UnSetToken(){
 
     console.log("Unsetting Token... ");
 
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('logged_in_user');
 
-    window.location.reload();
+    window.location.assign('/auth/login');
 }
 
 $('.datetime').datetimepicker({
