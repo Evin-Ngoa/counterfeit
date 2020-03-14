@@ -1,6 +1,6 @@
 var Api = function () {
     // http://localhost:3000/api/Book
-    var domainUrl = 'http://localhost:3000/api';
+    var domainUrl = 'http://localhost:3001/api';
     var postBookURL = domainUrl + '/Book';
     var postBookShipmentURL = domainUrl + '/BookRegisterShipment';
     var postOrderURL = domainUrl + '/OrderContract';
@@ -45,12 +45,15 @@ var Api = function () {
     // Login
     var frmLogin = $("#frmLogin");
 
+    var frmRegister = $("#frmRegister");
+
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookShipmentSbtBtn = $('#frmregisterBookShipment .btn-add-book-shipment');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
     var loginSbtBtn = $('#frmLogin .btn-login');
+    var registerSbtBtn = $('#frmRegister .btn-register');
 
     var orderSbtBtn = $('#frmAddOrder .btn-add-order');
     var orderEditSbtBtn = $('#frmEditOrder .btn-edit-order');
@@ -174,7 +177,7 @@ var Api = function () {
 
             var msgHTML = "";
 
-            var checkBookAvailabilityURL =  domainUrl + '/Book/' + jsonData["book"];
+            var checkBookAvailabilityURL = domainUrl + '/Book/' + jsonData["book"];
 
             $.ajaxSetup({
                 headers: {
@@ -210,9 +213,9 @@ var Api = function () {
                             msgHTML = '<div class="alert alert-primary" role="alert">'
                                 + 'Record Added Successfuly '
                                 + '</div>';
-        
+
                             $('#add-book-shipment-msgs').html(msgHTML);
-        
+
                             $('#frmregisterBookShipment').trigger("reset");
                             $("#frmregisterBookShipment .close").click();
                             window.location.reload();
@@ -220,31 +223,31 @@ var Api = function () {
                         error: function (data) {
                             var errors = $.parseJSON(data.responseText);
                             var status = errors.error.statusCode;
-        
+
                             if (status == 422) {
                                 console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                                 console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
                                 $("#add-book-msgs").hide();
-        
+
                                 $('#add-book-shipment-errors').html('');
                                 $.each(errors.error.details.messages, function (key, value) {
                                     console.log('Error Value' + value + ' Key ' + key);
                                     $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
                                 });
-        
+
                             } else {
                                 console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
                                 $('#add-book-shipment-errors').html(errors.error.message);
                             }
                             // hide loader
                             $("#loader").hide();
-        
+
                             // Show modal to display error showed
                             $('#registerBookShipmentModal').modal('show');
                             $("#add-error-bag").show();
                         }
                     });
-        
+
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
@@ -593,7 +596,7 @@ var Api = function () {
                     } else {
                         $('#edit-order-errors').html(errors.error.message);
                     }
-                    
+
                     $("#loader").hide();
                     $('#editOrderModal').modal('show');
                     $("#edit-error-bag").show();
@@ -737,7 +740,7 @@ var Api = function () {
                     $("#loader").show();
                 },
                 success: function (data) {
-                    
+
                     console.log("Success +++> " + JSON.stringify(data));
 
                     var orderstatusData = {
@@ -1662,7 +1665,7 @@ var Api = function () {
      * Function to save 
      * 
      */
-    var handlePostSelectDistributor = function(){
+    var handlePostSelectDistributor = function () {
         console.log("handlePostSelectDistributor");
         $("#add-ship-ownership-error-bag").hide();
         // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -1756,7 +1759,7 @@ var Api = function () {
             // jsonData["id"] = bookId;
 
             console.log("LOGIN JSON SENT => " + JSON.stringify(jsonData));
-            
+
             // Seeting token
             setToken();
 
@@ -1764,7 +1767,7 @@ var Api = function () {
             var authTokenParsedData = JSON.parse(authToken);
 
             // check if token is set
-            if(authTokenParsedData != undefined && authTokenParsedData != null){
+            if (authTokenParsedData != undefined && authTokenParsedData != null) {
                 console.log("Token -> " + JSON.stringify(authToken));
                 console.log("Parsed Token -> " + authTokenParsedData.token);
                 window.location.assign('/book');
@@ -1831,6 +1834,106 @@ var Api = function () {
         });
     };
 
+    var handlePostRegistration = function () {
+        console.log("handlePostRegistration");
+        $("#add-error-bag").hide();
+        var memberID = randomString(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        var msgHTML = '';
+
+        registerSbtBtn.on('click', function () {
+            var json = frmRegister.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            if (jsonData["participant"] == "Customer") {
+                //remove business name
+                delete jsonData["name"];
+                delete jsonData["participant"];
+                jsonData["memberId"] = "C-" + memberID;
+
+                $.ajax({
+                    type: 'POST',
+                    url: postCustomerURL,
+                    data: jsonData,
+                    dataType: 'json',
+                    beforeSend: function () {//calls the loader id tag
+                        // $("#book_form .close").click();
+                        // $("#loader").show();
+                    },
+                    success: function (data) {
+                        // $("#loader").hide();
+                        console.log("Success +++> " + JSON.stringify(data));
+                        $("#add-error-reg-bag").hide();
+
+                        msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + data.firstName +' Added Successfuly. You will be redirected to Login momentarily'
+                        + '</div>';
+
+                        $('#msgAlert').html(msgHTML);
+    
+                        window.setTimeout(function () {
+                            // Move to a new location or you can do something else
+                            window.location.href = "/auth/login";
+                        }, 5000);
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+
+                            $('#add-reg-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-reg-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-reg-errors').html(errors.error.message);
+                        }
+                        // hide loader
+                        // $("#loader").hide();
+
+                        // Show modal to display error showed
+                        // $('#addBookModal').modal('show');
+                        $("#add-error-reg-bag").show();
+                    }
+                });
+            } 
+
+            // Append ID
+            // jsonData["id"] = bookId;
+
+            console.log("REGISTER JSON SENT => " + JSON.stringify(jsonData));
+
+            // Setting token
+            // setToken();
+
+            // var authToken = localStorage.getItem('auth_token');
+            // var authTokenParsedData = JSON.parse(authToken);
+
+            // // check if token is set
+            // if(authTokenParsedData != undefined && authTokenParsedData != null){
+            //     console.log("Token -> " + JSON.stringify(authToken));
+            //     console.log("Parsed Token -> " + authTokenParsedData.token);
+            //     window.location.assign('/book');
+            // }
+
+        });
+    };
+
     return {
         //main function to initiate the theme
         init: function (Args) {
@@ -1867,6 +1970,9 @@ var Api = function () {
 
             // Login
             handlePostLogin();
+
+            // Register
+            handlePostRegistration();
         }
     }
 
