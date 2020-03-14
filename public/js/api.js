@@ -1931,7 +1931,81 @@ var Api = function () {
                     }
                 });
 
-            } 
+            } else {
+                // Publisher
+                console.log("PUBLISHER LOGIN");
+
+                publisherLoginUrl = domainUrl + "/Publisher/" + jsonData["email"];
+
+                // delete participant object
+                delete jsonData["participant"];
+
+                $.ajax({
+                    type: 'GET',
+                    url: publisherLoginUrl,
+                    data: jsonData,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        // calls the loader id tag
+                        // $("#book_form .close").click();
+                        // $("#loader").show();
+                    },
+                    success: function (data) {
+                        // $("#loader").hide();
+                        console.log("Success +++> " + JSON.stringify(data));
+                        $("#add-error-login-bag").hide();
+                        
+                        // Setting token
+                        setToken(data);
+
+                        if (data.secret == jsonData["secret"]) {
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + ' Login Successfuly. You will be redirected to Dashboard'
+                                + '</div>';
+                        } else {
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + 'Invalid Email / Password'
+                                + '</div>';
+                        }
+                        $('#msgAlert').html(msgHTML);
+
+                        window.setTimeout(function () {
+                            // Move to a new location or you can do something else
+                            window.location.href = "/book";
+                        }, 5000);
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+
+                            $('#add-login-errors').html('');
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + '<ul>';
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                msgHTML += '<li>' + key + ' ' + value + '</li>';
+                                // $('#add-login-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+                            msgHTML += '</ul>'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML)
+
+                        } else {
+                            // console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + 'Invalid Email / Password'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+                        }
+                    }
+                });
+            }
 
         });
     };
