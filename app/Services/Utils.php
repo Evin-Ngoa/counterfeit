@@ -59,6 +59,11 @@ class Utils
 		return $this->endpointRequest($callURL . '?filter={"where":{'.$itemName.':"' . $itemValue . '"},"include":"resolve"}');
 	}
 
+	public function getMyBook($callURL, $id){
+
+		return $this->endpointRequest($callURL . $id);
+	}
+
 	/**
 	 * callURL = '/Book/'
 	 * @request POST
