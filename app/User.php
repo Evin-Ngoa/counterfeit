@@ -61,7 +61,7 @@ class User extends Authenticatable
     }
     
     /**
-     * 
+     * Get the logged email
      */
     public function scopeLoggedInUserEmail()
     {
