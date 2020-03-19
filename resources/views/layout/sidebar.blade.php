@@ -39,7 +39,8 @@
     <ul class="main-menu">
         <li class="sub-header"><span>Menu</span></li>
         <li class="selected {!! classActivePath('book') !!}">
-            <a href="{{ route('book.index') }}">
+            <!-- <a href="{{ route('book.index') }}"> -->
+            <a href="{{ route('book.view', ['id' => 'publisher1@gmail.com']) }}">
                 <div class="icon-w">
                     <div class="os-icon os-icon-book"></div>
                 </div><span>Book</span>
