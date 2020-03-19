@@ -25,9 +25,12 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 
     Route::get('/login', ['as' => 'login', 'uses' => 'AuthController@index']);
     Route::get('/register', ['as' => 'register', 'uses' => 'AuthController@register']);
-
 });
 
+
+Route::group(['prefix' => 'book', 'as' => 'book.'], function () {
+    Route::get('/list/{id}', ['as' => 'view', 'uses' => 'BookController@view_books']);
+});
 Route::resource('book', 'BookController');
 Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
@@ -40,7 +43,6 @@ Route::resource('shipment', 'ShipmentController');
 Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
 
     Route::get('/book/{id}', ['as' => 'book', 'uses' => 'BookController@verify']);
-
 });
 
 Route::get('qrcode', function () {
