@@ -1742,6 +1742,21 @@ var Api = function () {
 
     };
 
+    /**
+     * Function to redirect
+     * @param {*} UrlLink 
+     */
+    function redirectTo(UrlLink){
+        window.setTimeout(function () {
+            // Move to a new location or you can do something else
+            // window.location.href = "/book";
+            window.location.href = UrlLink;
+        }, 3000);
+    }
+
+    /**
+     * Function to Log in User
+     */
     var handlePostLogin = function () {
         console.log("handlePostLogin");
         $("#add-error-bag").hide();
@@ -1796,18 +1811,17 @@ var Api = function () {
                                 + '</div>';
 
                             $('#msgAlert').html(msgHTML);
+
+                            redirectTo('/book');
                         } else {
                             msgHTML = '<div class="alert alert-danger" role="alert">'
                                 + 'Invalid Email / Password'
                                 + '</div>';
 
                             $('#msgAlert').html(msgHTML);
-                        }
 
-                        // window.setTimeout(function () {
-                        //     // Move to a new location or you can do something else
-                        //     window.location.href = "/auth/login";
-                        // }, 5000);
+                            redirectTo('/auth/login');
+                        }
                     },
                     error: function (data) {
                         var errors = $.parseJSON(data.responseText);
@@ -1878,10 +1892,10 @@ var Api = function () {
                         }
                         $('#msgAlert').html(msgHTML);
 
-                        // window.setTimeout(function () {
-                        //     // Move to a new location or you can do something else
-                        //     window.location.href = "/auth/login";
-                        // }, 5000);
+                        window.setTimeout(function () {
+                            // Move to a new location or you can do something else
+                            window.location.href = "/auth/login";
+                        }, 5000);
                     },
                     error: function (data) {
                         var errors = $.parseJSON(data.responseText);
