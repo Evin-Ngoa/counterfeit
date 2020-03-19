@@ -16,7 +16,8 @@ class TransactionService
      * Get all Transaction Records
      */
     public function getAllTransactions(){
-        return $this->utils->allRelations('/system/historian');
+        // return $this->utils->allRelations('/system/historian');
+        return $this->utils->all('/queries/getLatestHistorian');
     }
 
 }
