@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Order\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
@@ -23,6 +24,27 @@ class OrderController extends Controller
         //
         $orders = $this->orderservice->getAllOrders();
         // dd($orders);
+
+        return view('orders.index')->with(compact('orders'));
+    }
+
+    /**
+     * Checking Owner Orders
+     */
+    public function view_orders($id)
+    {
+
+        $isSame = \App\User::active($id);
+
+        if(!$isSame){
+
+            $userEmail = \App\User::loggedInUserEmail();
+
+            return Redirect::route('order.view', [$userEmail]);
+        }
+        
+        $orders = $this->orderservice->getOnlyUserOrders($id, 'Publisher');
+
 
         return view('orders.index')->with(compact('orders'));
     }
