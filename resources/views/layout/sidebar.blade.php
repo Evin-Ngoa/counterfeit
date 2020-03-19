@@ -40,7 +40,7 @@
         <li class="sub-header"><span>Menu</span></li>
         <li class="selected {!! classActivePath('book') !!}">
             <!-- <a href="{{ route('book.index') }}"> -->
-            <a href="{{ route('book.view', ['id' => 'publisher1@gmail.com']) }}">
+            <a href="{{ route('book.view', ['id' => \App\User::loggedInUserEmail()]) }}">
                 <div class="icon-w">
                     <div class="os-icon os-icon-book"></div>
                 </div><span>Book</span>
@@ -48,7 +48,7 @@
         </li>
         <li class="sub-header"><span>Activities</span></li>
         <li class="selected {!! classActivePath('order') !!}">
-            <a href="{{ route('order.index') }}">
+            <a href="{{ route('order.view',  ['id' => \App\User::loggedInUserEmail()])}}">
                 <div class="icon-w">
                     <div class="os-icon os-icon-mail-14"></div>
                 </div><span>Orders</span>
