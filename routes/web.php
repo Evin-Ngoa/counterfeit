@@ -36,6 +36,9 @@ Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
 Route::resource('distributor', 'DistributorController');
 Route::resource('customer', 'CustomerController');
+Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
+    Route::get('/list/{id}', ['as' => 'view', 'uses' => 'OrderController@view_orders']);
+});
 Route::resource('order', 'OrderController');
 Route::resource('shipment', 'ShipmentController');
 
