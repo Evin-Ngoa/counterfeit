@@ -18,6 +18,10 @@ class BookService
         // dd($this->utils->all('/Book'));
         return $this->utils->all('/Book');
     }
+
+    public function getPublisherBooks($id){
+        return $this->utils->getMyBook('/queries/getPublisherBooks?addedBy=resource:org.evin.book.track.Publisher%23',  $id);
+    }
     
     public function getSingleBook($id){
         return $this->utils->findById('/Book/', $id);
