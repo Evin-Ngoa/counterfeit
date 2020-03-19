@@ -414,6 +414,11 @@ function setToken(detailsData){
     var jsonDataStringified = JSON.stringify(detailsData);
 
     localStorage.setItem('logged_in_user', jsonDataStringified);
+
+    //get your item from the localStorageand save it to the cookie
+    var myItem = localStorage.getItem('logged_in_user');
+    setCookie('logged_in_user', myItem, 7);
+
 }
 
 /**
@@ -426,6 +431,23 @@ function UnSetToken(){
     localStorage.removeItem('logged_in_user');
 
     window.location.assign('/auth/login');
+}
+
+//define a function to set cookies
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+ }
+
+ function getRoleFromClass(words) {
+    var n = words.split(".");
+    return n[n.length - 1];
+
 }
 
 $('.datetime').datetimepicker({
