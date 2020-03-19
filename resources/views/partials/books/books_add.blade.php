@@ -40,6 +40,7 @@
                                     <input type="hidden" name="sold" id="sold" class="form-control" value="false">
                                     <!-- "$class": "org.evin.book.track.Book", -->
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.Book">
+                                    <input type="hidden" name="addedBy" id="addedByAddBookForm" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="col-sm-6">
