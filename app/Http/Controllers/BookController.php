@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BookStoreRequest;
-use App\Http\Traits\PageTitles;
 use Illuminate\Http\Request;
 use App\Services\Book\BookService;
 use App\Services\Utils;
 use Illuminate\Support\Facades\Validator;
+use Hashids\Hashids;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class BookController extends Controller
 {
@@ -26,23 +27,29 @@ class BookController extends Controller
      */
     public function index()
     {
-        // $roles = Role::all();//Get all roles
-
-        // $page_title = PageTitles::BOOKS;
-
-        // $breadcrumbs = PageTitles::BOOKS;
-
-        // return view('roles.index')->with(compact('roles', 'page_title','breadcrumbs'));
-
-        // return view('welcome');
-
-        // $client = new \GuzzleHttp\Client();
-        // $request = $client->get('http://localhost:3000/api/Book');
-        // $response = $request->getBody()->getContents();
-        // dd($response);
-
         // Get all the post
         $books = $this->bookservice->getAllBooks();
+        // dd($books);
+
+        return view('books.index')->with(compact('books'));
+    }
+
+    /**
+     * Checking Owner Books
+     */
+    public function view_books($id)
+    {
+
+        $isSame = \App\User::active($id);
+
+        if(!$isSame){
+            // dd($isSame);
+            $userEmail = \App\User::loggedInUserEmail();
+            // dd($userEmail);
+            return Redirect::route('book.view', [$userEmail]);
+        }
+        
+        $books = $this->bookservice->getPublisherBooks($id);
         // dd($books);
 
         return view('books.index')->with(compact('books'));
@@ -102,8 +109,8 @@ class BookController extends Controller
 
         $request->merge(['id' => $genBookId]);
 
-         // Save all the post
-         $books = $this->bookservice->storeBook($request);
+        // Save all the post
+        $books = $this->bookservice->storeBook($request);
 
         return response()->json([
             'error' => false,
