@@ -29,7 +29,7 @@
                                     <!-- <th class="text-center">Book ID</th> -->
                                     <th class="text-center">Book Type</th>
                                     <th class="text-center">Price</th>
-                                    <th class="text-center">initial Owner</th>
+                                    <th class="text-center" style="display:none">initial Owner</th>
                                     <th class="text-center">Sold</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -57,8 +57,8 @@
                                     <td class="nowrap">
                                         <div class="smaller text-center">{{ $book->price }}</div>
                                     </td>
-                                    <td class="nowrap">
-                                        <div class="smaller text-center">{{ $book->initialOwner }}</div>
+                                    <td class="nowrap" style="display:none">
+                                        <div class="smaller text-center">{{ $book->addedBy }}</div>
                                     </td>
                                     @if($book->sold)
                                     <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
