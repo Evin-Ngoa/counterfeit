@@ -37,4 +37,41 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+        /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function active($id)
+    {
+        // dd($id);
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($_COOKIE['logged_in_user'],true);
+            $userEmail = $cookieData['email'];
+            if($id != $userEmail){
+                // return Redirect::route('book.view', [$userEmail]);
+                return false;
+            }
+
+            return true;
+        }
+    }
+    
+    /**
+     * 
+     */
+    public function scopeLoggedInUserEmail()
+    {
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user,true);
+
+            $userEmail = $cookieData['email'];
+
+            return $userEmail;
+        }   
+    }
 }
