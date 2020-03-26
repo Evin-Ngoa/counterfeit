@@ -12,8 +12,11 @@ class OrderService
 		$this->utils = $utils;
     }
 
-    public function getOnlyUserOrders($id, $user){
-        return $this->utils->findById('/queries/getPublisherOrders?seller=resource:org.evin.book.track.'.$user.'%23',  $id);
+    /**
+     * Get Orders by Users
+     */
+    public function getOnlyUserOrders($id, $action ,$user){
+        return $this->utils->findById('/queries/get'.$user.'Orders?'.$action.'=resource:org.evin.book.track.'.$user.'%23',  $id);
     }
     
     /**
