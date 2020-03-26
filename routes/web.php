@@ -32,7 +32,7 @@ Route::group(['prefix' => 'book', 'as' => 'book.'], function () {
     Route::get('/list/{id}', ['as' => 'view', 'uses' => 'BookController@view_books']);
 });
 Route::resource('book', 'BookController');
-Route::resource('transaction', 'TransactionController');
+Route::resource('transaction', 'TransactionController')->middleware(['auth.admin']);
 Route::resource('publisher', 'PublisherController');
 Route::resource('distributor', 'DistributorController');
 Route::resource('customer', 'CustomerController');
