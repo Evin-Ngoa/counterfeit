@@ -37,16 +37,18 @@
 
     <h1 class="menu-page-header">Page Header</h1>
     <ul class="main-menu">
+        @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
         <li class="sub-header"><span>Menu</span></li>
         <li class="selected {!! classActivePath('book') !!}">
-            <!-- <a href="{{ route('book.index') }}"> -->
             <a href="{{ route('book.view', ['id' => \App\User::loggedInUserEmail()]) }}">
                 <div class="icon-w">
                     <div class="os-icon os-icon-book"></div>
                 </div><span>Book</span>
             </a>
         </li>
+        @endif
         <li class="sub-header"><span>Activities</span></li>
+        @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
         <li class="selected {!! classActivePath('order') !!}">
             <a href="{{ route('order.view',  ['id' => \App\User::loggedInUserEmail()])}}">
                 <div class="icon-w">
@@ -54,6 +56,8 @@
                 </div><span>Orders</span>
             </a>
         </li>
+        @endif
+        @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
         <li class="selected {!! classActivePath('shipment') !!}">
             <a href="{{ route('shipment.index') }}">
                 <div class="icon-w">
@@ -61,6 +65,8 @@
                 </div><span>Shipments</span>
             </a>
         </li>
+        @endif
+        @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
         <li class="sub-header"><span>Users</span></li>
         <li class="selected {!! classActivePath('publisher') !!}">
             <a href="{{ route('publisher.index') }}">
@@ -83,6 +89,7 @@
                 </div><span>Customers</span>
             </a>
         </li>
+        
         <li class="sub-header"><span>Audit</span></li>
         <li class="selected {!! classActivePath('transaction') !!}">
             <a href="{{ route('transaction.index') }}">
@@ -91,7 +98,7 @@
                 </div><span>Transactions</span>
             </a>
         </li>
-        
+        @endif
     </ul>
     <div class="side-menu-magic">
         <h4>Dedication</h4>
