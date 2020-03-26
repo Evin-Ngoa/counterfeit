@@ -43,7 +43,14 @@ class OrderController extends Controller
             return Redirect::route('order.view', [$userEmail]);
         }
         
-        $orders = $this->orderservice->getOnlyUserOrders($id, 'Publisher');
+        if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER){
+            $orders = $this->orderservice->getOnlyUserOrders($id, 'seller', \App\Http\Traits\UserConstants::PUBLISHER);
+
+        }elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER){
+            $orders = $this->orderservice->getOnlyUserOrders($id, 'buyer', \App\Http\Traits\UserConstants::CUSTOMER);
+        }elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN){
+            $orders = $this->orderservice->getAllOrders();
+        }
 
 
         return view('orders.index')->with(compact('orders'));
