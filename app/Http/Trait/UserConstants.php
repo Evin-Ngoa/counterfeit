@@ -8,30 +8,22 @@ interface UserConstants
     /**
      * Identifier for role for admin
      */
-    const ROLE_ADMIN = 'Admin';
+    const ADMIN = 'Admin';
 
     /**
-     * Identifier role for Managers
+     * Identifier role for Publisher
      */
-    const ROLE_MANAGER = 'Manager';
-
+    const PUBLISHER = 'Publisher';
     /**
-     * Identifier for role for Supervisor
+     * Identifier role for Distributor
      */
-    const ROLE_SUPERVISOR = 'Supervisor';
-
+    const DISTRIBUTOR = 'Distributor';
     /**
-     * Identifier for role for Security Coordinator
+     * Identifier role for Customer
      */
-    const ROLE_SECURITY_COORDINATOR = 'Coordinator';
+    const CUSTOMER = 'Customer';
 
-    /**
-     * Identifier for role for Agents
-     */
-    const ROLE_AGENT = 'Agent';
 
     const JAMBO_PAY_SHARED_KEY = '6127482F-35BC-42FF-A466-276C577E7DF3';
-
-
 
 }
