@@ -23,17 +23,6 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="">Select Publisher - Initial Owner</label>
-                                    <select class="form-control" name="initialOwner" id="initialOwner">
-                                        <option value="">-Select-</option>
-                                        <option value="longhorn publishers" selected>Longhorn</option>
-                                        <option value="KLB publishers">KLB</option>
-                                        <option value="Moran publishers">Moran</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
                                     <label for="type">Subject / Type</label>
                                     <input name="type" id="type" class="form-control" placeholder="Book Subject...Eg Kiswahili" value="Geography">
                                     <!-- <input type="hidden" name="id" id="id" class="form-control" value="BOOK_006"> -->
@@ -68,21 +57,7 @@
                                     <textarea name="description" id="description" class="form-control" value="Testing Book Description">Any addition...</textarea>
                                 </div>
                             </div>
-                            <!-- <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="price">Book Price</label>
-                                    <button class="mr-2 mb-2 btn btn-primary btn-sm" type="button"> Save Book</button>
-                                </div>
-
-                            </div> -->
-                            <!-- <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="price">Book Price</label>
-                                    <button class="mr-2 mb-2 btn btn-primary btn-sm" type="button"> Save Book</button>
-                                </div>
-                            </div> -->
                         </div>
-
                     </div>
                 </div>
 
