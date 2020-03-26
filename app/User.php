@@ -38,7 +38,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-        /**
+    /**
      * Scope a query to only include active users.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -49,14 +49,27 @@ class User extends Authenticatable
         // dd($id);
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($_COOKIE['logged_in_user'],true);
+            $cookieData = json_decode($_COOKIE['logged_in_user'], true);
             $userEmail = $cookieData['email'];
-            if($id != $userEmail){
+            if ($id != $userEmail) {
                 // return Redirect::route('book.view', [$userEmail]);
                 return false;
             }
 
             return true;
+        }
+    }
+
+    /**
+     * Reads the role of user
+     */
+    public static function getUserRole(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            $userRole = User::extractRole($cookieData['$class']);
+
+            return $userRole;
         }
     }
     
@@ -67,11 +80,27 @@ class User extends Authenticatable
     {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user,true);
+            $cookieData = json_decode($user, true);
 
             $userEmail = $cookieData['email'];
 
             return $userEmail;
-        }   
+        }
+    }
+
+    /**
+     * Function to extract role
+     */
+    public static function extractRole($str)
+    {
+
+        // Your string
+        // $str = "I like to eat apple";
+        // Split it into pieces, with the delimiter being a space. This creates an array.
+        $split = explode(".", $str);
+        // Get the last value in the array.
+        // count($split) returns the total amount of values.
+        // Use -1 to get the index.
+        return $split[count($split) - 1];
     }
 }
