@@ -72,6 +72,16 @@ class User extends Authenticatable
             return $userRole;
         }
     }
+
+    /**
+     * Check if a user is loggedin
+     */
+    public static function checkAuth(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            return true;
+        }
+        return false;
+    }
     
     /**
      * Get the logged email
