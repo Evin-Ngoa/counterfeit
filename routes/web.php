@@ -12,9 +12,11 @@
 */
 // https://www.itsolutionstuff.com/post/guzzle-http-client-request-tutorial-with-laravel-58example.html
 // https://desertebs.com/laravel/how-to-consume-external-third-party-api-in-laravel-5
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+// Dashboard
+Route::get('/', ['uses' => 'DashboardController@index']);
+Route::resource('dashboard', 'DashboardController');
 
 Route::get('/dash', function () {
     return view('layout.theme-dash');
@@ -27,20 +29,24 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::get('/register', ['as' => 'register', 'uses' => 'AuthController@register']);
 });
 
-
+// Book
 Route::group(['prefix' => 'book', 'as' => 'book.'], function () {
     Route::get('/list/{id}', ['as' => 'view', 'uses' => 'BookController@view_books']);
 });
 Route::resource('book', 'BookController');
-Route::resource('transaction', 'TransactionController')->middleware(['auth.admin']);
+
+// History
+Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
 Route::resource('distributor', 'DistributorController');
 Route::resource('customer', 'CustomerController');
+Route::resource('shipment', 'ShipmentController');
+
+// Order Contract
 Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
     Route::get('/list/{id}', ['as' => 'view', 'uses' => 'OrderController@view_orders']);
 });
 Route::resource('order', 'OrderController');
-Route::resource('shipment', 'ShipmentController');
 
 //Import Users
 Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
