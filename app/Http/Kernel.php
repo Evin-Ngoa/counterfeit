@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'auth.distributor' => \App\Http\Middleware\AccessDistributor::class,
         'auth.customer' => \App\Http\Middleware\AccessCustomer::class,
         'check.auth' => \App\Http\Middleware\CheckAuth::class,
+        'auth.book' => \App\Http\Middleware\AccessBook::class,
     ];
 
     /**
