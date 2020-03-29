@@ -21,6 +21,6 @@ class AccessPublisher
         if (User::getUserRole() == UserConstants::PUBLISHER) {
             return $next($request);
         }
-        return redirect('book');
+        return redirect('dashboard');
     }
 }
