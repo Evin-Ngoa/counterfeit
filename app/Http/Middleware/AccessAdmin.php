@@ -21,6 +21,6 @@ class AccessAdmin
         if(User::getUserRole() == UserConstants::ADMIN){
             return $next($request);
         }
-        return redirect('book');
+        return redirect('dashboard');
     }
 }
