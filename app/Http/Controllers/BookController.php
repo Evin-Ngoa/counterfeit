@@ -19,6 +19,9 @@ class BookController extends Controller
     {
         $this->utils = $utils;
         $this->bookservice = $bookservice;
+
+        $this->middleware('check.auth');
+        $this->middleware('auth.book')->except('verify');
     }
     /**
      * Display a listing of the resource.
