@@ -21,6 +21,6 @@ class AccessCustomer
         if (User::getUserRole() == UserConstants::CUSTOMER) {
             return $next($request);
         }
-        return redirect('book');
+        return redirect('dashboard');
     }
 }
