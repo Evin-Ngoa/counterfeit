@@ -1812,7 +1812,7 @@ var Api = function () {
 
                             $('#msgAlert').html(msgHTML);
 
-                            redirectTo('/book');
+                            redirectTo('/dashboard');
                         } else {
                             msgHTML = '<div class="alert alert-danger" role="alert">'
                                 + 'Invalid Email / Password'
