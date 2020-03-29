@@ -21,6 +21,6 @@ class AccessBook
          if(User::getUserRole() == UserConstants::ADMIN || User::getUserRole() == UserConstants::PUBLISHER){
             return $next($request);
         }
-        return redirect('/auth/login');
+        return redirect('dashboard');
     }
 }
