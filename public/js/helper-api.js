@@ -430,6 +430,8 @@ function UnSetToken(){
 
     localStorage.removeItem('logged_in_user');
 
+    deleteCookie('logged_in_user');
+
     window.location.assign('/auth/login');
 }
 
@@ -438,11 +440,18 @@ function setCookie(name,value,days) {
     var expires = "";
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
+        date.setTime(date.getTime() + (days*24*60*60*1000)); // days
+        // date.setTime(date.getTime() + (hours*60*60*1000)); // hours
         expires = "; expires=" + date.toUTCString();
     }
     document.cookie = name + "=" + (value || "")  + expires + "; path=/";
  }
+
+ /*On logout deleteCookie*/
+function deleteCookie(cname) {
+    cookieValue = "LOGGED-OUT";
+    document.cookie = cname + "=" + cookieValue + "; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+}
 
  function getRoleFromClass(words) {
     var n = words.split(".");
