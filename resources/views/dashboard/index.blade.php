@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'WelcomeDasboard')
+@section('title', 'Welcome Dashboard')
 
 @section('breadcrumb')
 <ul class="breadcrumb">
