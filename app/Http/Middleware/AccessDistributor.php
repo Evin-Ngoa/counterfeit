@@ -21,6 +21,6 @@ class AccessDistributor
         if (User::getUserRole() == UserConstants::DISTRIBUTOR) {
             return $next($request);
         }
-        return redirect('book');
+        return redirect('dashboard');
     }
 }
