@@ -34,12 +34,21 @@ Route::group(['prefix' => 'book', 'as' => 'book.'], function () {
     Route::get('/list/{id}', ['as' => 'view', 'uses' => 'BookController@view_books']);
 });
 Route::resource('book', 'BookController');
+//Verify Book
+Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
+    Route::get('/book/{id}', ['as' => 'book', 'uses' => 'BookController@verify']);
+    Route::get('/book', ['as' => 'form', 'uses' => 'BookController@verify_form']);
+});
 
 // History
 Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
 Route::resource('distributor', 'DistributorController');
 Route::resource('customer', 'CustomerController');
+// Shipment
+Route::group(['prefix' => 'shipment', 'as' => 'shipment.'], function () {
+    Route::get('/list/{id}', ['as' => 'view', 'uses' => 'ShipmentController@view_shipments']);
+});
 Route::resource('shipment', 'ShipmentController');
 
 // Order Contract
@@ -47,12 +56,6 @@ Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
     Route::get('/list/{id}', ['as' => 'view', 'uses' => 'OrderController@view_orders']);
 });
 Route::resource('order', 'OrderController');
-
-//Import Users
-Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
-
-    Route::get('/book/{id}', ['as' => 'book', 'uses' => 'BookController@verify']);
-});
 
 Route::get('qrcode', function () {
     return QrCode::size(300)->generate('456');
