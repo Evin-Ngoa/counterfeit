@@ -34,6 +34,7 @@ class DashboardController extends Controller
     {
         $role = \App\User::getUserRole();
         $email = \App\User::loggedInUserEmail();
+        $orders = [];
         
         // Orders
         if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER){
