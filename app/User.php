@@ -82,6 +82,21 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    /*
+     * Get Email from resource
+     * resource:org.evin.book.track.Customer#toneevin07@gmail.com
+     */
+    public static function extractEmailFromResource($resource){
+        $email = "";
+        // Check if # Exists before exctracting the email
+        if (($pos = strpos($resource, "#")) !== FALSE) { 
+
+            //Get the string after the # character
+            $email = substr($resource, $pos + 1 ); 
+        }
+        return $email;
+    }
     
     /**
      * Get the logged email
