@@ -21,7 +21,8 @@ class BookController extends Controller
         $this->bookservice = $bookservice;
 
         $this->middleware('check.auth');
-        $this->middleware('auth.book')->except('verify');
+        $this->middleware('auth.admin')->only('index');
+        $this->middleware('auth.book');
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +34,6 @@ class BookController extends Controller
         // Get all the post
         $books = $this->bookservice->getAllBooks();
         // dd($books);
-
         return view('books.index')->with(compact('books'));
     }
 
@@ -69,6 +69,17 @@ class BookController extends Controller
         // dd($groupOwners);
 
         return view('books.book-verify')->with(compact('groupOwners', 'id'));
+    }
+
+    /**
+     * Tracking Book Ownership
+     */
+    public function verify_form()
+    {
+
+        // dd('groupOwners');
+
+        return view('books.book-form');
     }
 
     /**
