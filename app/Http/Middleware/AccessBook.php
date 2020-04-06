@@ -17,8 +17,13 @@ class AccessBook
      */
     public function handle($request, Closure $next)
     {
-         // Check if the logged in is an Admin OR Publisher
-         if(User::getUserRole() == UserConstants::ADMIN || User::getUserRole() == UserConstants::PUBLISHER){
+        // Check if the logged in is an Admin OR Publisher
+        if (
+            User::getUserRole() == UserConstants::ADMIN ||
+            User::getUserRole() == UserConstants::PUBLISHER ||
+            User::getUserRole() == UserConstants::DISTRIBUTOR ||
+            User::getUserRole() == UserConstants::CUSTOMER
+        ) {
             return $next($request);
         }
         return redirect('dashboard');
