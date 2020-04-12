@@ -13,6 +13,10 @@ class OrderController extends Controller
     public function __construct(OrderService  $orderservice)
     {
         $this->orderservice = $orderservice;
+
+        $this->middleware('check.auth');
+        $this->middleware('auth.admin')->only('index');;
+        $this->middleware('auth.order');
     }
     /**
      * Display a listing of the resource.
@@ -52,7 +56,7 @@ class OrderController extends Controller
             $orders = $this->orderservice->getAllOrders();
         }
 
-
+        // dd(count($orders));
         return view('orders.index')->with(compact('orders'));
     }
 
