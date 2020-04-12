@@ -14,6 +14,7 @@ class OrderService
 
     /**
      * Get Orders by Users
+     * http://localhost:3001/api/queries/getPublisherOrders?seller=resource:org.evin.book.track.Publisher%23publisher2@gmail.com
      */
     public function getOnlyUserOrders($id, $action ,$user){
         return $this->utils->findById('/queries/get'.$user.'Orders?'.$action.'=resource:org.evin.book.track.'.$user.'%23',  $id);
