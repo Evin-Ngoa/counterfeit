@@ -40,14 +40,26 @@ class Utils
 		return $this->endpointRequest($callURL . $id);
 	}
 
+	public function findByIdRelation($callURL, $id)
+	{
+		return $this->endpointRequest($callURL . $id . '?filter={"include":"resolve"}');
+	}
+
 	/**
-	 * http://localhost:3000/api/Book/?filter={"where":{"id":"BOOK_001"}, "include":"resolve"}
-	 * http://localhost:3000/api/Book/BOOK_001/?filter={include":"resolve"}
+	 * http://localhost:3000/api/Book/?filter={"where":{"id":"BOOK_001"},"include":"resolve"}
+	 * http://localhost:3000/api/Book/BOOK_001/?filter={"include":"resolve"}
 	 * Help resolve the relationships
 	 */
 	public function findByIdRelationResolved($callURL, $id)
 	{
 		return $this->endpointRequest($callURL . $id . '?filter={"where":{"id":"' . $id . '"},"include":"resolve"}');
+	}
+	/**
+	 * http://localhost:3001/api/OrderContract/?filter={"where":{"orderStatus":"DELIVERED"},"include":"resolve"}
+	 */
+	public function findByColumnWhereRelationResolved($callURL, $column, $value)
+	{
+		return $this->endpointRequest($callURL. '?filter={"where":{"'. $column .'":"' . $value . '"},"include":"resolve"}');
 	}
 
 	/**
