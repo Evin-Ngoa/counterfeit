@@ -2,6 +2,8 @@ var Api = function () {
     // http://localhost:3000/api/Book
     var domainUrl = 'http://localhost:3001/api';
     var postBookURL = domainUrl + '/Book';
+    // var getVerifyBookURL = 'http://localhost:8000/verify/book/';
+    var getVerifyBookURL = domainUrl + '/Book/';
     var postBookShipmentURL = domainUrl + '/BookRegisterShipment';
     var postOrderURL = domainUrl + '/OrderContract';
     var postShipmentURL = domainUrl + '/Shipment';
@@ -10,6 +12,7 @@ var Api = function () {
     var postPublisherURL = domainUrl + '/Publisher';
     var postDistributorURL = domainUrl + '/Distributor';
     var postCustomerURL = domainUrl + '/Customer';
+    var postCustomerReviewURL = domainUrl + '/updateShipmentReview';
 
     // var postBookURL = '/book';
 
@@ -18,6 +21,7 @@ var Api = function () {
      */
     // Book
     var bookForm = $("#book_form");
+    var bookVerifyForm = $("#verify_form");
     var bookShipmentForm = $("#frmregisterBookShipment");
     var frmEditBook = $("#frmEditBook");
 
@@ -27,6 +31,7 @@ var Api = function () {
 
     // Shipment
     var frmAddShipment = $("#frmAddShipment");
+    var frmEditShipment = $("#frmEditShipment");
 
     // Publisher
     var frmAddPublisher = $("#frmAddPublisher");
@@ -41,6 +46,7 @@ var Api = function () {
     // Customer
     var frmAddCustomer = $("#frmAddCustomer");
     var frmEditCustomer = $("#frmEditCustomer");
+    var frmAddReview = $("#frmAddReview");
 
     // Login
     var frmLogin = $("#frmLogin");
@@ -49,6 +55,7 @@ var Api = function () {
 
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
+    var bookVerifySbtBtn = $('#verify_form .btn-verify-book');
     var bookShipmentSbtBtn = $('#frmregisterBookShipment .btn-add-book-shipment');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
@@ -60,6 +67,7 @@ var Api = function () {
     var orderDeleteSbtBtn = $('#frmDeleteOrder .btn-delete-order');
 
     var shipmentSbtBtn = $('#frmAddShipment .btn-add-shipment');
+    var shipmentEditSbtBtn = $('#frmEditShipment .btn-edit-shipment');
     var shipmentSelectDistributorSbtBtn = $('#frmSelectDistributor .btn-add-ship-ownership');
 
     var publisherSbtBtn = $('#frmAddPublisher .btn-add-publisher');
@@ -74,10 +82,92 @@ var Api = function () {
     var customerEditSbtBtn = $('#frmEditCustomer .btn-edit-customer');
     var customerDeleteSbtBtn = $('#frmDeleteCustomer .btn-delete-customer');
 
+    var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
+
+    var handlePostReview = function () {
+        console.log("handlePostReview");
+        $("#add-error-bag").hide();
+
+        customerReviewSbtBtn.on('click', function () {
+            var json = frmAddReview.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'POST',
+                url: postCustomerReviewURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    $("#frmAddReview .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    $("#loader").hide();
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-review-error-bag").hide();
+                    $("#add-review-msgs").show();
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Record Added Successfuly '
+                        + '</div>';
+
+                    $('#add-review-msgs').html(msgHTML);
+
+                    $('#frmAddReview').trigger("reset");
+                    $("#frmAddReview .close").click();
+                    window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-review-msgs").hide();
+
+                        $('#add-review-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-review-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addReviewModal').modal('show');
+                    $("#add-review-error-bag").show();
+                }
+            });
+
+        });
+    };
+
     var handlePostBook = function () {
         console.log("handlePostBook");
         $("#add-error-bag").hide();
-        var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        var bookId = "BOOK_" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
         bookSbtBtn.on('click', function () {
             var json = bookForm.serializeArray();
@@ -94,6 +184,9 @@ var Api = function () {
 
             // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
             console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            // Add  created time
+            jsonData["createdAt"] = currentDateTime();
 
             var msgHTML = "";
 
@@ -158,6 +251,94 @@ var Api = function () {
         });
     };
 
+    var handleVerifyBook = function () {
+        console.log("handlePostBook");
+        $("#add-error-bag").hide();
+
+        // Prevent submit by enter button
+        bookVerifyForm.on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        bookVerifySbtBtn.on('click', function () {
+            var json = bookVerifyForm.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            var bookID = jsonData["book_serial"];
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            var getBookTrailUrl = getVerifyBookURL + bookID + '?filter={"where":{"id":"' + bookID + '"},"include":"resolve"}';
+
+            console.log("SUBMIT URL = " + getBookTrailUrl);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'GET',
+                url: getBookTrailUrl,
+                beforeSend: function () {//calls the loader id tag
+                    $("#book_form .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    $("#loader").hide();
+                    console.log("Success +++> " + JSON.stringify(data));
+                    console.log("data.id = " + data.id);
+
+                    window.location.href = '/verify/book/' + data.id;
+                },
+                error: function (data) {
+                    $("#loader").hide();
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-book-msgs").hide();
+
+                        $('#add-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        // $('#add-book-errors').html(errors.error.message);
+                        $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
+                }
+            });
+
+        });
+    };
+
     /**
      * Post Books in Shipment
      */
@@ -178,13 +359,20 @@ var Api = function () {
             var msgHTML = "";
 
             var checkBookAvailabilityURL = domainUrl + '/Book/' + jsonData["book"];
+            var updateBookShipmentURL = domainUrl + '/updateBookShipment/';
+
+            var updateBookShipmentData = {
+                "$class": "org.evin.book.track.updateBookShipment",
+                "book": "resource:org.evin.book.track.Book#" + jsonData["book"],
+                "shipmentId": jsonData["shipment"]
+            }
 
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // Check 
+            // Check if book Exists
             $.ajax({
                 type: 'GET',
                 url: checkBookAvailabilityURL,
@@ -195,58 +383,219 @@ var Api = function () {
                     $("#loader").show();
                 },
                 success: function (data) {
-                    // Send final 
-                    $.ajax({
-                        type: 'POST',
-                        url: postBookShipmentURL,
-                        data: jsonData,
-                        dataType: 'json',
-                        beforeSend: function () {//calls the loader id tag
-                            $("#frmregisterBookShipment .close").click();
-                            $("#loader").show();
-                        },
-                        success: function (data) {
-                            $("#loader").hide();
-                            console.log("Success +++> " + JSON.stringify(data));
-                            $("#add-error-bag").hide();
-                            $("#add-book-shipment-msgs").show();
-                            msgHTML = '<div class="alert alert-primary" role="alert">'
-                                + 'Record Added Successfuly '
-                                + '</div>';
+                    console.log("data below");
+                    console.log(JSON.stringify(data));
+                    //if book has shipment id then it has been registered
+                    // so disallow saving prevent repetition
 
-                            $('#add-book-shipment-msgs').html(msgHTML);
-
-                            $('#frmregisterBookShipment').trigger("reset");
-                            $("#frmregisterBookShipment .close").click();
-                            window.location.reload();
-                        },
-                        error: function (data) {
-                            var errors = $.parseJSON(data.responseText);
-                            var status = errors.error.statusCode;
-
-                            if (status == 422) {
-                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                $("#add-book-msgs").hide();
-
-                                $('#add-book-shipment-errors').html('');
-                                $.each(errors.error.details.messages, function (key, value) {
-                                    console.log('Error Value' + value + ' Key ' + key);
-                                    $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
-                                });
-
-                            } else {
-                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                $('#add-book-shipment-errors').html(errors.error.message);
-                            }
+                    // check of data.shipment exists in the book
+                    if (data.hasOwnProperty('shipment')) {
+                        // CORRECT ME have default value 
+                        // if the shipment default value id does not begin with SHIP_
+                        // then the book has not been assigned thus can assign else
+                        // already registered and can't be registered af=gain in 
+                        // another shipment
+                        if (checkShipmentID(data.shipment)) {
                             // hide loader
                             $("#loader").hide();
+
+                            console.log("ALREADY REGISTERED BOOK >>!!!!!!! ");
+                            $('#add-book-shipment-errors').html("Book Already Added To The Shipment.");
 
                             // Show modal to display error showed
                             $('#registerBookShipmentModal').modal('show');
                             $("#add-error-bag").show();
+                        } else {
+                            // Add Book To Shipment
+                            $.ajax({
+                                type: 'POST',
+                                url: postBookShipmentURL,
+                                data: jsonData,
+                                dataType: 'json',
+                                beforeSend: function () {//calls the loader id tag
+                                    $("#frmregisterBookShipment .close").click();
+                                    $("#loader").show();
+                                },
+                                success: function (data) {
+
+                                    // UPDATE SHIPMENT ID IN BOOK FOR TRACKING PURPOSES
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: updateBookShipmentURL,
+                                        data: updateBookShipmentData,
+                                        dataType: 'json',
+                                        beforeSend: function () {//calls the loader id tag
+                                            $("#frmregisterBookShipment .close").click();
+                                            $("#loader").show();
+                                        },
+                                        success: function (data) {
+                                            $("#loader").hide();
+                                            console.log("Success +++> " + JSON.stringify(data));
+                                            $("#add-error-bag").hide();
+                                            $("#add-book-shipment-msgs").show();
+                                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                + 'Record Added Successfuly '
+                                                + '</div>';
+
+                                            $('#add-book-shipment-msgs').html(msgHTML);
+
+                                            $('#frmregisterBookShipment').trigger("reset");
+                                            $("#frmregisterBookShipment .close").click();
+                                            window.location.reload();
+                                        },
+                                        error: function (data) {
+                                            var errors = $.parseJSON(data.responseText);
+                                            var status = errors.error.statusCode;
+
+                                            if (status == 422) {
+                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                $("#add-book-msgs").hide();
+
+                                                $('#add-book-shipment-errors').html('');
+                                                $.each(errors.error.details.messages, function (key, value) {
+                                                    console.log('Error Value' + value + ' Key ' + key);
+                                                    $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                });
+
+                                            } else {
+                                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                $('#add-book-shipment-errors').html(errors.error.message);
+                                            }
+                                            // hide loader
+                                            $("#loader").hide();
+
+                                            // Show modal to display error showed
+                                            $('#registerBookShipmentModal').modal('show');
+                                            $("#add-error-bag").show();
+                                        }
+                                    });  // End AJax updateBookShipmentURL
+                                },
+                                error: function (data) {
+                                    var errors = $.parseJSON(data.responseText);
+                                    var status = errors.error.statusCode;
+
+                                    if (status == 422) {
+                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                        $("#add-book-msgs").hide();
+
+                                        $('#add-book-shipment-errors').html('');
+                                        $.each(errors.error.details.messages, function (key, value) {
+                                            console.log('Error Value' + value + ' Key ' + key);
+                                            $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                        });
+
+                                    } else {
+                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                        $('#add-book-shipment-errors').html(errors.error.message);
+                                    }
+                                    // hide loader
+                                    $("#loader").hide();
+
+                                    // Show modal to display error showed
+                                    $('#registerBookShipmentModal').modal('show');
+                                    $("#add-error-bag").show();
+                                }
+                            });
                         }
-                    });
+                    } else {
+                        // Add Book To Shipment
+                        $.ajax({
+                            type: 'POST',
+                            url: postBookShipmentURL,
+                            data: jsonData,
+                            dataType: 'json',
+                            beforeSend: function () {//calls the loader id tag
+                                $("#frmregisterBookShipment .close").click();
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                // UPDATE SHIPMENT ID IN BOOK FOR TRACKING PURPOSES
+                                $.ajax({
+                                    type: 'POST',
+                                    url: updateBookShipmentURL,
+                                    data: updateBookShipmentData,
+                                    dataType: 'json',
+                                    beforeSend: function () {//calls the loader id tag
+                                        $("#frmregisterBookShipment .close").click();
+                                        $("#loader").show();
+                                    },
+                                    success: function (data) {
+                                        $("#loader").hide();
+                                        console.log("Success +++> " + JSON.stringify(data));
+                                        $("#add-error-bag").hide();
+                                        $("#add-book-shipment-msgs").show();
+                                        msgHTML = '<div class="alert alert-primary" role="alert">'
+                                            + 'Record Added Successfuly '
+                                            + '</div>';
+
+                                        $('#add-book-shipment-msgs').html(msgHTML);
+
+                                        $('#frmregisterBookShipment').trigger("reset");
+                                        $("#frmregisterBookShipment .close").click();
+                                        window.location.reload();
+                                    },
+                                    error: function (data) {
+                                        var errors = $.parseJSON(data.responseText);
+                                        var status = errors.error.statusCode;
+
+                                        if (status == 422) {
+                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                            $("#add-book-msgs").hide();
+
+                                            $('#add-book-shipment-errors').html('');
+                                            $.each(errors.error.details.messages, function (key, value) {
+                                                console.log('Error Value' + value + ' Key ' + key);
+                                                $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                            });
+
+                                        } else {
+                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                            $('#add-book-shipment-errors').html(errors.error.message);
+                                        }
+                                        // hide loader
+                                        $("#loader").hide();
+
+                                        // Show modal to display error showed
+                                        $('#registerBookShipmentModal').modal('show');
+                                        $("#add-error-bag").show();
+                                    }
+                                });  // End AJax updateBookShipmentURL
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-book-msgs").hide();
+
+                                    $('#add-book-shipment-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-book-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-book-shipment-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                // Show modal to display error showed
+                                $('#registerBookShipmentModal').modal('show');
+                                $("#add-error-bag").show();
+                            }
+                        });
+
+                    }
+
+
 
                 },
                 error: function (data) {
@@ -318,6 +667,9 @@ var Api = function () {
             // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
             console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
             var postEditBookURL = domainUrl + '/Book/' + BookId;
+
+            // Add update time
+            jsonData["updatedAt"] = currentDateTime();
 
             var msgHTML = "";
 
@@ -435,22 +787,35 @@ var Api = function () {
 
     var handlePostOrder = function () {
         console.log("handlePostOrder");
-        $("#add-error-bag").hide();
+        $("#add-order-error-bag").hide();
         var orderId = 'CON_' + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
         orderSbtBtn.on('click', function () {
             var json = frmAddOrder.serializeArray();
             var jsonData = {};
+            var seller = $("#seller").val();
+            var buyer = $("#buyer").val();
+            console.log("Seller - " + seller + " Buyer - " + buyer);
+    
 
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
             });
-
+            var publisherID = jsonData["seller"];
             // Append ID
             jsonData["contractId"] = orderId;
 
+            //updating Seller
+            jsonData["seller"] = "org.evin.book.track.Publisher#" + seller;
+
+            //updating Buyer
+            jsonData["buyer"] = "org.evin.book.track.Customer#" + buyer;
+
             // Set default status 
             jsonData["orderStatus"] = 'WAITING';
+
+            // created AT
+            jsonData["createdAt"] = currentDateTime();
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
@@ -458,16 +823,17 @@ var Api = function () {
 
             var msgHTML = "";
 
+            var checkPublisherExistsURL = domainUrl + '/Publisher/' + publisherID;
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // data:  JSON.stringify(jsonData),
+            // check if publisher exists
             $.ajax({
-                type: 'POST',
-                url: postOrderURL,
-                data: jsonData,
+                type: 'GET',
+                url: checkPublisherExistsURL,
                 dataType: 'json',
                 beforeSend: function () {//calls the loader id tag
                     $("#frmAddOrder .close").click();
@@ -475,19 +841,62 @@ var Api = function () {
                 },
                 success: function (data) {
 
-                    $("#loader").hide();
-                    console.log("Success +++> " + JSON.stringify(data));
-                    $("#add-error-bag").hide();
-                    $("#add-order-msgs").show();
-                    msgHTML = '<div class="alert alert-primary" role="alert">'
-                        + 'Record Added Successfuly '
-                        + '</div>';
+                    // $("#loader").hide();
+                    console.log("Success Check Publisher +++> " + JSON.stringify(data));
+                    // Post Order
+                    $.ajax({
+                        type: 'POST',
+                        url: postOrderURL,
+                        data: jsonData,
+                        dataType: 'json',
+                        beforeSend: function () {//calls the loader id tag
+                            $("#frmAddOrder .close").click();
+                            $("#loader").show();
+                        },
+                        success: function (data) {
 
-                    $('#add-order-msgs').html(msgHTML);
+                            $("#loader").hide();
+                            console.log("Success +++> " + JSON.stringify(data));
+                            $("#add-error-bag").hide();
+                            $("#add-order-msgs").show();
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + 'Record Added Successfuly '
+                                + '</div>';
 
-                    $('#frmAddOrder').trigger("reset");
-                    $("#frmAddOrder .close").click();
-                    window.location.reload();
+                            $('#add-order-msgs').html(msgHTML);
+
+                            $('#frmAddOrder').trigger("reset");
+                            $("#frmAddOrder .close").click();
+                            window.location.reload();
+                        },
+                        error: function (data) {
+
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+                            // if (status == 500) {
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-order-msgs").hide();
+
+                                $('#add-order-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                $('#add-order-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+
+                            // Show modal to display error showed
+                            $('#addOrderModal').modal('show');
+                            $("#add-order-error-bag").show();
+                        }
+                    });
+
                 },
                 error: function (data) {
 
@@ -513,7 +922,7 @@ var Api = function () {
 
                     // Show modal to display error showed
                     $('#addOrderModal').modal('show');
-                    $("#add-error-bag").show();
+                    $("#add-order-error-bag").show();
                 }
             });
 
@@ -533,50 +942,100 @@ var Api = function () {
             var OrderId = $('#contractId').val();
             console.log('Order ID Edit ==> ' + OrderId);
             var jsonData = {};
+            var seller = $("#sellerEdit").val();
+            var buyer = $("#buyer").val();
+
+            console.log("Seller - " + seller + " Buyer - " + buyer);
 
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
             });
+            var publisherID = jsonData["seller"];
+
+            //updating Seller
+            jsonData["seller"] = "org.evin.book.track.Publisher#" + seller;
+
+            //updating Buyer
+            jsonData["buyer"] = "org.evin.book.track.Customer#" + buyer;
+
+            // Update time
+            jsonData["updatedAt"] =  currentDateTime();
 
             console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
-            console.log('Order ID Edit jsonData ==> ' + jsonData.contractId);
 
-            console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
             var putEditOrderURL = domainUrl + '/OrderContract/' + OrderId;
 
             var msgHTML = "";
+
+            var checkPublisherExistsURL = domainUrl + '/Publisher/' + publisherID;
 
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // data:  JSON.stringify(jsonData),
+            // check if publisher exists
             $.ajax({
-                type: 'PUT',
-                url: putEditOrderURL,
-                data: jsonData,
+                type: 'GET',
+                url: checkPublisherExistsURL,
                 dataType: 'json',
                 beforeSend: function () {//calls the loader id tag
-                    $("#frmEditOrder .close").click();
+                    $("#frmAddOrder .close").click();
                     $("#loader").show();
                 },
                 success: function (data) {
-                    $("#loader").hide();
+                    // data:  JSON.stringify(jsonData),
+                    $.ajax({
+                        type: 'PUT',
+                        url: putEditOrderURL,
+                        data: jsonData,
+                        dataType: 'json',
+                        beforeSend: function () {//calls the loader id tag
+                            $("#frmEditOrder .close").click();
+                            $("#loader").show();
+                        },
+                        success: function (data) {
+                            $("#loader").hide();
 
-                    console.log("Success +++> " + JSON.stringify(data));
-                    $("#edit-error-bag").hide();
-                    $("#edit-order-msgs").show();
+                            console.log("Success +++> " + JSON.stringify(data));
+                            $("#edit-error-bag").hide();
+                            $("#edit-order-msgs").show();
 
-                    msgHTML = '<div class="alert alert-primary" role="alert">'
-                        + 'Record Added Successfuly '
-                        + '</div>';
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + 'Record Added Successfuly '
+                                + '</div>';
 
-                    $('#edit-order-msgs').html(msgHTML);
+                            $('#edit-order-msgs').html(msgHTML);
 
-                    $('#frmEditOrder').trigger("reset");
-                    $("#frmEditOrder .close").click();
-                    window.location.reload();
+                            $('#frmEditOrder').trigger("reset");
+                            $("#frmEditOrder .close").click();
+                            window.location.reload();
+                        },
+                        error: function (data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+                            // if (status == 500) {
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#edit-order-msgs").hide();
+
+                                $('#edit-order-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#edit-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                $('#edit-order-errors').html(errors.error.message);
+                            }
+
+                            $("#loader").hide();
+                            $('#editOrderModal').modal('show');
+                            $("#edit-error-bag").show();
+                        }
+                    }); // END Ajax edit
+
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
@@ -601,7 +1060,7 @@ var Api = function () {
                     $('#editOrderModal').modal('show');
                     $("#edit-error-bag").show();
                 }
-            }); // END Ajax
+            });
 
         }); // END OnClick Submit
 
@@ -679,14 +1138,19 @@ var Api = function () {
      */
     var handlePostShipment = function () {
         console.log("handlePostShipment");
-        $("#add-error-bag").hide();
+        $("#add-shipment-error-bag").hide();
         var shipmentId = 'SHIP_' + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-        var owner = "org.evin.book.track.Publisher#publisher1@gmail.com";
+        // var owner = "org.evin.book.track.Publisher#publisher1@gmail.com";
+        var owner = $("#owner").val();
+        // var ShipmentStatus = $("#ShipmentStatus").val();
+
+        // console.log("SHIPMENT STATUS" + ShipmentStatus);
         shipmentSbtBtn.on('click', function () {
+            console.log("handlePostShipment shipmentSbtBtn.on");
             var json = frmAddShipment.serializeArray();
             var jsonData = {};
 
-            var getLocation = $('#location').val();
+            // var getLocation = $('#location').val();
             // var initialOwner = $('#owner').val();
 
             $.each(json, function (i, field) {
@@ -696,14 +1160,20 @@ var Api = function () {
             // Append ID
             jsonData["shipmentId"] = shipmentId;
 
+            // Add createdAt time
+            jsonData["createdAt"] = currentDateTime();
+
             // Set Default Status
-            jsonData["shipmentStatus"] = 'WAITING';
+            // jsonData["ShipmentStatus"] = ShipmentStatus;
+
+            // Delete Owner Variable from JSON
+            delete jsonData["owner"];
 
             // update latitude
-            jsonData.location = {
-                "$class": "org.evin.book.track.Location",
-                "latLong": getLocation
-            }
+            // jsonData.location = {
+            //     "$class": "org.evin.book.track.Location",
+            //     "latLong": getLocation
+            // }
 
             //update owner
             // jsonData.shipOwnership = [{
@@ -770,7 +1240,7 @@ var Api = function () {
                                     $("#loader").hide();
                                     console.log("Success updateOrderStatusURL");
 
-                                    $("#add-error-bag").hide();
+                                    $("#add-shipment-error-bag").hide();
                                     $("#add-shipment-msgs").show();
                                     msgHTML = '<div class="alert alert-primary" role="alert">'
                                         + 'Record Added Successfuly '
@@ -803,7 +1273,7 @@ var Api = function () {
                                     }
                                     $("#loader").hide();
                                     $('#addShipmentModal').modal('show');
-                                    $("#add-error-bag").show();
+                                    $("#add-shipment-error-bag").show();
                                 }
                             }); // end ajax 3
 
@@ -826,7 +1296,7 @@ var Api = function () {
                             }
                             $("#loader").hide();
                             $('#addShipmentModal').modal('show');
-                            $("#add-error-bag").show();
+                            $("#add-shipment-error-bag").show();
                         }
                     }); // end Ajax 2
                 },
@@ -849,9 +1319,368 @@ var Api = function () {
                     } else {
                         $('#add-shipment-errors').html(errors.error.message);
                     }
-                    $("#add-error-bag").show();
+                    $("#loader").hide();
+                    $('#addShipmentModal').modal('show');
+                    $("#add-shipment-error-bag").show();
                 }
             });
+
+        });
+    };
+
+    /**
+     * Posting Edit Shipment Form
+     */
+    var handleEditShipment = function () {
+        console.log("handleEditShipment");
+        $("#add-shipment-error-bag").hide();
+        // var shipmentId = 'SHIP_' + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        // var owner = "org.evin.book.track.Publisher#publisher1@gmail.com";
+        // var owner = $("#owner").val();
+        // var ShipmentStatus = $("#ShipmentStatus").val();
+
+        // console.log("SHIPMENT STATUS" + ShipmentStatus);
+        shipmentEditSbtBtn.on('click', function () {
+            console.log("handleEditShipment BUTTON");
+            var json = frmEditShipment.serializeArray();
+            var jsonData = {};
+
+            // var getLocation = $('#location').val();
+            // var initialOwner = $('#owner').val();
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            jsonData["shipmentId"];
+
+            // Add updated time
+            jsonData["updatedAt"] = currentDateTime();
+
+            // Set Default Status
+            // jsonData["ShipmentStatus"] = ShipmentStatus;
+
+            // Delete Owner Variable from JSON
+            delete jsonData["owner"];
+            var putEditShipmentURL = domainUrl + "/Shipment/" + jsonData["shipmentId"];
+
+            var updateInitialShipOwnership = {
+                "$class": "org.evin.book.track.ShipOwnership",
+                "owner": owner,
+                "shipment": "resource:org.evin.book.track.Shipment#" + shipmentId
+            }
+
+            var updateOrderStatusURL = domainUrl + "/updateOrderStatus";
+            var updateOrderStatusData = {
+                "$class": "org.evin.book.track.updateOrderStatus",
+                "order": "resource:org.evin.book.track.OrderContract#" + jsonData["contract"],
+                "orderStatus": "DELIVERED"
+            }
+
+            var updateShipmentStatusURL = domainUrl + "/updateShipmentStatus";
+
+            var editShipmentDistributorData = {
+                "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
+                "ShipmentStatus": jsonData["ShipmentStatus"]
+            }
+
+            var updateShipmentItemStatusURL = domainUrl + "/updateShipmentItemStatus";
+            var editShipmentItemStatusData = {
+                "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
+                "itemStatus": jsonData["itemStatus"]
+            }
+
+            var postCustomerOwnerURL = domainUrl + '/ShipOwnership';
+            var postCustomerOwnerData = {
+                "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
+                "owner": "resource:org.evin.book.track.Customer#" + jsonData["customerId"]
+            }
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            console.log("editShipmentItemStatus Sent Data =>" + JSON.stringify(editShipmentItemStatusData));
+            console.log("editShipmentDistributorData Sent Data =>" + JSON.stringify(editShipmentDistributorData));
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            //Check if shipment is delivered
+            if (jsonData["ShipmentStatus"] == "DELIVERED") {
+
+                //
+                // 1. Update ShipmentOwnership to customers by getting
+                // 2. Update Shipment Status
+                // 3. Update updateOrderStatus
+                // 4. Update ItemStatus
+                // 5. Frontend - lock distributor & publisher actions
+                // 6. Frontend - Unlock review on customer actions to review
+
+                // 1. Update ShipmentOwnership to customers by getting
+                $.ajax({
+                    type: 'POST',
+                    url: postCustomerOwnerURL,
+                    data: postCustomerOwnerData,
+                    dataType: 'json',
+                    beforeSend: function () {//calls the loader id tag
+                        $("#frmEditShipment .close").click();
+                        $("#loader").show();
+                    },
+                    success: function (data) {
+                        // 2. Update Shipment Status
+                        $.ajax({
+                            type: 'POST',
+                            url: updateShipmentStatusURL,
+                            data: editShipmentDistributorData,
+                            dataType: 'json',
+                            beforeSend: function () {//calls the loader id tag
+                                $("#frmEditShipment .close").click();
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+                                console.log("Executed updateShipmentStatusURL successfully");
+                                 // 3. Update updateOrderStatus
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: updateOrderStatusURL,
+                                        data: updateOrderStatusData,
+                                        dataType: 'json',
+                                        beforeSend: function () {//calls the loader id tag
+                                            $("#frmEditShipment .close").click();
+                                            $("#loader").show();
+                                        },
+                                        success: function (data) {
+                                            console.log("Executed updateOrderStatusURL successfully");
+                                            // 4. Update ItemStatus
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: updateShipmentItemStatusURL,
+                                                data: editShipmentItemStatusData,
+                                                dataType: 'json',
+                                                beforeSend: function () {//calls the loader id tag
+                                                    $("#frmEditShipment .close").click();
+                                                    $("#loader").show();
+                                                },
+                                                success: function (data) {
+                                                    console.log("Executed updateShipmentItemStatusURL successfully");
+                                                    $("#loader").hide();
+
+                                                    console.log("Success +++> " + JSON.stringify(data));
+                                                    $("#edit-shipment-error-bag").hide();
+                                                    $("#edit-shipment-msgs").show();
+
+                                                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                        + 'Record Added Successfuly '
+                                                        + '</div>';
+
+                                                    $('#edit-shipment-msgs').html(msgHTML);
+
+                                                    $('#frmEditShipment').trigger("reset");
+                                                    $("#frmEditShipment .close").click();
+                                                    window.location.reload();
+
+
+                                                },
+                                                error: function (data) {
+                                                    var errors = $.parseJSON(data.responseText);
+                                                    var status = errors.error.statusCode;
+                                                    $("#edit-shipment-errors").show();
+                                                    // if (status == 500) {
+                                                    if (status == 422) {
+                                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                        $("#edit-shipment-msgs").hide();
+
+                                                        $('#edit-shipment-errors').html('');
+                                                        $.each(errors.error.details.messages, function (key, value) {
+                                                            console.log('Error Value' + value + ' Key ' + key);
+                                                            $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                        });
+
+                                                    } else {
+                                                        $('#edit-shipment-errors').html(errors.error.message);
+                                                    }
+                                                    $("#loader").hide();
+                                                    $('#editShipmentModal').modal('show');
+                                                    $("#edit-shipment-error-bag").show();
+                                                }
+                                            });
+                                        },
+                                        error: function (data) {
+                                            var errors = $.parseJSON(data.responseText);
+                                            var status = errors.error.statusCode;
+                                            $("#edit-shipment-errors").show();
+                                            // if (status == 500) {
+                                            if (status == 422) {
+                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                $("#edit-shipment-msgs").hide();
+            
+                                                $('#edit-shipment-errors').html('');
+                                                $.each(errors.error.details.messages, function (key, value) {
+                                                    console.log('Error Value' + value + ' Key ' + key);
+                                                    $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                });
+            
+                                            } else {
+                                                $('#edit-shipment-errors').html(errors.error.message);
+                                            }
+                                            $("#loader").hide();
+                                            $('#editShipmentModal').modal('show');
+                                            $("#edit-shipment-error-bag").show();
+                                        }
+                                    });
+
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+                                $("#edit-shipment-errors").show();
+                                // if (status == 500) {
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#edit-shipment-msgs").hide();
+
+                                    $('#edit-shipment-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    $('#edit-shipment-errors').html(errors.error.message);
+                                }
+                                $("#loader").hide();
+                                $('#editShipmentModal').modal('show');
+                                $("#edit-shipment-error-bag").show();
+                            }
+                        });
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+                        $("#edit-shipment-errors").show();
+                        // if (status == 500) {
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#edit-shipment-msgs").hide();
+
+                            $('#edit-shipment-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            $('#edit-shipment-errors').html(errors.error.message);
+                        }
+                        $("#loader").hide();
+                        $('#editShipmentModal').modal('show');
+                        $("#edit-shipment-error-bag").show();
+                    }
+                });
+
+            } else {
+                // data:  JSON.stringify(jsonData),
+                $.ajax({
+                    type: 'POST',
+                    url: updateShipmentStatusURL,
+                    data: editShipmentDistributorData,
+                    dataType: 'json',
+                    beforeSend: function () {//calls the loader id tag
+                        $("#frmEditShipment .close").click();
+                        $("#loader").show();
+                    },
+                    success: function (data) {
+                        // Updating Item
+                        $.ajax({
+                            type: 'POST',
+                            url: updateShipmentItemStatusURL,
+                            data: editShipmentItemStatusData,
+                            dataType: 'json',
+                            beforeSend: function () {//calls the loader id tag
+                                $("#frmEditShipment .close").click();
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                $("#loader").hide();
+
+                                console.log("Success +++> " + JSON.stringify(data));
+                                $("#edit-shipment-error-bag").hide();
+                                $("#edit-shipment-msgs").show();
+
+                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                    + 'Record Added Successfuly '
+                                    + '</div>';
+
+                                $('#edit-shipment-msgs').html(msgHTML);
+
+                                $('#frmEditShipment').trigger("reset");
+                                $("#frmEditShipment .close").click();
+                                window.location.reload();
+
+
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+                                $("#edit-shipment-errors").show();
+                                // if (status == 500) {
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#edit-shipment-msgs").hide();
+
+                                    $('#edit-shipment-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    $('#edit-shipment-errors').html(errors.error.message);
+                                }
+                                $("#loader").hide();
+                                $('#editShipmentModal').modal('show');
+                                $("#edit-shipment-error-bag").show();
+                            }
+                        });
+
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+                        $("#edit-shipment-errors").show();
+                        // if (status == 500) {
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#edit-shipment-msgs").hide();
+
+                            $('#edit-shipment-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            $('#edit-shipment-errors').html(errors.error.message);
+                        }
+                        $("#loader").hide();
+                        $('#editShipmentModal').modal('show');
+                        $("#edit-shipment-error-bag").show();
+                    }
+                });
+
+            }
 
         });
     };
@@ -1712,7 +2541,7 @@ var Api = function () {
                     $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     $("#frmSelectDistributor .close").click();
-                    // window.location.reload();
+                    window.location.reload();
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
@@ -1746,7 +2575,7 @@ var Api = function () {
      * Function to redirect
      * @param {*} UrlLink 
      */
-    function redirectTo(UrlLink){
+    function redirectTo(UrlLink) {
         window.setTimeout(function () {
             // Move to a new location or you can do something else
             // window.location.href = "/book";
@@ -1875,27 +2704,30 @@ var Api = function () {
                     },
                     success: function (data) {
                         // $("#loader").hide();
-                        console.log("Success +++> " + JSON.stringify(data));
-                        $("#add-error-login-bag").hide();
 
                         // Setting token
                         setToken(data);
+
+                        console.log("Success +++> " + JSON.stringify(data));
+                        $("#add-error-login-bag").hide();
 
                         if (data.secret == jsonData["secret"]) {
                             msgHTML = '<div class="alert alert-primary" role="alert">'
                                 + ' Login Successfuly. You will be redirected to Dashboard'
                                 + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+
+                            redirectTo('/dashboard');
                         } else {
                             msgHTML = '<div class="alert alert-danger" role="alert">'
                                 + 'Invalid Email / Password'
                                 + '</div>';
-                        }
-                        $('#msgAlert').html(msgHTML);
 
-                        window.setTimeout(function () {
-                            // Move to a new location or you can do something else
-                            window.location.href = "/auth/login";
-                        }, 5000);
+                            $('#msgAlert').html(msgHTML);
+
+                            redirectTo('/auth/login');
+                        }
                     },
                     error: function (data) {
                         var errors = $.parseJSON(data.responseText);
@@ -1929,7 +2761,7 @@ var Api = function () {
                     }
                 });
 
-            } else {
+            } else if (jsonData["participant"] == "Publisher") {
                 // Publisher
                 console.log("PUBLISHER LOGIN");
 
@@ -1950,27 +2782,107 @@ var Api = function () {
                     },
                     success: function (data) {
                         // $("#loader").hide();
-                        console.log("Success +++> " + JSON.stringify(data));
-                        $("#add-error-login-bag").hide();
-                        
+
                         // Setting token
                         setToken(data);
+
+                        console.log("Success +++> " + JSON.stringify(data));
+                        $("#add-error-login-bag").hide();
 
                         if (data.secret == jsonData["secret"]) {
                             msgHTML = '<div class="alert alert-primary" role="alert">'
                                 + ' Login Successfuly. You will be redirected to Dashboard'
                                 + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+
+                            redirectTo('/dashboard');
                         } else {
                             msgHTML = '<div class="alert alert-danger" role="alert">'
                                 + 'Invalid Email / Password'
                                 + '</div>';
-                        }
-                        $('#msgAlert').html(msgHTML);
 
-                        window.setTimeout(function () {
-                            // Move to a new location or you can do something else
-                            window.location.href = "/book";
-                        }, 5000);
+                            $('#msgAlert').html(msgHTML);
+
+                            redirectTo('/auth/login');
+                        }
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+
+                            $('#add-login-errors').html('');
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + '<ul>';
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                msgHTML += '<li>' + key + ' ' + value + '</li>';
+                                // $('#add-login-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+                            msgHTML += '</ul>'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML)
+
+                        } else {
+                            // console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + 'Invalid Email / Password'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+                        }
+                    }
+                });
+            } else {
+                // Admin
+                console.log("ADMIN LOGIN");
+
+                adminLoginUrl = domainUrl + "/Admin/" + jsonData["email"];
+
+                // delete participant object
+                delete jsonData["participant"];
+
+                $.ajax({
+                    type: 'GET',
+                    url: adminLoginUrl,
+                    data: jsonData,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        // calls the loader id tag
+                        // $("#book_form .close").click();
+                        // $("#loader").show();
+                    },
+                    success: function (data) {
+                        // $("#loader").hide();
+
+                        // Setting token
+                        setToken(data);
+
+                        console.log("Success +++> " + JSON.stringify(data));
+                        $("#add-error-login-bag").hide();
+
+                        if (data.secret == jsonData["secret"]) {
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + ' Login Successfuly. You will be redirected to Dashboard'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+
+                            redirectTo('/dashboard');
+                        } else {
+                            msgHTML = '<div class="alert alert-danger" role="alert">'
+                                + 'Invalid Email / Password'
+                                + '</div>';
+
+                            $('#msgAlert').html(msgHTML);
+
+                            redirectTo('/auth/book-counterfeit-admin');
+                        }
                     },
                     error: function (data) {
                         var errors = $.parseJSON(data.responseText);
@@ -2228,6 +3140,29 @@ var Api = function () {
         });
     };
 
+    // function you can use:
+    function getAfterHarsh(str) {
+        return str.split('#')[1];
+    }
+
+    // Check if value contains SHIP_
+    // to show book has already been assigned another shipment
+    // therefore cannot be reassigned another shipment
+    // returns boolean
+    function checkShipmentID(str) {
+        var shipID = getAfterHarsh(str);
+        var bool = shipID.includes("SHIP_");
+        return bool;
+    }
+
+    // Get current Date Time in GMT+0300 (East Africa Time)
+    function currentDateTime(){
+        var dt = new Date();
+        dt.setHours( dt.getHours() + 3 );
+
+        return dt;
+    }
+
     return {
         //main function to initiate the theme
         init: function (Args) {
@@ -2236,6 +3171,7 @@ var Api = function () {
             handlePostBook();
             handleEditBook();
             handleDeleteBook();
+            handleVerifyBook();
 
             // Handle Order EndPoints
             handlePostOrder();
@@ -2244,6 +3180,7 @@ var Api = function () {
 
             // Handle Shipment
             handlePostShipment();
+            handleEditShipment();
             handlePostBookShipment();
             handlePostSelectDistributor();
 
@@ -2261,6 +3198,9 @@ var Api = function () {
             handlePostCustomer();
             handleEditCustomer();
             handleDeleteCustomer();
+
+            // Handle Review
+            handlePostReview();
 
             // Login
             handlePostLogin();
