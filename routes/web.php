@@ -25,8 +25,10 @@ Route::get('/dash', function () {
 // Authentication
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 
+    Route::get('/book-counterfeit-admin', ['as' => 'book-counterfeit-admin', 'uses' => 'AuthController@adminLogin']);
     Route::get('/login', ['as' => 'login', 'uses' => 'AuthController@index']);
     Route::get('/register', ['as' => 'register', 'uses' => 'AuthController@register']);
+    
 });
 
 // Book
@@ -45,6 +47,7 @@ Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
 Route::resource('distributor', 'DistributorController');
 Route::resource('customer', 'CustomerController');
+Route::resource('profile', 'ProfileController');
 // Shipment
 Route::group(['prefix' => 'shipment', 'as' => 'shipment.'], function () {
     Route::get('/list/{id}', ['as' => 'view', 'uses' => 'ShipmentController@view_shipments']);
