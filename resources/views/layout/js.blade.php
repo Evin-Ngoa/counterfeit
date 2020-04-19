@@ -56,7 +56,7 @@
                 $(".logged-user-name").text(authTokenParsedData.name);
                 $(".logged-user-role").text(getRoleFromClass(authTokenParsedData.$class));
                 $("#addedByAddBookForm").val(pubID);
-            } else if (authTokenParsedData.$class == "org.evin.book.track.Distributor") {
+            } else if (authTokenParsedData.$class == "org.evin.book.track.Distributor" || authTokenParsedData.$class == "org.evin.book.track.Admin") {
                 // update Names & Role in dashboard 
                 $(".logged-user-name").text(authTokenParsedData.name);
                 $(".logged-user-role").text(getRoleFromClass(authTokenParsedData.$class));
@@ -69,12 +69,13 @@
         }
 
         $(document).ready(function() {
+            var domainUrl = 'http://localhost:3001/api';
             $("#selectDistributor").select2({
                 width: '100%',
                 ajax: {
                     url: function(params) {
                         console.log("params url " + JSON.stringify(params));
-                        return 'http://localhost:3000/api/Distributor?filter={\"where\":{\"email\":\"' + params.term + '\"},\"include\":\"resolve\"}';
+                        return domainUrl + '/Distributor?filter={\"where\":{\"email\":\"' + params.term + '\"},\"include\":\"resolve\"}';
                     },
                     type: "GET",
                     dataType: 'json',
