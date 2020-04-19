@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Order;
 
+use App\Http\Traits\OrderConstants;
 use App\Services\Utils;
 
 class OrderService
@@ -28,10 +29,31 @@ class OrderService
     }
 
     /**
+     * 
+     */
+    public function getProcessedOrders(){
+        return $this->utils->findByColumnWhereRelationResolved('/OrderContract','orderStatus', OrderConstants::PROCESSED);
+    }
+
+    /**
+     * 
+     */
+    public function getCancelledOrders(){
+        return $this->utils->findByColumnWhereRelationResolved('/OrderContract','orderStatus',OrderConstants::SHIP_CANCELED);
+    }
+
+    /**
+     * 
+     */
+    public function getLostOrders(){
+        return $this->utils->findByColumnWhereRelationResolved('/OrderContract','orderStatus',OrderConstants::SHIP_LOST);
+    }
+
+    /**
      * Get Single Order
      */
     public function getSingleOrder($id){
-        return $this->utils->findById('/OrderContract/', $id);
+        return $this->utils->findByIdRelation('/OrderContract/', $id);
     }
    
 }
