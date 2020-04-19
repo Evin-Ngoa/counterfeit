@@ -21,20 +21,29 @@
                             <div class="activity-box">
                                 <div class="activity-avatar"><img alt="" src="/img/avatar1.jpg"></div>
                                 <div class="activity-info">
-                                    <div class="activity-role">{{ $groupOwner->owner->name }}</div>
+                                    @if(isset($groupOwner->owner->name))
+                                        <div class="activity-role">{{ $groupOwner->owner->name }}</div>
+                                    @else
+                                        <div class="activity-role">{{ $groupOwner->owner->firstName }} {{ $groupOwner->owner->lastName }} </div>
+                                    @endif
+
+                                    @if(isset($groupOwner->owner->address->country))
                                     <strong class="activity-title">{{ $groupOwner->owner->address->country}} , {{ $groupOwner->owner->address->county }} , {{ $groupOwner->owner->address->street }}</strong>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                         @endforeach
                     @else
                     <div class="alert alert-success">
-                        @lang('No Related Data Found.')
+                        <!-- If Book exists but there is no tracking yet -->
+                        @lang('WARNING!!! The Book {{ $id }} is a possible counterfeit.')
                     </div>
                     @endif
                 @else
                 <div class="alert alert-success">
-                    @lang('No Related Data Found.')
+                    <!-- If Book does not exist -->
+                    @lang('WARNING!!! The Book {{ $id }} is a possible counterfeit.')
                 </div>
                 @endif
             </div>
