@@ -75,6 +75,31 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the names of the participants
+     */
+    public static function getParticipantNames(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            $userRole = User::extractRole($cookieData['$class']);
+            // dd($userRole);
+            if( $userRole == \App\Http\Traits\UserConstants::ADMIN || 
+                $userRole == \App\Http\Traits\UserConstants::PUBLISHER || 
+                $userRole == \App\Http\Traits\UserConstants::DISTRIBUTOR){
+                if(isset($cookieData['name'])){
+                    $userName = $cookieData['name'];
+                }
+            }elseif($userRole == \App\Http\Traits\UserConstants::CUSTOMER){
+                $firstName = $cookieData['firstName'];
+                $lastName = $cookieData['lastName'];
+                $userName = $firstName . " " . $lastName;
+            }
+
+            return $userName;
+        }
+    }
+
+    /**
      * Check if a user is loggedin
      */
     public static function checkAuth(){
