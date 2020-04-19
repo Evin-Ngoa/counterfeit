@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\OrderConstants;
 use App\Services\Book\BookService;
+use App\Services\Customer\CustomerService;
+use App\Services\Distributor\DistributorService;
 use App\Services\Order\OrderService;
+use App\Services\Publisher\PublisherService;
+use App\Services\Shipment\ShipmentService;
 use App\Services\Utils;
 use Illuminate\Http\Request;
 
@@ -11,16 +16,27 @@ class DashboardController extends Controller
 {
     protected $bookservice;
     protected $orderservice;
+    protected $shipmentservice;
+    protected $customerservice;
+    protected $publisherservice;
+    protected $distributorservice;
 
     public function __construct(
-        Utils $utils, 
-        BookService $bookservice, 
-        OrderService  $orderservice
-        )
-    {
+        Utils $utils,
+        BookService $bookservice,
+        OrderService  $orderservice,
+        ShipmentService $shipmentservice,
+        CustomerService $customerservice,
+        PublisherService $publisherservice,
+        DistributorService $distributorservice
+    ) {
         $this->utils = $utils;
         $this->bookservice = $bookservice;
         $this->orderservice = $orderservice;
+        $this->shipmentservice = $shipmentservice;
+        $this->customerservice = $customerservice;
+        $this->publisherservice = $publisherservice;
+        $this->distributorservice = $distributorservice;
 
         $this->middleware('check.auth');
         // $this->middleware('auth.book')->except('verify');
@@ -35,18 +51,165 @@ class DashboardController extends Controller
         $role = \App\User::getUserRole();
         $email = \App\User::loggedInUserEmail();
         $orders = [];
-        
+        $array = array();
+        $ordersWaitingProcessed = array();
+        $ordersDelivered = array();
+        $shipments = array();
+        $arrayShip = array();
+        $arrayDeli = array();
+
         // Orders
-        if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER){
+        if (\App\User::getUserRole() == \App\Http\Traits\UserConstants::PUBLISHER) {
+            // 1. PUBLISHER ORDERS STATS
+            $array = array();
             $orders = $this->orderservice->getOnlyUserOrders($email, 'seller', \App\Http\Traits\UserConstants::PUBLISHER);
-        }elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER){
+
+            foreach ($orders as $key => $value) {
+                // Active Orders include ; Sum(waiting, processed)  
+                if ($orders[$key]->orderStatus == OrderConstants::WAITING || $orders[$key]->orderStatus == OrderConstants::PROCESSED) {
+                    $array[$key] = $value;
+                    $ordersWaitingProcessed = $array;
+                }
+            }
+            // dd($ordersWaitingProcessed);
+            $ordersCount = count($ordersWaitingProcessed);
+            // dd($ordersCount);
+
+            // 2. PUBLISHER SHIPMENTS STATS
+            $shipmentPub = $this->shipmentservice->getAllShipments();
+
+            foreach ($shipmentPub as $key => $value) {
+                // Active Shipments include waiting, dispatching and transit
+                if ($shipmentPub[$key]->contract->seller->email == \App\User::loggedInUserEmail() && ($shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_WAITING || $shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_DISPATCHING || $shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_SHIPPED_IN_TRANSIT)) {
+                    $arrayShip[$key] = $value;
+                    $shipments = $arrayShip;
+                }
+            }
+            // dd($shipments);
+            $shipmentsCount = count($shipments);
+            // dd($shipmentsCount);
+
+            // 3. PUBLISHER BOOKS STATS
+            $booksPub = $this->bookservice->getPublisherBooks($email);
+            $booksPubCount = count($booksPub);
+            // dd($booksPubCount);
+
+            return view('dashboard.index')->with(compact('role', 'ordersCount', 'ordersWaitingProcessed','shipmentsCount','shipments','booksPubCount'));
+        } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::CUSTOMER) {
+            // 1. CUSTOMER ORDERS STATS
             $orders = $this->orderservice->getOnlyUserOrders($email, 'buyer', \App\Http\Traits\UserConstants::CUSTOMER);
-        }elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN){
+
+            foreach ($orders as $key => $value) {
+                // Active Orders include ; Sum(waiting, processed)  
+                if ($orders[$key]->orderStatus == OrderConstants::WAITING || $orders[$key]->orderStatus == OrderConstants::PROCESSED) {
+                    $array[$key] = $value;
+                    $ordersWaitingProcessed = $array;
+                }
+            }
+            // dd($ordersWaitingProcessed);
+            $ordersCount = count($ordersWaitingProcessed);
+            // dd($ordersCount);
+
+            // 2. SHIPMENTS STATS
+            $shipment = $this->shipmentservice->getAllShipments();
+
+            foreach ($shipment as $key => $value) {
+                // Active Shipments include waiting, dispatching and transit
+                if ($shipment[$key]->contract->buyer->email == \App\User::loggedInUserEmail() && ($shipment[$key]->ShipmentStatus == OrderConstants::SHIP_WAITING || $shipment[$key]->ShipmentStatus == OrderConstants::SHIP_DISPATCHING || $shipment[$key]->ShipmentStatus == OrderConstants::SHIP_SHIPPED_IN_TRANSIT)) {
+                    $arrayShip[$key] = $value;
+                    $shipments = $arrayShip;
+                }
+            }
+            // dd($shipments);
+            $shipmentsCount = count($shipments);
+            // dd($shipmentsCount);
+
+            // 3. ORDERS DELIVERED STATS
+            $ordersDeli = $this->orderservice->getOnlyUserOrders($email, 'buyer', \App\Http\Traits\UserConstants::CUSTOMER);
+
+            foreach ($ordersDeli as $key => $value) {
+                // Active Orders include ; Sum(waiting, processed)  
+                if ($ordersDeli[$key]->orderStatus == OrderConstants::SHIP_DELIVERED) {
+                    $arrayDeli[$key] = $value;
+                    $ordersDelivered = $arrayDeli;
+                }
+            }
+            // dd($ordersDelivered);
+            $ordersDeliveredCount = count($ordersDelivered);
+            // dd($ordersDeliveredCount);
+
+            return view('dashboard.index')->with(compact('role', 'ordersCount', 'ordersWaitingProcessed', 'shipmentsCount', 'ordersDeliveredCount'));
+        } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::ADMIN) {
             $orders = $this->orderservice->getAllOrders();
+            $orderCount = count($orders);
+
+            // 1. USERS STATS
+            $publishers = $this->publisherservice->getAllPublishers();
+            $customers = $this->customerservice->getAllCustomers();
+            $distributors = $this->distributorservice->getAllDistributors();
+
+            $publishersCount = count($publishers);
+            $customersCount = count($customers);
+            $distributorsCount = count($distributors);
+
+            // 2. ORDER STATS
+            $array = array();
+            $orders = $this->orderservice->getAllOrders();
+            foreach ($orders as $key => $value) {
+                // Active Orders include ; Sum(waiting, processed)  
+                if ($orders[$key]->orderStatus == OrderConstants::WAITING || $orders[$key]->orderStatus == OrderConstants::PROCESSED) {
+                    $array[$key] = $value;
+                    $ordersWaitingProcessed = $array;
+                }
+            }
+            $ordersCount = count($ordersWaitingProcessed);
+
+            
+            // 3. ADMIN SHIPMENTS STATS
+            $shipmentPub = $this->shipmentservice->getAllShipments();
+
+            foreach ($shipmentPub as $key => $value) {
+                // Active Shipments include waiting, dispatching and transit
+                if ($shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_WAITING || $shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_DISPATCHING || $shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_SHIPPED_IN_TRANSIT) {
+                    $arrayShip[$key] = $value;
+                    $shipments = $arrayShip;
+                }
+            }
+            // dd($shipments);
+            $shipmentsCount = count($shipments);
+            // dd($shipmentsCount);
+
+            return view('dashboard.index')->with(compact('role','shipmentsCount','shipments','ordersWaitingProcessed', 'orderCount','publishersCount','customersCount','distributorsCount'));
+
+        }elseif(\App\User::getUserRole() == \App\Http\Traits\UserConstants::DISTRIBUTOR) {
+
+            // 1. DISTRIBUTOR SHIPMENTS STATS
+            $shipmentDistr = $this->shipmentservice->getAllShipments();
+
+             
+            foreach ($shipmentDistr as $key => $value) {
+                // dd(count($shipment[$key]->shipOwnership));
+                // if the array has owners
+                if(count($shipmentDistr[$key]->shipOwnership) > 0){
+                    // loop shipowners
+                    foreach ($shipmentDistr[$key]->shipOwnership as $keys => $values) {
+                        if ($shipmentDistr[$key]->shipOwnership[$keys]->owner->email == $email) {
+                            $array[ $key ] = $value;
+                            $shipments = $array;
+                        }
+                    }
+                }
+                
+            }
+            // dd($shipments);
+            $shipmentsCount = count($shipments);
+            // dd($shipmentsCount);
+            return view('dashboard.index')->with(compact('role', 'shipmentsCount','shipments'));
+
         }
         $orderCount = count($orders);
 
-        return view('dashboard.index')->with(compact('role','orderCount'));
+        return view('dashboard.index')->with(compact('role', 'orderCount'));
     }
 
     /**
