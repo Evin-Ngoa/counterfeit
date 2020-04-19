@@ -35,12 +35,13 @@
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.Shipment">
                                     <!-- <input type="hidden" name="owner" id="owner" class="form-control" value="org.evin.book.track.Publisher#{{ \App\User::loggedInUserEmail() }}"> -->
                                     <input type="hidden" name="shipmentId" id="shipmentId" class="form-control" value="">
+                                    <input type="hidden" name="customerId" id="customerId" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="shipmentStatus">Select Shipment Status</label>
-                                    <select class="form-control" name="shipmentStatus" id="shipmentStatus">
+                                    <label for="ShipmentStatus">Select Shipment Status</label>
+                                    <select class="form-control" name="ShipmentStatus" id="ShipmentStatus">
                                         <option value="">-Select-</option>
                                         <option value="WAITING" selected>WAITING</option>
                                         <option value="DISPATCHING">DISPATCHING</option>
@@ -62,12 +63,21 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6" style="display:block;">
+                            @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
+                            <div class="col-sm-6" style="display:none;">
                                 <div class="form-group">
                                     <label for="unitCount">Quantity</label>
                                     <input name="unitCount" id="unitCount" class="form-control" placeholder="Enter Number of Books" value="">
                                 </div>
                             </div>
+                            @elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="unitCount">Quantity</label>
+                                    <input name="unitCount" id="unitCount" class="form-control" placeholder="Enter Number of Books" value="">
+                                </div>
+                            </div>
+                            @endif
                             <!-- <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="location">Location</label>

@@ -16,7 +16,7 @@
                                 <!-- <div class="alert alert-info" role="alert">
                                     <strong>Sorry! </strong>No Records at the moment.
                                 </div> -->
-                                <div class="alert alert-danger" id="add-error-bag" >
+                                <div class="alert alert-danger" id="add-shipment-error-bag" >
                                     <ul id="add-shipment-errors">
                                     </ul>
                                 </div>
@@ -29,13 +29,13 @@
                                     <!-- <input type="hidden" name="sold" id="sold" class="form-control" value="false"> -->
                                     <!-- "$class": "org.evin.book.track.Shipment", -->
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.Shipment">
-                                    <!-- <input type="hidden" name="owner" id="owner" class="form-control" value="org.evin.book.track.Publisher#publisher1@gmail.com"> -->
+                                    <input type="hidden" name="owner" id="owner" class="form-control" value="org.evin.book.track.Publisher#{{ \App\User::loggedInUserEmail() }}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="shipmentStatus">Select Shipment Status</label>
-                                    <select class="form-control" name="shipmentStatus" id="shipmentStatus">
+                                    <label for="ShipmentStatus">Select Shipment Status</label>
+                                    <select class="form-control" name="ShipmentStatus" id="ShipmentStatus">
                                         <option value="">-Select-</option>
                                         <option value="WAITING" selected>WAITING</option>
                                         <option value="DISPATCHING">DISPATCHING</option>
@@ -63,32 +63,6 @@
                                     <input name="unitCount" id="unitCount" class="form-control" placeholder="Enter Number of Books" value="300">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="location">Location</label>
-                                    <input name="location" id="location" class="form-control" placeholder="Type..." value="4.0435,39.6682">
-                                </div>
-                            </div>
-                            <!-- <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="description">Shipment Description</label> -->
-                                    <!-- <input name="description" id="description" class="form-control" placeholder="Any addition..." value=""> -->
-                                    <!-- <textarea name="description" id="description" class="form-control" value="Testing Shipment Description">Any addition...</textarea>
-                                </div>
-                            </div> -->
-                            <!-- <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="price">Shipment Price</label>
-                                    <button class="mr-2 mb-2 btn btn-primary btn-sm" type="button"> Save Shipment</button>
-                                </div>
-
-                            </div> -->
-                            <!-- <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="price">Shipment Price</label>
-                                    <button class="mr-2 mb-2 btn btn-primary btn-sm" type="button"> Save Shipment</button>
-                                </div>
-                            </div> -->
                         </div>
 
                     </div>
