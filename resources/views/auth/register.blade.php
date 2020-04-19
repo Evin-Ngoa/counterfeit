@@ -90,12 +90,15 @@
                     <input class="form-control" name="name" id="name" placeholder="Enter Business Name" type="text">
                     <div class="pre-icon os-icon os-icon-briefcase"></div>
                 </div>
-                <div class="form-group">
+                <div class="row" id="usernameField">
+                    
+                </div>
+                <!-- <div class="form-group">
                     <label for=""> Username</label>
                     <input class="form-control" name="userName" id="userName" data-error="Please input your Username" placeholder="Enter Username" type="text">
                     <div class="pre-icon os-icon os-icon-at-sign"></div>
                     <div class="help-block form-text with-errors form-control-feedback"></div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for=""> Telephone</label>
                     <input class="form-control" name="telephone" id="telephone" data-error="Please input your Telephone Number" placeholder="Enter Telephone" type="text" required>
@@ -190,19 +193,59 @@
             $("#add-error-reg-bag").hide();
         }
 
-        function checkUser() {
-
-            if (document.getElementById('Customer').checked) {
+        // If customer is retailer, enable name disable 
+        // first and last name
+        function enableName(bool){
+            console.log("Value Passed = " + bool);
+            if(bool == "1"){
+                $("#businessNameField").show();
+                $("#individualNameField").hide();
+            }else{
                 $("#businessNameField").hide();
                 $("#individualNameField").show();
+            }
+        }
+
+        function checkUser() {
+            var usernameHtml = '<div class="col-sm-12">'
+                        +'<div class="form-group">'
+                        +'<label for="userName">Username</label>'
+                        +'<div class="pre-icon os-icon os-icon-at-sign"></div>'
+                        +'<input class="form-control" name="userName" id="userName" data-error="Please input your Username" placeholder="Enter Username" type="text">'
+                        +'</div>'
+                        +'</div>';
+            var usernameRetailerHtml = '<div class="col-sm-6">'
+            +'<div class="form-group">'
+            +'<label for="userName">Username</label>'
+            +'<div class="pre-icon os-icon os-icon-at-sign"></div>'
+            +'<input class="form-control" name="userName" id="userName" data-error="Please input your Username" placeholder="Enter Username" type="text">'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-sm-6">'
+            +'<div class="form-group">'
+            +'<label for="isRetailer">Are You A Retailer?</label>'
+            +'<select name="isRetailer" onchange="enableName(this.value)" id="isRetailer" class="form-control" data-error="Please input your Username">'
+            +'<option value="">- Select -</option>'
+            +'<option value="1">Yes</option>'
+            +'<option value="0">No</option>'
+            +'</select>'
+            +'</div>'
+            +'</div>';
+            if (document.getElementById('Customer').checked) {
+               
+                $("#businessNameField").hide();
+                $("#individualNameField").show();
+                $("#usernameField").html(usernameRetailerHtml);
             }
             if (document.getElementById('Distributor').checked) {
                 $("#businessNameField").show();
                 $("#individualNameField").hide();
+                $("#usernameField").html(usernameHtml);
             }
             if (document.getElementById('Publisher').checked) {
                 $("#businessNameField").show();
                 $("#individualNameField").hide();
+                $("#usernameField").html(usernameHtml);
             }
 
         }
