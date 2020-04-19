@@ -44,7 +44,7 @@
                                     <td>
                                         <div class="user-with-avatar">
                                             <img alt="" src="img/avatar1.jpg">
-                                            <span class="smaller">{{ $customer->name }}</span>
+                                            <span class="smaller">{{ $customer->firstName }} {{ $customer->lastName }}</span>
                                         </div>
                                     </td>
                                     <td>
@@ -56,13 +56,17 @@
                                     @else
                                     <td><span class="smaller text-center">Unknown</span></td>
                                     @endif
-                                    <td>
-                                        <span class="smaller text-center">
-                                            {{ $customer->address->country }},
-                                            {{ $customer->address->county }},
-                                            {{ $customer->address->street }}
-                                        </span>
-                                    </td>
+                                    @if(isset( $publisher->address ))
+                                        <td>
+                                            <span class="smaller text-center">
+                                                {{ $publisher->address->country }},
+                                                {{ $publisher->address->county }},
+                                                {{ $publisher->address->street }}
+                                            </span>
+                                        </td>
+                                    @else
+                                        <td><span class="smaller text-center">Unknown</span></td>
+                                    @endif
                                     <td class="row-actions">
                                         <a href="#" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editCustomerForm('{{ $customer->email }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" onclick="event.preventDefault();deleteCustomerForm('{{ $customer->email }}');" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
