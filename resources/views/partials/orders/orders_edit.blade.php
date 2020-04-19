@@ -21,8 +21,8 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="seller">Publisher</label>
-                                    <input name="seller" id="seller" class="form-control" placeholder="Use publisher email" value="publisher1@gmail.com">
+                                    <label for="seller">Publisher Email</label>
+                                    <input name="seller" id="sellerEdit" class="form-control" placeholder="Use publisher email" value="">
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -30,8 +30,12 @@
                                     <label for="arrivalDateTime">Expected Arrival Date</label>
                                     <input name="arrivalDateTime" id="arrivalDateTime" class="form-control datetime" placeholder="DD/MM/YYYY" value="">
                               
-                                    <input type="hidden" name="buyer" id="buyer" class="form-control" value="customer@gmail.com">
+                                    <input type="hidden" name="buyer" id="buyer" class="form-control" value="">
                                     <input type="hidden" name="contractId" id="contractId" class="form-control" value="">
+                                    <input type="hidden" name="createdAt" id="createdAt" class="form-control" value="">
+                                    @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
+                                        <input type="hidden" name="orderStatus" id="orderStatus"  value="WAITING">
+                                    @endif
                                 
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.OrderContract">
                                 </div>
@@ -46,18 +50,28 @@
                                     </select>
                                 </div>
                             </div>
+                            @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
                             <div class="col-sm-4">
+                            @elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
+                            <div class="col-sm-6">
+                            @endif
                                 <div class="form-group">
                                     <label for="unitPrice">Agreed Unit Price</label>
                                     <input name="unitPrice" id="unitPrice" class="form-control" placeholder="Enter Price" value="300">
                                 </div>
                             </div>
+                            @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
                             <div class="col-sm-4">
+                            @elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
+                            <div class="col-sm-6">
+                            @endif
                                 <div class="form-group">
                                     <label for="quantity">Quantity</label>
                                     <input name="quantity" id="quantity" class="form-control" placeholder="Enter Price..." value="120">
                                 </div>
                             </div>
+                            @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
+                            
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="orderStatus">Order Status</label>
@@ -68,28 +82,38 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            @endif
+
+                            @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
+                            <div class="col-sm-6" style="display: none;">
                                 <div class="form-group">
                                     <label for="lateArrivalPenaltyFactor">% Discount Per Book on Late Arrival</label>
                                     <input name="lateArrivalPenaltyFactor" id="lateArrivalPenaltyFactor" class="form-control" placeholder="Enter Penalty in decimal Eg 5% => 0.05" value="0.20">                                
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" style="display: none;">
                                 <div class="form-group">
                                     <label for="damagedPenaltyFactor">% Discount Per Book on Damaged Books</label>
                                     <input name="damagedPenaltyFactor" id="damagedPenaltyFactor" class="form-control" placeholder="Use decimal Eg 10% => 0.10" value="0.10">                                
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" style="display: none;">
                                 <div class="form-group">
                                     <label for="lostPenaltyFactor">% Discount Per Book on Lost Books</label>
                                     <input name="lostPenaltyFactor" id="lostPenaltyFactor" class="form-control" placeholder="Use decimal Eg 15% => 0.15" value="0.15">                                
                                 </div>
                             </div>
+                            @endif
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="destinationAddress">Delivery Address</label>
                                     <textarea name="destinationAddress" id="destinationAddress" class="form-control" value="" placeholder="Be specific; County, Street, building name, Flr etc">Nairobi, Loita Street, Barclays Plaza, Floor 12</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="description">Provide Book Description</label>
+                                    <textarea name="description" id="description" class="form-control" value="" placeholder="Provide Book Name, subject, Author, Edition etc"></textarea>
                                 </div>
                             </div>
                         </div>
