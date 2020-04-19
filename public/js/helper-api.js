@@ -1,4 +1,4 @@
-
+var domainUrl = 'http://localhost:3001/api';
 /**
  * Show edit form with the values
 * @param {*} book_id 
@@ -74,8 +74,8 @@ function editOrderForm(order_id) {
             $("#contractId").val(orderID);
             $("#IdOrder").text(orderID);
             // $("#frmEditOrder input[name=id]").val(BookID);
-            $("#frmEditOrder input[name=buyer]").val(data.order.buyer);
-            $("#frmEditOrder input[name=seller]").val(data.order.seller);
+            $("#frmEditOrder input[name=buyer]").val(data.order.buyer.email);
+            $("#frmEditOrder input[name=seller]").val(data.order.seller.email);
             $("#frmEditOrder input[name=arrivalDateTime]").val(data.order.arrivalDateTime);
             $("#frmEditOrder input[name=payOnArrival]").val(data.order.payOnArrival);
             $("#frmEditOrder textarea[name=destinationAddress]").val(data.order.destinationAddress);
@@ -84,6 +84,8 @@ function editOrderForm(order_id) {
             $("#frmEditOrder input[name=lateArrivalPenaltyFactor]").val(data.order.lateArrivalPenaltyFactor);
             $("#frmEditOrder input[name=damagedPenaltyFactor]").val(data.order.damagedPenaltyFactor);
             $("#frmEditOrder input[name=lostPenaltyFactor]").val(data.order.lostPenaltyFactor);
+            $("#frmEditOrder textarea[name=description]").val(data.order.description);
+            $("#frmEditOrder input[name=createdAt]").val(data.order.createdAt);
 
             $('#editOrderModal').modal('show');
         },
@@ -92,6 +94,155 @@ function editOrderForm(order_id) {
         }
     });
 }
+
+/**
+ * Show edit form with the values
+* @param {*} order_id 
+*/
+function orderDetailedView(order_id) {
+    console.log("Clicked orderDetailedView form");
+    var qrCodeEdit = '';
+    $.ajax({
+        type: 'GET',
+        url: '/order/' + order_id + '/edit',
+        success: function (data) {
+            var buyerInfo = '';
+            var sellerInfo = '';
+
+            $("#orderIdView").html(data.order.contractId);
+            $("#orderStatusView").html(data.order.orderStatus);
+
+            buyerInfo += data.order.buyer.email + ' , ' + data.order.buyer.firstName + ' ' + data.order.buyer.lastName;
+            $("#buyerInfoView").html(buyerInfo);
+
+            sellerInfo += data.order.seller.email + ' , ' + data.order.seller.name;
+            $("#sellerInfoView").html(sellerInfo);
+
+            $("#arrivalDateTimeView").html(data.order.arrivalDateTime);
+            if(data.order.payOnArrival == true){
+                $("#payOnArrivalView").html("Yes");
+            }else{
+                $("#payOnArrivalView").html("No");
+            }
+            $("#unitPriceView").html(data.order.unitPrice);
+            $("#quantityView").html(data.order.quantity);
+            $("#descriptionView").html(data.order.description);
+            $("#destinationAddressView").html(data.order.destinationAddress);
+
+            $('#orderViewModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+/**
+ * Show edit form with the values
+ * @param {*} shipment_id 
+ */
+function editShipmentForm(shipment_id){
+    console.log("Clicked Shipment Edit form");
+    
+    $.ajax({
+        type: 'GET',
+        url: '/shipment/' + shipment_id + '/edit',
+        success: function (data) {
+     
+            // console.log("JSON +>" + JSON.stringify(data));
+            // console.log("Buyer +>" + JSON.stringify(data.shipment.contract.buyer.email));
+
+            $("#edit-shipment-error-bag").hide();
+
+            $("#frmEditShipment input[name=contract]").val(data.shipment.contract.contractId);
+            $("#frmEditShipment select[name=ShipmentStatus]").val(data.shipment.ShipmentStatus);
+            $("#frmEditShipment select[name=itemStatus]").val(data.shipment.itemStatus);
+            $("#frmEditShipment input[name=unitCount]").val(data.shipment.unitCount);
+            $("#frmEditShipment input[name=shipmentId]").val(data.shipment.shipmentId);
+            $("#frmEditShipment input[name=customerId]").val(data.shipment.contract.buyer.email);
+
+            $('#editShipmentModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+/**
+ * Show Review Form
+ * @param {*} shipment_id 
+ */
+function reviewForm(shipment_id){
+    console.log("Clicked reviewForm form");
+    
+    $.ajax({
+        type: 'GET',
+        url: '/shipment/' + shipment_id + '/edit',
+        success: function (data) {
+     
+            // console.log("JSON +>" + JSON.stringify(data));
+            // console.log("Buyer +>" + JSON.stringify(data.shipment.contract.buyer.email));
+            console.log("Shipment +>" + JSON.stringify(data.shipment.shipmentId));
+
+            $("#add-review-error-bag").hide();
+
+            $("#frmAddReview input[name=contract]").val(data.shipment.contract.contractId);
+            // $("#frmAddReview select[name=ShipmentStatus]").val(data.shipment.ShipmentStatus);
+            // $("#frmAddReview select[name=itemStatus]").val(data.shipment.itemStatus);
+            // $("#frmAddReview input[name=unitCount]").val(data.shipment.unitCount);
+            $("#frmAddReview input[name=shipment]").val(data.shipment.shipmentId);
+            // $("#frmAddReview input[name=customerId]").val(data.shipment.contract.buyer.email);
+
+            $('#addReviewModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+/**
+ * Show Detailed View Of Shipment
+ * @param {*} shipment_id 
+ */
+function shipmentDetailedView(shipment_id){
+    console.log("Clicked shipmentDetailedView");
+    $("#view-detailed-shipment-error-bag").hide();
+    
+    $.ajax({
+        type: 'GET',
+        url: '/shipment/' + shipment_id + '/edit',
+        success: function (data) {
+            var stars = '';
+     
+            // console.log("JSON +>" + JSON.stringify(data));
+            // console.log("Buyer +>" + JSON.stringify(data.shipment.contract.buyer.email));
+            console.log("Shipment +>" + JSON.stringify(data.shipment.shipmentId));
+
+            $("#add-review-error-bag").hide();
+            
+            $("#shipmentIdView").html(data.shipment.shipmentId);
+            $("#ShipmentStatusView").html(data.shipment.ShipmentStatus);
+            $("#itemStatusView").html(data.shipment.itemStatus);
+            for(var i=0; i < data.shipment.feedbackScale;i++){
+                stars += '<i style="color:#ffd700;" class="typcn typcn-heart-full-outline"></i>';
+            }
+            $("#feedbackScaleView").html(stars);
+            $("#feedbackMessageView").html(data.shipment.feedbackMessage);
+            $("#unitCountView").html(data.shipment.unitCount);
+            $("#contractIdView").html(data.shipment.contract.contractId);
+            $("#buyerView").html(data.shipment.contract.buyer.email);
+            $("#sellerView").html(data.shipment.contract.seller.email);
+
+            $('#shipmentViewModal').modal('show');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
 
 /**
  * Delete Order
@@ -328,7 +479,7 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
     if(unitsOrdered > unitsAdded){
 
         diff = unitsOrdered - unitsAdded;
-        message = "Add more "+ diff +" books in the shipment before being able to select ditributor.";
+        message = "You can't assign this Shipment to a distributor. Ensure You add more "+ diff +" books in the shipment before getting access to select ditributor.";
 
         message = '<div class="alert alert-warning" >'
                       + message               
@@ -336,22 +487,39 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
 
         console.log("Add more "+ diff +" books in the shipment.");
         $("#add-ship-ownership-error-bag").hide();
+        // Hide the selector distributor and action buttons till
+        // conditions are met
+        $("#selectDistributorDropdown").hide();
+        $("#selectDistributorDropdownActions").hide();
+
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
 
     }else if(unitsOrdered < unitsAdded){
         diff = unitsAdded - unitsOrdered;
-        message = "You have registered more "+ diff +" books.";
+        message = "You can't assign this Shipment to a distributor. You have registered more "+ diff +" books.";
+        message = '<div class="alert alert-warning" >'
+                      + message               
+                    +'</div>';
         console.log("You have registered more "+ diff +" books.");
         $("#add-ship-ownership-error-bag").hide();
+        // Hide the selector distributor and action buttons till
+        // conditions are met
+        $("#selectDistributorDropdown").hide();
+        $("#selectDistributorDropdownActions").hide();
+
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
 
     }else{
+        // Show the selector distributor and action buttons till
+        // conditions are met
+        $("#selectDistributorDropdown").show();
+        $("#selectDistributorDropdownActions").show();
         var selectOption = '';
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:3000/api/Distributor/',
+            url: domainUrl + '/Distributor/',
             success: function(data) {
                 console.log("DATA ->" + JSON.stringify(data));
 
@@ -371,10 +539,19 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
             }
         });
 
-        console.log("Equal can continue coding " + diff);
-        $("#add-ship-ownership-error-bag").hide();
 
-        message = "You have registered more "+ diff +" books.";
+        $("#add-ship-ownership-error-bag").hide();
+        diff = unitsAdded - unitsOrdered;
+        console.log("Equal can continue coding " + diff);
+        
+        // Books added correctly
+        if( diff == 0 && unitsAdded > 0){
+            // No Message
+            message = "";
+        }else{
+            // You haven't registered any
+            message = "You have registered more "+ diff +" books.";
+        }
 
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
