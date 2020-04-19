@@ -47,6 +47,13 @@ class BookService
         // dd($bookRelations);
         
         return $bookRelations;
-	}
+    }
+    
+    /**
+     * http://localhost:3001/api/Book/?filter={"where":{"addedBy":"resource:org.evin.book.track.Publisher#moran@gmail.com"},"include":"resolve"}
+     */
+    public function getPublisherBooksStats(){
+        return $this->utils->findByColumnWhereRelationResolved('/Book','addedBy', \App\User::loggedInUserEmail());
+    }
    
 }
