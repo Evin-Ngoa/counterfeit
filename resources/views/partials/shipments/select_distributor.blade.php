@@ -24,12 +24,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" id="selectDistributorDropdown">
                                 <div class="form-group">
                                     <label for="selectDistributor" class="">Select Distributor</label>
 
                                     <select class="form-control" name="owner" id="selectDistributor">
-                                        <option selected="true">Select</option>
+                                        <option selected="true" value="">Select</option>
                                         
                                     </select>
 
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer" id="selectDistributorDropdownActions">
                     <button class="btn btn-secondary" data-dismiss="modal" type="button"> Close</button>
                     <button class="btn btn-primary btn-add-ship-ownership" type="button" value="Save Book"> Save Book To Shipment</button>
                 </div>
