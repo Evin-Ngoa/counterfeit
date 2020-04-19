@@ -12,7 +12,7 @@
 @section('content-box')
 <div class="content-box">
     <div class="row pt-4">
-    @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
+    @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
         <div class="col-sm-12">
             <div class="alert alert-warning borderless">
                 <h5 class="alert-heading">Note</h5>
@@ -31,6 +31,16 @@
                         <li>
                             Assign the shipment to your prefered distributor by clicking (<i class="os-icon os-icon-truck"></i>) icon.
                         </li>
+                    </ol>                  
+                </p>
+                @elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
+                <p>
+                    To Process the Shipment, <br>
+                    <ol>
+                        <li>
+                            You can update the shipment status to <a class="badge badge-info" href="#">SHIPPED_IN_TRANSIT</a> and the item status by clicking (<i class="os-icon os-icon-edit"></i>) icon.
+                        </li>
+                        
                     </ol>                  
                 </p>
                 @endif
@@ -59,6 +69,15 @@
                                     <th class="text-center">Units Ordered</th>
                                     <th class="text-center">Units Added</th>
                                     @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
+                                        <!--@if(!empty($shipments))
+                                            @foreach($shipments as $shipment)-->
+                                                <!-- Be visible only when DELIVERED -->
+                                                <!--@if($shipment->ShipmentStatus == "DELIVERED")
+                                                <th class="text-center">Reviews</th>
+                                                @endif
+                                            @endforeach
+                                        @endif -->
+                                        <th class="text-center">Actions</th>
                                     @else
                                     <th class="text-center">Actions</th>
                                     @endif
@@ -76,18 +95,18 @@
                                         <div class="smaller text-center">{{ $shipment->contract->contractId }}</div>
                                     </td>
                                     <td class="text-center">
-                                        @if($shipment->shipmentStatus == 'WAITING')
-                                        <a class="badge badge-secondary" href="#">{{ $shipment->shipmentStatus }}</a>
-                                        @elseif($shipment->shipmentStatus == 'DISPATCHING')
-                                        <a class="badge badge-warning" href="#">{{ $shipment->shipmentStatus }}</a>
-                                        @elseif($shipment->shipmentStatus == 'SHIPPED_IN_TRANSIT')
-                                        <a class="badge badge-info" href="#">{{ $shipment->shipmentStatus }}</a>
-                                        @elseif($shipment->shipmentStatus == 'CANCELED')
-                                        <a class="badge badge-danger" href="#">{{ $shipment->shipmentStatus }}</a>
-                                        @elseif($shipment->shipmentStatus == 'DELIVERED')
-                                        <a class="badge badge-success" href="#">{{ $shipment->shipmentStatus }}</a>
-                                        @elseif($shipment->shipmentStatus == 'LOST')
-                                        <a class="badge badge-danger" href="#">{{ $shipment->shipmentStatus }}</a>
+                                        @if($shipment->ShipmentStatus  == 'WAITING')
+                                        <a class="badge badge-secondary" href="#">{{ $shipment->ShipmentStatus  }}</a>
+                                        @elseif($shipment->ShipmentStatus  == 'DISPATCHING')
+                                        <a class="badge badge-warning" href="#">{{ $shipment->ShipmentStatus  }}</a>
+                                        @elseif($shipment->ShipmentStatus  == 'SHIPPED_IN_TRANSIT')
+                                        <a class="badge badge-info" href="#">{{ $shipment->ShipmentStatus  }}</a>
+                                        @elseif($shipment->ShipmentStatus  == 'CANCELED')
+                                        <a class="badge badge-danger" href="#">{{ $shipment->ShipmentStatus  }}</a>
+                                        @elseif($shipment->ShipmentStatus  == 'DELIVERED')
+                                        <a class="badge badge-success" href="#">{{ $shipment->ShipmentStatus  }}</a>
+                                        @elseif($shipment->ShipmentStatus  == 'LOST')
+                                        <a class="badge badge-danger" href="#">{{ $shipment->ShipmentStatus  }}</a>
                                         @endif
                                     </td>
                                     <td>
@@ -99,15 +118,42 @@
                                     <td>
                                         <div class="smaller text-center">{{ count($shipment->bookRegisterShipment) }}</div>
                                     </td>
-
                                     @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
-                                    <td class="row-actions">
-                                        <a href="#" onclick="event.preventDefault();openAddBookForm('{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Register Book To This Shipment"><i class="os-icon os-icon-book"></i></a><a href="#" onclick="event.preventDefault();selectDistributorForm('{{ $shipment->unitCount }}','{{ count($shipment->bookRegisterShipment) }}','{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a>
-                                        <a onclick="event.preventDefault();editShipmentForm('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
-                                    </td>
+                                        <td class="row-actions">
+                                        <!-- Check if distributor is assigned and lock actions for publisher -->
+                                        @if(isset($shipment->shipOwnership[1]))
+                                        <a  onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Shipment Locked"><i class="os-icon os-icon-lock"></i></a>
+                                            <div class="smaller lighter">
+                                                 Shipment Assigned to {{ $shipment->shipOwnership[1]->owner->name}}.
+                                            </div>
+                                        @else
+                                        
+                                            <a href="#" onclick="event.preventDefault();openAddBookForm('{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Register Book To This Shipment"><i class="os-icon os-icon-book"></i></a><a href="#" onclick="event.preventDefault();selectDistributorForm('{{ $shipment->unitCount }}','{{ count($shipment->bookRegisterShipment) }}','{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a>
+                                            <a onclick="event.preventDefault();editShipmentForm('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Shipment"><i class="os-icon os-icon-edit"></i></a><a  onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                        
+                                        @endif
+                                        </td>
+                            
                                     @elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
-                                    <!-- <td class="row-actions">
-                                    </td> -->
+                                        <!-- Be visible only when DELIVERED -->
+                                        @if($shipment->ShipmentStatus == "DELIVERED")
+                                            <td class="row-actions">
+                                                @if(!isset($shipment->feedbackScale))
+                                                    <a style="color:#eacf09;" onclick="event.preventDefault();reviewForm('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Please Rate the Delivery"><i style="font-size: 1.3rem;" class="typcn typcn-star-full-outline"></i></a> <a  onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a>
+                                                @else
+                                                    <a onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a>
+                                                @endif
+                                            </td>
+                                        @else
+                                            <td class="row-actions">
+                                                <a onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a>
+                                            </td>
+                                        @endif
+                                    
+                                    @elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
+                                    <td class="row-actions">
+                                        <a onclick="event.preventDefault();editShipmentForm('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Shipment"><i class="os-icon os-icon-edit"></i></a><a  onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a>
+                                    </td>
                                     @endif
 
                                 </tr>
@@ -125,10 +171,12 @@
                 </div>
 
                 @include('partials.shipments.add_books')
+                @include('partials.shipments.add_review')
                 @include('partials.shipments.select_distributor')
                 @include('partials.shipments.shipments_add')
                 @include('partials.shipments.shipments_edit')
                 @include('partials.shipments.shipments_403')
+                @include('partials.shipments.shipments_detailed_view')
 
 
                 <!-- <div class="element-box" style="display: none;">
@@ -159,7 +207,7 @@
                                 @foreach($shipments as $shipment)
                                 <tr>
                                     <td>{{ $shipment->shipmentId }}</td>
-                                    <td>{{ $shipment->shipmentStatus }}</td>
+                                    <td>{{ $shipment->ShipmentStatus }}</td>
                                     <td>{{ $shipment->itemStatus }}</td>
                                     <td>{{ $shipment->unitCount }}</td>
                                     <td>{{ $shipment->contract->contractId }}</td>
