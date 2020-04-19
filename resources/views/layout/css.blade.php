@@ -7,5 +7,7 @@
     <link href="{{ asset("vendor/fullcalendar/dist/fullcalendar.min.css") }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset("vendor/perfect-scrollbar/css/perfect-scrollbar.min.css") }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset("vendor/slick-carousel/slick/slick.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("icon_fonts_assets/typicons/typicons.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("icon_fonts_assets/entypo/style.css") }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset("css/main5739.css") }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset("css/custom.css") }}" rel="stylesheet" type="text/css" />
