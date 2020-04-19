@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Shipment;
 
+use App\Http\Traits\OrderConstants;
 use App\Services\Utils;
 
 class ShipmentService
@@ -25,5 +26,34 @@ class ShipmentService
         // return $this->utils->findById('/Shipment/', $id);
         return $this->utils->findByIdRelation('/Shipment/', $id);
     }
+
+    /**
+     * 
+     */
+    public function getWaitingShipments(){
+        return $this->utils->findByColumnWhereRelationResolved('/Shipment','ShipmentStatus', OrderConstants::WAITING);
+    }
+
+    /**
+     * 
+     */
+    public function getDispatchedShipments(){
+        return $this->utils->findByColumnWhereRelationResolved('/Shipment','ShipmentStatus',OrderConstants::SHIP_DISPATCHING);
+    }
+
+    /**
+     * 
+     */
+    public function getTransitShipments(){
+        return $this->utils->findByColumnWhereRelationResolved('/Shipment','ShipmentStatus',OrderConstants::SHIP_SHIPPED_IN_TRANSIT);
+    }
+
+    /**
+     * 
+     */
+    public function getDeliveredShipments(){
+        return $this->utils->findByColumnWhereRelationResolved('/Shipment','ShipmentStatus',OrderConstants::SHIP_DELIVERED);
+    }
+
    
 }
