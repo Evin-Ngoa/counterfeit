@@ -56,13 +56,18 @@
                                     @else
                                     <td><span class="smaller text-center">Unknown</span></td>
                                     @endif
-                                    <td>
-                                        <span class="smaller text-center">
-                                            {{ $distributor->address->country }},
-                                            {{ $distributor->address->county }},
-                                            {{ $distributor->address->street }}
-                                        </span>
-                                    </td>
+
+                                    @if(isset( $publisher->address ))
+                                        <td>
+                                            <span class="smaller text-center">
+                                                {{ $publisher->address->country }},
+                                                {{ $publisher->address->county }},
+                                                {{ $publisher->address->street }}
+                                            </span>
+                                        </td>
+                                    @else
+                                    <td><span class="smaller text-center">Unknown</span></td>
+                                    @endif
                                     <td class="row-actions">
                                         <a href="#" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editDistributorForm('{{ $distributor->email }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit"><i class="os-icon os-icon-edit"></i></a><a class="danger" onclick="event.preventDefault();deleteDistributorForm('{{ $distributor->email }}');" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
                                     </td>
