@@ -42,12 +42,15 @@ Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
     Route::get('/book', ['as' => 'form', 'uses' => 'BookController@verify_form']);
 });
 
-// History
+// History update_avatar
 Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
 Route::resource('distributor', 'DistributorController');
 Route::resource('customer', 'CustomerController');
 Route::resource('profile', 'ProfileController');
+Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
+    Route::post('/profile/pic/', ['as' => 'profile', 'uses' => 'ProfileController@update_avatar']);
+});
 // Shipment
 Route::group(['prefix' => 'shipment', 'as' => 'shipment.'], function () {
     Route::get('/list/{id}', ['as' => 'view', 'uses' => 'ShipmentController@view_shipments']);
