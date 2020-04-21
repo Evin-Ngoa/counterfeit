@@ -118,20 +118,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for=""> Email address</label>
-                            <input class="form-control" data-error="Your email address is invalid" placeholder="Enter email" required="required" type="email">
-                            <div class="help-block form-text with-errors form-control-feedback"></div>
-                        </div>
-                        
                         <!-- CUSTOMER NAMES-->
                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
-                        <div class="row">
+                        <div class="row" id="individualNameField">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for=""> First Name</label>
                                     <input class="form-control" name="firstName" id="firstName" placeholder="Enter First Name" type="text">
-                                    <div class="pre-icon os-icon os-icon-users"></div>
+                                    <!-- <div class="pre-icon os-icon os-icon-users"></div> -->
                                     <input type="hidden" name="memberId" id="memberId" class="form-control" value="">
                                     <!-- <input type="hidden" name="secret" id="secret" class="form-control" value="secretmy"> -->
                                     <input type="hidden" name="accountBalance" id="accountBalance" class="form-control" value="56000">
@@ -146,18 +140,28 @@
                         </div>
                         @endif
 
-                        <!-- ADMIN NAME -->
-                        @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
+                        <!-- ADMIN | PUBLISHER | DISTRIBUTOR NAME -->
+                        @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
                         <div class="form-group" id="businessNameField">
                             <label for=""> Business Name</label>
-                            <input class="form-control" name="name" id="name" placeholder="Enter Business Name" type="text">
+                            <input class="form-control" name="name" id="name" data-error="Your Name cannot be null address is invalid" placeholder="Enter Business Name" type="text" value="{{ \App\User::getParticipantNames() }}">
                         </div>
                         @endif
+                        <div class="form-group">
+                            <label for="email"> Email address</label>
+                            <input class="form-control" name="email" id="email" data-error="Your email address is invalid" placeholder="Enter email" required="required" type="email" value="{{ \App\User::loggedInUserEmail() }}">
+                            <div class="help-block form-text with-errors form-control-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telephone">Telephone</label>
+                            <input class="form-control" name="telephone" id="telephone" data-error="Please input your Telephone Number" placeholder="Enter Telephone" required="required" type="text" value="{{ \App\User::getParticipantTelephone() }}">
+                            <div class="help-block form-text with-errors form-control-feedback"></div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for=""> Password</label>
-                                    <input class="form-control" data-minlength="6" placeholder="Password" required="required" type="password">
+                                    <label for="secret"> Password</label>
+                                    <input class="form-control" data-minlength="6" placeholder="Password" name="secret" id="secret" required="required" type="password" value="{{ \App\User::getParticipantSecret() }}">
                                     <div class="help-block form-text text-muted form-control-feedback">Minimum of 6 characters</div>
                                 </div>
                             </div>
@@ -169,78 +173,46 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for=""> Regular select</label>
-                            <select class="form-control">
-                                <option value="New York">New York</option>
-                                <option value="California">California</option>
-                                <option value="Boston">Boston</option>
-                                <option value="Texas">Texas</option>
-                                <option value="Colorado">Colorado</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for=""> Multiselect</label>
-                            <select class="form-control select2" multiple="true">
-                                <option selected="true">New York</option>
-                                <option selected="true">California</option>
-                                <option>Boston</option>
-                                <option>Texas</option>
-                                <option>Colorado</option>
-                            </select>
-                        </div>
                         <fieldset class="form-group">
-                            <legend><span>Section Example</span></legend>
+                            <legend><span>Business Address</span></legend>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for=""> First Name</label>
-                                        <input class="form-control" data-error="Please input your First Name" placeholder="First Name" required="required">
-                                        <div class="help-block form-text with-errors form-control-feedback"></div>
+                                        <label for="country">Country</label>
+                                        <select name="country" id="country" class="form-control">
+                                            @if(\App\User::getParticipantAddCountry()=='-select country-')
+                                                <option >{{ \App\User::getParticipantAddCountry() }} </option>
+                                            @else
+                                                <option value="{{ \App\User::getParticipantAddCountry() }}" selected>{{ \App\User::getParticipantAddCountry() }}</option>
+                                            @endif
+                                            <option value="KENYA">KENYA</option>
+                                            <option value="TANZANIA">TANZANIA</option>
+                                            <option value="UGANDA">UGANDA</option>
+                                            <option value="RWANDA">RWANDA</option>
+                                            <option value="BURUNDI">BURUNDI</option>
+                                            <option value="SOUTH SUDAN">SOUTH SUDAN</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="">Last Name</label>
-                                        <input class="form-control" data-error="Please input your Last Name" placeholder="Last Name" required="required">
+                                        <label for="">County / Province</label>
+                                        <input class="form-control" data-error="Please input your county / province" placeholder="County" required="required" value="{{ \App\User::getParticipantAddCounty() }}">
                                         <div class="help-block form-text with-errors form-control-feedback"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for=""> Date of Birth</label>
-                                        <input class="single-daterange form-control" placeholder="Date of birth" value="04/12/1978">
+                                        <label for="street">Postal Address</label>
+                                        <input class="form-control" name="street" id="street" placeholder="Postal Address" value="{{ \App\User::getParticipantAddPostal() }}">
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Twitter Username</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">@</div>
-                                            </div>
-                                            <input class="form-control" placeholder="Twitter Username">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Date Range Picker</label>
-                                <input class="multi-daterange form-control" value="03/31/2017 - 04/06/2017">
-                            </div>
-                            <div class="form-group">
-                                <label> Example textarea</label>
-                                <textarea class="form-control" rows="3"></textarea>
                             </div>
                         </fieldset>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox">I agree to terms and conditions</label>
-                        </div>
                         <div class="form-buttons-w">
-                            <button class="btn btn-primary" type="submit"> Submit</button>
+                            <button class="btn btn-primary" type="button"> Update Profile</button>
                         </div>
                     </form>
                 </div>
