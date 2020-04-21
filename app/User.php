@@ -100,6 +100,121 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the first name of the customers
+     */
+    public static function getParticipantFirstName(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            
+            $firstName = $cookieData['firstName'];
+            $lastName = $cookieData['lastName'];
+            
+            return $firstName;
+        }
+    }
+
+    /**
+     * Get the Last Name of the participant
+     */
+    public static function getParticipantLastName(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            
+            $firstName = $cookieData['firstName'];
+            $lastName = $cookieData['lastName'];
+            
+            return $lastName;
+        }
+    }
+
+    /**
+     * Get the secret of the participant
+     */
+    public static function getParticipantSecret(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            
+            $secret = $cookieData['secret'];
+            
+            return $secret;
+        }
+    }
+
+    /**
+     * Get the Telephone of the customers
+     */
+    public static function getParticipantTelephone(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+
+            if(isset($cookieData['telephone'])){
+                return $cookieData['telephone'];
+            }
+
+            return "";
+        }
+    }
+
+    /**
+     * Get the Country of the customers
+     */
+    public static function getParticipantAddCountry(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+
+            if(isset($cookieData['address'])){
+                if(isset($cookieData['address']['country'])){
+                    return $cookieData['address']['country'];
+                }
+            }
+
+            return "-select country-";
+        }
+    }
+
+    /**
+     * Get the county of the customers
+     */
+    public static function getParticipantAddCounty(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+
+            if(isset($cookieData['address'])){
+                if(isset($cookieData['address']['county'])){
+                    return $cookieData['address']['county'];
+                }
+            }
+
+            return "";
+        }
+    }
+
+    /**
+     * Get the street of the customers
+     */
+    public static function getParticipantAddPostal(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+
+            if(isset($cookieData['address'])){
+                if(isset($cookieData['address']['street'])){
+                    return $cookieData['address']['street'];
+                }
+            }
+
+            return "";
+        }
+    }
+
+
+    /**
      * Check if a user is loggedin
      */
     public static function checkAuth(){
