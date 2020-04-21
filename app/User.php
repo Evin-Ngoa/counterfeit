@@ -144,6 +144,34 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the memberId of the participant
+     */
+    public static function getParticipantMemberID(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            
+            $memberId = $cookieData['memberId'];
+            
+            return $memberId;
+        }
+    }
+
+    /**
+     * Get the memberId of the participant
+     */
+    public static function getParticipantUserName(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            
+            $userName = $cookieData['userName'];
+            
+            return $userName;
+        }
+    }
+
+    /**
      * Get the Telephone of the customers
      */
     public static function getParticipantTelephone(){
@@ -208,7 +236,6 @@ class User extends Authenticatable
                     return $cookieData['address']['street'];
                 }
             }
-
             return "";
         }
     }
@@ -273,6 +300,27 @@ class User extends Authenticatable
             return false;
         }else{
             return true;
+        }
+    }
+
+    /**
+     * Check for image
+     */
+    public static function getUserProfile($authRole ,$email){
+        // Fetch remotely to get user profile image
+        // coz the cookie might not expire but the remote user 
+        // does not exist
+        // $get_data = User::callAPI('GET', 'http://localhost:3001/api/' .'upload'. $authRole .'ProfilePic', $data);
+        $get_data = User::callAPI('GET', 'http://localhost:3001/api/'.$authRole .'/'. $email,false);
+        $response = json_decode($get_data, true);
+        // dd($response);
+        if(isset($response['error']['statusCode'])){
+            return 'None';
+        }else{
+            if(isset($response['avatar'])){
+                return $response['avatar'];
+            }
+            return 'None';
         }
     }
 
