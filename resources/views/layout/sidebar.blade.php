@@ -7,7 +7,11 @@
     </div>
     <div class="logged-user-w avatar-inline">
         <div class="logged-user-i">
-            <div class="avatar-w"><img alt="" src="/img/avatar1.jpg"></div>
+            @if(\App\User::getUserProfile(\App\User::getUserRole(),\App\User::loggedInUserEmail()) == "None")
+            <div class="avatar-w"><img alt="" src="/img/avatar.png"></div>
+            @else
+            <div class="avatar-w"><img alt="" src="{{\App\User::getUserProfile(\App\User::getUserRole(),\App\User::loggedInUserEmail())}}"></div>
+            @endif
             <div class="logged-user-info-w">
                 <div class="logged-user-name">{ user.name }</div>
                 <div class="logged-user-role">{ user.role }</div>
@@ -17,7 +21,11 @@
             </div>
             <div class="logged-user-menu color-style-bright">
                 <div class="logged-user-avatar-info">
-                    <div class="avatar-w"><img alt="" src="/img/avatar1.jpg"></div>
+                    @if(\App\User::getUserProfile(\App\User::getUserRole(),\App\User::loggedInUserEmail()) == "None")
+                    <div class="avatar-w"><img alt="" src="/img/avatar.png"></div>
+                    @else
+                    <div class="avatar-w"><img alt="" src="{{\App\User::getUserProfile(\App\User::getUserRole(),\App\User::loggedInUserEmail())}}"></div>
+                    @endif
                     <div class="logged-user-info-w">
                         <div class="logged-user-name">{ user.name }</div>
                         <div class="logged-user-role">{ user.role }</div>
@@ -38,7 +46,7 @@
 
     <h1 class="menu-page-header">Page Header</h1>
     <ul class="main-menu">
-    <li class="sub-header"><span>Menu</span></li>
+        <li class="sub-header"><span>Menu</span></li>
         <li class="selected {!! classActivePath('dashboard') !!}">
             <a href="{{ route('dashboard.index') }}">
                 <div class="icon-w">
@@ -55,7 +63,7 @@
             </a>
         </li>
         @endif
-        
+
         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
         <li class="selected {!! classActivePath('book') !!}">
             <a href="{{ route('book.index') }}">
@@ -126,7 +134,7 @@
                 </div><span>Customers</span>
             </a>
         </li>
-        
+
         <li class="sub-header"><span>Audit</span></li>
         <li class="selected {!! classActivePath('transaction') !!}">
             <a href="{{ route('transaction.index') }}">
