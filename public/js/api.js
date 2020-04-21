@@ -48,6 +48,9 @@ var Api = function () {
     var frmEditCustomer = $("#frmEditCustomer");
     var frmAddReview = $("#frmAddReview");
 
+    // Profile
+    var frmProfile = $("#frmProfile");
+
     // Login
     var frmLogin = $("#frmLogin");
 
@@ -81,6 +84,8 @@ var Api = function () {
     var customerSbtBtn = $('#frmAddCustomer .btn-add-customer');
     var customerEditSbtBtn = $('#frmEditCustomer .btn-edit-customer');
     var customerDeleteSbtBtn = $('#frmDeleteCustomer .btn-delete-customer');
+
+    var profileEditSbtBtn = $('#frmProfile .btn-profile');
 
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
 
@@ -1685,6 +1690,117 @@ var Api = function () {
         });
     };
 
+    /**
+     * Posting the Profile edit form
+     */
+    var handleEditProfile = function () {
+        console.log("handleEditProfile");
+        $("#add-error-profile-bag").hide();
+        // var bookId = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        profileEditSbtBtn.on('click', function () {
+            var json = frmProfile.serializeArray();
+            // var memberId = $('#email').val();
+            console.log('Publisher memberId Edit ==> ' + memberId);
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            var memberId = jsonData['email'];
+            console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
+            if(jsonData['role'] == 'Admin'){
+                var profileEditURL = domainUrl + '/Admin/' + memberId;
+            }else if(jsonData['role'] == 'Customer'){
+                var profileEditURL = domainUrl + '/Customer/' + memberId;
+            }else if(jsonData['role'] == 'Publisher'){
+                var profileEditURL = domainUrl + '/Publisher/' + memberId;
+            }else if(jsonData['role'] == 'Distributor'){
+                var profileEditURL = domainUrl + '/Distributor/' + memberId;
+            }
+
+            // Delete unwanted keys
+            delete jsonData['county'];
+            delete jsonData['country'];
+            delete jsonData['street'];
+            delete jsonData['role'];
+
+            // Append Address
+            jsonData["address"] = {
+                "$class": "org.evin.book.track.Address",
+                "county": $("#county").val(),
+                "country": $("#country").val(),
+                "street": $("#street").val(),
+                "zip": "string"
+            };
+
+            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+            console.log('Publisher ID Edit jsonData ==> ' + jsonData.id);
+
+            console.log('URL => ' + profileEditURL);
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'PUT',
+                url: profileEditURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {//calls the loader id tag
+                    // $("#frmEditPublisher .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    $("#loader").hide();
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-error-profile-bag").hide();
+
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Profile Edited Successfuly '
+                        + '</div>';
+
+                    $('#msgAlertProfile').html(msgHTML);
+
+                    // $('#frmEditPublisher').trigger("reset");
+                    // $("#frmEditPublisher .close").click();
+                    // window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+                    $('#msgAlertProfile').html("");
+                    // if (status == 500) {
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#edit-publisher-msgs").hide();
+
+                        $('#add-profile-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-profile-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        $('#add-profile-errors').html(errors.error.message);
+                    }
+                    $("#loader").hide();
+                    // $('#editPublisherModal').modal('show');
+                    $("#add-error-profile-bag").show();
+                }
+            }); // END Ajax
+
+        }); // END OnClick Submit
+
+    };
+
     var handlePostPublisher = function () {
         console.log("===================");
         console.log("handlePostPublisher");
@@ -3207,6 +3323,9 @@ var Api = function () {
 
             // Register
             handlePostRegistration();
+
+            // Profile
+            handleEditProfile();
         }
     }
 
