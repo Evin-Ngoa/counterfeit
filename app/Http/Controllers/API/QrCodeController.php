@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseApiController as BaseController;
 use Validator;
 use App\Qrcode;
+use App\Util;
 
 class QrCodeController extends BaseController
 {
@@ -54,13 +55,12 @@ class QrCodeController extends BaseController
      */
     public function show($id)
     {
-        $qrcode = Qrcode::find($id);
+        $book = Util::callAPI('GET', 'http://localhost:3001/api//Book/'. $id ,false);
 
-        if (is_null($qrcode)) {
-            return $this->sendError('Qrcode not found.');
-        }
+        $res = json_decode($book);
 
-        return $this->sendResponse($qrcode->toArray(), 'Qrcode retrieved successfully.');
+
+        return $this->sendResponse($res , 'Qrcode retrieved successfully.');
     }
 
        /**
