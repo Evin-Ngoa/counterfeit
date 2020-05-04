@@ -25,3 +25,7 @@ Route::post('register', 'API\RegisterController@register');
 // });
 
 Route::resource('qrcodes', 'API\QrCodeController');
+
+Route::resource('profile', 'API\ProfileController');
+
+
