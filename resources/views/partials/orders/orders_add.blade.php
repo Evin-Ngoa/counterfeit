@@ -35,7 +35,9 @@
                                     <input name="arrivalDateTime" id="arrivalDateTime" class="form-control datetime" placeholder="DD/MM/YYYY" value="">
 
                                     <input type="hidden" name="buyer" id="buyer" class="form-control" value="{{\App\User::loggedInUserEmail()}}">
-
+                                  
+                                    <input type="hidden" name="participantName" id="participantName" class="form-control" value="{{\App\User::getParticipantNames()}}">
+                                    
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.OrderContract">
                                 </div>
                             </div>
