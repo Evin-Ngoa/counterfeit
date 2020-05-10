@@ -88,8 +88,11 @@ class Utils
 
 	public function endpointRequest($url)
 	{
+		// dd($url);
 		try {
-			$response = $this->client->request('GET', env('COMPOSER_API_BASE_URL') . $url);
+			// $response = $this->client->request('GET', env('COMPOSER_API_BASE_URL') . $url);
+			$response = $this->client->request('GET', 'http://localhost:3001/api' . $url);
+			// dd($response);
 		} catch (\Exception $e) {
 			return [];
 		}
