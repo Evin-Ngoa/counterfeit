@@ -1,5 +1,6 @@
 var Api = function () {
     // http://localhost:3000/api/Book
+    var systemEmail = 'order@bookcounterfeit.com';
     var domainUrl = 'http://localhost:3001/api';
     var postBookURL = domainUrl + '/Book';
     // var getVerifyBookURL = 'http://localhost:8000/verify/book/';
@@ -800,8 +801,9 @@ var Api = function () {
             var jsonData = {};
             var seller = $("#seller").val();
             var buyer = $("#buyer").val();
+            var name = $("#participantName").val();
             console.log("Seller - " + seller + " Buyer - " + buyer);
-    
+
 
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
@@ -822,6 +824,16 @@ var Api = function () {
             // created AT
             jsonData["createdAt"] = currentDateTime();
 
+            delete jsonData["participantName"];
+
+            var quantity = parseInt(jsonData["quantity"]);
+            var unitPrice = parseInt(jsonData["unitPrice"]);
+            var total = quantity * unitPrice;
+            var destinationAddress = jsonData["destinationAddress"];
+            var createdAt = jsonData["createdAt"];
+
+            console.log("Quantity = " + quantity + "UnitPrice = " + unitPrice + "Total = " + total);
+
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
             console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
@@ -830,11 +842,45 @@ var Api = function () {
 
             var checkPublisherExistsURL = domainUrl + '/Publisher/' + publisherID;
 
+            // send mail
+            var sendEmailURL = "/sendemail/send";
+
+            var subject = "New Order";
+            var emailMsg = "New Order Alert";
+            var jsonEmailData = {}
+            jsonEmailData = {
+                'name': name,
+                'message': emailMsg,
+                'from': systemEmail,
+                'to': buyer,
+                'subject': subject,
+                'destinationAddress': destinationAddress,
+                'order': orderId,
+                'quantity': quantity,
+                'unitPrice': unitPrice,
+                'total': total,
+                'createdAt': createdAt
+            };
+
+            // send sms
+            var sendSmsURL = "/send/sms";
+            var jsonSMSData = {}
+            jsonSMSData = {
+                'order': orderId
+            };
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            // Disable Ajax Momentarily
+
+            // 1. Check Publisher checks
+            // 2. Post Order
+            // 3. Send SMS to Publisher
+            // 4. Send Email to Customer
+
             // check if publisher exists
             $.ajax({
                 type: 'GET',
@@ -862,17 +908,98 @@ var Api = function () {
 
                             $("#loader").hide();
                             console.log("Success +++> " + JSON.stringify(data));
-                            $("#add-error-bag").hide();
-                            $("#add-order-msgs").show();
-                            msgHTML = '<div class="alert alert-primary" role="alert">'
-                                + 'Record Added Successfuly '
-                                + '</div>';
 
-                            $('#add-order-msgs').html(msgHTML);
+                            console.log("Sending SMS");
+                            // Send SMS
+                            $.ajax({
+                                type: 'POST',
+                                url: sendSmsURL,
+                                data: jsonSMSData,
+                                dataType: 'json',
+                                beforeSend: function () {//calls the loader id tag
+                                    $("#frmAddOrder .close").click();
+                                    $("#loader").show();
+                                },
+                                success: function (data) {
 
-                            $('#frmAddOrder').trigger("reset");
-                            $("#frmAddOrder .close").click();
-                            window.location.reload();
+                                    $("#loader").hide();
+                                    console.log("Success +++> " + JSON.stringify(data));
+                                    console.log("Data +++> " + data.data);
+
+                                    // Send Email
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: sendEmailURL,
+                                        data: jsonEmailData,
+                                        dataType: 'json',
+                                        beforeSend: function () {//calls the loader id tag
+                                            $("#frmAddOrder .close").click();
+                                            $("#loader").show();
+                                        },
+                                        success: function (data) {
+
+                                            $("#loader").hide();
+                                            console.log("Success +++> " + JSON.stringify(data));
+                                            console.log("Data +++> " + data.data);
+
+                                            if (data.success) {
+                                                $("#add-error-bag").hide();
+                                                $("#add-order-msgs").show();
+                                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                    + 'Record Added Successfuly '
+                                                    + '</div>';
+
+                                                $('#add-order-msgs').html(msgHTML);
+
+                                                $('#frmAddOrder').trigger("reset");
+                                                $("#frmAddOrder .close").click();
+                                                window.location.reload();
+                                                // window.location.reload();
+                                            } else {
+                                                // Error
+                                                $('#add-order-errors').html('An error occured!');
+                                                // Show modal to display error showed
+                                                $('#addOrderModal').modal('show');
+                                                $("#add-order-error-bag").show();
+                                            }
+
+
+                                        },
+                                        error: function (data) {
+                                            console.log("Error +++> " + JSON.stringify(data));
+                                            var errors = $.parseJSON(data.responseText);
+                                            var status = errors.error.statusCode;
+
+                                            $('#add-order-errors').html('An error occured!');
+
+                                            // hide loader
+                                            $("#loader").hide();
+
+                                            // Show modal to display error showed
+                                            $('#addOrderModal').modal('show');
+                                            $("#add-order-error-bag").show();
+                                        }
+                                    });
+
+                                },
+                                error: function (data) {
+                                    console.log("Error +++> " + JSON.stringify(data));
+                                    var errors = $.parseJSON(data.responseText);
+                                    var status = errors.error.statusCode;
+
+                                    $('#add-order-errors').html('An error occured!');
+
+                                    // hide loader
+                                    $("#loader").hide();
+
+                                    // Show modal to display error showed
+                                    $('#addOrderModal').modal('show');
+                                    $("#add-order-error-bag").show();
+                                }
+                            });
+                            console.log("Sending Mail");
+
+
                         },
                         error: function (data) {
 
@@ -931,6 +1058,7 @@ var Api = function () {
                 }
             });
 
+
         });
     };
 
@@ -964,7 +1092,7 @@ var Api = function () {
             jsonData["buyer"] = "org.evin.book.track.Customer#" + buyer;
 
             // Update time
-            jsonData["updatedAt"] =  currentDateTime();
+            jsonData["updatedAt"] = currentDateTime();
 
             console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
 
@@ -1449,97 +1577,97 @@ var Api = function () {
                             },
                             success: function (data) {
                                 console.log("Executed updateShipmentStatusURL successfully");
-                                 // 3. Update updateOrderStatus
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: updateOrderStatusURL,
-                                        data: updateOrderStatusData,
-                                        dataType: 'json',
-                                        beforeSend: function () {//calls the loader id tag
-                                            $("#frmEditShipment .close").click();
-                                            $("#loader").show();
-                                        },
-                                        success: function (data) {
-                                            console.log("Executed updateOrderStatusURL successfully");
-                                            // 4. Update ItemStatus
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: updateShipmentItemStatusURL,
-                                                data: editShipmentItemStatusData,
-                                                dataType: 'json',
-                                                beforeSend: function () {//calls the loader id tag
-                                                    $("#frmEditShipment .close").click();
-                                                    $("#loader").show();
-                                                },
-                                                success: function (data) {
-                                                    console.log("Executed updateShipmentItemStatusURL successfully");
-                                                    $("#loader").hide();
+                                // 3. Update updateOrderStatus
+                                $.ajax({
+                                    type: 'POST',
+                                    url: updateOrderStatusURL,
+                                    data: updateOrderStatusData,
+                                    dataType: 'json',
+                                    beforeSend: function () {//calls the loader id tag
+                                        $("#frmEditShipment .close").click();
+                                        $("#loader").show();
+                                    },
+                                    success: function (data) {
+                                        console.log("Executed updateOrderStatusURL successfully");
+                                        // 4. Update ItemStatus
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: updateShipmentItemStatusURL,
+                                            data: editShipmentItemStatusData,
+                                            dataType: 'json',
+                                            beforeSend: function () {//calls the loader id tag
+                                                $("#frmEditShipment .close").click();
+                                                $("#loader").show();
+                                            },
+                                            success: function (data) {
+                                                console.log("Executed updateShipmentItemStatusURL successfully");
+                                                $("#loader").hide();
 
-                                                    console.log("Success +++> " + JSON.stringify(data));
-                                                    $("#edit-shipment-error-bag").hide();
-                                                    $("#edit-shipment-msgs").show();
+                                                console.log("Success +++> " + JSON.stringify(data));
+                                                $("#edit-shipment-error-bag").hide();
+                                                $("#edit-shipment-msgs").show();
 
-                                                    msgHTML = '<div class="alert alert-primary" role="alert">'
-                                                        + 'Record Added Successfuly '
-                                                        + '</div>';
+                                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                    + 'Record Added Successfuly '
+                                                    + '</div>';
 
-                                                    $('#edit-shipment-msgs').html(msgHTML);
+                                                $('#edit-shipment-msgs').html(msgHTML);
 
-                                                    $('#frmEditShipment').trigger("reset");
-                                                    $("#frmEditShipment .close").click();
-                                                    window.location.reload();
+                                                $('#frmEditShipment').trigger("reset");
+                                                $("#frmEditShipment .close").click();
+                                                window.location.reload();
 
 
-                                                },
-                                                error: function (data) {
-                                                    var errors = $.parseJSON(data.responseText);
-                                                    var status = errors.error.statusCode;
-                                                    $("#edit-shipment-errors").show();
-                                                    // if (status == 500) {
-                                                    if (status == 422) {
-                                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                                        $("#edit-shipment-msgs").hide();
+                                            },
+                                            error: function (data) {
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+                                                $("#edit-shipment-errors").show();
+                                                // if (status == 500) {
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#edit-shipment-msgs").hide();
 
-                                                        $('#edit-shipment-errors').html('');
-                                                        $.each(errors.error.details.messages, function (key, value) {
-                                                            console.log('Error Value' + value + ' Key ' + key);
-                                                            $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
-                                                        });
+                                                    $('#edit-shipment-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
 
-                                                    } else {
-                                                        $('#edit-shipment-errors').html(errors.error.message);
-                                                    }
-                                                    $("#loader").hide();
-                                                    $('#editShipmentModal').modal('show');
-                                                    $("#edit-shipment-error-bag").show();
+                                                } else {
+                                                    $('#edit-shipment-errors').html(errors.error.message);
                                                 }
-                                            });
-                                        },
-                                        error: function (data) {
-                                            var errors = $.parseJSON(data.responseText);
-                                            var status = errors.error.statusCode;
-                                            $("#edit-shipment-errors").show();
-                                            // if (status == 500) {
-                                            if (status == 422) {
-                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                                $("#edit-shipment-msgs").hide();
-            
-                                                $('#edit-shipment-errors').html('');
-                                                $.each(errors.error.details.messages, function (key, value) {
-                                                    console.log('Error Value' + value + ' Key ' + key);
-                                                    $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
-                                                });
-            
-                                            } else {
-                                                $('#edit-shipment-errors').html(errors.error.message);
+                                                $("#loader").hide();
+                                                $('#editShipmentModal').modal('show');
+                                                $("#edit-shipment-error-bag").show();
                                             }
-                                            $("#loader").hide();
-                                            $('#editShipmentModal').modal('show');
-                                            $("#edit-shipment-error-bag").show();
+                                        });
+                                    },
+                                    error: function (data) {
+                                        var errors = $.parseJSON(data.responseText);
+                                        var status = errors.error.statusCode;
+                                        $("#edit-shipment-errors").show();
+                                        // if (status == 500) {
+                                        if (status == 422) {
+                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                            $("#edit-shipment-msgs").hide();
+
+                                            $('#edit-shipment-errors').html('');
+                                            $.each(errors.error.details.messages, function (key, value) {
+                                                console.log('Error Value' + value + ' Key ' + key);
+                                                $('#edit-shipment-errors').append('<li>' + key + ' ' + value + '</li>');
+                                            });
+
+                                        } else {
+                                            $('#edit-shipment-errors').html(errors.error.message);
                                         }
-                                    });
+                                        $("#loader").hide();
+                                        $('#editShipmentModal').modal('show');
+                                        $("#edit-shipment-error-bag").show();
+                                    }
+                                });
 
                             },
                             error: function (data) {
@@ -1710,13 +1838,13 @@ var Api = function () {
 
             var memberId = jsonData['email'];
             console.log("Progress Sent Edit Data =>" + JSON.stringify(jsonData));
-            if(jsonData['role'] == 'Admin'){
+            if (jsonData['role'] == 'Admin') {
                 var profileEditURL = domainUrl + '/Admin/' + memberId;
-            }else if(jsonData['role'] == 'Customer'){
+            } else if (jsonData['role'] == 'Customer') {
                 var profileEditURL = domainUrl + '/Customer/' + memberId;
-            }else if(jsonData['role'] == 'Publisher'){
+            } else if (jsonData['role'] == 'Publisher') {
                 var profileEditURL = domainUrl + '/Publisher/' + memberId;
-            }else if(jsonData['role'] == 'Distributor'){
+            } else if (jsonData['role'] == 'Distributor') {
                 var profileEditURL = domainUrl + '/Distributor/' + memberId;
             }
 
@@ -3272,9 +3400,9 @@ var Api = function () {
     }
 
     // Get current Date Time in GMT+0300 (East Africa Time)
-    function currentDateTime(){
+    function currentDateTime() {
         var dt = new Date();
-        dt.setHours( dt.getHours() + 3 );
+        dt.setHours(dt.getHours() + 3);
 
         return dt;
     }
