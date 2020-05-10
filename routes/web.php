@@ -85,3 +85,8 @@ Route::get('qrcode', function () {
 //     return \QrCode::size(500)
 //                 ->email('info@tutsmake.com', 'Welcome to Tutsmake!', 'This is !.');
 // });
+
+
+Route::get('/sendemail', 'SendEmailController@index');
+Route::post('/send/sms', 'SendEmailController@sendSMS');
+Route::post('/sendemail/send', 'SendEmailController@send');
