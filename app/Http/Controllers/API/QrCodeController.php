@@ -38,8 +38,8 @@ class QrCodeController extends BaseController
             'detail' => 'required'
         ]);
 
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+        if($validator->fails()){  
+            return response()->json(array('error'=> $validator->errors(),'status_code' => 401 ));
         }
 
         $qrcode = Qrcode::create($input);
