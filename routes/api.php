@@ -24,8 +24,20 @@ Route::post('register', 'API\RegisterController@register');
 // 	Route::resource('qrcodes', 'API\QrCodeController');
 // });
 
+/**
+ * Mobile APIs
+ */
+
+// http://localhost:8000/api/qrcodes/BOOK_001 [active]
 Route::resource('qrcodes', 'API\QrCodeController');
 
+// http://localhost:8000/api/profile/customer@gmail.com [active]
 Route::resource('profile', 'API\ProfileController');
+
+Route::post('login', 'API\AuthController@login');
+        
+// http://localhost:8000/api/login/customer@gmail.com/kaaradapk [active]
+Route::get('login/{id}/{secret}', 'API\AuthController@getLogin');
+
 
 
