@@ -59,8 +59,18 @@ class QrCodeController extends BaseController
 
         $res = json_decode($book);
 
-
-        return $this->sendResponse($res , 'Qrcode retrieved successfully.');
+        // If Book does not exist
+        if(isset($res->error)){
+            return response()->json(
+                array(
+                    'success'=> false,
+                    'data'=> 'Book Does not exist',
+                    'status_code' => 404
+                )
+            );  
+        }
+        
+        return $this->sendResponse($res , 'Qrcode retrieved successfully.', );
     }
 
        /**
