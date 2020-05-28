@@ -40,4 +40,16 @@ Route::post('login', 'API\AuthController@login');
 Route::get('login/{id}/{secret}', 'API\AuthController@getLogin');
 
 
+/**
+ * Mobile APIs Mock Live
+ */
+// http://localhost:8000/api/demo/qrcodes/BOOK_001
+Route::get('demo/qrcodes/{id}', 'API\QrCodeController@showDemo');
+
+// http://localhost:8000/api/demo/profile/customer@gmail.com
+Route::get('demo/profile/{id}', 'API\ProfileController@showDemo');
+
+// http://localhost:8000/api/demo/login/customer@gmail.com/kaaradapk
+Route::get('demo/login/{id}/{secret}', 'API\AuthController@getLoginDemo');
+
 
