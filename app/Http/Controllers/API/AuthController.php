@@ -42,12 +42,24 @@ class AuthController extends BaseController
 
         // If Account does not exist
         if(isset($res->error)){
-            return response()->json(array('data'=> 'Invalid Username / Password','status_code' => 401 ));  
+            return response()->json(
+                array(
+                    'success'=> false,
+                    'data'=> 'Invalid Username / Password',
+                    'status_code' => 401
+                )
+            );  
         }
 
         // If Passwords dont match
         if($res->secret != $secret){
-            return response()->json(array('data'=> 'Invalid Username / Passwords','status_code' => 401 ));  
+            return response()->json(
+                array(
+                    'success'=> false,
+                    'data'=> 'Invalid Username / Password',
+                    'status_code' => 401
+                )
+            );  
         }
         
         // http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23customer@gmail.com
@@ -57,7 +69,15 @@ class AuthController extends BaseController
 
         // var_dump($order);
         $order = count($order);
-        return response()->json(array('data'=> $res,'order' => $order, 'status_code' => 200 )); 
+
+        return response()->json(
+            array(
+                'success'=> true,
+                'data'=> $res,
+                'order' => $order, 
+                'status_code' => 200 
+            )
+        ); 
 
     }
 
@@ -69,12 +89,24 @@ class AuthController extends BaseController
 
         // If Account does not exist
         if(isset($res->error)){
-            return response()->json(array('data'=> 'Invalid Username / Password','status_code' => 401 ));  
+            return response()->json(
+                array(
+                    'success'=> false,
+                    'data'=> 'Invalid Username / Password',
+                    'status_code' => 401
+                )
+            );  
         }
 
         // If Passwords dont match
         if($res->secret != $secret){
-            return response()->json(array('data'=> 'Invalid Username / Passwords','status_code' => 401 ));  
+            return response()->json(
+                array(
+                    'success'=> false,
+                    'data'=> 'Invalid Username / Password',
+                    'status_code' => 401
+                )
+            );  
         }
         
         // http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23customer@gmail.com
@@ -84,8 +116,10 @@ class AuthController extends BaseController
 
         // var_dump($order);
         $order = count($orders);
+        
         return response()->json(
             array(
+                'success'=> true,
                 'data'=> $res,
                 'order_count' => $order, 
                 'orders' => $orders, 
