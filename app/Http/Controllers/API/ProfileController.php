@@ -28,8 +28,19 @@ class ProfileController extends BaseController
 
         $res = json_decode($customer);
 
+        // If Customer does not exist
+        if(isset($res->error)){
+            return response()->json(
+                array(
+                    'success'=> false,
+                    'data'=> 'Customer Does not exist',
+                    'status_code' => 404 
+                )
+            );  
+        }
+
         return $this->sendResponse(
-            $res,'Retriving Customer Profile Successfully'
+            $res,'Retrived Customer Profile Successfully' , 200
         );
     }
 
