@@ -41,4 +41,13 @@ class Util extends Model
         return $result;
      }
 
+     /**
+      * Base 
+      */
+     public static function baseAPIUrl(){
+
+        $url = "http://localhost:3001";
+        return $url;
+     }
+
 }
