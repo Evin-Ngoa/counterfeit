@@ -397,7 +397,7 @@ class User extends Authenticatable
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         // EXECUTE:
         $result = curl_exec($curl);
-        if(!$result){die("Connection Failure");}
+        if(!$result){die("Fabric Down! Connection Failure");}
         curl_close($curl);
         return $result;
      }
