@@ -22,6 +22,7 @@ class AuthController extends BaseController
     {
 
         $credentials = $request->only(['email', 'secret']);
+        $baseUrl = Util::baseAPIUrl();
 
         $validator = Validator::make($credentials, [
             'email' => 'required',
@@ -36,7 +37,7 @@ class AuthController extends BaseController
         $email = $request->email;
         $secret = $request->email;
 
-        $customer = Util::callAPI('GET', 'http://localhost:3001/api/Customer/'. $email , false);
+        $customer = Util::callAPI('GET', $baseUrl.'/api/Customer/'. $email , false);
 
         $res = json_decode($customer);
 
@@ -63,7 +64,7 @@ class AuthController extends BaseController
         }
         
         // http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23customer@gmail.com
-        $orders = Util::callAPI('GET', 'http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23'. $email , false);
+        $orders = Util::callAPI('GET', $baseUrl . '/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23'. $email , false);
 
         $order = json_decode($orders);
 
@@ -86,8 +87,9 @@ class AuthController extends BaseController
      * Login using 
      */
     public function getLogin($email,$secret){
+        $baseUrl = Util::baseAPIUrl();
 
-        $customer = Util::callAPI('GET', 'http://localhost:3001/api/Customer/'. $email , false);
+        $customer = Util::callAPI('GET', $baseUrl . '/api/Customer/'. $email , false);
 
         $res = json_decode($customer);
 
@@ -114,7 +116,7 @@ class AuthController extends BaseController
         }
         
         // http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23customer@gmail.com
-        $ordersRaw = Util::callAPI('GET', 'http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23'. $email , false);
+        $ordersRaw = Util::callAPI('GET', $baseUrl . '/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23'. $email , false);
 
         $orders = json_decode($ordersRaw);
 
