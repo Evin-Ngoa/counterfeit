@@ -24,7 +24,9 @@ class ProfileController extends BaseController
      */
     public function show($id)
     {
-        $customer = Util::callAPI('GET', 'http://localhost:3001/api/Customer/'. $id ,false);
+        $baseUrl = Util::baseAPIUrl();
+        
+        $customer = Util::callAPI('GET', $baseUrl . '/api/Customer/'. $id ,false);
 
         $res = json_decode($customer);
 
