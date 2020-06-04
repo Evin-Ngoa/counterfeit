@@ -302,7 +302,7 @@ Respond Success
 Respond Failure
 {
   "success": false,
-  "data": "Book Does not exist",
+  "data": "Unknown \"Book\" id \"BOOK_004\".",
   "status_code": 404
 }
 ------------------------------------------------------------------------------
