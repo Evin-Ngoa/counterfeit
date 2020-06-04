@@ -55,16 +55,17 @@ class QrCodeController extends BaseController
      */
     public function show($id)
     {
-        $book = Util::callAPI('GET', 'http://localhost:3001/api//Book/'. $id ,false);
+        $baseUrl = Util::baseAPIUrl();
+        $book = Util::callAPI('GET', $baseUrl.'/api/Book/' . $id .'?filter={"include":"resolve"}' ,false);
 
         $res = json_decode($book);
-
+      
         // If Book does not exist
         if(isset($res->error)){
             return response()->json(
                 array(
                     'success'=> false,
-                    'data'=> 'Book Does not exist',
+                    'data'=> $res->error->message,
                     'status_code' => 404
                 )
             );  
@@ -81,23 +82,258 @@ class QrCodeController extends BaseController
      */
     public function showDemo($id)
     {
-
           $book =  array(
-            "\$class" => "org.evin.book.track.Book",
-            "id" => "BOOK_001",
-            "type"=> "Kiswahili",
-            "author" => "Wallah Bin Wallah",
-            "edition" => "3rd Edition",
-            "description" => "Description Goes Here",
-            "sold" => false,
-            "price" => 450,
-            "location" =>  array(
-                '$class'=> 'org.evin.book.track.Location',
-                'latLong'=> '3.0435,59.6682'
-            ),
-            "addedBy" => "resource:org.evin.book.track.Publisher#publisher1@gmail.com",
-            "shipment" => "resource:org.evin.book.track.Shipment#SHIP_001",
-            "createdAt" => "2020-05-28T23:32:27.567Z"
+                    "\$class" => "org.evin.book.track.Book",
+                    "id" => "BOOK_001",
+                    "type" => "Kiswahili",
+                    "author" => "Wallah Bin Wallah",
+                    "edition" => "3rd Edition",
+                    "description" => "Description Goes Here",
+                    "sold"=>false,
+                    "price"=>450,
+                    "location"=> array(
+                       "\$class" => "org.evin.book.track.Location",
+                       "latLong" => "3.0435,59.6682"
+                    ),
+                    "addedBy" => array(
+                       "\$class" => "org.evin.book.track.bookNetMember",
+                       "email" => "publisher1@gmail.com",
+                       "memberId" => "P-001",
+                       "name" => "Longhorn Publishers",
+                       "userName" => "longhorn-publishers",
+                       "secret" => "kaarada",
+                       "firstTimeLogin"=>1,
+                       "address" => array(
+                          "\$class" => "org.evin.book.track.Address",
+                          "county" => "NAIROBI",
+                          "country" => "KENYA",
+                          "street" => "Loita Street",
+                          "zip" => "047"
+                       ),
+                       "accountBalance" => 0,
+                       "createdAt" => "2020-05-29T09:28:31.628Z"
+                    ),
+                    "shipment" => array( // continue from here
+                       "\$class" => "org.evin.book.track.Shipment",
+                       "shipmentId" => "SHIP_BW2hHD4zqF",
+                       "ShipmentStatus" => "DELIVERED",
+                       "itemStatus" => "GOOD",
+                       "unitCount" => 2,
+                       "bookRegisterShipment" => array(
+                          array(
+                             "\$class" => "org.evin.book.track.BookRegisterShipment",
+                             "book" => array(
+                                "\$class" => "org.evin.book.track.Book",
+                                "id" => "BOOK_001",
+                                "type" => "Kiswahili",
+                                "author" => "Wallah Bin Wallah",
+                                "edition" => "3rd Edition",
+                                "description" => "Description Goes Here",
+                                "sold" => false,
+                                "price" => 450,
+                                "location" => array(
+                                   "\$class" => "org.evin.book.track.Location",
+                                   "latLong" => "3.0435,59.6682"
+                                 ),
+                                "addedBy" => array(
+                                   "\$class" => "org.evin.book.track.bookNetMember",
+                                   "email" => "publisher1@gmail.com",
+                                   "memberId" => "P-001",
+                                   "name" => "Longhorn Publishers",
+                                   "userName" => "longhorn-publishers",
+                                   "secret" => "kaarada",
+                                   "firstTimeLogin" => 1,
+                                   "address" => array(
+                                      "\$class" => "org.evin.book.track.Address",
+                                      "county" => "NAIROBI",
+                                      "country" => "KENYA",
+                                      "street" => "Loita Street",
+                                      "zip" => "047"
+                                   ),
+                                   "accountBalance" => 0,
+                                   "createdAt" => "2020-05-29T09:28:31.628Z"
+                                 ),
+                                "shipment" => "resource:org.evin.book.track.Shipment#SHIP_BW2hHD4zqF",
+                                "createdAt" => "2020-05-29T09:28:31.628Z"
+                              ),
+                             "shipment" => "resource:org.evin.book.track.Shipment#SHIP_BW2hHD4zqF",
+                             "transactionId" => "228c7dcd31bd3f0d7de695aab46fc6ce3944c61f69c5676238d7049bc647a359",
+                             "timestamp" => "2020-05-29T08:16:30.334Z"
+                         
+                           ),
+                        array(
+                             "\$class" => "org.evin.book.track.BookRegisterShipment",
+                             "book" => array(
+                                "\$class" => "org.evin.book.track.Book",
+                                "id" => "BOOK_002",
+                                "type" => "English",
+                                "author" => "Oludhe McGoyie",
+                                "edition" => "2nd Edition",
+                                "description" => "Description Goes Here",
+                                "sold" => false,
+                                "price" => 650,
+                                "location" => array(
+                                   "\$class" => "org.evin.book.track.Location",
+                                   "latLong" => "36.0435,80.6682"
+                                 ),
+                                "addedBy" => array(
+                                   "\$class" => "org.evin.book.track.bookNetMember",
+                                   "email" => "publisher2@gmail.com",
+                                   "memberId" => "P-002",
+                                   "name" => "Kenya Bureau Of Statitics",
+                                   "userName" => "kbs-publishers",
+                                   "secret" => "kaaradakbs",
+                                   "firstTimeLogin" => 1,
+                                   "address" => array(
+                                      "\$class" => "org.evin.book.track.Address",
+                                      "county" => "MOMBASA",
+                                      "country" => "KENYA",
+                                      "street" => "Loita Street",
+                                      "zip" => "001"
+                                   ),
+                                   "accountBalance" => 0,
+                                   "createdAt" => "2020-05-29T09:28:31.628Z"
+                                 ),
+                                "shipment" => "resource:org.evin.book.track.Shipment#SHIP_BW2hHD4zqF",
+                                "createdAt" => "2020-05-29T09:28:31.628Z"
+                              ),
+                             "shipment" => "resource:org.evin.book.track.Shipment#SHIP_BW2hHD4zqF",
+                             "transactionId" => "93f2d8e0393955df26c1d2289f38c0af0d817ceed1bd50bac3c5d4d5a1fc176f",
+                             "timestamp" => "2020-05-29T08:48:03.889Z"
+                       )
+                     ),
+                       "shipOwnership"=> array(
+                         array(
+                          
+                             "\$class" => "org.evin.book.track.ShipOwnership",
+                             "owner"=> array(
+                                "\$class" => "org.evin.book.track.bookNetMember",
+                                "email" => "publisher1@gmail.com",
+                                "memberId" => "P-001",
+                                "name" => "Longhorn Publishers",
+                                "userName" => "longhorn-publishers",
+                                "secret" => "kaarada",
+                                "firstTimeLogin" => 1,
+                                "address"=> array(
+                                   "\$class" => "org.evin.book.track.Address",
+                                   "county" => "NAIROBI",
+                                   "country" => "KENYA",
+                                   "street" => "Loita Street",
+                                   "zip" => "047"
+                                ),
+                                "accountBalance" => 0,
+                                "createdAt" => "2020-05-29T09:28:31.628Z"
+                              ),
+                             "shipment" => "resource:org.evin.book.track.Shipment#SHIP_BW2hHD4zqF",
+                             "transactionId" => "e73c931586d50e67d5029b25acaf55f0e29565b1660becc3be7978bc316c6a03",
+                             "timestamp" => "2020-05-29T08:00:25.344Z"
+                          ),
+                          array(
+                             "\$class" => "org.evin.book.track.ShipOwnership",
+                             "owner"=> array(
+                                "\$class" => "org.evin.book.track.bookNetMember",
+                                "email" => "distributor@gmail.com",
+                                "memberId" => "D-001",
+                                "name" => "Book Distributors Kenya",
+                                "userName" => "bdk-ditributors",
+                                "secret" => "kaaradabdk",
+                                "firstTimeLogin" => 1,
+                                "address" => array(
+                                   "\$class" => "org.evin.book.track.Address",
+                                   "county" => "NAIROBI",
+                                   "country" => "KENYA",
+                                   "street" => "Mfangano Street",
+                                   "zip" => "047"
+                                ),
+                                "accountBalance" => 2000000,
+                                "createdAt" => "2020-05-29T09:28:31.628Z"
+                              ),
+                             "shipment" => "resource:org.evin.book.track.Shipment#SHIP_BW2hHD4zqF",
+                             "transactionId" => "f0e870310a33916236cf45c549125249f4c5bdd05dc60be097cb213acd7aedea",
+                             "timestamp" => "2020-05-29T08:48:30.164Z"
+                           ),
+                           array(
+                             "\$class" => "org.evin.book.track.ShipOwnership",
+                             "owner" => array(
+                                "\$class" => "org.evin.book.track.bookNetMember",
+                                "email" => "customer@gmail.com",
+                                "memberId" => "D-002",
+                                "firstName" => "Peter",
+                                "lastName" => "Kiama",
+                                "userName" => "pk-kiama",
+                                "secret" => "kaaradapk",
+                                "firstTimeLogin" => 1,
+                                "address"=> array(
+                                   "\$class" => "org.evin.book.track.Address",
+                                   "county" => "NAIROBI",
+                                   "country" => "KENYA",
+                                   "street" => "Kenyatta Avenue",
+                                   "zip" => "047"
+                                ),
+                                "accountBalance" =>5000000,
+                                "createdAt" => "2020-05-29T09:28:31.628Z"
+                              ),
+                             "shipment" => "resource:org.evin.book.track.Shipment#SHIP_BW2hHD4zqF",
+                             "transactionId" => "819a129057d273981759ce08b74eb84eed5b27ccc8f2e832dab2f00e56ba3405",
+                             "timestamp" => "2020-05-29T10:10:15.313Z"
+                           )
+                        
+                       ),
+                       "contract" => array (
+                          "\$class" => "org.evin.book.track.OrderContract",
+                          "contractId" => "CON_001",
+                          "buyer" => array (
+                             "\$class" => "org.evin.book.track.Customer",
+                             "isRetailer" => "0",
+                             "email" => "customer@gmail.com",
+                             "memberId" => "D-002",
+                             "firstName" => "Peter",
+                             "lastName" => "Kiama",
+                             "userName" => "pk-kiama",
+                             "secret" => "kaaradapk",
+                             "firstTimeLogin" => 1,
+                             "address" => array (
+                                "\$class" => "org.evin.book.track.Address",
+                                "county" => "NAIROBI",
+                                "country" => "KENYA",
+                                "street" => "Kenyatta Avenue",
+                                "zip" => "047"
+                             ),
+                             "accountBalance" =>5000000,
+                             "createdAt" => "2020-05-29T09:28:31.628Z"
+                          ),
+                          "seller" => array (
+                             "\$class" => "org.evin.book.track.Publisher",
+                             "email" => "publisher1@gmail.com",
+                             "memberId" => "P-001",
+                             "name" => "Longhorn Publishers",
+                             "userName" => "longhorn-publishers",
+                             "secret" => "kaarada",
+                             "firstTimeLogin" =>1,
+                             "address" => array (
+                                "\$class" => "org.evin.book.track.Address",
+                                "county" => "NAIROBI",
+                                "country" => "KENYA",
+                                "street" => "Loita Street",
+                                "zip" => "047"
+                             ),
+                             "accountBalance" =>0,
+                             "createdAt" => "2020-05-29T09:28:31.628Z"
+                          ),
+                          "arrivalDateTime" => "2020-05-30T06:28:31.408Z",
+                          "payOnArrival" =>true,
+                          "unitPrice" =>500,
+                          "quantity" =>2,
+                          "description" => "Mathematics, Class 4, 3rd Edition",
+                          "destinationAddress" => "Loita Street, Barclays Plaza, Flr 12",
+                          "orderStatus" => "DELIVERED",
+                          "createdAt" => "2020-05-29T09:28:31.628Z",
+                          "updatedAt" => "2020-05-29T10:59:23.000Z"
+                       ),
+                       "createdAt" => "2020-05-29T11:00:22.000Z"
+                     ),
+                    "createdAt" => "2020-05-29T09:28:31.628Z"
+            
           );
 
         $resRaw = json_encode($book);
@@ -108,9 +344,9 @@ class QrCodeController extends BaseController
         if($id != "BOOK_001"){
             return response()->json(
                 array(
-                    'success'=> false,
-                    'data'=> 'Book Does not exist',
-                    'status_code' => 404
+                    'success'=> true,
+                    'data'=> [],
+                    'status_code' => 200
                 )
             );  
         }
