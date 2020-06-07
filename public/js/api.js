@@ -14,6 +14,7 @@ var Api = function () {
     var postDistributorURL = domainUrl + '/Distributor';
     var postCustomerURL = domainUrl + '/Customer';
     var postCustomerReviewURL = domainUrl + '/updateShipmentReview';
+    var postReportviewURL = domainUrl + '/Report';
 
     // var postBookURL = '/book';
 
@@ -51,6 +52,9 @@ var Api = function () {
 
     // Profile
     var frmProfile = $("#frmProfile");
+    
+    // Report
+    var frmReport = $("#frmReport");
 
     // Login
     var frmLogin = $("#frmLogin");
@@ -88,7 +92,94 @@ var Api = function () {
 
     var profileEditSbtBtn = $('#frmProfile .btn-profile');
 
+    var reportPostSbtBtn = $('#frmReport .btn-report');
+
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
+
+    var handlePostReport = function () {
+        console.log("handlePostReview");
+        $("#add-error-bag").hide();
+        var reportId = "Re_" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        reportPostSbtBtn.on('click', function () {
+            var json = frmReport.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            // Append ID
+            jsonData["id"] = reportId;
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // Add  created time
+            jsonData["createdAt"] = currentDateTime();
+
+            var msgHTML = "";
+
+            $("#add-error-report-bag").hide();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            // $.ajax({
+            //     type: 'POST',
+            //     url: postReportviewURL,
+            //     data: jsonData,
+            //     dataType: 'json',
+            //     beforeSend: function () {
+            //         //calls the loader id tag
+            //         $("#loader").show();
+            //     },
+            //     success: function (data) {
+            //         $("#loader").hide();
+            //         console.log("Success +++> " + JSON.stringify(data));
+            //         $("#add-error-report-bag").hide();
+            //         $("#add-review-msgs").show();
+            //         msgHTML = '<div class="alert alert-primary" role="alert">'
+            //             + 'Record Added Successfuly '
+            //             + '</div>';
+
+            //         $('#add-review-msgs').html(msgHTML);
+
+            //         $('#book_form').trigger("reset");
+            //         $("#book_form .close").click();
+            //         window.location.reload();
+            //     },
+            //     error: function (data) {
+            //         var errors = $.parseJSON(data.responseText);
+            //         var status = errors.error.statusCode;
+
+            //         if (status == 422) {
+            //             console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+            //             console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+            //             $("#add-review-msgs").hide();
+
+            //             $('#add-review-errors').html('');
+            //             $.each(errors.error.details.messages, function (key, value) {
+            //                 console.log('Error Value' + value + ' Key ' + key);
+            //                 $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+            //             });
+
+            //         } else {
+            //             console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+            //             $('#add-review-errors').html(errors.error.message);
+            //         }
+            //         // hide loader
+            //         $("#loader").hide();
+
+            //         // Show modal to display error showed
+            //         $("#add-error-report-bag").show();
+            //     }
+            // });
+
+        });
+    };
 
     var handlePostReview = function () {
         console.log("handlePostReview");
@@ -3454,6 +3545,9 @@ var Api = function () {
 
             // Profile
             handleEditProfile();
+
+            // Review
+            handlePostReport();
         }
     }
 
