@@ -64,6 +64,7 @@ class ProfileController extends BaseController
             "firstName" => "Peter",
             "lastName" => "Kiama",
             "userName" => "pk-kiama",
+            "avatar" => "http://mastercard.us.evincloud.com/public/img/avatar.png",
             "secret" => "kaaradapk",
             "firstTimeLogin" => 1,
             "address" => array(
