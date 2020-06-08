@@ -149,6 +149,7 @@ class AuthController extends BaseController
             "memberId" => "D-002",
             "firstName" => "Peter",
             "lastName" => "Kiama",
+            "avatar" => "http://mastercard.us.evincloud.com/public/img/avatar.png",
             "userName" => "pk-kiama",
             "secret" => "kaaradapk",
             "firstTimeLogin" => 1,
