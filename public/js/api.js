@@ -1,4 +1,8 @@
 var Api = function () {
+    var scanPoints = 2.0;
+    var reportPoints = 5.0;
+    var penaltyPoints = 20.0;
+
     // http://localhost:3000/api/Book
     var systemEmail = 'order@bookcounterfeit.com';
     var domainUrl = 'http://localhost:3001/api';
@@ -15,6 +19,7 @@ var Api = function () {
     var postCustomerURL = domainUrl + '/Customer';
     var postCustomerReviewURL = domainUrl + '/updateShipmentReview';
     var postReportviewURL = domainUrl + '/Report';
+    var postCustomerScanPointsURL = domainUrl + '/updateCustomerPoints';
 
     // var postBookURL = '/book';
 
@@ -93,9 +98,15 @@ var Api = function () {
     var profileEditSbtBtn = $('#frmProfile .btn-profile');
 
     var reportPostSbtBtn = $('#frmReport .btn-report');
+    var buyBookPostSbtBtn = $('#frmBuyBook .btn-buy-book');
 
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
 
+    /**
+     * 
+     * https://stackoverflow.com/questions/20481141/jquery-change-json-data-in-cookie
+     * updates cookie and sends accountBaalnce
+     */
     var handlePostReport = function () {
         console.log("handlePostReview");
         $("#add-error-bag").hide();
@@ -108,9 +119,20 @@ var Api = function () {
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
             });
+            var book = jsonData["book"];
+            var reportedBy = "resource:org.evin.book.track.Customer#" + jsonData["reportedBy"];
+            var reportedTo = jsonData["reportedTo"];
+            
+            var postPoints = {
+                accountBalance : reportPoints,
+                customer : reportedBy
+            };
 
             // Append ID
             jsonData["id"] = reportId;
+            jsonData["book"] = "resource:org.evin.book.track.Book#" + book;
+            jsonData["reportedBy"] = reportedBy;
+            jsonData["reportedTo"] = "resource:org.evin.book.track.Publisher#" + reportedTo;
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
@@ -127,56 +149,94 @@ var Api = function () {
                 }
             });
             // data:  JSON.stringify(jsonData),
-            // $.ajax({
-            //     type: 'POST',
-            //     url: postReportviewURL,
-            //     data: jsonData,
-            //     dataType: 'json',
-            //     beforeSend: function () {
-            //         //calls the loader id tag
-            //         $("#loader").show();
-            //     },
-            //     success: function (data) {
-            //         $("#loader").hide();
-            //         console.log("Success +++> " + JSON.stringify(data));
-            //         $("#add-error-report-bag").hide();
-            //         $("#add-review-msgs").show();
-            //         msgHTML = '<div class="alert alert-primary" role="alert">'
-            //             + 'Record Added Successfuly '
-            //             + '</div>';
+            $.ajax({
+                type: 'POST',
+                url: postReportviewURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {
+                    //calls the loader id tag
+                    $("#loader").show();
+                },
+                success: function (data) {
 
-            //         $('#add-review-msgs').html(msgHTML);
+                    // Add Points
+                    $.ajax({
+                        type: 'POST',
+                        url: postCustomerScanPointsURL,
+                        data: postPoints,
+                        dataType: 'json',
+                        beforeSend: function () {
+                            //calls the loader id tag
+                            $("#loader").show();
+                        },
+                        success: function (data) {
+                            $("#loader").hide();
+                            console.log("Success +++> " + JSON.stringify(data));
+                            $("#add-error-report-bag").hide();
+                            $("#add-review-msgs").show();
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + 'Report Sent Successfuly. You have earned extra '+ reportPoints + ' for helping in fighting counterfeit.'
+                                + '</div>';
+        
+                            $('#add-review-msgs').html(msgHTML);
+        
+                            // window.location.reload();
+                        },
+                        error: function (data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+        
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-review-msgs").hide();
+        
+                                $('#add-review-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+        
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-review-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+        
+                            // Show modal to display error showed
+                            $("#add-error-report-bag").show();
+                        }
+                    }); //end post points ajax
 
-            //         $('#book_form').trigger("reset");
-            //         $("#book_form .close").click();
-            //         window.location.reload();
-            //     },
-            //     error: function (data) {
-            //         var errors = $.parseJSON(data.responseText);
-            //         var status = errors.error.statusCode;
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
 
-            //         if (status == 422) {
-            //             console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-            //             console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-            //             $("#add-review-msgs").hide();
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-review-msgs").hide();
 
-            //             $('#add-review-errors').html('');
-            //             $.each(errors.error.details.messages, function (key, value) {
-            //                 console.log('Error Value' + value + ' Key ' + key);
-            //                 $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
-            //             });
+                        $('#add-review-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
 
-            //         } else {
-            //             console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-            //             $('#add-review-errors').html(errors.error.message);
-            //         }
-            //         // hide loader
-            //         $("#loader").hide();
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-review-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
 
-            //         // Show modal to display error showed
-            //         $("#add-error-report-bag").show();
-            //     }
-            // });
+                    // Show modal to display error showed
+                    $("#add-error-report-bag").show();
+                }
+            });
 
         });
     };
@@ -365,12 +425,22 @@ var Api = function () {
             var json = bookVerifyForm.serializeArray();
             var jsonData = {};
 
+            var loggedInUser = "resource:org.evin.book.track.Customer#" + $("#loggedInUser").val();
+
+            var postPoints = {
+                accountBalance : scanPoints,
+                customer : loggedInUser
+            };
+
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
             });
 
+
             // Append ID
             var bookID = jsonData["book_serial"];
+
+            delete jsonData["loggedInUser"];
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
@@ -397,11 +467,55 @@ var Api = function () {
                     $("#loader").show();
                 },
                 success: function (data) {
-                    $("#loader").hide();
-                    console.log("Success +++> " + JSON.stringify(data));
-                    console.log("data.id = " + data.id);
 
-                    window.location.href = '/verify/book/' + data.id;
+
+                    // Add Posting Points
+                    $.ajax({
+                        type: 'POST',
+                        url: postCustomerScanPointsURL,
+                        data: postPoints,
+                        dataType: 'json',
+                        beforeSend: function () {
+                            //calls the loader id tag
+                            $("#loader").show();
+                        },
+                        success: function (datas) {
+                            $("#loader").hide();
+                            console.log("Success +++> " + JSON.stringify(data));
+                            console.log("data.id = " + data.id);
+
+                            window.location.href = '/verify/book/' + data.id;
+                        },
+                        error: function (data) {
+                            $("#loader").hide();
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+        
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-book-msgs").hide();
+        
+                                $('#add-book-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+        
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-book-errors').html(errors.error.message);
+                                // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                            }
+                            // hide loader
+                            $("#loader").hide();
+        
+                            // Show modal to display error showed
+                            $('#addBookModal').modal('show');
+                            $("#add-error-bag").show();
+                        }
+                    }); //end post points ajax
+
                 },
                 error: function (data) {
                     $("#loader").hide();
@@ -3475,6 +3589,28 @@ var Api = function () {
         });
     };
 
+    var handleFetchWards = function() {
+        var wardsBaseURL = 'https://frozen-basin-45055.herokuapp.com/api/wards?county='; 
+        var county = $("#county").val();
+        var county = "Nairobi";
+        var wardsURL = wardsBaseURL + county;
+
+        console.log("COUNTY = " + county);
+        console.log("Wards = " + wards[0].name);
+        console.log("Wards Size = " + wards.length);
+
+        var denomination = document.getElementById("ward")
+        for (var i = 0; i < wards.length; i++) {
+            var option = document.createElement("OPTION"),
+                txt = document.createTextNode(wards[i].name);
+            option.appendChild(txt);
+            option.setAttribute("value", wards[i].name);
+            denomination.insertBefore(option, denomination.lastChild);
+        }
+
+    };
+
+
     // function you can use:
     function getAfterHarsh(str) {
         return str.split('#')[1];
@@ -3548,6 +3684,9 @@ var Api = function () {
 
             // Review
             handlePostReport();
+
+            // Fetch Wards
+            // handleFetchWards();
         }
     }
 
