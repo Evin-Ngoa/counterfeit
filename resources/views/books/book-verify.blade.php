@@ -3,6 +3,12 @@
 @section('title', 'Books | Book Verification')
 
 @section('content-box')
+<?php
+$reportedTo = "N/A";
+$first = true;
+$reportedToMemberId = "N/A";
+$purchasedToEmail = "N/A";
+?>
 <div class="content-box">
     <div class="element-wrapper ">
         <div class="element-actions">
@@ -11,9 +17,22 @@
             </a>
         </div>
         <h6 class="element-header">Supply Chain For {{ $id }}</h6>
+        <?php 
+            $bookSold = '';
+        ?>
         <div class="element-box-tp">
+            @if($groupOwners->sold)
+                <div class="alert alert-danger">
+                    Book Already Sold. By buying this book you are supporting counterfeit products. Please
+                    report this on the report deck form and earn points that you can redeem on your next purchase. 
+                    Help fight Counterfeits in Kenya.
+                </div>
+            @endif
             <div class="activity-boxes-w">
                 @if($groupOwners)
+                <?php 
+                    $bookSold = $groupOwners->sold;
+                ?>
                 @if(isset($groupOwners->shipment->shipOwnership))
                 @foreach ($groupOwners->shipment->shipOwnership as $groupOwner)
                 <div class="activity-box-w">
@@ -22,6 +41,12 @@
                         <div class="activity-avatar"><img alt="" src="/img/avatar1.jpg"></div>
                         <div class="activity-info">
                             @if(isset($groupOwner->owner->name))
+                            <?php
+                            if ($first) {
+                                $reportedTo = $groupOwner->owner->email;
+                                $first = false;
+                            }
+                            ?>
                             <div class="activity-role">{{ $groupOwner->owner->name }}</div>
                             @else
                             <div class="activity-role">{{ $groupOwner->owner->firstName }} {{ $groupOwner->owner->lastName }} </div>
@@ -30,6 +55,10 @@
                             @if(isset($groupOwner->owner->address->country))
                             <strong class="activity-title">{{ $groupOwner->owner->address->country}} , {{ $groupOwner->owner->address->county }} , {{ $groupOwner->owner->address->street }}</strong>
                             @endif
+                            <?php
+                                $reportedToMemberId = $groupOwner->owner->memberId;
+                                $purchasedToEmail = $groupOwner->owner->email;
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -49,57 +78,32 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
-        <div class="col-lg-8">
-            <div class="element-wrapper">
-                <h6 class="element-header">Report Deck</h6>
-                <div class="element-box">
-                    <form id="frmReport">
-                        <!-- <h5 class="form-header">Report </h5> -->
-                        <div class="form-desc">
-                            Report a book that is rendered possible counterfeit and get points
-                        </div>
-                        <div id="add-review-msgs"></div>
-
-                        <div class="alert alert-danger" id="add-error-report-bag">
-                            <ul id="add-review-errors">
-                            </ul>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="ward"> Select Ward</label>
-                            <select class="form-control" name="ward" id="ward">
-                                <option>Select Ward</option>
-                                <option>Ngara</option>
-                           
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="book"> Book ID</label>
-                            <input class="form-control" placeholder="Enter Book ID" type="text" name="book" id="book" value="{{ $id }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="store"> Enter Store ID</label>
-                            <input class="form-control" placeholder="Enter Book ID" type="text" name="store" id="store" value="">
-                            <input class="form-control" type="hidden" name="reportedBy" id="reportedBy" value="">
-                            <input class="form-control" type="hidden" name="reportedTo" id="reportedTo" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="store"> Enter Description</label>
-                            <textarea class="form-control" name="description" id="description" value=""></textarea>
-                        </div>
-
-                        <div class="form-buttons-w">
-                            <button class="btn btn-primary btn-report" type="button"> Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="col-lg-6">
+            @include('books.report-deck')
+        </div>
+        <div class="col-lg-6">
+            @include('books.sale')
         </div>
     </div>
 </div>
 @endsection
+
+@section('footer_scripts')
+<script>
+        console.log("Wards = " + wards[0].name);
+        console.log("Wards Size = " + wards.length);
+
+        var denomination = document.getElementById("ward")
+        for (var i = 0; i < wards.length; i++) {
+            var option = document.createElement("OPTION"),
+                txt = document.createTextNode(wards[i].name);
+            option.appendChild(txt);
+            option.setAttribute("value", wards[i].name);
+            denomination.insertBefore(option, denomination.lastChild);
+        }
+</script>
+@endsection
+
+<!-- https://github.com/njoguamos/Kenya-demographics-units/blob/master/src/wards/wards.json -->
