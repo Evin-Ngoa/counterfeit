@@ -896,7 +896,7 @@
 
                         $('#add-request-msgs').html(msgHTML);
 
-                        // window.location.reload();
+                        window.location.reload();
                     },
                     error: function(data) {
                         var errors = $.parseJSON(data.responseText);
