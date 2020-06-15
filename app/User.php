@@ -172,6 +172,24 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if customer is a retailer
+     */
+    public static function isCustomerRetailer(){
+        if (isset($_COOKIE['logged_in_user'])) {
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user , true);
+            
+            $isRetailer = $cookieData['isRetailer'];
+
+            if($isRetailer == "1"){
+                return true;
+            }
+            
+            return false;
+        }
+    }
+
+    /**
      * Get the Telephone of the customers
      */
     public static function getParticipantTelephone(){
