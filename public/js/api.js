@@ -20,6 +20,7 @@ var Api = function () {
     var postCustomerReviewURL = domainUrl + '/updateShipmentReview';
     var postReportviewURL = domainUrl + '/Report';
     var postCustomerScanPointsURL = domainUrl + '/updateCustomerPoints';
+    var postBuyBookURL = domainUrl + '/PurchaseRequest';
 
     // var postBookURL = '/book';
 
@@ -66,6 +67,9 @@ var Api = function () {
 
     var frmRegister = $("#frmRegister");
 
+    // Buy Book
+    var frmBuyBook = $("#frmBuyBook");
+
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookVerifySbtBtn = $('#verify_form .btn-verify-book');
@@ -101,6 +105,101 @@ var Api = function () {
     var buyBookPostSbtBtn = $('#frmBuyBook .btn-buy-book');
 
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
+
+    /**
+     * Posting the book purchase form
+     */
+    var handleBuyBook = function () {
+        console.log("handleBuyBook");
+
+        $("#add-error-buy-book-bag").hide();
+        var buyBookId = "P-" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        buyBookPostSbtBtn.on('click', function () {
+            var json = frmBuyBook.serializeArray();
+
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            var book = "resource:org.evin.book.track.Book#" + jsonData["book"];
+            var purchasedBy = "resource:org.evin.book.track.Customer#" + jsonData["purchasedBy"];
+            var purchasedTo = "resource:org.evin.book.track.Customer#" + jsonData["purchasedTo"];
+
+            delete jsonData["purchasedToMemberId"];
+
+            // Add update time
+            jsonData["createdAt"] = currentDateTime();
+            // Append ID
+            jsonData["id"] = buyBookId;
+            jsonData["book"] = book;
+            jsonData["purchasedBy"] = purchasedBy;
+            jsonData["purchasedTo"] = purchasedTo;
+
+            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: postBuyBookURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    // hide loader
+                    $("#loader").hide();
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-error-buy-book-bag").hide();
+                    $("#add-buy-book-msgs").show();
+
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Request sent successfully. Await Approval from the store.'
+                        + '</div>';
+
+                    $('#add-buy-book-msgs').html(msgHTML);
+
+                    // window.location.reload();
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-buy-book-msgs").hide();
+
+                        $('#add-buy-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-buy-book-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#add-error-buy-book-bag").show();
+                }
+            }); // END Ajax
+
+        }); // END Onclick Submit
+
+    };
 
     /**
      * 
@@ -3684,6 +3783,9 @@ var Api = function () {
 
             // Review
             handlePostReport();
+
+            // Purchase Book
+            handleBuyBook();
 
             // Fetch Wards
             // handleFetchWards();
