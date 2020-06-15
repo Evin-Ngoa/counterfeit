@@ -504,7 +504,7 @@ New Shipment
     },
     {
       "$class": "org.evin.book.track.ShipOwnership",
-      "owner": "resource:org.evin.book.track.Customer#customer@gmail.com",
+      "owner": "resource:org.evin.book.track.Customer#customer-evin@gmail.com",
       "shipment": "resource:org.evin.book.track.Shipment#SHIP_hRSgxcVWU7",
       "transactionId": "90ad455dea65210f88f5323b591492600a03942173aa7a8026acf6dfe8934dc9",
       "timestamp": "2020-06-04T18:22:37.495Z"
@@ -512,4 +512,42 @@ New Shipment
   ],
   "contract": "resource:org.evin.book.track.OrderContract#CON_DBn1jTnJoT",
   "createdAt": "2020-06-04T20:55:30.000Z"
+}
+
+New Customer
+-----------------------------------------------
+Retailer 
+
+{
+  "$class": "org.evin.book.track.Customer",
+  "isRetailer": "1",
+  "email": "customer-evin@gmail.com",
+  "memberId": "C-6a3Gm",
+  "firstName": "Evin",
+  "lastName": "BookStore",
+  "userName": "evin",
+  "secret": "123456",
+  "telephone": "078954326",
+  "firstTimeLogin": 1,
+  "address": {
+    "$class": "org.evin.book.track.Address",
+    "county": "NAIROBI",
+    "country": "KENYA",
+    "street": "Kenyatta Avenue",
+    "zip": "047"
+  },
+  "accountBalance": 56000
+}
+
+------------------------------------------------
+Purchase Request
+
+{
+  "$class": "org.evin.book.track.PurchaseRequest",
+  "id": "P-B2qJ5TrwEL",
+  "book": "resource:org.evin.book.track.Book#BOOK_001",
+  "purchasedBy": "resource:org.evin.book.track.Customer#customer@gmail.com",
+  "purchasedTo": "resource:org.evin.book.track.Customer#customer-evin@gmail.com",
+  "status": false,
+  "createdAt": "2020-06-15T11:33:13.000Z"
 }
