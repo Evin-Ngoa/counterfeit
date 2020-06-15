@@ -153,7 +153,7 @@
                                     </td>
                                     <td class="text-center" style="font-size: .73rem;">
                                         <div class="pt-btn">
-                                            <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}' );">Confirm</a>
+                                            <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}' );">Confirm</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -837,7 +837,7 @@
 
 @section('footer_scripts')
 <script>
-    function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID) {
+    function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEmail) {
         console.log("Clicked updatePurchaseRequest");
 
         var domainUrl = 'http://localhost:3001/api';
@@ -850,13 +850,13 @@
 
         // 2. Update Book as sold in its flag
         var jsonDataBook = {
-            book : "resource:org.evin.book.track.Book#" + BookID,
-            sold : true
+            book: "resource:org.evin.book.track.Book#" + BookID,
+            sold: true
         };
 
         // 3. Update Final Owner in Supply Chain
         var jsonDataShipOwnership = {
-            book: "resource:org.evin.book.track.Book#" + BookID,
+            owner: "resource:org.evin.book.track.Customer#" + customerEmail,
             shipment: "resource:org.evin.book.track.Shipment#" + ShipmentID
         };
 
@@ -886,19 +886,58 @@
                         $('#add-request-msgs').hide();
                     },
                     success: function(data) {
-                        $("#loader").hide();
-                        console.log(data);
-                        $("#add-error-request-bag").hide();
-                        $('#add-request-msgs').show();
-                        msgHTML = '<div class="alert alert-primary" role="alert">' +
-                            'Request confirmed' +
-                            '</div>';
 
-                        $('#add-request-msgs').html(msgHTML);
+                        // Add buyer to supply chain
+                        $.ajax({
+                            type: 'POST',
+                            url: domainUrl + '/ShipOwnership',
+                            data: jsonDataShipOwnership,
+                            dataType: 'json',
+                            beforeSend: function() {
+                                $("#loader").show();
+                                $("#add-error-request-bag").hide();
+                                $('#add-request-msgs').hide();
+                            },
+                            success: function(data) {
+                                $("#loader").hide();
+                                console.log(data);
+                                $("#add-error-request-bag").hide();
+                                $('#add-request-msgs').show();
+                                msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                    'Request confirmed and ' + + ' added to the supply chain' +
+                                    '</div>';
 
-                        // window.location.reload();
+                                $('#add-request-msgs').html(msgHTML);
 
-                        //Add buyer to supply chain
+                                // window.location.reload();
+
+                                // Add buyer to supply chain
+                            },
+                            error: function(data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-request-msgs").hide();
+
+                                    $('#add-request-errors').html('');
+                                    $.each(errors.error.details.messages, function(key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-request-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                $("#add-error-request-bag").show();
+                            }
+                        });
                     },
                     error: function(data) {
                         var errors = $.parseJSON(data.responseText);
