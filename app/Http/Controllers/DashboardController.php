@@ -57,6 +57,8 @@ class DashboardController extends Controller
         $shipments = array();
         $arrayShip = array();
         $arrayDeli = array();
+        $purchaseRequests = array();
+        $arrayPurchaseRequests = array();
 
         // Orders
         if (\App\User::getUserRole() == \App\Http\Traits\UserConstants::PUBLISHER) {
@@ -138,7 +140,33 @@ class DashboardController extends Controller
             $ordersDeliveredCount = count($ordersDelivered);
             // dd($ordersDeliveredCount);
 
-            return view('dashboard.index')->with(compact('role', 'ordersCount', 'ordersWaitingProcessed', 'shipmentsCount', 'ordersDeliveredCount'));
+            // 4. Get All Purchase Requests
+            $purchaseRequest = $this->orderservice->getAllPurchaseRequests();
+
+            // dd($purchaseRequest);
+
+            foreach ($purchaseRequest as $key => $value) {
+                // Active Shipments include waiting, dispatching and transit
+                if ($purchaseRequest[$key]->purchasedTo->email == \App\User::loggedInUserEmail() && $purchaseRequest[$key]->status == false) {
+                    $arrayShip[$key] = $value;
+                    $purchaseRequests = $arrayShip;
+                }
+            }
+            // dd($purchaseRequests);
+            $purchaseRequestsCount = count($purchaseRequests);
+            // dd($purchaseRequestsCount);
+
+            return view('dashboard.index')->with(
+                compact(
+                    'role', 
+                    'ordersCount', 
+                    'ordersWaitingProcessed', 
+                    'shipmentsCount', 
+                    'ordersDeliveredCount',
+                    'purchaseRequests',
+                    'purchaseRequestsCount'
+                    )
+            );
         } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::ADMIN) {
             $orders = $this->orderservice->getAllOrders();
             $orderCount = count($orders);
