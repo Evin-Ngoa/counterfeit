@@ -14,7 +14,11 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="element-wrapper">
-                <h6 class="element-header">{{ $role }} Dashboard</h6>
+                @if(\App\User::isCustomerRetailer())
+                    <h6 class="element-header">Retailer Dashboard</h6> 
+                @else
+                    <h6 class="element-header">{{ $role }} Dashboard</h6> 
+                @endif
                 <div class="element-content">
                     <div class="row">
                         <!-- Orders Customer-->
@@ -33,13 +37,22 @@
                                 <div class="trending trending-down-basic"><span>12%</span><i class="os-icon os-icon-arrow-down"></i></div>
                             </a>
                         </div>
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="#">
-                                <div class="label">Delivered</div>
-                                <div class="value">{{ $ordersDeliveredCount }}</div>
-                                <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                            </a>
-                        </div>
+                            @if(\App\User::isCustomerRetailer())
+                                <div class="col-sm-4 col-xxxl-4">
+                                    <a class="element-box el-tablo" href="#">
+                                        <div class="label">Purchase Requests</div>
+                                        <div class="value">{{ $purchaseRequestsCount }}</div>
+                                    </a>
+                                </div>
+                            @else
+                                <div class="col-sm-4 col-xxxl-4">
+                                    <a class="element-box el-tablo" href="#">
+                                        <div class="label">Delivered</div>
+                                        <div class="value">{{ $ordersDeliveredCount }}</div>
+                                        <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
+                                    </a>
+                                </div>
+                            @endif
                         @endif
 
                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
@@ -110,61 +123,64 @@
 
     <!-- Orders Customer-->
     @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
-    <div class="row">
-        <div class="col-sm-12 col-xxxl-12">
-            <div class="element-wrapper">
-                <h6 class="element-header">Active Purchase Requests</h6>
-                <div class="element-box">
-                    <div class="table-responsive">
-                        <table class="table table-lightborder">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Request ID</th>
-                                    <th class="text-center">Book ID</th>
-                                    <th class="text-center">Buyer Email</th>
-                                    <th class="text-center">Seller Email</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <div id="add-request-msgs"></div>
-                                <div class="alert alert-danger" id="add-error-request-bag" style="display: none;">
-                                    <ul id="add-request-errors">
-                                    </ul>
-                                </div>
-                                {{-- dd($ordersWaitingProcessed) --}}
-                                @foreach($purchaseRequests as $activeRequests)
-                                <tr>
-                                    <td class="nowrap text-center" style="font-size: .73rem;">{{ $activeRequests->id }}</td>
-                                    <td class="text-center" style="font-size: .73rem;">
-                                        {{-- \App\User::extractEmailFromResource($activeRequests->seller) --}}
-                                        {{ $activeRequests->book->id}}
-                                    </td>
-                                    <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedBy->email}}</td>
-                                    <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedTo->email}}</td>
-                                    <td class="text-center" style="font-size: .73rem;">
-                                        @if($activeRequests->status == false)
-                                        <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
-                                        @elseif($activeRequests->status == true)
-                                        <div class="status-pill green" data-title="Confirmed" data-toggle="tooltip" data-original-title="" title=""></div>
-                                        @else
-                                        @endif
-                                    </td>
-                                    <td class="text-center" style="font-size: .73rem;">
-                                        <div class="pt-btn">
-                                            <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}' );">Confirm</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+        @if(\App\User::isCustomerRetailer())
+        <div class="row">
+            <div class="col-sm-12 col-xxxl-12">
+                <div class="element-wrapper">
+                    <h6 class="element-header">Active Purchase Requests</h6>
+                    <div class="element-box">
+                        <div class="table-responsive">
+                            <table class="table table-lightborder">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Request ID</th>
+                                        <th class="text-center">Book ID</th>
+                                        <th class="text-center">Buyer Email</th>
+                                        <th class="text-center">Seller Email</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div id="add-request-msgs"></div>
+                                    <div class="alert alert-danger" id="add-error-request-bag" style="display: none;">
+                                        <ul id="add-request-errors">
+                                        </ul>
+                                    </div>
+                                    {{-- dd($ordersWaitingProcessed) --}}
+                                    {{-- dd(\App\User::isCustomerRetailer()) --}}
+                                    @foreach($purchaseRequests as $activeRequests)
+                                    <tr>
+                                        <td class="nowrap text-center" style="font-size: .73rem;">{{ $activeRequests->id }}</td>
+                                        <td class="text-center" style="font-size: .73rem;">
+                                            {{-- \App\User::extractEmailFromResource($activeRequests->seller) --}}
+                                            {{ $activeRequests->book->id}}
+                                        </td>
+                                        <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedBy->email}}</td>
+                                        <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedTo->email}}</td>
+                                        <td class="text-center" style="font-size: .73rem;">
+                                            @if($activeRequests->status == false)
+                                            <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
+                                            @elseif($activeRequests->status == true)
+                                            <div class="status-pill green" data-title="Confirmed" data-toggle="tooltip" data-original-title="" title=""></div>
+                                            @else
+                                            @endif
+                                        </td>
+                                        <td class="text-center" style="font-size: .73rem;">
+                                            <div class="pt-btn">
+                                                <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}' );">Confirm</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        @endif
     <div class="row">
         <div class="col-sm-12 col-xxxl-12">
             <div class="element-wrapper">
