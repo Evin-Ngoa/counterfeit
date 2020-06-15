@@ -80,27 +80,27 @@
 
                         <!-- Admin-->
                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
-                            <div class="col-sm-4 col-xxxl-4">
-                                <a class="element-box el-tablo" href="{{ route('publisher.index') }}">
-                                    <div class="label">Publishers</div>
-                                    <div class="value">{{ $publishersCount }}</div>
-                                    <!-- <div class="trending trending-up-basic"><span>12%</span><i class="os-icon os-icon-arrow-up2"></i></div> -->
-                                </a>
-                            </div>
-                            <div class="col-sm-4 col-xxxl-4">
-                                <a class="element-box el-tablo" href="{{ route('distributor.index') }}">
-                                    <div class="label">Distributors</div>
-                                    <div class="value">{{ $distributorsCount }}</div>
-                                    <div class="trending trending-down-basic"><span>12%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                                </a>
-                            </div>
-                            <div class="col-sm-4 col-xxxl-4">
-                                <a class="element-box el-tablo" href="{{ route('customer.index') }}">
-                                    <div class="label">Consumers</div>
-                                    <div class="value">{{ $customersCount }}</div>
-                                    <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                                </a>
-                            </div>
+                        <div class="col-sm-4 col-xxxl-4">
+                            <a class="element-box el-tablo" href="{{ route('publisher.index') }}">
+                                <div class="label">Publishers</div>
+                                <div class="value">{{ $publishersCount }}</div>
+                                <!-- <div class="trending trending-up-basic"><span>12%</span><i class="os-icon os-icon-arrow-up2"></i></div> -->
+                            </a>
+                        </div>
+                        <div class="col-sm-4 col-xxxl-4">
+                            <a class="element-box el-tablo" href="{{ route('distributor.index') }}">
+                                <div class="label">Distributors</div>
+                                <div class="value">{{ $distributorsCount }}</div>
+                                <div class="trending trending-down-basic"><span>12%</span><i class="os-icon os-icon-arrow-down"></i></div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4 col-xxxl-4">
+                            <a class="element-box el-tablo" href="{{ route('customer.index') }}">
+                                <div class="label">Consumers</div>
+                                <div class="value">{{ $customersCount }}</div>
+                                <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
+                            </a>
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -110,6 +110,61 @@
 
     <!-- Orders Customer-->
     @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
+    <div class="row">
+        <div class="col-sm-12 col-xxxl-12">
+            <div class="element-wrapper">
+                <h6 class="element-header">Active Purchase Requests</h6>
+                <div class="element-box">
+                    <div class="table-responsive">
+                        <table class="table table-lightborder">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Request ID</th>
+                                    <th class="text-center">Book ID</th>
+                                    <th class="text-center">Buyer Email</th>
+                                    <th class="text-center">Seller Email</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <div id="add-request-msgs"></div>
+                                <div class="alert alert-danger" id="add-error-request-bag" style="display: none;">
+                                    <ul id="add-request-errors">
+                                    </ul>
+                                </div>
+                                {{-- dd($ordersWaitingProcessed) --}}
+                                @foreach($purchaseRequests as $activeRequests)
+                                <tr>
+                                    <td class="nowrap text-center" style="font-size: .73rem;">{{ $activeRequests->id }}</td>
+                                    <td class="text-center" style="font-size: .73rem;">
+                                        {{-- \App\User::extractEmailFromResource($activeRequests->seller) --}}
+                                        {{ $activeRequests->book->id}}
+                                    </td>
+                                    <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedBy->email}}</td>
+                                    <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedTo->email}}</td>
+                                    <td class="text-center" style="font-size: .73rem;">
+                                        @if($activeRequests->status == false)
+                                        <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        @elseif($activeRequests->status == true)
+                                        <div class="status-pill green" data-title="Confirmed" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        @else
+                                        @endif
+                                    </td>
+                                    <td class="text-center" style="font-size: .73rem;">
+                                        <div class="pt-btn">
+                                            <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id}}');">Confirm</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12 col-xxxl-12">
             <div class="element-wrapper">
@@ -480,11 +535,11 @@
                                     </td>
                                     <td class="text-center">
                                         @if($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_WAITING)
-                                            <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @elseif($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_DISPATCHING)
-                                            <div class="status-pill green" data-title="Dispatching" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill green" data-title="Dispatching" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @elseif($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_SHIPPED_IN_TRANSIT)
-                                            <div class="status-pill green" data-title="In Transit" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill green" data-title="In Transit" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @else
                                         @endif
                                     </td>
@@ -626,11 +681,11 @@
         </div>
     </div>
     @endif
-    
+
     <!-- Distributor-->
     @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
-        <!-- Shipments -->
-        <div class="row">
+    <!-- Shipments -->
+    <div class="row">
         <div class="col-sm-12 col-xxxl-12">
             <div class="element-wrapper">
                 <h6 class="element-header">Active Shipments</h6>
@@ -655,11 +710,11 @@
                                     </td>
                                     <td class="text-center">
                                         @if($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_WAITING)
-                                            <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @elseif($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_DISPATCHING)
-                                            <div class="status-pill green" data-title="Dispatching" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill green" data-title="Dispatching" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @elseif($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_SHIPPED_IN_TRANSIT)
-                                            <div class="status-pill green" data-title="In Transit" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill green" data-title="In Transit" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @else
                                         @endif
                                     </td>
@@ -747,11 +802,11 @@
                                     </td>
                                     <td class="text-center">
                                         @if($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_WAITING)
-                                            <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill yellow" data-title="Waiting" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @elseif($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_DISPATCHING)
-                                            <div class="status-pill green" data-title="Dispatching" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill green" data-title="Dispatching" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @elseif($activeShipment->ShipmentStatus == \App\Http\Traits\OrderConstants::SHIP_SHIPPED_IN_TRANSIT)
-                                            <div class="status-pill green" data-title="In Transit" data-toggle="tooltip" data-original-title="" title=""></div>
+                                        <div class="status-pill green" data-title="In Transit" data-toggle="tooltip" data-original-title="" title=""></div>
                                         @else
                                         @endif
                                     </td>
@@ -778,4 +833,72 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('footer_scripts')
+<script>
+    function updatePurchaseRequest(purchaseRequestID) {
+        console.log("Clicked updatePurchaseRequest");
+
+        var domainUrl = 'http://localhost:3001/api';
+
+        var jsonData = {
+            purchaseRequest: "resource:org.evin.book.track.PurchaseRequest#" + purchaseRequestID,
+            status: true
+        };
+
+        var msgHTML = '';
+
+        $.ajax({
+            type: 'POST',
+            url: domainUrl + '/updatePurchaseRequestStatus',
+            data: jsonData,
+            dataType: 'json',
+            beforeSend: function () {
+                $("#loader").show();
+                $("#add-error-request-bag").hide();
+                $('#add-request-msgs').hide();
+            },
+            success: function(data) {
+                $("#loader").hide();
+                console.log(data);
+                $("#add-error-request-bag").hide();
+                $('#add-request-msgs').show();
+                msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Request confirmed'
+                        + '</div>';
+
+                $('#add-request-msgs').html(msgHTML);
+
+                // window.location.reload();
+
+                // Update Book sold
+            },
+            error: function(data) {
+                var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-request-msgs").hide();
+
+                        $('#add-request-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-request-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#add-error-request-bag").show();
+            }
+        });
+    }
+</script>
 @endsection
