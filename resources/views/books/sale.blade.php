@@ -14,23 +14,28 @@
                 </ul>
             </div>
 
+            @if(!$bookSold)
+                <div class="form-group">
+                    <label for="book"> Book ID</label>
+                    <!-- <input class="form-control" placeholder="Enter Book ID" type="text" name="book_show" id="book_show" value="{{ $id }}" disabled> -->
+                    <input class="form-control" placeholder="Enter Book ID" type="text" name="book" id="book" value="{{ $id }}">
+                </div>
 
-            <div class="form-group">
-                <label for="book"> Book ID</label>
-                <!-- <input class="form-control" placeholder="Enter Book ID" type="text" name="book_show" id="book_show" value="{{ $id }}" disabled> -->
-                <input class="form-control" placeholder="Enter Book ID" type="text" name="book" id="book" value="{{ $id }}">
-            </div>
+                <div class="form-group">
+                    <label for="store">Purchase From [BookShop ID]</label>
+                    <input class="form-control" type="text" name="purchasedToMemberId" id="purchasedToMemberId" value="{{$reportedToMemberId}}" >
+                    <input class="form-control" type="hidden" name="purchasedTo" id="purchasedTo" value="{{$purchasedToEmail}}">
+                    <input class="form-control" type="hidden" name="purchasedBy" id="purchasedBy" value="{{\App\User::loggedInUserEmail()}}">
+                </div>
 
-            <div class="form-group">
-                <label for="store">Purchase From [BookShop ID]</label>
-                <input class="form-control" type="text" name="purchasedToMemberId" id="purchasedToMemberId" value="{{$reportedToMemberId}}" >
-                <input class="form-control" type="hidden" name="purchasedTo" id="purchasedTo" value="{{$purchasedToEmail}}">
-                <input class="form-control" type="hidden" name="purchasedBy" id="purchasedBy" value="{{\App\User::loggedInUserEmail()}}">
-            </div>
-
-            <div class="form-buttons-w">
-                <button class="btn btn-primary btn-buy-book" type="button"> Purchase Book</button>
-            </div>
+                <div class="form-buttons-w">
+                    <button class="btn btn-primary btn-buy-book" type="button"> Purchase Book</button>
+                </div>
+            @else
+                <div class="alert alert-danger">
+                    Book {{ $id }} already sold.
+                </div>
+            @endif
         </form>
     </div>
 </div>
