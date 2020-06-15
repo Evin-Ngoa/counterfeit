@@ -22,6 +22,13 @@ class OrderService
     public function getOnlyUserOrders($id, $action ,$user){
         return $this->utils->findById('/queries/get'.$user.'Orders?'.$action.'=resource:org.evin.book.track.'.$user.'%23',  $id);
     }
+
+    /**
+     * http://localhost:3001/api/PurchaseRequest/?filter={%22include%22:%22resolve%22}
+     */
+    public function getAllPurchaseRequests(){
+        return $this->utils->allRelations('/PurchaseRequest');
+    }
     
     /**
      * Get all Order Records
