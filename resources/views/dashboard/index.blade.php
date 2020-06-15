@@ -886,58 +886,17 @@
                         $('#add-request-msgs').hide();
                     },
                     success: function(data) {
+                        $("#loader").hide();
+                        console.log(data);
+                        $("#add-error-request-bag").hide();
+                        $('#add-request-msgs').show();
+                        msgHTML = '<div class="alert alert-primary" role="alert">' +
+                            'Request confirmed and ' + +' added to the supply chain' +
+                            '</div>';
 
-                        // Add buyer to supply chain
-                        $.ajax({
-                            type: 'POST',
-                            url: domainUrl + '/ShipOwnership',
-                            data: jsonDataShipOwnership,
-                            dataType: 'json',
-                            beforeSend: function() {
-                                $("#loader").show();
-                                $("#add-error-request-bag").hide();
-                                $('#add-request-msgs').hide();
-                            },
-                            success: function(data) {
-                                $("#loader").hide();
-                                console.log(data);
-                                $("#add-error-request-bag").hide();
-                                $('#add-request-msgs').show();
-                                msgHTML = '<div class="alert alert-primary" role="alert">' +
-                                    'Request confirmed and ' + + ' added to the supply chain' +
-                                    '</div>';
+                        $('#add-request-msgs').html(msgHTML);
 
-                                $('#add-request-msgs').html(msgHTML);
-
-                                // window.location.reload();
-
-                                // Add buyer to supply chain
-                            },
-                            error: function(data) {
-                                var errors = $.parseJSON(data.responseText);
-                                var status = errors.error.statusCode;
-
-                                if (status == 422) {
-                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                    $("#add-request-msgs").hide();
-
-                                    $('#add-request-errors').html('');
-                                    $.each(errors.error.details.messages, function(key, value) {
-                                        console.log('Error Value' + value + ' Key ' + key);
-                                        $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
-                                    });
-
-                                } else {
-                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                    $('#add-request-errors').html(errors.error.message);
-                                }
-                                // hide loader
-                                $("#loader").hide();
-
-                                $("#add-error-request-bag").show();
-                            }
-                        });
+                        // window.location.reload();
                     },
                     error: function(data) {
                         var errors = $.parseJSON(data.responseText);
