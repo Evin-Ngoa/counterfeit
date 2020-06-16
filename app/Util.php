@@ -50,4 +50,22 @@ class Util extends Model
         return $url;
      }
 
+     /**
+      * Base SMS API Key
+      */
+     public static function smsAPIKey(){
+
+        $apiKey = '3c6e9bd992e111ebafdee808f1d72715d60a61b670532aaca30fdd19b4646dff';
+        return $apiKey;
+     }
+
+     /**
+      * Base SMS Number
+      */
+     public static function smsNumber(){
+
+        $phoneNumber = '+254701864761';
+        return $phoneNumber;
+     }
+
 }
