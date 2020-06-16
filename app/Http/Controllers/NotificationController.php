@@ -85,9 +85,10 @@ class NotificationController extends Controller
      */
     function sendSMS(Request $request)
     {
-        // $username = 'evin'; // use 'sandbox' for development in the test environment
-        $username = 'sandbox'; // use 'sandbox' for development in the test environment
-                 // use your sandbox app API key for development in the test environment
+        // use 'sandbox' for development in the test environment
+        $username = 'sandbox';
+        
+        // use your sandbox app API key for development in the test environment
         $apiKey   = Util::smsAPIKey();
 
         $AT       = new AfricasTalking($username, $apiKey);
@@ -116,11 +117,11 @@ class NotificationController extends Controller
      */
     function sendGeneralSMS(Request $request)
     {
-        // $username = 'evin'; // use 'sandbox' for development in the test environment
-        $username = 'sandbox'; // use 'sandbox' for development in the test environment
-                 // use your sandbox app API key for development in the test environment
+        // use 'sandbox' for development in the test environment
+        $username = 'sandbox'; 
+        
+        // use your sandbox app API key for development in the test environment
         $apiKey   = Util::smsAPIKey();
-        // $apiKey   = '3c6e9bd992e111ebafdee808f1d72715d60a61b670532aaca30fdd19b4646dff';
 
         $AT       = new AfricasTalking($username, $apiKey);
 
