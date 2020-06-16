@@ -7,7 +7,7 @@ var Api = function () {
     var systemEmail = 'order@bookcounterfeit.com';
     var domainUrl = 'http://localhost:3001/api';
     var postBookURL = domainUrl + '/Book';
-    // var getVerifyBookURL = 'http://localhost:8000/verify/book/';
+    var laravelDomain = 'http://localhost:8000';
     var getVerifyBookURL = domainUrl + '/Book/';
     var postBookShipmentURL = domainUrl + '/BookRegisterShipment';
     var postOrderURL = domainUrl + '/OrderContract';
@@ -58,7 +58,7 @@ var Api = function () {
 
     // Profile
     var frmProfile = $("#frmProfile");
-    
+
     // Report
     var frmReport = $("#frmReport");
 
@@ -124,7 +124,10 @@ var Api = function () {
                 jsonData[field.name] = field.value;
             });
 
-            var book = "resource:org.evin.book.track.Book#" + jsonData["book"];
+            var bookID = jsonData["book"];
+            var purchasedByVal = jsonData["purchasedBy"];
+
+            var book = "resource:org.evin.book.track.Book#" + bookID;
             var purchasedBy = "resource:org.evin.book.track.Customer#" + jsonData["purchasedBy"];
             var purchasedTo = "resource:org.evin.book.track.Customer#" + jsonData["purchasedTo"];
 
@@ -142,6 +145,16 @@ var Api = function () {
 
             var msgHTML = "";
 
+            var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + purchasedByVal + ". Awaiting Approval!";
+
+            var jsonDataSMS = {
+                message : smsApprovalMessage
+            };
+
+            console.log("bookID = "+ bookID + " purchasedBy = " + purchasedByVal + " smsApprovalMessage = " + smsApprovalMessage);
+
+            var smsURL = laravelDomain + '/general/sms/send/';
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -157,19 +170,58 @@ var Api = function () {
                     $("#loader").show();
                 },
                 success: function (data) {
-                    // hide loader
-                    $("#loader").hide();
-                    console.log("Success +++> " + JSON.stringify(data));
-                    $("#add-error-buy-book-bag").hide();
-                    $("#add-buy-book-msgs").show();
 
-                    msgHTML = '<div class="alert alert-primary" role="alert">'
-                        + 'Request sent successfully. Await Approval from the store.'
-                        + '</div>';
+                    // SEND SMS 
+                    $.ajax({
+                        type: 'POST',
+                        url: smsURL,
+                        data: jsonDataSMS,
+                        dataType: 'json',
+                        beforeSend: function () {
+                            $("#loader").show();
+                        },
+                        success: function (data) {
+                            // hide loader
+                            $("#loader").hide();
+                            console.log("Success +++> " + JSON.stringify(data));
+                            $("#add-error-buy-book-bag").hide();
+                            $("#add-buy-book-msgs").show();
 
-                    $('#add-buy-book-msgs').html(msgHTML);
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + 'Request sent successfully. Await Approval from the store.'
+                                + '</div>';
 
-                    // window.location.reload();
+                            $('#add-buy-book-msgs').html(msgHTML);
+
+                            // window.location.reload();
+
+                        },
+                        error: function (data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-buy-book-msgs").hide();
+
+                                $('#add-buy-book-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-buy-book-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+
+                            $("#add-error-buy-book-bag").show();
+                        }
+                    }); // END Ajax
+
                 },
                 error: function (data) {
                     var errors = $.parseJSON(data.responseText);
@@ -221,10 +273,10 @@ var Api = function () {
             var book = jsonData["book"];
             var reportedBy = "resource:org.evin.book.track.Customer#" + jsonData["reportedBy"];
             var reportedTo = jsonData["reportedTo"];
-            
+
             var postPoints = {
-                accountBalance : reportPoints,
-                customer : reportedBy
+                accountBalance: reportPoints,
+                customer: reportedBy
             };
 
             // Append ID
@@ -275,35 +327,35 @@ var Api = function () {
                             $("#add-error-report-bag").hide();
                             $("#add-review-msgs").show();
                             msgHTML = '<div class="alert alert-primary" role="alert">'
-                                + 'Report Sent Successfuly. You have earned extra '+ reportPoints + ' for helping in fighting counterfeit.'
+                                + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
                                 + '</div>';
-        
+
                             $('#add-review-msgs').html(msgHTML);
-        
+
                             // window.location.reload();
                         },
                         error: function (data) {
                             var errors = $.parseJSON(data.responseText);
                             var status = errors.error.statusCode;
-        
+
                             if (status == 422) {
                                 console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                                 console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
                                 $("#add-review-msgs").hide();
-        
+
                                 $('#add-review-errors').html('');
                                 $.each(errors.error.details.messages, function (key, value) {
                                     console.log('Error Value' + value + ' Key ' + key);
                                     $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
                                 });
-        
+
                             } else {
                                 console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
                                 $('#add-review-errors').html(errors.error.message);
                             }
                             // hide loader
                             $("#loader").hide();
-        
+
                             // Show modal to display error showed
                             $("#add-error-report-bag").show();
                         }
@@ -527,8 +579,8 @@ var Api = function () {
             var loggedInUser = "resource:org.evin.book.track.Customer#" + $("#loggedInUser").val();
 
             var postPoints = {
-                accountBalance : scanPoints,
-                customer : loggedInUser
+                accountBalance: scanPoints,
+                customer: loggedInUser
             };
 
             $.each(json, function (i, field) {
@@ -589,18 +641,18 @@ var Api = function () {
                             $("#loader").hide();
                             var errors = $.parseJSON(data.responseText);
                             var status = errors.error.statusCode;
-        
+
                             if (status == 422) {
                                 console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                                 console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
                                 $("#add-book-msgs").hide();
-        
+
                                 $('#add-book-errors').html('');
                                 $.each(errors.error.details.messages, function (key, value) {
                                     console.log('Error Value' + value + ' Key ' + key);
                                     $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
                                 });
-        
+
                             } else {
                                 console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
                                 $('#add-book-errors').html(errors.error.message);
@@ -608,7 +660,7 @@ var Api = function () {
                             }
                             // hide loader
                             $("#loader").hide();
-        
+
                             // Show modal to display error showed
                             $('#addBookModal').modal('show');
                             $("#add-error-bag").show();
@@ -3688,8 +3740,8 @@ var Api = function () {
         });
     };
 
-    var handleFetchWards = function() {
-        var wardsBaseURL = 'https://frozen-basin-45055.herokuapp.com/api/wards?county='; 
+    var handleFetchWards = function () {
+        var wardsBaseURL = 'https://frozen-basin-45055.herokuapp.com/api/wards?county=';
         var county = $("#county").val();
         var county = "Nairobi";
         var wardsURL = wardsBaseURL + county;
