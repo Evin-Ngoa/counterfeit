@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use Illuminate\Http\Response;
 use AfricasTalking\SDK\AfricasTalking;
+use App\Util;
 
 class NotificationController extends Controller
 {
@@ -87,8 +88,7 @@ class NotificationController extends Controller
         // $username = 'evin'; // use 'sandbox' for development in the test environment
         $username = 'sandbox'; // use 'sandbox' for development in the test environment
                  // use your sandbox app API key for development in the test environment
-        // $apiKey   = '59b03d2f25590fead3ac88f978a72fa1a6db6d542e014fb84fed9503373183b6';
-        $apiKey   = '3c6e9bd992e111ebafdee808f1d72715d60a61b670532aaca30fdd19b4646dff';
+        $apiKey   = Util::smsAPIKey();
 
         $AT       = new AfricasTalking($username, $apiKey);
 
@@ -99,8 +99,42 @@ class NotificationController extends Controller
 
         // Use the service
         $result   = $sms->send([
-            'to'      => '+254701864761',
+            'to'      => Util::smsNumber(),
             'message' => $message
+        ]);
+
+        // dd($result['status']);
+        // dd($result['data']);
+        return response()->json([
+            'success' => true,
+            'data'   => $result
+        ]);
+    }
+
+    /**
+     * Dynamic Sending SMS
+     */
+    function sendGeneralSMS(Request $request)
+    {
+        // $username = 'evin'; // use 'sandbox' for development in the test environment
+        $username = 'sandbox'; // use 'sandbox' for development in the test environment
+                 // use your sandbox app API key for development in the test environment
+        $apiKey   = Util::smsAPIKey();
+        // $apiKey   = '3c6e9bd992e111ebafdee808f1d72715d60a61b670532aaca30fdd19b4646dff';
+
+        $AT       = new AfricasTalking($username, $apiKey);
+
+        // Get one of the services
+        $sms      = $AT->sms();
+
+        // dd($request->message);
+
+        // $message = 'Congratulations! You have a new Order #'.  $request->order .'!';
+
+        // Use the service
+        $result   = $sms->send([
+            'to'      => Util::smsNumber(),
+            'message' => $request->message
         ]);
 
         // dd($result['status']);
