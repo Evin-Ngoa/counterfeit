@@ -89,4 +89,5 @@ Route::get('qrcode', function () {
 
 Route::get('/sendemail', 'NotificationController@index');
 Route::post('/send/sms', 'NotificationController@sendSMS');
+Route::post('/general/sms/send/', 'NotificationController@sendGeneralSMS');
 Route::post('/sendemail/send', 'NotificationController@sendEmail');
