@@ -148,10 +148,10 @@ var Api = function () {
             var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + purchasedByVal + ". Awaiting Approval!";
 
             var jsonDataSMS = {
-                message : smsApprovalMessage
+                message: smsApprovalMessage
             };
 
-            console.log("bookID = "+ bookID + " purchasedBy = " + purchasedByVal + " smsApprovalMessage = " + smsApprovalMessage);
+            console.log("bookID = " + bookID + " purchasedBy = " + purchasedByVal + " smsApprovalMessage = " + smsApprovalMessage);
 
             var smsURL = laravelDomain + '/general/sms/send/';
 
@@ -575,13 +575,12 @@ var Api = function () {
         bookVerifySbtBtn.on('click', function () {
             var json = bookVerifyForm.serializeArray();
             var jsonData = {};
+            var loggedInUserEmail = $("#loggedInUser").val();
+            var loggedInUser = "resource:org.evin.book.track.Customer#" + loggedInUserEmail;
 
-            var loggedInUser = "resource:org.evin.book.track.Customer#" + $("#loggedInUser").val();
+            var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
 
-            var postPoints = {
-                accountBalance: scanPoints,
-                customer: loggedInUser
-            };
+            console.log("LoggedInUserEmail => " + loggedInUserEmail);
 
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
@@ -619,23 +618,70 @@ var Api = function () {
                 },
                 success: function (data) {
 
-
-                    // Add Posting Points
+                    // Get Customer Details
                     $.ajax({
-                        type: 'POST',
-                        url: postCustomerScanPointsURL,
-                        data: postPoints,
-                        dataType: 'json',
+                        type: 'GET',
+                        url: getCustomerURL,
                         beforeSend: function () {
                             //calls the loader id tag
                             $("#loader").show();
                         },
-                        success: function (datas) {
+                        success: function (customerData) {
                             $("#loader").hide();
-                            console.log("Success +++> " + JSON.stringify(data));
-                            console.log("data.id = " + data.id);
+                            console.log("customerData +++> " + JSON.stringify(customerData));
+                            console.log("customerData.accountBalance = " + customerData.accountBalance);
 
-                            window.location.href = '/verify/book/' + data.id;
+                            var postPoints = {
+                                accountBalance: customerData.accountBalance + scanPoints,
+                                customer: loggedInUser
+                            };
+
+                            // Add Posting Points
+                            $.ajax({
+                                type: 'POST',
+                                url: postCustomerScanPointsURL,
+                                data: postPoints,
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    //calls the loader id tag
+                                    $("#loader").show();
+                                },
+                                success: function (datas) {
+                                    $("#loader").hide();
+                                    console.log("Success +++> " + JSON.stringify(data));
+                                    console.log("data.id = " + data.id);
+
+                                    window.location.href = '/verify/book/' + data.id;
+                                },
+                                error: function (data) {
+                                    $("#loader").hide();
+                                    var errors = $.parseJSON(data.responseText);
+                                    var status = errors.error.statusCode;
+
+                                    if (status == 422) {
+                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                        $("#add-book-msgs").hide();
+
+                                        $('#add-book-errors').html('');
+                                        $.each(errors.error.details.messages, function (key, value) {
+                                            console.log('Error Value' + value + ' Key ' + key);
+                                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                        });
+
+                                    } else {
+                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                        $('#add-book-errors').html(errors.error.message);
+                                        // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                                    }
+                                    // hide loader
+                                    $("#loader").hide();
+
+                                    // Show modal to display error showed
+                                    $('#addBookModal').modal('show');
+                                    $("#add-error-bag").show();
+                                }
+                            }); //end post points ajax
                         },
                         error: function (data) {
                             $("#loader").hide();
@@ -665,7 +711,8 @@ var Api = function () {
                             $('#addBookModal').modal('show');
                             $("#add-error-bag").show();
                         }
-                    }); //end post points ajax
+                    }); //end Get Customer Details
+
 
                 },
                 error: function (data) {
