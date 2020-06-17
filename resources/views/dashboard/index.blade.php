@@ -45,10 +45,18 @@
                             </a>
                         </div>
                         @else
-                        <div class="col-sm-4 col-xxxl-4">
+                        <div class="col-sm-4 col-xxxl-4" style="display: none;">
                             <a class="element-box el-tablo" href="#">
                                 <div class="label">Delivered</div>
                                 <div class="value">{{ $ordersDeliveredCount }}</div>
+                                <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
+                            </a>
+                        </div>
+
+                        <div class="col-sm-4 col-xxxl-4">
+                            <a class="element-box el-tablo" href="#">
+                                <div class="label">Points</div>
+                                <div class="value">{{ $points }}</div>
                                 <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
                             </a>
                         </div>
