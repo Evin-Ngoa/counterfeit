@@ -17,6 +17,7 @@
                 </div>
                 <h6 class="element-header">Book Verification Form</h6>
                 <div class="element-box">
+                @if(\App\User::isCustomerNotRetailer())
                     <form id="verify_form">
                         <h5 class="form-header">Note</h5>
                         <div class="form-desc">Ensure you enter the right value. It is case sensitive.</div>
@@ -41,6 +42,32 @@
                             <button class="btn btn-primary btn-verify-book" type="button"> Submit</button>
                         </div>
                     </form>
+                @else
+                    <form id="verify_form_others">
+                        <h5 class="form-header">Note</h5>
+                        <div class="form-desc">Ensure you enter the right value. It is case sensitive.</div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div id="add-book-msgs"></div>
+                                
+                                <div class="alert alert-danger" id="add-error-bag" style="display: none;">
+                                    <ul id="add-book-errors">
+                                    </ul>
+                                </div>
+                            </div>
+                            <label class="col-form-label col-sm-4" for=""> Enter Book Serial</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" name="book_serial" id="book_serial" placeholder="Enter Book Serial" type="text">
+                                <input class="form-control" name="loggedInUser" id="loggedInUser" value="{{\App\User::loggedInUserEmail()}}" type="hidden">
+                            </div>
+                        </div>
+
+                        <div class="form-buttons-w">
+                            <button class="btn btn-primary btn-verify-book-others" type="button"> Submit</button>
+                        </div>
+                    </form>
+                @endif
                 </div>
             </div>
         </div>
