@@ -64,10 +64,11 @@ class User extends Authenticatable
     /**
      * Reads the role of user
      */
-    public static function getUserRole(){
+    public static function getUserRole()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
+            $cookieData = json_decode($user, true);
             $userRole = User::extractRole($cookieData['$class']);
 
             return $userRole;
@@ -77,19 +78,22 @@ class User extends Authenticatable
     /**
      * Get the names of the participants
      */
-    public static function getParticipantNames(){
+    public static function getParticipantNames()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
+            $cookieData = json_decode($user, true);
             $userRole = User::extractRole($cookieData['$class']);
             // dd($userRole);
-            if( $userRole == \App\Http\Traits\UserConstants::ADMIN || 
-                $userRole == \App\Http\Traits\UserConstants::PUBLISHER || 
-                $userRole == \App\Http\Traits\UserConstants::DISTRIBUTOR){
-                if(isset($cookieData['name'])){
+            if (
+                $userRole == \App\Http\Traits\UserConstants::ADMIN ||
+                $userRole == \App\Http\Traits\UserConstants::PUBLISHER ||
+                $userRole == \App\Http\Traits\UserConstants::DISTRIBUTOR
+            ) {
+                if (isset($cookieData['name'])) {
                     $userName = $cookieData['name'];
                 }
-            }elseif($userRole == \App\Http\Traits\UserConstants::CUSTOMER){
+            } elseif ($userRole == \App\Http\Traits\UserConstants::CUSTOMER) {
                 $firstName = $cookieData['firstName'];
                 $lastName = $cookieData['lastName'];
                 $userName = $firstName . " " . $lastName;
@@ -102,14 +106,15 @@ class User extends Authenticatable
     /**
      * Get the first name of the customers
      */
-    public static function getParticipantFirstName(){
+    public static function getParticipantFirstName()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
-            
+            $cookieData = json_decode($user, true);
+
             $firstName = $cookieData['firstName'];
             $lastName = $cookieData['lastName'];
-            
+
             return $firstName;
         }
     }
@@ -117,14 +122,15 @@ class User extends Authenticatable
     /**
      * Get the Last Name of the participant
      */
-    public static function getParticipantLastName(){
+    public static function getParticipantLastName()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
-            
+            $cookieData = json_decode($user, true);
+
             $firstName = $cookieData['firstName'];
             $lastName = $cookieData['lastName'];
-            
+
             return $lastName;
         }
     }
@@ -132,13 +138,14 @@ class User extends Authenticatable
     /**
      * Get the secret of the participant
      */
-    public static function getParticipantSecret(){
+    public static function getParticipantSecret()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
-            
+            $cookieData = json_decode($user, true);
+
             $secret = $cookieData['secret'];
-            
+
             return $secret;
         }
     }
@@ -146,13 +153,14 @@ class User extends Authenticatable
     /**
      * Get the memberId of the participant
      */
-    public static function getParticipantMemberID(){
+    public static function getParticipantMemberID()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
-            
+            $cookieData = json_decode($user, true);
+
             $memberId = $cookieData['memberId'];
-            
+
             return $memberId;
         }
     }
@@ -160,13 +168,14 @@ class User extends Authenticatable
     /**
      * Get the memberId of the participant
      */
-    public static function getParticipantUserName(){
+    public static function getParticipantUserName()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
-            
+            $cookieData = json_decode($user, true);
+
             $userName = $cookieData['userName'];
-            
+
             return $userName;
         }
     }
@@ -174,17 +183,22 @@ class User extends Authenticatable
     /**
      * Check if customer is a retailer
      */
-    public static function isCustomerRetailer(){
+    public static function isCustomerRetailer()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
-            $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
-            
-            $isRetailer = $cookieData['isRetailer'];
 
-            if($isRetailer == "1"){
-                return true;
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user, true);
+
+            if (isset($cookieData['isRetailer'])) {
+
+                $isRetailer = $cookieData['isRetailer'];
+
+                if ($isRetailer == "1") {
+                    return true;
+                }
             }
-            
+
             return false;
         }
     }
@@ -192,17 +206,22 @@ class User extends Authenticatable
     /**
      * Check if customer is a indivudual
      */
-    public static function isCustomerNotRetailer(){
+    public static function isCustomerNotRetailer()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
-            $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
-            
-            $isIndividual = $cookieData['isRetailer'];
 
-            if($isIndividual == "0"){
-                return true;
+            $user = $_COOKIE['logged_in_user'];
+            $cookieData = json_decode($user, true);
+
+            if (isset($cookieData['isRetailer'])) {
+                
+                $isIndividual = $cookieData['isRetailer'];
+
+                if ($isIndividual == "0") {
+                    return true;
+                }
             }
-            
+
             return false;
         }
     }
@@ -210,12 +229,13 @@ class User extends Authenticatable
     /**
      * Get the Telephone of the customers
      */
-    public static function getParticipantTelephone(){
+    public static function getParticipantTelephone()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
+            $cookieData = json_decode($user, true);
 
-            if(isset($cookieData['telephone'])){
+            if (isset($cookieData['telephone'])) {
                 return $cookieData['telephone'];
             }
 
@@ -226,13 +246,14 @@ class User extends Authenticatable
     /**
      * Get the Country of the customers
      */
-    public static function getParticipantAddCountry(){
+    public static function getParticipantAddCountry()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
+            $cookieData = json_decode($user, true);
 
-            if(isset($cookieData['address'])){
-                if(isset($cookieData['address']['country'])){
+            if (isset($cookieData['address'])) {
+                if (isset($cookieData['address']['country'])) {
                     return $cookieData['address']['country'];
                 }
             }
@@ -244,13 +265,14 @@ class User extends Authenticatable
     /**
      * Get the county of the customers
      */
-    public static function getParticipantAddCounty(){
+    public static function getParticipantAddCounty()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
+            $cookieData = json_decode($user, true);
 
-            if(isset($cookieData['address'])){
-                if(isset($cookieData['address']['county'])){
+            if (isset($cookieData['address'])) {
+                if (isset($cookieData['address']['county'])) {
                     return $cookieData['address']['county'];
                 }
             }
@@ -262,13 +284,14 @@ class User extends Authenticatable
     /**
      * Get the street of the customers
      */
-    public static function getParticipantAddPostal(){
+    public static function getParticipantAddPostal()
+    {
         if (isset($_COOKIE['logged_in_user'])) {
             $user = $_COOKIE['logged_in_user'];
-            $cookieData = json_decode($user , true);
+            $cookieData = json_decode($user, true);
 
-            if(isset($cookieData['address'])){
-                if(isset($cookieData['address']['street'])){
+            if (isset($cookieData['address'])) {
+                if (isset($cookieData['address']['street'])) {
                     return $cookieData['address']['street'];
                 }
             }
@@ -280,7 +303,8 @@ class User extends Authenticatable
     /**
      * Check if a user is loggedin
      */
-    public static function checkAuth(){
+    public static function checkAuth()
+    {
         // if someone loggedin
         if (isset($_COOKIE['logged_in_user'])) {
             $userEmail = self::loggedInUserEmail();
@@ -296,45 +320,46 @@ class User extends Authenticatable
      * Check if remote user exists
      * in all participants
      */
-    public static function checkUser($userEmail){
+    public static function checkUser($userEmail)
+    {
         $bool = false;
         $role = self::getUserRole();
         // $role = UserConstants::PUBLISHER;
 
-        if($role == UserConstants::ADMIN){
+        if ($role == UserConstants::ADMIN) {
             $bool = self::remoteUserCall(UserConstants::ADMIN, $userEmail);
         }
 
-        if($role == UserConstants::CUSTOMER){
+        if ($role == UserConstants::CUSTOMER) {
             $bool = self::remoteUserCall(UserConstants::CUSTOMER, $userEmail);
         }
 
-        if($role == UserConstants::PUBLISHER){
+        if ($role == UserConstants::PUBLISHER) {
             $bool = self::remoteUserCall(UserConstants::PUBLISHER, $userEmail);
         }
 
-        if($role == UserConstants::DISTRIBUTOR){
+        if ($role == UserConstants::DISTRIBUTOR) {
             $bool = self::remoteUserCall(UserConstants::DISTRIBUTOR, $userEmail);
         }
 
         return $bool;
-
     }
 
     /**
      * Remote Api Call
      */
-    public static function remoteUserCall($participant ,$userEmail){
+    public static function remoteUserCall($participant, $userEmail)
+    {
         // Fetch remotely to confirm the user
         // coz the cookie might not expire but the remote user 
         // does not exist
-        $get_data = self::callAPI('GET', 'http://localhost:3001/api/' . $participant.'/' .$userEmail, false);
+        $get_data = self::callAPI('GET', 'http://localhost:3001/api/' . $participant . '/' . $userEmail, false);
         $response = json_decode($get_data, true);
         // dd($response);
         // $errors = $response['error']['statusCode'];
-        if(isset($response['error']['statusCode'])){
+        if (isset($response['error']['statusCode'])) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -342,18 +367,19 @@ class User extends Authenticatable
     /**
      * Check for image
      */
-    public static function getUserProfile($authRole ,$email){
+    public static function getUserProfile($authRole, $email)
+    {
         // Fetch remotely to get user profile image
         // coz the cookie might not expire but the remote user 
         // does not exist
         // $get_data = User::callAPI('GET', 'http://localhost:3001/api/' .'upload'. $authRole .'ProfilePic', $data);
-        $get_data = User::callAPI('GET', 'http://localhost:3001/api/'.$authRole .'/'. $email,false);
+        $get_data = User::callAPI('GET', 'http://localhost:3001/api/' . $authRole . '/' . $email, false);
         $response = json_decode($get_data, true);
         // dd($response);
-        if(isset($response['error']['statusCode'])){
+        if (isset($response['error']['statusCode'])) {
             return 'None';
-        }else{
-            if(isset($response['avatar'])){
+        } else {
+            if (isset($response['avatar'])) {
                 return $response['avatar'];
             }
             return 'None';
@@ -364,17 +390,18 @@ class User extends Authenticatable
      * Get Email from resource
      * resource:org.evin.book.track.Customer#toneevin07@gmail.com
      */
-    public static function extractEmailFromResource($resource){
+    public static function extractEmailFromResource($resource)
+    {
         $email = "";
         // Check if # Exists before exctracting the email
-        if (($pos = strpos($resource, "#")) !== FALSE) { 
+        if (($pos = strpos($resource, "#")) !== FALSE) {
 
             //Get the string after the # character
-            $email = substr($resource, $pos + 1 ); 
+            $email = substr($resource, $pos + 1);
         }
         return $email;
     }
-    
+
     /**
      * Get the logged email
      */
@@ -406,35 +433,38 @@ class User extends Authenticatable
         return $split[count($split) - 1];
     }
 
-    public static function callAPI($method, $url, $data){
+    public static function callAPI($method, $url, $data)
+    {
         $curl = curl_init();
-        switch ($method){
-           case "POST":
-              curl_setopt($curl, CURLOPT_POST, 1);
-              if ($data)
-                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-              break;
-           case "PUT":
-              curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-              if ($data)
-                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
-              break;
-           default:
-              if ($data)
-                 $url = sprintf("%s?%s", $url, http_build_query($data));
+        switch ($method) {
+            case "POST":
+                curl_setopt($curl, CURLOPT_POST, 1);
+                if ($data)
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                break;
+            case "PUT":
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+                if ($data)
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                break;
+            default:
+                if ($data)
+                    $url = sprintf("%s?%s", $url, http_build_query($data));
         }
         // OPTIONS:
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-           'APIKEY: 111111111111111111111',
-           'Content-Type: application/json',
+            'APIKEY: 111111111111111111111',
+            'Content-Type: application/json',
         ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         // EXECUTE:
         $result = curl_exec($curl);
-        if(!$result){die("Fabric Down! Connection Failure");}
+        if (!$result) {
+            die("Fabric Down! Connection Failure");
+        }
         curl_close($curl);
         return $result;
-     }
+    }
 }
