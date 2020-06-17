@@ -572,7 +572,7 @@ D:\NewsPlugin or http://tevratgundogdu.com/works/breakingnewsticker/index.html
 
 To Do Tasks
 1. Forceful phone and address
-2. Verification points only for customers while verifiy and reporting
+2. Verification points only for customers while verifiy and reporting [DONE]
 3. Transfer of points while ordering
 4. Name of company to save to Firstname from name for mobile purposes
 5. Did you know Notifications
