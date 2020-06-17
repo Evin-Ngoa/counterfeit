@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\OrderConstants;
+use App\Services\Auth\AuthService;
 use App\Services\Book\BookService;
 use App\Services\Customer\CustomerService;
 use App\Services\Distributor\DistributorService;
@@ -20,6 +21,7 @@ class DashboardController extends Controller
     protected $customerservice;
     protected $publisherservice;
     protected $distributorservice;
+    protected $authservice;
 
     public function __construct(
         Utils $utils,
@@ -28,7 +30,8 @@ class DashboardController extends Controller
         ShipmentService $shipmentservice,
         CustomerService $customerservice,
         PublisherService $publisherservice,
-        DistributorService $distributorservice
+        DistributorService $distributorservice,
+        AuthService $authservice
     ) {
         $this->utils = $utils;
         $this->bookservice = $bookservice;
@@ -37,6 +40,7 @@ class DashboardController extends Controller
         $this->customerservice = $customerservice;
         $this->publisherservice = $publisherservice;
         $this->distributorservice = $distributorservice;
+        $this->authservice = $authservice;
 
         $this->middleware('check.auth');
         // $this->middleware('auth.book')->except('verify');
@@ -156,6 +160,14 @@ class DashboardController extends Controller
             $purchaseRequestsCount = count($purchaseRequests);
             // dd($purchaseRequestsCount);
 
+            // 5. Get Customer Details
+
+            $customerDetails = $this->authservice->getCustomerDetails($email, $role);
+
+            // dd($customerDetails->accountBalance);
+
+            $points = $customerDetails->accountBalance;
+
             return view('dashboard.index')->with(
                 compact(
                     'role', 
@@ -164,7 +176,8 @@ class DashboardController extends Controller
                     'shipmentsCount', 
                     'ordersDeliveredCount',
                     'purchaseRequests',
-                    'purchaseRequestsCount'
+                    'purchaseRequestsCount',
+                    'points'
                     )
             );
         } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::ADMIN) {
