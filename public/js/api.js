@@ -30,6 +30,7 @@ var Api = function () {
     // Book
     var bookForm = $("#book_form");
     var bookVerifyForm = $("#verify_form");
+    var bookVerifyFormOthers = $("#verify_form_others");
     var bookShipmentForm = $("#frmregisterBookShipment");
     var frmEditBook = $("#frmEditBook");
 
@@ -73,6 +74,7 @@ var Api = function () {
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookVerifySbtBtn = $('#verify_form .btn-verify-book');
+    var bookVerifySbtBtnOthers = $('#verify_form_others .btn-verify-book-others');
     var bookShipmentSbtBtn = $('#frmregisterBookShipment .btn-add-book-shipment');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
@@ -605,8 +607,106 @@ var Api = function () {
         });
     };
 
+    var handleVerifyBookOthers = function () {
+        console.log("handleVerifyBookOthers");
+        $("#add-error-bag").hide();
+
+        // Prevent submit by enter button
+        bookVerifyFormOthers.on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        bookVerifySbtBtnOthers.on('click', function () {
+            var json = bookVerifyFormOthers.serializeArray();
+            var jsonData = {};
+            var loggedInUserEmail = $("#loggedInUser").val();
+            var loggedInUser = "resource:org.evin.book.track.Customer#" + loggedInUserEmail;
+
+            var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
+
+            console.log("LoggedInUserEmail => " + loggedInUserEmail);
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+
+            // Append ID
+            var bookID = jsonData["book_serial"];
+
+            delete jsonData["loggedInUser"];
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            var getBookTrailUrl = getVerifyBookURL + bookID + '?filter={"where":{"id":"' + bookID + '"},"include":"resolve"}';
+
+            console.log("SUBMIT URL = " + getBookTrailUrl);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'GET',
+                url: getBookTrailUrl,
+                beforeSend: function () {//calls the loader id tag
+                    $("#book_form .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+
+                    $("#loader").hide();
+                    console.log("Success +++> " + JSON.stringify(data));
+                    console.log("data.id = " + data.id);
+
+                    window.location.href = '/verify/book/' + data.id;
+                },
+                error: function (data) {
+                    $("#loader").hide();
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-book-msgs").hide();
+
+                        $('#add-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        // $('#add-book-errors').html(errors.error.message);
+                        $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
+                }
+            });
+
+        });
+    };
+
     var handleVerifyBook = function () {
-        console.log("handlePostBook");
+        console.log("handleVerifyBook");
         $("#add-error-bag").hide();
 
         // Prevent submit by enter button
@@ -3886,6 +3986,7 @@ var Api = function () {
             handleEditBook();
             handleDeleteBook();
             handleVerifyBook();
+            handleVerifyBookOthers();
 
             // Handle Order EndPoints
             handlePostOrder();
