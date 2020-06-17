@@ -12,6 +12,21 @@
 @section('content-box')
 <div class="content-box">
     <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 20px;">
+            <div class="breakingNews" id="bn2">
+                <div class="bn-title">
+                    <h2>UPDATES</h2><span></span>
+                </div>
+                <ul>
+                    <li><a href="#"><span>Did You Know</span> - A similar software like this reduced the counterfeit cases by 30%.</a></li>
+                    <li><a href="#"><span>Join Hands In Fighting Counterfeit Books</span> - A total of 45 cases have been reported through this system.</a></li>
+                </ul>
+                <div class="bn-navi">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
         <div class="col-sm-12">
             <div class="element-wrapper">
                 @if(\App\User::isCustomerRetailer())
@@ -861,6 +876,14 @@
 
 @section('footer_scripts')
 <script>
+    $("#bn2").breakingNews({
+        effect		:"slide-v",
+        autoplay	:true,
+        timer		:3000,
+        color		:"blue"
+    });
+
+
     function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEmail) {
         console.log("Clicked updatePurchaseRequest");
 
