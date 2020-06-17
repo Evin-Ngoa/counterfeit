@@ -29,5 +29,12 @@ class AuthService
         dd("admin => ". $admin . "customer => " . $customer . "distributor => " . $distributor . "publisher => " . $publisher);
         // return $this->utils->findById('/Distributor/', $id);
     }
+
+    /**
+     * Get User Details
+     */
+    public function getCustomerDetails($email, $role){
+        return $this->utils->findByIdRelation('/'. $role .'/', $email);
+    }
    
 }
