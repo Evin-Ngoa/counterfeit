@@ -575,7 +575,7 @@ To Do Tasks
 2. Verification points only for customers while verifiy and reporting [DONE]
 3. Transfer of points while ordering upto publisher.
 4. Name of company to save to Firstname from name for mobile purposes
-5. Did you know Notifications
+5. Did you know Notifications [Foundation-Set]
 6. Login simulation for creating file.
 7. Check report and confirm in publisher.
 8. Historian for transactions
