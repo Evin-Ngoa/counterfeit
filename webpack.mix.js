@@ -27,6 +27,7 @@ mix.styles([
    'public/icon_fonts_assets/typicons/typicons.css',
    'public/icon_fonts_assets/entypo/style.css',
    'public/css/main5739.css',
+   'public/css/breakingNews.css',
    'public/css/custom.css'
 ], 'public/css/app-bc.css');
 
@@ -63,6 +64,7 @@ mix.scripts([
    'public/js/dataTables.bootstrap4.min.js',
    'public/js/demo_customizer5739.js',
    'public/js/main5739.js',
+   'public/js/breakingNews.js',
    'public/js/counties.js',
    'public/js/constituencies.js',
    'public/js/wards.js',
