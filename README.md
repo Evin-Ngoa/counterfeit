@@ -573,7 +573,9 @@ D:\NewsPlugin or http://tevratgundogdu.com/works/breakingnewsticker/index.html
 To Do Tasks
 1. Forceful phone and address
 2. Verification points only for customers while verifiy and reporting [DONE]
-3. Transfer of points while ordering
+3. Transfer of points while ordering upto publisher.
 4. Name of company to save to Firstname from name for mobile purposes
 5. Did you know Notifications
-6. Login simulation for creating file
+6. Login simulation for creating file.
+7. Check report and confirm in publisher.
+8. Historian for transactions
