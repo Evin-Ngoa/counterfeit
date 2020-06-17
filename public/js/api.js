@@ -62,6 +62,7 @@ var Api = function () {
 
     // Report
     var frmReport = $("#frmReport");
+    var frmReportOthers = $("#frmReportOthers");
 
     // Login
     var frmLogin = $("#frmLogin");
@@ -104,6 +105,7 @@ var Api = function () {
     var profileEditSbtBtn = $('#frmProfile .btn-profile');
 
     var reportPostSbtBtn = $('#frmReport .btn-report');
+    var reportPostSbtBtnOthers = $('#frmReportOthers .btn-report-others');
     var buyBookPostSbtBtn = $('#frmBuyBook .btn-buy-book');
 
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
@@ -408,6 +410,107 @@ var Api = function () {
                             $("#add-error-bag").show();
                         }
                     }); //end Get Customer Details
+
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-review-msgs").hide();
+
+                        $('#add-review-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-review-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $("#add-error-report-bag").show();
+                }
+            });
+
+        });
+    };
+
+        /**
+     * 
+     * https://stackoverflow.com/questions/20481141/jquery-change-json-data-in-cookie
+     * updates cookie and sends accountBaalnce
+     */
+    var handlePostReportOthers = function () {
+        console.log("handlePostReportOthers");
+        $("#add-error-bag").hide();
+        var reportId = "Re_" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        reportPostSbtBtnOthers.on('click', function () {
+            var json = frmReportOthers.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+            var loggedInUserEmail = jsonData["reportedBy"];
+            var book = jsonData["book"];
+            var reportedBy = "resource:org.evin.book.track.Customer#" + jsonData["reportedBy"];
+            var reportedTo = jsonData["reportedTo"];
+
+            var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
+
+            console.log("loggedInUserEmail ==> " + loggedInUserEmail);
+
+            // Append ID
+            jsonData["id"] = reportId;
+            jsonData["book"] = "resource:org.evin.book.track.Book#" + book;
+            jsonData["reportedBy"] = reportedBy;
+            jsonData["reportedTo"] = "resource:org.evin.book.track.Publisher#" + reportedTo;
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // Add  created time
+            jsonData["createdAt"] = currentDateTime();
+
+            var msgHTML = "";
+
+            $("#add-error-report-bag").hide();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'POST',
+                url: postReportviewURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {
+                    //calls the loader id tag
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    
+                    $("#loader").hide();
+                    console.log("Success +++> " + JSON.stringify(data));
+                    $("#add-error-report-bag").hide();
+                    $("#add-review-msgs").show();
+                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                        + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
+                        + '</div>';
+
+                    $('#add-review-msgs').html(msgHTML);
+
+                    // window.location.reload();
 
                 },
                 error: function (data) {
@@ -4028,6 +4131,7 @@ var Api = function () {
 
             // Review
             handlePostReport();
+            handlePostReportOthers();
 
             // Purchase Book
             handleBuyBook();
