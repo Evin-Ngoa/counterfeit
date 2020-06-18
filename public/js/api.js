@@ -278,8 +278,11 @@ var Api = function () {
             var book = jsonData["book"];
             var reportedBy = "resource:org.evin.book.track.Customer#" + jsonData["reportedBy"];
             var reportedTo = jsonData["reportedTo"];
+            var store = jsonData["store"];
 
             var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
+
+            var getCustomerEmailURL = domainUrl + "/queries/getCustomerEmailonMemberID?memberId=" + store;
 
             console.log("loggedInUserEmail ==> " + loggedInUserEmail);
 
@@ -288,6 +291,7 @@ var Api = function () {
             jsonData["book"] = "resource:org.evin.book.track.Book#" + book;
             jsonData["reportedBy"] = reportedBy;
             jsonData["reportedTo"] = "resource:org.evin.book.track.Publisher#" + reportedTo;
+            // jsonData["store"] = "resource:org.evin.book.track.Customer#" + store;
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
@@ -303,150 +307,214 @@ var Api = function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // data:  JSON.stringify(jsonData),
+
+            // Get Customer Email Based on MemberID
             $.ajax({
-                type: 'POST',
-                url: postReportviewURL,
-                data: jsonData,
-                dataType: 'json',
+                type: 'GET',
+                url: getCustomerEmailURL,
                 beforeSend: function () {
                     //calls the loader id tag
                     $("#loader").show();
                 },
-                success: function (data) {
-                    // Get Customer Details
-                    $.ajax({
-                        type: 'GET',
-                        url: getCustomerURL,
-                        beforeSend: function () {
-                            //calls the loader id tag
-                            $("#loader").show();
-                        },
-                        success: function (customerData) {
-                            console.log("customerData +++> " + JSON.stringify(customerData));
-                            console.log("customerData.accountBalance = " + customerData.accountBalance);
-                            var postPoints = {
-                                accountBalance: customerData.accountBalance + reportPoints,
-                                customer: reportedBy
-                            };
+                success: function (customerEmailData) {
+                    console.log("customerEmailData +++> " + JSON.stringify(customerEmailData[0]));
 
-                            // Add Points
-                            $.ajax({
-                                type: 'POST',
-                                url: postCustomerScanPointsURL,
-                                data: postPoints,
-                                dataType: 'json',
-                                beforeSend: function () {
-                                    //calls the loader id tag
-                                    $("#loader").show();
-                                },
-                                success: function (data) {
-                                    $("#loader").hide();
-                                    console.log("Success +++> " + JSON.stringify(data));
-                                    $("#add-error-report-bag").hide();
-                                    $("#add-review-msgs").show();
-                                    msgHTML = '<div class="alert alert-primary" role="alert">'
-                                        + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
-                                        + '</div>';
+                    console.log("customerEmailData SIZE==  = " + customerEmailData.length);
 
-                                    $('#add-review-msgs').html(msgHTML);
+                    console.log("Final jsonData => " + JSON.stringify(jsonData));
 
-                                    // window.location.reload();
-                                },
-                                error: function (data) {
-                                    var errors = $.parseJSON(data.responseText);
-                                    var status = errors.error.statusCode;
+                    if (customerEmailData.length == 0) {
+                        $("#loader").hide();
 
-                                    if (status == 422) {
-                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                        $("#add-review-msgs").hide();
+                        msgHTML = '<div class="alert alert-danger" role="alert">'
+                            + 'The store ' + store + ' does not exist. Kindly re-check the code.'
+                            + '</div>';
 
-                                        $('#add-review-errors').html('');
-                                        $.each(errors.error.details.messages, function (key, value) {
-                                            console.log('Error Value' + value + ' Key ' + key);
-                                            $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
-                                        });
+                        $('#add-review-msgs').html(msgHTML);
 
-                                    } else {
-                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                        $('#add-review-errors').html(errors.error.message);
+                    } else {
+
+                        console.log("customerEmailData.email = " + customerEmailData[0].email);
+
+                        var customerEmail = customerEmailData[0].email;
+
+                        jsonData["store"] = "resource:org.evin.book.track.Customer#" + customerEmail;
+
+                        // Report Book
+                        $.ajax({
+                            type: 'POST',
+                            url: postReportviewURL,
+                            data: jsonData,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+                                // Get Customer Details
+                                $.ajax({
+                                    type: 'GET',
+                                    url: getCustomerURL,
+                                    beforeSend: function () {
+                                        //calls the loader id tag
+                                        $("#loader").show();
+                                    },
+                                    success: function (customerData) {
+                                        console.log("customerData +++> " + JSON.stringify(customerData));
+                                        console.log("customerData.accountBalance = " + customerData.accountBalance);
+                                        var postPoints = {
+                                            accountBalance: customerData.accountBalance + reportPoints,
+                                            customer: reportedBy
+                                        };
+
+                                        // Add Points
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: postCustomerScanPointsURL,
+                                            data: postPoints,
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                //calls the loader id tag
+                                                $("#loader").show();
+                                            },
+                                            success: function (data) {
+                                                $("#loader").hide();
+                                                console.log("Success +++> " + JSON.stringify(data));
+                                                $("#add-error-report-bag").hide();
+                                                $("#add-review-msgs").show();
+                                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                    + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
+                                                    + '</div>';
+
+                                                $('#add-review-msgs').html(msgHTML);
+
+                                                // window.location.reload();
+                                            },
+                                            error: function (data) {
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#add-review-msgs").hide();
+
+                                                    $('#add-review-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
+
+                                                } else {
+                                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                    $('#add-review-errors').html(errors.error.message);
+                                                }
+                                                // hide loader
+                                                $("#loader").hide();
+
+                                                // Show modal to display error showed
+                                                $("#add-error-report-bag").show();
+                                            }
+                                        }); //end post points ajax
+
+                                    },
+                                    error: function (data) {
+                                        $("#loader").hide();
+                                        var errors = $.parseJSON(data.responseText);
+                                        var status = errors.error.statusCode;
+
+                                        if (status == 422) {
+                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                            $("#add-book-msgs").hide();
+
+                                            $('#add-book-errors').html('');
+                                            $.each(errors.error.details.messages, function (key, value) {
+                                                console.log('Error Value' + value + ' Key ' + key);
+                                                $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                            });
+
+                                        } else {
+                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                            $('#add-book-errors').html(errors.error.message);
+                                            // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                                        }
+                                        // hide loader
+                                        $("#loader").hide();
+
+                                        // Show modal to display error showed
+                                        $('#addBookModal').modal('show');
+                                        $("#add-error-bag").show();
                                     }
-                                    // hide loader
-                                    $("#loader").hide();
+                                }); //end Get Customer Details
 
-                                    // Show modal to display error showed
-                                    $("#add-error-report-bag").show();
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-review-msgs").hide();
+
+                                    $('#add-review-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-review-errors').html(errors.error.message);
                                 }
-                            }); //end post points ajax
+                                // hide loader
+                                $("#loader").hide();
 
-                        },
-                        error: function (data) {
-                            $("#loader").hide();
-                            var errors = $.parseJSON(data.responseText);
-                            var status = errors.error.statusCode;
-
-                            if (status == 422) {
-                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                $("#add-book-msgs").hide();
-
-                                $('#add-book-errors').html('');
-                                $.each(errors.error.details.messages, function (key, value) {
-                                    console.log('Error Value' + value + ' Key ' + key);
-                                    $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
-                                });
-
-                            } else {
-                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                $('#add-book-errors').html(errors.error.message);
-                                // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                                // Show modal to display error showed
+                                $("#add-error-report-bag").show();
                             }
-                            // hide loader
-                            $("#loader").hide();
-
-                            // Show modal to display error showed
-                            $('#addBookModal').modal('show');
-                            $("#add-error-bag").show();
-                        }
-                    }); //end Get Customer Details
-
+                        });
+                    }
                 },
                 error: function (data) {
+                    $("#loader").hide();
                     var errors = $.parseJSON(data.responseText);
                     var status = errors.error.statusCode;
 
                     if (status == 422) {
                         console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                         console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                        $("#add-review-msgs").hide();
+                        $("#add-book-msgs").hide();
 
-                        $('#add-review-errors').html('');
+                        $('#add-book-errors').html('');
                         $.each(errors.error.details.messages, function (key, value) {
                             console.log('Error Value' + value + ' Key ' + key);
-                            $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
                         });
 
                     } else {
                         console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                        $('#add-review-errors').html(errors.error.message);
+                        $('#add-book-errors').html(errors.error.message);
+                        // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
                     }
                     // hide loader
                     $("#loader").hide();
 
                     // Show modal to display error showed
-                    $("#add-error-report-bag").show();
+                    $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
                 }
-            });
+            }); //end Get Customer Email Based on MemberID
 
         });
     };
 
-        /**
-     * 
-     * https://stackoverflow.com/questions/20481141/jquery-change-json-data-in-cookie
-     * updates cookie and sends accountBaalnce
-     */
+    /**
+ * 
+ * https://stackoverflow.com/questions/20481141/jquery-change-json-data-in-cookie
+ * updates cookie and sends accountBaalnce
+ */
     var handlePostReportOthers = function () {
         console.log("handlePostReportOthers");
         $("#add-error-bag").hide();
@@ -463,8 +531,9 @@ var Api = function () {
             var book = jsonData["book"];
             var reportedBy = "resource:org.evin.book.track.Customer#" + jsonData["reportedBy"];
             var reportedTo = jsonData["reportedTo"];
+            var store = jsonData["store"];
 
-            var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
+            var getCustomerEmailURL = domainUrl + "/queries/getCustomerEmailonMemberID?memberId=" + store;
 
             console.log("loggedInUserEmail ==> " + loggedInUserEmail);
 
@@ -473,6 +542,7 @@ var Api = function () {
             jsonData["book"] = "resource:org.evin.book.track.Book#" + book;
             jsonData["reportedBy"] = reportedBy;
             jsonData["reportedTo"] = "resource:org.evin.book.track.Publisher#" + reportedTo;
+            // jsonData["store"] = "resource:org.evin.book.track.Customer#" + store;
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
@@ -483,62 +553,129 @@ var Api = function () {
 
             $("#add-error-report-bag").hide();
 
+            // var customerDetailsURL = 
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // data:  JSON.stringify(jsonData),
+
+            // Get Customer Email Based on MemberID
             $.ajax({
-                type: 'POST',
-                url: postReportviewURL,
-                data: jsonData,
-                dataType: 'json',
+                type: 'GET',
+                url: getCustomerEmailURL,
                 beforeSend: function () {
                     //calls the loader id tag
                     $("#loader").show();
                 },
-                success: function (data) {
-                    
-                    $("#loader").hide();
-                    console.log("Success +++> " + JSON.stringify(data));
-                    $("#add-error-report-bag").hide();
-                    $("#add-review-msgs").show();
-                    msgHTML = '<div class="alert alert-primary" role="alert">'
-                        + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
-                        + '</div>';
+                success: function (customerEmailData) {
+                    console.log("customerEmailData +++> " + JSON.stringify(customerEmailData[0]));
 
-                    $('#add-review-msgs').html(msgHTML);
+                    console.log("customerEmailData SIZE==  = " + customerEmailData.length);
 
-                    // window.location.reload();
+                    console.log("Final jsonData => " + JSON.stringify(jsonData));
 
+                    if (customerEmailData.length == 0) {
+                        $("#loader").hide();
+
+                        msgHTML = '<div class="alert alert-danger" role="alert">'
+                            + 'The store ' + store + ' does not exist. Kindly re-check the code.'
+                            + '</div>';
+
+                        $('#add-review-msgs').html(msgHTML);
+
+                    } else {
+
+                        console.log("customerEmailData.email = " + customerEmailData[0].email);
+
+                        var customerEmail = customerEmailData[0].email;
+
+                        jsonData["store"] = "resource:org.evin.book.track.Customer#" + customerEmail;
+
+
+                        // Report Book
+                        $.ajax({
+                            type: 'POST',
+                            url: postReportviewURL,
+                            data: jsonData,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                $("#loader").hide();
+                                console.log("Success +++> " + JSON.stringify(data));
+                                $("#add-error-report-bag").hide();
+                                $("#add-review-msgs").show();
+                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                    + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
+                                    + '</div>';
+
+                                $('#add-review-msgs').html(msgHTML);
+
+                                // window.location.reload();
+
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-review-msgs").hide();
+
+                                    $('#add-review-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-review-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                // Show modal to display error showed
+                                $("#add-error-report-bag").show();
+                            }
+                        });
+                    }
                 },
                 error: function (data) {
+                    $("#loader").hide();
                     var errors = $.parseJSON(data.responseText);
                     var status = errors.error.statusCode;
 
                     if (status == 422) {
                         console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                         console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                        $("#add-review-msgs").hide();
+                        $("#add-book-msgs").hide();
 
-                        $('#add-review-errors').html('');
+                        $('#add-book-errors').html('');
                         $.each(errors.error.details.messages, function (key, value) {
                             console.log('Error Value' + value + ' Key ' + key);
-                            $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
                         });
 
                     } else {
                         console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                        $('#add-review-errors').html(errors.error.message);
+                        $('#add-book-errors').html(errors.error.message);
+                        // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
                     }
                     // hide loader
                     $("#loader").hide();
 
                     // Show modal to display error showed
-                    $("#add-error-report-bag").show();
+                    $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
                 }
-            });
+            }); //end Get Customer Email Based on MemberID
 
         });
     };
