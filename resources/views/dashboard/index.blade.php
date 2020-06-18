@@ -719,6 +719,66 @@
             </div>
         </div>
     </div>
+
+    <!-- Reports -->
+    <div class="row">
+        <div class="col-sm-12 col-xxxl-12">
+            <div class="element-wrapper">
+                <h6 class="element-header">Active Reports</h6>
+                <div class="element-box">
+                    <div class="table-responsive">
+                        <table class="table table-lightborder">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Report ID</th>
+                                    <th class="text-center">Book ID</th>
+                                    <th class="text-center">Reporter Email</th>
+                                    <th class="text-center">Involved Bookseller</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Description</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <div id="add-report-msgs"></div>
+                                <div class="alert alert-danger" id="add-error-report-bag" style="display: none;">
+                                    <ul id="add-report-errors">
+                                    </ul>
+                                </div>
+                                {{-- dd($ordersWaitingProcessed) --}}
+                                {{-- dd(\App\User::isCustomerRetailer()) --}}
+                                @foreach($report as $activeReports)
+                                    <tr>
+                                        <td class="nowrap text-center" style="font-size: .73rem;">{{ $activeReports->id }}</td>
+                                        <td class="text-center" style="font-size: .73rem;">
+                                            {{-- \App\User::extractEmailFromResource($activeReports->seller) --}}
+                                            {{ $activeReports->book->id}}
+                                        </td>
+                                        <td class="text-center" style="font-size: .73rem;">{{$activeReports->reportedBy->email}}</td>
+                                        <td class="text-center" style="font-size: .73rem;">{{$activeReports->store->email}}</td>
+                                        <td class="text-center" style="font-size: .73rem;">
+                                            @if($activeReports->isConfirmed == false)
+                                            <div class="status-pill yellow" data-title="Not Investigated" data-toggle="tooltip" data-original-title="" title=""></div>
+                                            @elseif($activeReports->isConfirmed == true)
+                                            <div class="status-pill green" data-title="Confirmed" data-toggle="tooltip" data-original-title="" title=""></div>
+                                            @else
+                                            @endif
+                                        </td>
+                                        <td class="text-center" style="font-size: .73rem;">{{$activeReports->description}}</td>
+                                        <td class="text-center" style="font-size: .73rem;">
+                                            <div class="pt-btn">
+                                                <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updateTrueIsConfirmedReport('{{ $activeReports->id }}', '{{ $activeReports->book->id }}', '{{ $activeReports->book->shipment->shipmentId }}', '{{ $activeReports->reportedBy->email }}' );">Confirm</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @endif
 
     <!-- Distributor-->
@@ -876,179 +936,6 @@
 
 @section('footer_scripts')
 <script>
-    $("#bn2").breakingNews({
-        effect		:"slide-v",
-        autoplay	:true,
-        timer		:3000,
-        color		:"blue"
-    });
 
-
-    function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEmail) {
-        console.log("Clicked updatePurchaseRequest");
-
-        var domainUrl = 'http://localhost:3001/api';
-        var laravelDomainUrl = 'http://localhost:8000';
-
-        var smsPurchaseMessage = "Purchase Completed for " + customerEmail + ". Thank you for using book counterfeit app";
-
-        var jsonDataSMS = {
-            message: smsPurchaseMessage
-        };
-
-        var smsURL = laravelDomainUrl + '/general/sms/send/';
-
-        // 1. Update Purchase Request
-        var jsonData = {
-            purchaseRequest: "resource:org.evin.book.track.PurchaseRequest#" + purchaseRequestID,
-            status: true
-        };
-
-        // 2. Update Book as sold in its flag
-        var jsonDataBook = {
-            book: "resource:org.evin.book.track.Book#" + BookID,
-            sold: true
-        };
-
-        // 3. Update Final Owner in Supply Chain
-        var jsonDataShipOwnership = {
-            owner: "resource:org.evin.book.track.Customer#" + customerEmail,
-            shipment: "resource:org.evin.book.track.Shipment#" + ShipmentID
-        };
-
-        var msgHTML = '';
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: 'POST',
-            url: domainUrl + '/updatePurchaseRequestStatus',
-            data: jsonData,
-            dataType: 'json',
-            beforeSend: function() {
-                $("#loader").show();
-                $("#add-error-request-bag").hide();
-                $('#add-request-msgs').hide();
-            },
-            success: function(data) {
-
-                // Update Book sold
-                $.ajax({
-                    type: 'POST',
-                    url: domainUrl + '/updateBookSold',
-                    data: jsonDataBook,
-                    dataType: 'json',
-                    beforeSend: function() {
-                        $("#loader").show();
-                        $("#add-error-request-bag").hide();
-                        $('#add-request-msgs').hide();
-                    },
-                    success: function(data) {
-
-                        // SEND SMS 
-                        $.ajax({
-                            type: 'POST',
-                            url: smsURL,
-                            data: jsonDataSMS,
-                            dataType: 'json',
-                            beforeSend: function() {
-                                $("#loader").show();
-                            },
-                            success: function(data) {
-                                $("#loader").hide();
-                                console.log(data);
-                                $("#add-error-request-bag").hide();
-                                $('#add-request-msgs').show();
-                                msgHTML = '<div class="alert alert-primary" role="alert">' +
-                                    'Request confirmed!' +
-                                    '</div>';
-
-                                $('#add-request-msgs').html(msgHTML);
-
-                                window.location.reload();
-
-                            },
-                            error: function(data) {
-                                var errors = $.parseJSON(data.responseText);
-                                var status = errors.error.statusCode;
-
-                                if (status == 422) {
-                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                    $("#add-request-msgs").hide();
-
-                                    $('#add-request-errors').html('');
-                                    $.each(errors.error.details.messages, function(key, value) {
-                                        console.log('Error Value' + value + ' Key ' + key);
-                                        $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
-                                    });
-
-                                } else {
-                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                    $('#add-request-errors').html(errors.error.message);
-                                }
-                                // hide loader
-                                $("#loader").hide();
-
-                                $("#add-error-request-bag").show();
-                            }
-                        }); // END Ajax
-                    },
-                    error: function(data) {
-                        var errors = $.parseJSON(data.responseText);
-                        var status = errors.error.statusCode;
-
-                        if (status == 422) {
-                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                            $("#add-request-msgs").hide();
-
-                            $('#add-request-errors').html('');
-                            $.each(errors.error.details.messages, function(key, value) {
-                                console.log('Error Value' + value + ' Key ' + key);
-                                $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
-                            });
-
-                        } else {
-                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                            $('#add-request-errors').html(errors.error.message);
-                        }
-                        // hide loader
-                        $("#loader").hide();
-
-                        $("#add-error-request-bag").show();
-                    }
-                });
-            },
-            error: function(data) {
-                var errors = $.parseJSON(data.responseText);
-                var status = errors.error.statusCode;
-
-                if (status == 422) {
-                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                    $("#add-request-msgs").hide();
-
-                    $('#add-request-errors').html('');
-                    $.each(errors.error.details.messages, function(key, value) {
-                        console.log('Error Value' + value + ' Key ' + key);
-                        $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
-                    });
-
-                } else {
-                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                    $('#add-request-errors').html(errors.error.message);
-                }
-                // hide loader
-                $("#loader").hide();
-
-                $("#add-error-request-bag").show();
-            }
-        });
-    }
 </script>
 @endsection
