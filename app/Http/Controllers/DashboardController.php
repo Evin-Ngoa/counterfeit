@@ -9,6 +9,7 @@ use App\Services\Customer\CustomerService;
 use App\Services\Distributor\DistributorService;
 use App\Services\Order\OrderService;
 use App\Services\Publisher\PublisherService;
+use App\Services\Report\ReportService;
 use App\Services\Shipment\ShipmentService;
 use App\Services\Utils;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class DashboardController extends Controller
     protected $publisherservice;
     protected $distributorservice;
     protected $authservice;
+    protected $reportservice;
 
     public function __construct(
         Utils $utils,
@@ -31,7 +33,8 @@ class DashboardController extends Controller
         CustomerService $customerservice,
         PublisherService $publisherservice,
         DistributorService $distributorservice,
-        AuthService $authservice
+        AuthService $authservice,
+        ReportService $reportservice
     ) {
         $this->utils = $utils;
         $this->bookservice = $bookservice;
@@ -41,6 +44,7 @@ class DashboardController extends Controller
         $this->publisherservice = $publisherservice;
         $this->distributorservice = $distributorservice;
         $this->authservice = $authservice;
+        $this->reportservice = $reportservice;
 
         $this->middleware('check.auth');
         // $this->middleware('auth.book')->except('verify');
@@ -63,6 +67,7 @@ class DashboardController extends Controller
         $arrayDeli = array();
         $purchaseRequests = array();
         $arrayPurchaseRequests = array();
+        $report = array();
 
         // Orders
         if (\App\User::getUserRole() == \App\Http\Traits\UserConstants::PUBLISHER) {
@@ -100,7 +105,34 @@ class DashboardController extends Controller
             $booksPubCount = count($booksPub);
             // dd($booksPubCount);
 
-            return view('dashboard.index')->with(compact('role', 'ordersCount', 'ordersWaitingProcessed','shipmentsCount','shipments','booksPubCount'));
+            // 4. Get All Reports
+            $reports = $this->reportservice->getAllReports();
+
+            // dd($reports);
+
+            foreach ($reports as $key => $value) {
+                // Active Shipments include waiting, dispatching and transit
+                if ($reports[$key]->reportedTo->email == \App\User::loggedInUserEmail() && $reports[$key]->isConfirmed == false) {
+                    $arrayShip[$key] = $value;
+                    $report = $arrayShip;
+                }
+            }
+            // dd($report);
+            $reportCount = count($report);
+            // dd($reportCount);
+
+            return view('dashboard.index')->with(
+                compact(
+                    'role', 
+                    'ordersCount', 
+                    'ordersWaitingProcessed', 
+                    'shipmentsCount', 
+                    'shipments', 
+                    'booksPubCount',
+                    'report',
+                    'reportCount'
+                ));
+
         } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::CUSTOMER) {
             // 1. CUSTOMER ORDERS STATS
             $orders = $this->orderservice->getOnlyUserOrders($email, 'buyer', \App\Http\Traits\UserConstants::CUSTOMER);
@@ -170,15 +202,15 @@ class DashboardController extends Controller
 
             return view('dashboard.index')->with(
                 compact(
-                    'role', 
-                    'ordersCount', 
-                    'ordersWaitingProcessed', 
-                    'shipmentsCount', 
+                    'role',
+                    'ordersCount',
+                    'ordersWaitingProcessed',
+                    'shipmentsCount',
                     'ordersDeliveredCount',
                     'purchaseRequests',
                     'purchaseRequestsCount',
                     'points'
-                    )
+                )
             );
         } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::ADMIN) {
             $orders = $this->orderservice->getAllOrders();
@@ -205,7 +237,7 @@ class DashboardController extends Controller
             }
             $ordersCount = count($ordersWaitingProcessed);
 
-            
+
             // 3. ADMIN SHIPMENTS STATS
             $shipmentPub = $this->shipmentservice->getAllShipments();
 
@@ -220,33 +252,30 @@ class DashboardController extends Controller
             $shipmentsCount = count($shipments);
             // dd($shipmentsCount);
 
-            return view('dashboard.index')->with(compact('role','shipmentsCount','shipments','ordersWaitingProcessed', 'orderCount','publishersCount','customersCount','distributorsCount'));
-
-        }elseif(\App\User::getUserRole() == \App\Http\Traits\UserConstants::DISTRIBUTOR) {
+            return view('dashboard.index')->with(compact('role', 'shipmentsCount', 'shipments', 'ordersWaitingProcessed', 'orderCount', 'publishersCount', 'customersCount', 'distributorsCount'));
+        } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::DISTRIBUTOR) {
 
             // 1. DISTRIBUTOR SHIPMENTS STATS
             $shipmentDistr = $this->shipmentservice->getAllShipments();
 
-             
+
             foreach ($shipmentDistr as $key => $value) {
                 // dd(count($shipment[$key]->shipOwnership));
                 // if the array has owners
-                if(count($shipmentDistr[$key]->shipOwnership) > 0){
+                if (count($shipmentDistr[$key]->shipOwnership) > 0) {
                     // loop shipowners
                     foreach ($shipmentDistr[$key]->shipOwnership as $keys => $values) {
                         if ($shipmentDistr[$key]->shipOwnership[$keys]->owner->email == $email) {
-                            $array[ $key ] = $value;
+                            $array[$key] = $value;
                             $shipments = $array;
                         }
                     }
                 }
-                
             }
             // dd($shipments);
             $shipmentsCount = count($shipments);
             // dd($shipmentsCount);
-            return view('dashboard.index')->with(compact('role', 'shipmentsCount','shipments'));
-
+            return view('dashboard.index')->with(compact('role', 'shipmentsCount', 'shipments'));
         }
         $orderCount = count($orders);
 
