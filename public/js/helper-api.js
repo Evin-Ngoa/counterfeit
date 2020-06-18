@@ -643,3 +643,370 @@ $('.datetime').datetimepicker({
     minDate:new Date(),
 });
 
+// Notification For Updates
+$("#bn2").breakingNews({
+    effect: "slide-v",
+    autoplay: true,
+    timer: 3000,
+    color: "blue"
+});
+
+// Get current Date Time in GMT+0300 (East Africa Time)
+function currentDateTime() {
+    var dt = new Date();
+    dt.setHours(dt.getHours() + 3);
+
+    return dt;
+}
+
+/**
+ * Function to confirm 
+ * @param {*} reportID 
+ * @param {*} BookID 
+ * @param {*} ShipmentID 
+ * @param {*} reportedByEmail 
+ */
+function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEmail) {
+    console.log("Clicked updateIsConfirmedReport in helper-api");
+
+    var domainUrl = 'http://localhost:3001/api';
+    var laravelDomainUrl = 'http://localhost:8000';
+
+    var smsReportMessage = "Report Confirmed for " + reportedByEmail + ". You earned 5 points for helping fight counterfeit.";
+
+    var jsonDataSMS = {
+        message: smsReportMessage
+    };
+
+    var smsURL = laravelDomainUrl + '/general/sms/send/';
+
+    // 1. Update Report isconfirmed
+    var jsonData = {
+        report: "resource:org.evin.book.track.Report#" + reportID,
+        isConfirmed: true,
+        updatedAt: currentDateTime()
+    };
+
+    console.log("updateIsConfirmedReport Data = " + JSON.stringify(jsonData));
+
+    // 2. Update Book as sold in its flag
+    var jsonDataBook = {
+        book: "resource:org.evin.book.track.Book#" + BookID,
+        sold: true
+    };
+
+    // 3. Update Final Owner in Supply Chain
+    var jsonDataShipOwnership = {
+        owner: "resource:org.evin.book.track.Customer#" + reportedByEmail,
+        shipment: "resource:org.evin.book.track.Shipment#" + ShipmentID
+    };
+
+    var msgHTML = '';
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: domainUrl + '/updateReportIsConfirmed',
+        data: jsonData,
+        dataType: 'json',
+        beforeSend: function() {
+            $("#loader").show();
+            $("#add-error-request-bag").hide();
+            $('#add-request-msgs').hide();
+        },
+        success: function(data) {
+
+            // Check User Email
+            $.ajax({
+                type: 'POST',
+                url: domainUrl + '/updateBookSold',
+                data: jsonDataBook,
+                dataType: 'json',
+                beforeSend: function() {
+                    $("#loader").show();
+                    $("#add-error-request-bag").hide();
+                    $('#add-request-msgs').hide();
+                },
+                success: function(data) {
+
+                    // SEND SMS 
+                    $.ajax({
+                        type: 'POST',
+                        url: smsURL,
+                        data: jsonDataSMS,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $("#loader").show();
+                        },
+                        success: function(data) {
+                            $("#loader").hide();
+                            console.log(data);
+                            $("#add-error-request-bag").hide();
+                            $('#add-request-msgs').show();
+                            msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                'Request confirmed!' +
+                                '</div>';
+
+                            $('#add-request-msgs').html(msgHTML);
+
+                            window.location.reload();
+
+                        },
+                        error: function(data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-request-msgs").hide();
+
+                                $('#add-request-errors').html('');
+                                $.each(errors.error.details.messages, function(key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-request-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+
+                            $("#add-error-request-bag").show();
+                        }
+                    }); // END Ajax
+                },
+                error: function(data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-request-msgs").hide();
+
+                        $('#add-request-errors').html('');
+                        $.each(errors.error.details.messages, function(key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-request-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#add-error-request-bag").show();
+                }
+            });
+        },
+        error: function(data) {
+            var errors = $.parseJSON(data.responseText);
+            var status = errors.error.statusCode;
+
+            if (status == 422) {
+                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                $("#add-request-msgs").hide();
+
+                $('#add-request-errors').html('');
+                $.each(errors.error.details.messages, function(key, value) {
+                    console.log('Error Value' + value + ' Key ' + key);
+                    $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                });
+
+            } else {
+                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                $('#add-request-errors').html(errors.error.message);
+            }
+            // hide loader
+            $("#loader").hide();
+
+            $("#add-error-request-bag").show();
+        }
+    });
+}
+
+/**
+ * FUnction to purchase book
+ * @param {*} purchaseRequestID 
+ * @param {*} BookID 
+ * @param {*} ShipmentID 
+ * @param {*} customerEmail 
+ */
+function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEmail) {
+    console.log("Clicked updatePurchaseRequest");
+
+    var domainUrl = 'http://localhost:3001/api';
+    var laravelDomainUrl = 'http://localhost:8000';
+
+    var smsPurchaseMessage = "Purchase Completed for " + customerEmail + ". Thank you for using book counterfeit app";
+
+    var jsonDataSMS = {
+        message: smsPurchaseMessage
+    };
+
+    var smsURL = laravelDomainUrl + '/general/sms/send/';
+
+    // 1. Update Purchase Request
+    var jsonData = {
+        purchaseRequest: "resource:org.evin.book.track.PurchaseRequest#" + purchaseRequestID,
+        status: true
+    };
+
+    // 2. Update Book as sold in its flag
+    var jsonDataBook = {
+        book: "resource:org.evin.book.track.Book#" + BookID,
+        sold: true
+    };
+
+    // 3. Update Final Owner in Supply Chain
+    var jsonDataShipOwnership = {
+        owner: "resource:org.evin.book.track.Customer#" + customerEmail,
+        shipment: "resource:org.evin.book.track.Shipment#" + ShipmentID
+    };
+
+    var msgHTML = '';
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: domainUrl + '/updatePurchaseRequestStatus',
+        data: jsonData,
+        dataType: 'json',
+        beforeSend: function() {
+            $("#loader").show();
+            $("#add-error-request-bag").hide();
+            $('#add-request-msgs').hide();
+        },
+        success: function(data) {
+
+            // Update Book sold
+            $.ajax({
+                type: 'POST',
+                url: domainUrl + '/updateBookSold',
+                data: jsonDataBook,
+                dataType: 'json',
+                beforeSend: function() {
+                    $("#loader").show();
+                    $("#add-error-request-bag").hide();
+                    $('#add-request-msgs').hide();
+                },
+                success: function(data) {
+
+                    // SEND SMS 
+                    $.ajax({
+                        type: 'POST',
+                        url: smsURL,
+                        data: jsonDataSMS,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $("#loader").show();
+                        },
+                        success: function(data) {
+                            $("#loader").hide();
+                            console.log(data);
+                            $("#add-error-request-bag").hide();
+                            $('#add-request-msgs').show();
+                            msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                'Request confirmed!' +
+                                '</div>';
+
+                            $('#add-request-msgs').html(msgHTML);
+
+                            window.location.reload();
+
+                        },
+                        error: function(data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-request-msgs").hide();
+
+                                $('#add-request-errors').html('');
+                                $.each(errors.error.details.messages, function(key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-request-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+
+                            $("#add-error-request-bag").show();
+                        }
+                    }); // END Ajax
+                },
+                error: function(data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-request-msgs").hide();
+
+                        $('#add-request-errors').html('');
+                        $.each(errors.error.details.messages, function(key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-request-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#add-error-request-bag").show();
+                }
+            });
+        },
+        error: function(data) {
+            var errors = $.parseJSON(data.responseText);
+            var status = errors.error.statusCode;
+
+            if (status == 422) {
+                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                $("#add-request-msgs").hide();
+
+                $('#add-request-errors').html('');
+                $.each(errors.error.details.messages, function(key, value) {
+                    console.log('Error Value' + value + ' Key ' + key);
+                    $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                });
+
+            } else {
+                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                $('#add-request-errors').html(errors.error.message);
+            }
+            // hide loader
+            $("#loader").hide();
+
+            $("#add-error-request-bag").show();
+        }
+    });
+}
+
