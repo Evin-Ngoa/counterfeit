@@ -577,5 +577,7 @@ To Do Tasks
 4. Name of company to save to Firstname from name for mobile purposes
 5. Did you know Notifications [Foundation-Set]
 6. Login simulation for creating file.
-7. Check report and confirm in publisher.
-8. Historian for transactions
+7. Check report and confirm in publisher. [In-progress] 
+   a. in report, ensure memeberID for store finds the customer with the email [Done]
+   b. in confirmation of report ensure add points to reportedBY else [deduct if status is rejected - has to be done even though reports fake]. c. On implementing this delete the one added after reporting
+8. Historian for transactions to show.
