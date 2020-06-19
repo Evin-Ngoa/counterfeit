@@ -112,7 +112,7 @@ class DashboardController extends Controller
 
             foreach ($reports as $key => $value) {
                 // Active Shipments include waiting, dispatching and transit
-                if ($reports[$key]->reportedTo->email == \App\User::loggedInUserEmail() && $reports[$key]->isConfirmed == false) {
+                if ($reports[$key]->reportedTo->email == \App\User::loggedInUserEmail() && $reports[$key]->isConfirmed == false && !isset($reports[$key]->updatedAt)) {
                     $arrayShip[$key] = $value;
                     $report = $arrayShip;
                 }
