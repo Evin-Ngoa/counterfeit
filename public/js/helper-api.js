@@ -734,7 +734,9 @@ function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEma
                     console.log("customerData.accountBalance = " + customerData.accountBalance);
                     var postPoints = {
                         accountBalance: customerData.accountBalance + reportPoints,
-                        customer: reportedByEmail
+                        customer: reportedByEmail,
+                        updatedAt: currentDateTime(),
+                        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
                     };
 
                     // Add Points
@@ -965,7 +967,9 @@ function updateFalseIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEm
                     console.log("customerData.accountBalance = " + customerData.accountBalance);
                     var postPoints = {
                         accountBalance: customerData.accountBalance - penaltyPoints,
-                        customer: reportedByEmail
+                        customer: reportedByEmail,
+                        updatedAt: currentDateTime(),
+                        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
                     };
 
                     // Add Points
@@ -1137,7 +1141,7 @@ function updateFalseIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEm
  * @param {*} ShipmentID 
  * @param {*} customerEmail 
  */
-function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEmail) {
+function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEmail, userRole, loggedInEmail) {
     console.log("Clicked updatePurchaseRequest");
 
     var domainUrl = 'http://localhost:3001/api';
@@ -1154,19 +1158,25 @@ function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEm
     // 1. Update Purchase Request
     var jsonData = {
         purchaseRequest: "resource:org.evin.book.track.PurchaseRequest#" + purchaseRequestID,
-        status: true
+        status: true,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
     };
 
     // 2. Update Book as sold in its flag
     var jsonDataBook = {
         book: "resource:org.evin.book.track.Book#" + BookID,
-        sold: true
+        sold: true,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
     };
 
     // 3. Update Final Owner in Supply Chain
     var jsonDataShipOwnership = {
         owner: "resource:org.evin.book.track.Customer#" + customerEmail,
-        shipment: "resource:org.evin.book.track.Shipment#" + ShipmentID
+        shipment: "resource:org.evin.book.track.Shipment#" + ShipmentID,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
     };
 
     var msgHTML = '';
