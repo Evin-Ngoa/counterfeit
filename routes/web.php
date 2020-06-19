@@ -90,4 +90,13 @@ Route::get('qrcode', function () {
 Route::get('/sendemail', 'NotificationController@index');
 Route::post('/send/sms', 'NotificationController@sendSMS');
 Route::post('/general/sms/send/', 'NotificationController@sendGeneralSMS');
+Route::post('/general/email/send/', 'NotificationController@sendEmailGeneral');
+// http://localhost:8000/general/email/send/Hello/confirmed/cstomer@gmail.com
+Route::get('/general/email/send/{message}/{subject}/{to}', 'NotificationController@sendEmailGeneralGet');
+Route::get('/general/sms/send/{message}', 'NotificationController@sendGeneralSMSGet');
 Route::post('/sendemail/send', 'NotificationController@sendEmail');
+
+Route::group(['prefix' => 'traceability', 'as' => 'traceability.'], function () {
+    // Route::get('/book/{id}', ['as' => 'book', 'uses' => 'BookController@verify']);
+    // Route::get('/book', ['as' => 'form', 'uses' => 'BookController@verify_form']);
+});
