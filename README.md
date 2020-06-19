@@ -552,6 +552,22 @@ Purchase Request
   "createdAt": "2020-06-15T11:33:13.000Z"
 }
 
+---------------------------------------------------
+Report
+
+{
+  "$class": "org.evin.book.track.Report",
+  "id": "Re_aPTOhMCUbP",
+  "ward": "Airport",
+  "description": "Book Name Geography",
+  "book": "resource:org.evin.book.track.Book#BOOK_001",
+  "reportedBy": "resource:org.evin.book.track.Customer#customer@gmail.com",
+  "reportedTo": "resource:org.evin.book.track.Publisher#publisher1@gmail.com",
+  "store": "resource:org.evin.book.track.Customer#customer-evin@gmail.com",
+  "isConfirmed": false,
+  "createdAt": "2020-06-19T11:00:17.000Z"
+}
+
 
 ---------------------------------------------------
 
@@ -579,5 +595,7 @@ To Do Tasks
 6. Login simulation for creating file.
 7. Check report and confirm in publisher. [In-progress] 
    a. in report, ensure memeberID for store finds the customer with the email [Done]
-   b. in confirmation of report ensure add points to reportedBY else [deduct if status is rejected - has to be done even though reports fake]. c. On implementing this delete the one added after reporting
-8. Historian for transactions to show.
+   b. in report confirmation of report ensure add points to reportedBY else [deduct if status is rejected - has to be done even though reports fake]. c. On implementing this delete the one added after reporting [done]
+   d. doing a js n logic.js for adding points because of mobile api in scanning
+8. Report view for pulblisher and customers
+9. Historian for transactions to show.
