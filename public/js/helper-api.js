@@ -678,7 +678,7 @@ function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEma
     var domainUrl = 'http://localhost:3001/api';
     var laravelDomainUrl = 'http://localhost:8000';
 
-    var smsReportMessage = "Report Confirmed for " + reportedByEmail + ". You earned 5 points for helping fight counterfeit.";
+    var smsReportMessage = "Report Confirmed for " + reportedByEmail + ". You earned 5 points for helping fight counterfeit. Keep up the Fight!";
 
     var jsonDataSMS = {
         message: smsReportMessage
@@ -694,6 +694,14 @@ function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEma
         participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
     };
 
+    // Email
+    var sendEmailURL = "/general/email/send/";
+    var jsonEmailData = {}
+    jsonEmailData = {
+        'message': smsReportMessage,
+        'to': reportedByEmail,
+        'subject': 'Book Counterfeit Report Confirmation'
+    };
     console.log("updateIsConfirmedReport Data = " + JSON.stringify(jsonData));
 
 
@@ -761,21 +769,19 @@ function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEma
                                     $("#loader").show();
                                 },
                                 success: function (data) {
-                                    $('#add-report-msgs').show();
+                               
 
                                     console.log("smsURL -->" + data);
 
                                     msgHTML = '<div class="alert alert-primary" role="alert">' +
-                                        'Report confirmed!' +
-                                        '</div>';
-
-                                    $("#loader").hide();
+                                    'Report confirmed!' +
+                                    '</div>';
 
                                     if (data.success) {
 
                                         $("#add-error-report-bag").hide();
-                                        
-                                        $('#add-report-msgs').html(msgHTML);
+
+                                        // $('#add-report-msgs').html(msgHTML);
 
                                     } else {
 
@@ -783,10 +789,74 @@ function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEma
                                             'SMS Sending Failed!' +
                                             '</div>';
 
-                                        $('#add-report-msgs').html(msgHTML);
+                                        // $('#add-report-msgs').html(msgHTML);
                                     }
 
                                     // window.location.reload();
+
+                                    // SEND Email 
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: sendEmailURL,
+                                        data: jsonEmailData,
+                                        dataType: 'json',
+                                        beforeSend: function () {
+                                            $("#loader").show();
+                                        },
+                                        success: function (data) {
+                                            $('#add-report-msgs').show();
+
+                                            console.log("smsURL -->" + data);
+
+                                            // msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                            //     'Report confirmed!' +
+                                            //     '</div>';
+
+                                            $("#loader").hide();
+
+                                            if (data.success) {
+
+                                                $("#add-error-report-bag").hide();
+
+                                                // $('#add-report-msgs').html(msgHTML);
+
+                                            } else {
+
+                                                msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                    'Email Sending Failed!' +
+                                                    '</div>';
+
+                                                $('#add-report-msgs').html(msgHTML);
+                                            }
+
+                                            // window.location.reload();
+
+                                        },
+                                        error: function (data) {
+                                            var errors = $.parseJSON(data.responseText);
+                                            var status = errors.error.statusCode;
+
+                                            if (status == 422) {
+                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                $("#add-report-msgs").hide();
+
+                                                $('#add-report-errors').html('');
+                                                $.each(errors.error.details.messages, function (key, value) {
+                                                    console.log('Error Value' + value + ' Key ' + key);
+                                                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                });
+
+                                            } else {
+                                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                $('#add-report-errors').html(errors.error.message);
+                                            }
+                                            // hide loader
+                                            $("#loader").hide();
+
+                                            $("#add-error-report-bag").show();
+                                        }
+                                    }); // END Email AJax
 
                                 },
                                 error: function (data) {
@@ -1014,7 +1084,7 @@ function updateFalseIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEm
 
                                         $('#add-report-msgs').html(msgHTML);
 
-                                        
+
 
                                     } else {
                                         msgHTML += '<div class="alert alert-danger" role="alert">' +
