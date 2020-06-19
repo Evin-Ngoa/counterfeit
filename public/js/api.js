@@ -351,102 +351,18 @@ var Api = function () {
                                 $("#loader").show();
                             },
                             success: function (data) {
-                                // Get Customer Details
-                                $.ajax({
-                                    type: 'GET',
-                                    url: getCustomerURL,
-                                    beforeSend: function () {
-                                        //calls the loader id tag
-                                        $("#loader").show();
-                                    },
-                                    success: function (customerData) {
-                                        console.log("customerData +++> " + JSON.stringify(customerData));
-                                        console.log("customerData.accountBalance = " + customerData.accountBalance);
-                                        var postPoints = {
-                                            accountBalance: customerData.accountBalance + reportPoints,
-                                            customer: reportedBy
-                                        };
 
-                                        // Add Points
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: postCustomerScanPointsURL,
-                                            data: postPoints,
-                                            dataType: 'json',
-                                            beforeSend: function () {
-                                                //calls the loader id tag
-                                                $("#loader").show();
-                                            },
-                                            success: function (data) {
-                                                $("#loader").hide();
-                                                console.log("Success +++> " + JSON.stringify(data));
-                                                $("#add-error-report-bag").hide();
-                                                $("#add-review-msgs").show();
-                                                msgHTML = '<div class="alert alert-primary" role="alert">'
-                                                    + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
-                                                    + '</div>';
+                                $("#loader").hide();
+                                console.log("Success +++> " + JSON.stringify(data));
+                                $("#add-error-report-bag").hide();
+                                $("#add-review-msgs").show();
+                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                    + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
+                                    + '</div>';
 
-                                                $('#add-review-msgs').html(msgHTML);
+                                $('#add-review-msgs').html(msgHTML);
 
-                                                // window.location.reload();
-                                            },
-                                            error: function (data) {
-                                                var errors = $.parseJSON(data.responseText);
-                                                var status = errors.error.statusCode;
-
-                                                if (status == 422) {
-                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                                    $("#add-review-msgs").hide();
-
-                                                    $('#add-review-errors').html('');
-                                                    $.each(errors.error.details.messages, function (key, value) {
-                                                        console.log('Error Value' + value + ' Key ' + key);
-                                                        $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
-                                                    });
-
-                                                } else {
-                                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                                    $('#add-review-errors').html(errors.error.message);
-                                                }
-                                                // hide loader
-                                                $("#loader").hide();
-
-                                                // Show modal to display error showed
-                                                $("#add-error-report-bag").show();
-                                            }
-                                        }); //end post points ajax
-
-                                    },
-                                    error: function (data) {
-                                        $("#loader").hide();
-                                        var errors = $.parseJSON(data.responseText);
-                                        var status = errors.error.statusCode;
-
-                                        if (status == 422) {
-                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                            $("#add-book-msgs").hide();
-
-                                            $('#add-book-errors').html('');
-                                            $.each(errors.error.details.messages, function (key, value) {
-                                                console.log('Error Value' + value + ' Key ' + key);
-                                                $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
-                                            });
-
-                                        } else {
-                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                            $('#add-book-errors').html(errors.error.message);
-                                            // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
-                                        }
-                                        // hide loader
-                                        $("#loader").hide();
-
-                                        // Show modal to display error showed
-                                        $('#addBookModal').modal('show');
-                                        $("#add-error-bag").show();
-                                    }
-                                }); //end Get Customer Details
+                                // window.location.reload();
 
                             },
                             error: function (data) {
