@@ -5,9 +5,8 @@
         <form id="frmReport">
             <!-- <h5 class="form-header">Report </h5> -->
             <div class="alert alert-warning">
-                Report a book that is rendered possible counterfeit and get points. However false alarm in order to get
-                points can lead to permanent disqualification of earning points or penalty deductions depending on the
-                frequency of false alarm.
+                Report a book that is rendered possible counterfeit and get 5 points. However, provision of false report in order to get
+                points can lead to penalty deductions of 20 points.
             </div>
             <div id="add-review-msgs"></div>
 
