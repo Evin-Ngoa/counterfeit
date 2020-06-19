@@ -55,7 +55,7 @@ class Util extends Model
       */
      public static function smsAPIKey(){
 
-        $apiKey = '3c6e9bd992e111ebafdee808f1d72715d60a61b670532aaca30fdd19b4646dff';
+        $apiKey = '9dac9f91bdff71addf63b4d8de8a84dca7ec538aa9468cc8f30536fdab085482';
         return $apiKey;
      }
 
