@@ -80,27 +80,8 @@
 
                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
 
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="{{ route('order.view',  ['id' => \App\User::loggedInUserEmail()]) }}">
-                                <div class="label">Active Orders</div>
-                                <div class="value">{{ $ordersCount }}</div>
-                                <!-- <div class="trending trending-up-basic"><span>12%</span><i class="os-icon os-icon-arrow-up2"></i></div> -->
-                            </a>
-                        </div>
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="{{ route('shipment.view',  ['id' => \App\User::loggedInUserEmail()]) }}">
-                                <div class="label">Active Shipments</div>
-                                <div class="value">{{ $shipmentsCount }}</div>
-                                <div class="trending trending-down-basic"><span>12%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                            </a>
-                        </div>
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="{{ route('book.view', ['id' => \App\User::loggedInUserEmail()]) }}">
-                                <div class="label">Registered Books</div>
-                                <div class="value">{{ $booksPubCount }}</div>
-                                <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                            </a>
-                        </div>
+                            <!-- Stats -->
+                            @include('dashboard.publisher.stats.index')
 
                         @endif
 
