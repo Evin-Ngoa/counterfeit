@@ -640,6 +640,16 @@ function getRoleFromClass(words) {
 
 }
 
+/**
+ * Get the value from a hash symbol
+ * @param {*} words 
+ */
+function getValueAfterHash(words) {
+    var n = words.split("#");
+    return n[n.length - 1];
+
+}
+
 $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
@@ -711,258 +721,263 @@ function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEma
 
     var msgHTML = '';
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    var confirmation = confirm("Are you sure you want to approve the report? You cannot undo after this.");
 
-    $.ajax({
-        type: 'POST',
-        url: domainUrl + '/updateReportIsConfirmed',
-        data: jsonData,
-        dataType: 'json',
-        beforeSend: function () {
-            $("#loader").show();
-            $("#add-error-report-bag").hide();
-            $('#add-report-msgs').hide();
-        },
-        success: function (data) {
+    if (confirmation) {
 
-            // Get Customer Details
-            $.ajax({
-                type: 'GET',
-                url: getCustomerURL,
-                beforeSend: function () {
-                    //calls the loader id tag
-                    $("#loader").show();
-                },
-                success: function (customerData) {
-                    console.log("customerData +++> " + JSON.stringify(customerData));
-                    console.log("customerData.accountBalance = " + customerData.accountBalance);
-                    var postPoints = {
-                        accountBalance: customerData.accountBalance + reportPoints,
-                        customer: reportedByEmail,
-                        updatedAt: currentDateTime(),
-                        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
-                    };
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-                    // Add Points
-                    $.ajax({
-                        type: 'POST',
-                        url: postCustomerScanPointsURL,
-                        data: postPoints,
-                        dataType: 'json',
-                        beforeSend: function () {
-                            //calls the loader id tag
-                            $("#loader").show();
-                        },
-                        success: function (data) {
+        $.ajax({
+            type: 'POST',
+            url: domainUrl + '/updateReportIsConfirmed',
+            data: jsonData,
+            dataType: 'json',
+            beforeSend: function () {
+                $("#loader").show();
+                $("#add-error-report-bag").hide();
+                $('#add-report-msgs').hide();
+            },
+            success: function (data) {
 
-                            // SEND SMS 
-                            $.ajax({
-                                type: 'POST',
-                                url: smsURL,
-                                data: jsonDataSMS,
-                                dataType: 'json',
-                                beforeSend: function () {
-                                    $("#loader").show();
-                                },
-                                success: function (data) {
+                // Get Customer Details
+                $.ajax({
+                    type: 'GET',
+                    url: getCustomerURL,
+                    beforeSend: function () {
+                        //calls the loader id tag
+                        $("#loader").show();
+                    },
+                    success: function (customerData) {
+                        console.log("customerData +++> " + JSON.stringify(customerData));
+                        console.log("customerData.accountBalance = " + customerData.accountBalance);
+                        var postPoints = {
+                            accountBalance: customerData.accountBalance + reportPoints,
+                            customer: reportedByEmail,
+                            updatedAt: currentDateTime(),
+                            participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+                        };
+
+                        // Add Points
+                        $.ajax({
+                            type: 'POST',
+                            url: postCustomerScanPointsURL,
+                            data: postPoints,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                // SEND SMS 
+                                $.ajax({
+                                    type: 'POST',
+                                    url: smsURL,
+                                    data: jsonDataSMS,
+                                    dataType: 'json',
+                                    beforeSend: function () {
+                                        $("#loader").show();
+                                    },
+                                    success: function (data) {
 
 
-                                    console.log("smsURL -->" + data);
+                                        console.log("smsURL -->" + data);
 
-                                    msgHTML = '<div class="alert alert-primary" role="alert">' +
-                                        'Report confirmed!' +
-                                        '</div>';
-
-                                    if (data.success) {
-
-                                        $("#add-error-report-bag").hide();
-
-                                        // $('#add-report-msgs').html(msgHTML);
-
-                                    } else {
-
-                                        msgHTML += '<div class="alert alert-danger" role="alert">' +
-                                            'SMS Sending Failed!' +
+                                        msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                            'Report confirmed!' +
                                             '</div>';
 
-                                        // $('#add-report-msgs').html(msgHTML);
-                                    }
+                                        if (data.success) {
 
-                                    // window.location.reload();
+                                            $("#add-error-report-bag").hide();
 
-                                    // SEND Email 
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: sendEmailURL,
-                                        data: jsonEmailData,
-                                        dataType: 'json',
-                                        beforeSend: function () {
-                                            $("#loader").show();
-                                        },
-                                        success: function (data) {
-                                            $('#add-report-msgs').show();
+                                            // $('#add-report-msgs').html(msgHTML);
 
-                                            console.log("smsURL -->" + data);
+                                        } else {
 
-                                            // msgHTML = '<div class="alert alert-primary" role="alert">' +
-                                            //     'Report confirmed!' +
-                                            //     '</div>';
+                                            msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                'SMS Sending Failed!' +
+                                                '</div>';
 
-                                            $("#loader").hide();
-
-                                            if (data.success) {
-
-                                                $("#add-error-report-bag").hide();
-
-                                                $('#add-report-msgs').html(msgHTML);
-
-                                            } else {
-
-                                                msgHTML += '<div class="alert alert-danger" role="alert">' +
-                                                    'Email Sending Failed!' +
-                                                    '</div>';
-
-                                                $('#add-report-msgs').html(msgHTML);
-                                            }
-
-                                            // window.location.reload();
-
-                                        },
-                                        error: function (data) {
-                                            var errors = $.parseJSON(data.responseText);
-                                            var status = errors.error.statusCode;
-
-                                            if (status == 422) {
-                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                                $("#add-report-msgs").hide();
-
-                                                $('#add-report-errors').html('');
-                                                $.each(errors.error.details.messages, function (key, value) {
-                                                    console.log('Error Value' + value + ' Key ' + key);
-                                                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                                                });
-
-                                            } else {
-                                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                                $('#add-report-errors').html(errors.error.message);
-                                            }
-                                            // hide loader
-                                            $("#loader").hide();
-
-                                            $("#add-error-report-bag").show();
+                                            // $('#add-report-msgs').html(msgHTML);
                                         }
-                                    }); // END Email AJax
 
-                                },
-                                error: function (data) {
-                                    var errors = $.parseJSON(data.responseText);
-                                    var status = errors.error.statusCode;
+                                        // window.location.reload();
 
-                                    if (status == 422) {
-                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                        $("#add-report-msgs").hide();
+                                        // SEND Email 
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: sendEmailURL,
+                                            data: jsonEmailData,
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                $("#loader").show();
+                                            },
+                                            success: function (data) {
+                                                $('#add-report-msgs').show();
 
-                                        $('#add-report-errors').html('');
-                                        $.each(errors.error.details.messages, function (key, value) {
-                                            console.log('Error Value' + value + ' Key ' + key);
-                                            $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                                        });
+                                                console.log("smsURL -->" + data);
 
-                                    } else {
-                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                        $('#add-report-errors').html(errors.error.message);
+                                                // msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                                //     'Report confirmed!' +
+                                                //     '</div>';
+
+                                                $("#loader").hide();
+
+                                                if (data.success) {
+
+                                                    $("#add-error-report-bag").hide();
+
+                                                    $('#add-report-msgs').html(msgHTML);
+
+                                                } else {
+
+                                                    msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                        'Email Sending Failed!' +
+                                                        '</div>';
+
+                                                    $('#add-report-msgs').html(msgHTML);
+                                                }
+
+                                                window.location.reload();
+
+                                            },
+                                            error: function (data) {
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#add-report-msgs").hide();
+
+                                                    $('#add-report-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
+
+                                                } else {
+                                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                    $('#add-report-errors').html(errors.error.message);
+                                                }
+                                                // hide loader
+                                                $("#loader").hide();
+
+                                                $("#add-error-report-bag").show();
+                                            }
+                                        }); // END Email AJax
+
+                                    },
+                                    error: function (data) {
+                                        var errors = $.parseJSON(data.responseText);
+                                        var status = errors.error.statusCode;
+
+                                        if (status == 422) {
+                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                            $("#add-report-msgs").hide();
+
+                                            $('#add-report-errors').html('');
+                                            $.each(errors.error.details.messages, function (key, value) {
+                                                console.log('Error Value' + value + ' Key ' + key);
+                                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                            });
+
+                                        } else {
+                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                            $('#add-report-errors').html(errors.error.message);
+                                        }
+                                        // hide loader
+                                        $("#loader").hide();
+
+                                        $("#add-error-report-bag").show();
                                     }
-                                    // hide loader
-                                    $("#loader").hide();
+                                }); // END Ajax
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
 
-                                    $("#add-error-report-bag").show();
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-report-msgs").hide();
+
+                                    $('#add-report-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-report-errors').html(errors.error.message);
                                 }
-                            }); // END Ajax
-                        },
-                        error: function (data) {
-                            var errors = $.parseJSON(data.responseText);
-                            var status = errors.error.statusCode;
+                                // hide loader
+                                $("#loader").hide();
 
-                            if (status == 422) {
-                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                $("#add-report-msgs").hide();
-
-                                $('#add-report-errors').html('');
-                                $.each(errors.error.details.messages, function (key, value) {
-                                    console.log('Error Value' + value + ' Key ' + key);
-                                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                                });
-
-                            } else {
-                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                $('#add-report-errors').html(errors.error.message);
+                                $("#add-error-report-bag").show();
                             }
-                            // hide loader
-                            $("#loader").hide();
+                        }); //end post points ajax
 
-                            $("#add-error-report-bag").show();
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#add-report-msgs").hide();
+
+                            $('#add-report-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-report-errors').html(errors.error.message);
                         }
-                    }); //end post points ajax
+                        // hide loader
+                        $("#loader").hide();
 
-                },
-                error: function (data) {
-                    var errors = $.parseJSON(data.responseText);
-                    var status = errors.error.statusCode;
-
-                    if (status == 422) {
-                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                        $("#add-report-msgs").hide();
-
-                        $('#add-report-errors').html('');
-                        $.each(errors.error.details.messages, function (key, value) {
-                            console.log('Error Value' + value + ' Key ' + key);
-                            $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                        });
-
-                    } else {
-                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                        $('#add-report-errors').html(errors.error.message);
+                        $("#add-error-report-bag").show();
                     }
-                    // hide loader
-                    $("#loader").hide();
+                }); //end Get Customer Details
+            },
+            error: function (data) {
+                var errors = $.parseJSON(data.responseText);
+                var status = errors.error.statusCode;
 
-                    $("#add-error-report-bag").show();
+                if (status == 422) {
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                    $("#add-report-msgs").hide();
+
+                    $('#add-report-errors').html('');
+                    $.each(errors.error.details.messages, function (key, value) {
+                        console.log('Error Value' + value + ' Key ' + key);
+                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                    });
+
+                } else {
+                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                    $('#add-report-errors').html(errors.error.message);
                 }
-            }); //end Get Customer Details
-        },
-        error: function (data) {
-            var errors = $.parseJSON(data.responseText);
-            var status = errors.error.statusCode;
+                // hide loader
+                $("#loader").hide();
 
-            if (status == 422) {
-                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                $("#add-report-msgs").hide();
-
-                $('#add-report-errors').html('');
-                $.each(errors.error.details.messages, function (key, value) {
-                    console.log('Error Value' + value + ' Key ' + key);
-                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                });
-
-            } else {
-                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                $('#add-report-errors').html(errors.error.message);
+                $("#add-error-report-bag").show();
             }
-            // hide loader
-            $("#loader").hide();
-
-            $("#add-error-report-bag").show();
-        }
-    });
+        });
+    }
 }
 
 /**
@@ -1014,260 +1029,267 @@ function updateFalseIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEm
 
     var msgHTML = '';
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    var confirmation = confirm("Are you sure you want to decline the report? You cannot undo after this.");
 
-    $.ajax({
-        type: 'POST',
-        url: domainUrl + '/updateReportIsConfirmed',
-        data: jsonData,
-        dataType: 'json',
-        beforeSend: function () {
-            $("#loader").show();
-            $("#add-error-report-bag").hide();
-            $('#add-report-msgs').hide();
-        },
-        success: function (data) {
+    if (confirmation) {
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-            // Get Customer Details
-            $.ajax({
-                type: 'GET',
-                url: getCustomerURL,
-                beforeSend: function () {
-                    //calls the loader id tag
-                    $("#loader").show();
-                },
-                success: function (customerData) {
-                    console.log("customerData +++> " + JSON.stringify(customerData));
-                    console.log("customerData.accountBalance = " + customerData.accountBalance);
-                    var postPoints = {
-                        accountBalance: customerData.accountBalance - penaltyPoints,
-                        customer: reportedByEmail,
-                        updatedAt: currentDateTime(),
-                        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
-                    };
-
-                    // Add Points
-                    $.ajax({
-                        type: 'POST',
-                        url: postCustomerScanPointsURL,
-                        data: postPoints,
-                        dataType: 'json',
-                        beforeSend: function () {
-                            //calls the loader id tag
-                            $("#loader").show();
-                        },
-                        success: function (data) {
-
-                            // SEND SMS 
-                            $.ajax({
-                                type: 'POST',
-                                url: smsURL,
-                                data: jsonDataSMS,
-                                dataType: 'json',
-                                beforeSend: function () {
-                                    $("#loader").show();
-                                },
-                                success: function (data) {
+        $.ajax({
+            type: 'POST',
+            url: domainUrl + '/updateReportIsConfirmed',
+            data: jsonData,
+            dataType: 'json',
+            beforeSend: function () {
+                $("#loader").show();
+                $("#add-error-report-bag").hide();
+                $('#add-report-msgs').hide();
+            },
+            success: function (data) {
 
 
-                                    console.log("smsURL -->" + data);
+                // Get Customer Details
+                $.ajax({
+                    type: 'GET',
+                    url: getCustomerURL,
+                    beforeSend: function () {
+                        //calls the loader id tag
+                        $("#loader").show();
+                    },
+                    success: function (customerData) {
+                        console.log("customerData +++> " + JSON.stringify(customerData));
+                        console.log("customerData.accountBalance = " + customerData.accountBalance);
+                        var postPoints = {
+                            accountBalance: customerData.accountBalance - penaltyPoints,
+                            customer: reportedByEmail,
+                            updatedAt: currentDateTime(),
+                            participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+                        };
 
-                                    msgHTML = '<div class="alert alert-primary" role="alert">' +
-                                        'Report declined!' +
-                                        '</div>';
+                        // Add Points
+                        $.ajax({
+                            type: 'POST',
+                            url: postCustomerScanPointsURL,
+                            data: postPoints,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
 
-                                    if (data.success) {
+                                // SEND SMS 
+                                $.ajax({
+                                    type: 'POST',
+                                    url: smsURL,
+                                    data: jsonDataSMS,
+                                    dataType: 'json',
+                                    beforeSend: function () {
+                                        $("#loader").show();
+                                    },
+                                    success: function (data) {
 
-                                        $("#add-error-report-bag").hide();
 
-                                        // $('#add-report-msgs').html(msgHTML);
+                                        console.log("smsURL -->" + data);
 
-                                    } else {
-
-                                        msgHTML += '<div class="alert alert-danger" role="alert">' +
-                                            'SMS Sending Failed!' +
+                                        msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                            'Report declined!' +
                                             '</div>';
 
-                                        // $('#add-report-msgs').html(msgHTML);
-                                    }
+                                        if (data.success) {
 
-                                    // window.location.reload();
+                                            $("#add-error-report-bag").hide();
 
-                                    // SEND Email 
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: sendEmailURL,
-                                        data: jsonEmailData,
-                                        dataType: 'json',
-                                        beforeSend: function () {
-                                            $("#loader").show();
-                                        },
-                                        success: function (data) {
-                                            $('#add-report-msgs').show();
+                                            // $('#add-report-msgs').html(msgHTML);
 
-                                            console.log("smsURL -->" + data);
+                                        } else {
 
-                                            // msgHTML = '<div class="alert alert-primary" role="alert">' +
-                                            //     'Report confirmed!' +
-                                            //     '</div>';
+                                            msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                'SMS Sending Failed!' +
+                                                '</div>';
 
-                                            $("#loader").hide();
-
-                                            if (data.success) {
-
-                                                $("#add-error-report-bag").hide();
-
-                                                $('#add-report-msgs').html(msgHTML);
-
-                                            } else {
-
-                                                msgHTML += '<div class="alert alert-danger" role="alert">' +
-                                                    'Email Sending Failed!' +
-                                                    '</div>';
-
-                                                $('#add-report-msgs').html(msgHTML);
-                                            }
-
-                                            // window.location.reload();
-
-                                        },
-                                        error: function (data) {
-                                            var errors = $.parseJSON(data.responseText);
-                                            var status = errors.error.statusCode;
-
-                                            if (status == 422) {
-                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                                $("#add-report-msgs").hide();
-
-                                                $('#add-report-errors').html('');
-                                                $.each(errors.error.details.messages, function (key, value) {
-                                                    console.log('Error Value' + value + ' Key ' + key);
-                                                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                                                });
-
-                                            } else {
-                                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                                $('#add-report-errors').html(errors.error.message);
-                                            }
-                                            // hide loader
-                                            $("#loader").hide();
-
-                                            $("#add-error-report-bag").show();
+                                            // $('#add-report-msgs').html(msgHTML);
                                         }
-                                    }); // END Email AJax
 
-                                },
-                                error: function (data) {
-                                    var errors = $.parseJSON(data.responseText);
-                                    var status = errors.error.statusCode;
+                                        // window.location.reload();
 
-                                    if (status == 422) {
-                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                        $("#add-report-msgs").hide();
+                                        // SEND Email 
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: sendEmailURL,
+                                            data: jsonEmailData,
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                $("#loader").show();
+                                            },
+                                            success: function (data) {
+                                                $('#add-report-msgs').show();
 
-                                        $('#add-report-errors').html('');
-                                        $.each(errors.error.details.messages, function (key, value) {
-                                            console.log('Error Value' + value + ' Key ' + key);
-                                            $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                                        });
+                                                console.log("smsURL -->" + data);
 
-                                    } else {
-                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                        $('#add-report-errors').html(errors.error.message);
+                                                // msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                                //     'Report confirmed!' +
+                                                //     '</div>';
+
+                                                $("#loader").hide();
+
+                                                if (data.success) {
+
+                                                    $("#add-error-report-bag").hide();
+
+                                                    $('#add-report-msgs').html(msgHTML);
+
+                                                } else {
+
+                                                    msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                        'Email Sending Failed!' +
+                                                        '</div>';
+
+                                                    $('#add-report-msgs').html(msgHTML);
+                                                }
+
+                                                window.location.reload();
+
+                                            },
+                                            error: function (data) {
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#add-report-msgs").hide();
+
+                                                    $('#add-report-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
+
+                                                } else {
+                                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                    $('#add-report-errors').html(errors.error.message);
+                                                }
+                                                // hide loader
+                                                $("#loader").hide();
+
+                                                $("#add-error-report-bag").show();
+                                            }
+                                        }); // END Email AJax
+
+                                    },
+                                    error: function (data) {
+                                        var errors = $.parseJSON(data.responseText);
+                                        var status = errors.error.statusCode;
+
+                                        if (status == 422) {
+                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                            $("#add-report-msgs").hide();
+
+                                            $('#add-report-errors').html('');
+                                            $.each(errors.error.details.messages, function (key, value) {
+                                                console.log('Error Value' + value + ' Key ' + key);
+                                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                            });
+
+                                        } else {
+                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                            $('#add-report-errors').html(errors.error.message);
+                                        }
+                                        // hide loader
+                                        $("#loader").hide();
+
+                                        $("#add-error-report-bag").show();
                                     }
-                                    // hide loader
-                                    $("#loader").hide();
+                                }); // END Ajax
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
 
-                                    $("#add-error-report-bag").show();
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-report-msgs").hide();
+
+                                    $('#add-report-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-report-errors').html(errors.error.message);
                                 }
-                            }); // END Ajax
-                        },
-                        error: function (data) {
-                            var errors = $.parseJSON(data.responseText);
-                            var status = errors.error.statusCode;
+                                // hide loader
+                                $("#loader").hide();
 
-                            if (status == 422) {
-                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                $("#add-report-msgs").hide();
-
-                                $('#add-report-errors').html('');
-                                $.each(errors.error.details.messages, function (key, value) {
-                                    console.log('Error Value' + value + ' Key ' + key);
-                                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                                });
-
-                            } else {
-                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                $('#add-report-errors').html(errors.error.message);
+                                $("#add-error-report-bag").show();
                             }
-                            // hide loader
-                            $("#loader").hide();
+                        }); //end post points ajax
 
-                            $("#add-error-report-bag").show();
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#add-report-msgs").hide();
+
+                            $('#add-report-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-report-errors').html(errors.error.message);
                         }
-                    }); //end post points ajax
+                        // hide loader
+                        $("#loader").hide();
 
-                },
-                error: function (data) {
-                    var errors = $.parseJSON(data.responseText);
-                    var status = errors.error.statusCode;
-
-                    if (status == 422) {
-                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                        $("#add-report-msgs").hide();
-
-                        $('#add-report-errors').html('');
-                        $.each(errors.error.details.messages, function (key, value) {
-                            console.log('Error Value' + value + ' Key ' + key);
-                            $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                        });
-
-                    } else {
-                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                        $('#add-report-errors').html(errors.error.message);
+                        $("#add-error-report-bag").show();
                     }
-                    // hide loader
-                    $("#loader").hide();
+                }); //end Get Customer Details
 
-                    $("#add-error-report-bag").show();
+            },
+            error: function (data) {
+                var errors = $.parseJSON(data.responseText);
+                var status = errors.error.statusCode;
+
+                if (status == 422) {
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                    $("#add-report-msgs").hide();
+
+                    $('#add-report-errors').html('');
+                    $.each(errors.error.details.messages, function (key, value) {
+                        console.log('Error Value' + value + ' Key ' + key);
+                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                    });
+
+                } else {
+                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                    $('#add-report-errors').html(errors.error.message);
                 }
-            }); //end Get Customer Details
+                // hide loader
+                $("#loader").hide();
 
-        },
-        error: function (data) {
-            var errors = $.parseJSON(data.responseText);
-            var status = errors.error.statusCode;
-
-            if (status == 422) {
-                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                $("#add-report-msgs").hide();
-
-                $('#add-report-errors').html('');
-                $.each(errors.error.details.messages, function (key, value) {
-                    console.log('Error Value' + value + ' Key ' + key);
-                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
-                });
-
-            } else {
-                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                $('#add-report-errors').html(errors.error.message);
+                $("#add-error-report-bag").show();
             }
-            // hide loader
-            $("#loader").hide();
+        });
+    }
 
-            $("#add-error-report-bag").show();
-        }
-    });
+
 }
 
 /**
@@ -1448,5 +1470,72 @@ function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEm
             $("#add-error-request-bag").show();
         }
     });
+}
+
+/**
+ * 
+ * @param {*} reportID 
+ */
+function traceReportConfirmation(reportID) {
+
+    console.log("Clicked traceReportConfirmation ID => " + reportID);
+
+    var msgHTML = '';
+
+    var getIsConfimedReportHistorianURL = domainUrl + "/queries/getIsConfimedReportHistorian?report=resource%3Aorg.evin.book.track.Report%23"+reportID;
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // SEND SMS 
+    $.ajax({
+        type: 'GET',
+        url: getIsConfimedReportHistorianURL ,
+        beforeSend: function () {
+            $("#loader").show();
+        },
+        success: function (data) {
+            $("#loader").hide();
+            console.log(data);
+            // $("#add-error-request-bag").hide();
+            // $('#add-request-msgs').show();
+            // msgHTML = '<div class="alert alert-primary" role="alert">' +
+            //     'Request confirmed!' +
+            //     '</div>';
+
+            // $('#add-request-msgs').html(msgHTML);
+
+            // window.location.reload();
+
+        },
+        error: function (data) {
+            var errors = $.parseJSON(data.responseText);
+            var status = errors.error.statusCode;
+
+            if (status == 422) {
+                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                $("#add-report-msgs").hide();
+
+                $('#add-report-errors').html('');
+                $.each(errors.error.details.messages, function (key, value) {
+                    console.log('Error Value' + value + ' Key ' + key);
+                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                });
+
+            } else {
+                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                $('#add-report-errors').html(errors.error.message);
+            }
+            // hide loader
+            $("#loader").hide();
+
+            $("#add-error-report-bag").show();
+        }
+    }); // END Ajax
+
 }
 
