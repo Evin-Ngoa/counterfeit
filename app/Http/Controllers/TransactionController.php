@@ -92,4 +92,11 @@ class TransactionController extends Controller
     {
         //
     }
+
+    /**
+     * Get the Form to search traceability
+     */
+    public function showSearchForm(){
+        return view('transactions.form');
+    }
 }
