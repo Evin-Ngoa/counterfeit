@@ -34,6 +34,9 @@ var Api = function () {
     var bookShipmentForm = $("#frmregisterBookShipment");
     var frmEditBook = $("#frmEditBook");
 
+    // Transaction
+    var transactionForm = $("#transaction_form");
+
     // Order
     var frmAddOrder = $("#frmAddOrder");
     var frmEditOrder = $("#frmEditOrder");
@@ -109,6 +112,10 @@ var Api = function () {
     var buyBookPostSbtBtn = $('#frmBuyBook .btn-buy-book');
 
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
+
+    var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
+
+    var transactionHistorySbtBtn = $('#transaction_form .btn-transaction-history');
 
     /**
      * Posting the book purchase form
@@ -4109,6 +4116,145 @@ var Api = function () {
 
     };
 
+    /**
+     * Extracts value after Hash
+     * @param {*} words 
+     */
+    function getValueAfterHash(words) {
+        var n = words.split("#");
+        return n[n.length - 1];
+    
+    }
+    /**
+     * Function to post transaction history
+     */
+    var handleTransactionHistory = function () {
+        console.log("handleTransactionHistory");
+        $("#add-transaction-error-bag").hide();
+
+        // Prevent submit by enter button
+        // transactionForm.on('keyup keypress', function (e) {
+        //     var keyCode = e.keyCode || e.which;
+        //     if (keyCode === 13) {
+        //         e.preventDefault();
+        //         return false;
+        //     }
+        // });
+
+        function getModel(transName){
+
+            if(transName == "getIsConfimedReportHistorian"){
+                return 'Report';
+            }
+            
+        }
+
+        transactionHistorySbtBtn.on('click', function () {
+            var json = transactionForm.serializeArray();
+            var jsonData = {};
+
+            console.log("handleTransactionHistory");
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            var loggedInUser = jsonData['loggedInUser'];
+            var role = jsonData['role'];
+            var transName = jsonData['transaction_name'];
+            var itemID = jsonData['itemID'];
+            var modelName = getModel(transName);
+
+            console.log("Here => " + loggedInUser + " " + role + " " + transName + " " + itemID + " " + modelName);
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            var getIsConfimedReportHistorianURL = domainUrl + "/queries/"+ transName +"?report=resource%3Aorg.evin.book.track."+ modelName +"%23" + itemID;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'GET',
+                url: getIsConfimedReportHistorianURL,
+                beforeSend: function () {//calls the loader id tag
+                    $("#book_form .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+
+                    $("#loader").hide();
+
+                    console.log("Success +++> " + JSON.stringify(data));
+                    console.log(data);
+                    console.log(data.length);
+
+                    if(data.length > 0){
+                        for(var i = 0; i < data.length; i++){
+                            msgHTML += '<tr>'
+                            + '<td>' + getValueAfterHash(data[i].report) + '</td>'
+                            + '<td>' + data[i].isConfirmed + '</td>'
+                            + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                            + '<td>' + data[i].updatedAt + '</td>'
+                            + '<td>' + data[i].timestamp + '</td>'
+                            + '</tr>';
+                        }
+
+                        $("#records").html(msgHTML);
+
+                        $('#transactionViewModal').modal('show');
+                    }else{
+                        msgHTML = '<div class="alert alert-warning" role="alert">'
+                        + 'No Transaction history found for ' + itemID + ' item ID.'
+                        + '</div>';
+
+                        $("#add-transaction-msgs").html(msgHTML);
+                    }
+                   
+
+                    // window.location.href = '/verify/book/' + data.id;
+                },
+                error: function (data) {
+                    $("#loader").hide();
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-transaction-msgs").hide();
+
+                        $('#add-transaction-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-transaction-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        // $('#add-transaction-errors').html(errors.error.message);
+                        $('#add-transaction-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    // $('#transactionViewModal').modal('show');
+                    $("#add-transaction-error-bag").show();
+                }
+            });
+
+        });
+    };
+
 
     // function you can use:
     function getAfterHarsh(str) {
@@ -4188,6 +4334,9 @@ var Api = function () {
 
             // Purchase Book
             handleBuyBook();
+
+            // Transaction
+            handleTransactionHistory();
 
             // Fetch Wards
             // handleFetchWards();
