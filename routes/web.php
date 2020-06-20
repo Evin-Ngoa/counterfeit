@@ -63,6 +63,8 @@ Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
 });
 Route::resource('order', 'OrderController');
 
+Route::resource('report', 'ReportController');
+
 Route::get('qrcode', function () {
     return QrCode::size(300)->generate('456');
 });
@@ -97,6 +99,5 @@ Route::get('/general/sms/send/{message}', 'NotificationController@sendGeneralSMS
 Route::post('/sendemail/send', 'NotificationController@sendEmail');
 
 Route::group(['prefix' => 'traceability', 'as' => 'traceability.'], function () {
-    // Route::get('/book/{id}', ['as' => 'book', 'uses' => 'BookController@verify']);
-    // Route::get('/book', ['as' => 'form', 'uses' => 'BookController@verify_form']);
+     Route::get('/form', ['as' => 'form', 'uses' => 'TransactionController@showSearchForm']);
 });
