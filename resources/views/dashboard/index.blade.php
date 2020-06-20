@@ -19,6 +19,7 @@
                 </div>
                 <ul>
                     <li><a href="#"><span>Did You Know</span> - A similar software like this reduced the counterfeit cases by 30%.</a></li>
+                    <li><a href="#"><span>Did You Know</span> - Buying counterfeit books may cost you more as it is more easily prone to tear.</a></li>
                     <li><a href="#"><span>Join Hands In Fighting Counterfeit Books</span> - A total of 45 cases have been reported through this system.</a></li>
                 </ul>
                 <div class="bn-navi">
@@ -172,7 +173,7 @@
                                     </td>
                                     <td class="text-center" style="font-size: .73rem;">
                                         <div class="pt-btn">
-                                            <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}' );">Confirm</a>
+                                            <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}', '{{ \App\User::getUserRole() }}', '{{ \App\User::loggedInUserEmail() }}' );">Confirm</a>
                                         </div>
                                     </td>
                                 </tr>
