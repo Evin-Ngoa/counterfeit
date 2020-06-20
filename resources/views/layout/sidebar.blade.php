@@ -104,6 +104,15 @@
             </a>
         </li>
         @endif
+        @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
+        <li class="selected {!! classActivePath('report') !!}">
+            <a href="{{ route('report.index') }}">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-mail-18"></div>
+                </div><span>Report</span>
+            </a>
+        </li>
+        @endif
         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
         <li class="selected {!! classActivePath('shipment') !!}">
             <a href="{{ route('shipment.index') }}">
@@ -144,10 +153,19 @@
             </a>
         </li>
         @endif
+        <li class="sub-header"><span>Transactions Traceability</span></li>
+        <li class="selected {!! classActivePath('traceability') !!}">
+            <a href="{{ route('traceability.form') }}">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-bar-chart-up"></div>
+                </div><span>Trace History</span>
+            </a>
+        </li>
     </ul>
     <div class="side-menu-magic">
         <h4>Dedication</h4>
         <p>Joseph Tola Mwawasi</p>
-        <div class="btn-w"><a class="btn btn-white btn-rounded" href="#">Rest Brother</a></div>
+        <p>Maxwel Mwailongo Mbogo</p>
+        <div class="btn-w"><a class="btn btn-white btn-rounded" href="#">Rest Brother & Father</a></div>
     </div>
 </div>
