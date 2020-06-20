@@ -2,6 +2,13 @@
 
 @section('title', 'Books | Books Records')
 
+@section('breadcrumb')
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ route('book.index') }}">Home</a></li>
+    <li class="breadcrumb-item"><span>Books</span></li>
+</ul>
+@endsection
+
 @section('content-box')
 <div class="content-box">
     <div class="row pt-4">
