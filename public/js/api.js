@@ -805,8 +805,6 @@ var Api = function () {
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
-            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
-            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
 
             var msgHTML = "";
 
@@ -903,8 +901,11 @@ var Api = function () {
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
-            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
-            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+        
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
 
             var msgHTML = "";
 
@@ -941,7 +942,9 @@ var Api = function () {
 
                             var postPoints = {
                                 accountBalance: customerData.accountBalance + scanPoints,
-                                customer: loggedInUser
+                                customer: loggedInUser,
+                                updatedAt: currentDateTime(),
+                                participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
                             };
 
                             // Add Posting Points
@@ -1071,6 +1074,12 @@ var Api = function () {
                 jsonData[field.name] = field.value;
             });
 
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+        
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
+
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
             var msgHTML = "";
@@ -1081,7 +1090,9 @@ var Api = function () {
             var updateBookShipmentData = {
                 "$class": "org.evin.book.track.updateBookShipment",
                 "book": "resource:org.evin.book.track.Book#" + jsonData["book"],
-                "shipmentId": jsonData["shipment"]
+                "shipmentId": jsonData["shipment"],
+                "updatedAt": currentDateTime(),
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             $.ajaxSetup({
@@ -2001,6 +2012,12 @@ var Api = function () {
                 jsonData[field.name] = field.value;
             });
 
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
+
             // Append ID
             jsonData["shipmentId"] = shipmentId;
 
@@ -2013,18 +2030,6 @@ var Api = function () {
             // Delete Owner Variable from JSON
             delete jsonData["owner"];
 
-            // update latitude
-            // jsonData.location = {
-            //     "$class": "org.evin.book.track.Location",
-            //     "latLong": getLocation
-            // }
-
-            //update owner
-            // jsonData.shipOwnership = [{
-            //     "$class": "org.evin.book.track.ShipOwnership",
-            //     "owner": owner,
-            //     "shipment": "resource:org.evin.book.track.Shipment#" + shipmentId
-            // }];
 
             var updateInitialShipOwnership = {
                 "$class": "org.evin.book.track.ShipOwnership",
@@ -2060,7 +2065,9 @@ var Api = function () {
                     var orderstatusData = {
                         "$class": "org.evin.book.track.updateOrderStatus",
                         "order": "resource:org.evin.book.track.OrderContract#" + jsonData.contract,
-                        "orderStatus": "PROCESSED"
+                        "orderStatus": "PROCESSED",
+                        "updatedAt": currentDateTime(),
+                        "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
                     }
 
                     console.log('Json Sent orderstatusData => ' + JSON.stringify(orderstatusData));
@@ -2202,8 +2209,13 @@ var Api = function () {
             // Add updated time
             jsonData["updatedAt"] = currentDateTime();
 
-            // Set Default Status
-            // jsonData["ShipmentStatus"] = ShipmentStatus;
+            var updatedAt = jsonData["updatedAt"];
+
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+        
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
 
             // Delete Owner Variable from JSON
             delete jsonData["owner"];
@@ -2219,20 +2231,26 @@ var Api = function () {
             var updateOrderStatusData = {
                 "$class": "org.evin.book.track.updateOrderStatus",
                 "order": "resource:org.evin.book.track.OrderContract#" + jsonData["contract"],
-                "orderStatus": "DELIVERED"
+                "orderStatus": "DELIVERED",
+                "updatedAt": updatedAt,
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             var updateShipmentStatusURL = domainUrl + "/updateShipmentStatus";
 
             var editShipmentDistributorData = {
                 "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
-                "ShipmentStatus": jsonData["ShipmentStatus"]
+                "ShipmentStatus": jsonData["ShipmentStatus"],
+                "updatedAt": updatedAt,
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             var updateShipmentItemStatusURL = domainUrl + "/updateShipmentItemStatus";
             var editShipmentItemStatusData = {
                 "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
-                "itemStatus": jsonData["itemStatus"]
+                "itemStatus": jsonData["itemStatus"],
+                "updatedAt": updatedAt,
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             var postCustomerOwnerURL = domainUrl + '/ShipOwnership';
@@ -2552,6 +2570,8 @@ var Api = function () {
             if (jsonData['role'] == 'Admin') {
                 var profileEditURL = domainUrl + '/Admin/' + memberId;
             } else if (jsonData['role'] == 'Customer') {
+                jsonData['firstName'] = jsonData['firstNameCustomer'];
+                delete jsonData['firstNameCustomer'];
                 var profileEditURL = domainUrl + '/Customer/' + memberId;
             } else if (jsonData['role'] == 'Publisher') {
                 var profileEditURL = domainUrl + '/Publisher/' + memberId;
@@ -3897,7 +3917,8 @@ var Api = function () {
 
             if (jsonData["participant"] == "Customer") {
                 //remove business name
-                delete jsonData["name"];
+                jsonData["firstName"] = jsonData["firstNameCustomer"];
+                delete jsonData["firstNameCustomer"];
                 delete jsonData["participant"];
                 jsonData["memberId"] = "C-" + memberID;
 
@@ -3954,7 +3975,9 @@ var Api = function () {
                 });
             } else if (jsonData["participant"] == "Distributor") {
                 // remove individual name
-                delete jsonData["firstName"];
+                // delete jsonData["firstName"];
+                //remove business name
+                // delete jsonData["name"];
                 delete jsonData["lastName"];
                 delete jsonData["participant"];
 
@@ -3975,7 +3998,7 @@ var Api = function () {
                         $("#add-error-reg-bag").hide();
 
                         msgHTML = '<div class="alert alert-primary" role="alert">'
-                            + data.name + ' Added Successfuly. You will be redirected to Login momentarily'
+                            + data.firstName + ' Added Successfuly. You will be redirected to Login momentarily'
                             + '</div>';
 
                         $('#msgAlert').html(msgHTML);
@@ -4015,7 +4038,9 @@ var Api = function () {
                 // Publisher
 
                 // remove individual name
-                delete jsonData["firstName"];
+                // delete jsonData["firstName"];
+                //remove business name
+                // delete jsonData["name"];
                 delete jsonData["lastName"];
                 delete jsonData["participant"];
 
@@ -4036,7 +4061,7 @@ var Api = function () {
                         $("#add-error-reg-bag").hide();
 
                         msgHTML = '<div class="alert alert-primary" role="alert">'
-                            + data.name + ' Added Successfuly. You will be redirected to Login momentarily'
+                            + data.firstName + ' Added Successfuly. You will be redirected to Login momentarily'
                             + '</div>';
 
                         $('#msgAlert').html(msgHTML);
@@ -4132,19 +4157,140 @@ var Api = function () {
         console.log("handleTransactionHistory");
         $("#add-transaction-error-bag").hide();
 
-        // Prevent submit by enter button
-        // transactionForm.on('keyup keypress', function (e) {
-        //     var keyCode = e.keyCode || e.which;
-        //     if (keyCode === 13) {
-        //         e.preventDefault();
-        //         return false;
-        //     }
-        // });
-
+        // Get the model basedon the transaction
         function getModel(transName){
 
             if(transName == "getIsConfimedReportHistorian"){
-                return 'Report';
+                var IDs = new Object();
+
+                IDs['model'] = "Report";
+                IDs['filter'] = "report";
+
+                return IDs;
+
+            }else if(transName == "getOrderStatusHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "OrderContract";
+                IDs['filter'] = "order";
+                
+                return IDs;
+
+            }else if(transName == "getShipmentStatusHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "Shipment";
+                IDs['filter'] = "shipment";
+                
+                return IDs;
+            }else if(transName == "getShipmentItemStatusHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "Shipment";
+                IDs['filter'] = "shipment";
+                
+                return IDs;
+
+            }else if(transName == "getScanBookHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "Customer";
+                IDs['filter'] = "customer";
+                
+                return IDs;
+            }
+            
+        }
+
+        // Format the data
+        function formatData(transName, data){
+
+            var msgHTML = "";
+
+            if(transName == "getIsConfimedReportHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].report) + '</td>'
+                    + '<td>' + data[i].isConfirmed + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#records").html(msgHTML);
+
+                $('#transactionViewModal').modal('show');
+
+            }else if(transName == "getOrderStatusHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].order) + '</td>'
+                    + '<td>' + data[i].orderStatus + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#order_status").html(msgHTML);
+
+                $('#orderStatusViewModal').modal('show');
+
+            }else if(transName == "getShipmentStatusHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                    + '<td>' + data[i].ShipmentStatus + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#shipment_status").html(msgHTML);
+
+                $('#shipmentStatusViewModal').modal('show');
+                
+            }else if(transName == "getShipmentItemStatusHistorian"){
+                
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                    + '<td>' + data[i].itemStatus + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#shipment_item_status").html(msgHTML);
+
+                $('#shipmentItemStatusViewModal').modal('show');
+
+            }else if(transName == "getScanBookHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].customer) + '</td>'
+                    + '<td>' + data[i].accountBalance + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#customer_book_scan_status").html(msgHTML);
+
+                $('#customerBookScanStatusViewModal').modal('show');
+              
             }
             
         }
@@ -4165,7 +4311,7 @@ var Api = function () {
             var itemID = jsonData['itemID'];
             var modelName = getModel(transName);
 
-            console.log("Here => " + loggedInUser + " " + role + " " + transName + " " + itemID + " " + modelName);
+            console.log("Here => " + loggedInUser + " " + role + " " + transName + " " + itemID + " " + modelName['model']);
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
@@ -4174,7 +4320,7 @@ var Api = function () {
 
             var msgHTML = "";
 
-            var getIsConfimedReportHistorianURL = domainUrl + "/queries/"+ transName +"?report=resource%3Aorg.evin.book.track."+ modelName +"%23" + itemID;
+            var getIsConfimedReportHistorianURL = domainUrl + "/queries/"+ transName +"?"+ modelName['filter'] +"=resource%3Aorg.evin.book.track."+ modelName['model'] +"%23" + itemID;
 
             $.ajaxSetup({
                 headers: {
@@ -4193,32 +4339,23 @@ var Api = function () {
 
                     $("#loader").hide();
 
-                    console.log("Success +++> " + JSON.stringify(data));
+                    // console.log("Success +++> " + JSON.stringify(data));
                     console.log(data);
                     console.log(data.length);
 
                     if(data.length > 0){
-                        for(var i = 0; i < data.length; i++){
-                            msgHTML += '<tr>'
-                            + '<td>' + getValueAfterHash(data[i].report) + '</td>'
-                            + '<td>' + data[i].isConfirmed + '</td>'
-                            + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                            + '<td>' + data[i].updatedAt + '</td>'
-                            + '<td>' + data[i].timestamp + '</td>'
-                            + '</tr>';
-                        }
 
-                        $("#records").html(msgHTML);
+                        formatData(transName, data);
 
-                        $('#transactionViewModal').modal('show');
                     }else{
                         msgHTML = '<div class="alert alert-warning" role="alert">'
                         + 'No Transaction history found for ' + itemID + ' item ID.'
                         + '</div>';
-
+    
                         $("#add-transaction-msgs").html(msgHTML);
                     }
-                   
+                    
+
 
                     // window.location.href = '/verify/book/' + data.id;
                 },
@@ -4240,8 +4377,8 @@ var Api = function () {
 
                     } else {
                         console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                        // $('#add-transaction-errors').html(errors.error.message);
-                        $('#add-transaction-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                        $('#add-transaction-errors').html(errors.error.message);
+                        // $('#add-transaction-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
                     }
                     // hide loader
                     $("#loader").hide();
