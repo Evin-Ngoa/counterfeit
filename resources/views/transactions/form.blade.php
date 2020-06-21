@@ -34,7 +34,11 @@
                             <div class="col-sm-8">
                                 <select class="form-control" name="transaction_name" id="transaction_name">
                                     <!-- <option value="">Select Transaction</option> -->
-                                    <option value="getIsConfimedReportHistorian">Report Case Confirmation</option>
+                                    <option value="getIsConfimedReportHistorian">Report Case Confirmation Historian</option>
+                                    <option value="getOrderStatusHistorian">Order Status Historian</option>
+                                    <option value="getShipmentStatusHistorian">Shipment Status Historian</option>
+                                    <option value="getShipmentItemStatusHistorian">Shipment Item Status Historian</option>
+                                    <option value="getScanBookHistorian">Customer Points Book Scan Historian</option>
                                 </select>
                             </div>
                         </div>
@@ -62,7 +66,11 @@
     </div>
 </div>
 
-@include('partials.reports.reports_trace')
+@include('partials.transaction.reports_trace')
+@include('partials.transaction.order_status_trace')
+@include('partials.transaction.shipment_status')
+@include('partials.transaction.shipment_item_status')
+@include('partials.transaction.customer_book_scan_status')
 @endsection
 
 
