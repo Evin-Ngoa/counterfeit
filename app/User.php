@@ -90,16 +90,16 @@ class User extends Authenticatable
                 $userRole == \App\Http\Traits\UserConstants::PUBLISHER ||
                 $userRole == \App\Http\Traits\UserConstants::DISTRIBUTOR
             ) {
-                if (isset($cookieData['name'])) {
-                    $userName = $cookieData['name'];
+                if (isset($cookieData['firstName'])) {
+                    $participantName = $cookieData['firstName'];
                 }
             } elseif ($userRole == \App\Http\Traits\UserConstants::CUSTOMER) {
                 $firstName = $cookieData['firstName'];
                 $lastName = $cookieData['lastName'];
-                $userName = $firstName . " " . $lastName;
+                $participantName = $firstName . " " . $lastName;
             }
 
-            return $userName;
+            return $participantName;
         }
     }
 
