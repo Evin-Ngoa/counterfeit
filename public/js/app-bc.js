@@ -15942,12 +15942,9203 @@ o.page()!=a.data.action&&o.page(a.data.action).draw("page")};l=0;for(h=f.length;
 "string"===typeof c?a.sTableId+"_"+c:null}).append(b("<a>",{href:"#","aria-controls":a.sTableId,"aria-label":u[c],"data-dt-idx":p,tabindex:a.iTabIndex,"class":"page-link"}).html(e)).appendTo(d),a.oApi._fnBindAction(i,{action:c},m),p++)}},i;try{i=b(h).find(d.activeElement).data("dt-idx")}catch(v){}q(b(h).empty().html('<ul class="pagination"/>').children("ul"),s);i!==m&&b(h).find("[data-dt-idx="+i+"]").focus()};return f});      
 $((function(){function e(){$(".menu-w").hasClass("menu-layout-compact")&&$(".menu-layout-selector").val("compact"),$(".menu-w").hasClass("menu-layout-full")&&$(".menu-layout-selector").val("full"),$(".menu-w").hasClass("menu-layout-mini")&&$(".menu-layout-selector").val("mini"),$(".menu-w").hasClass("color-scheme-dark")&&$(".menu-w").hasClass("color-style-bright")&&($(".menu-color-selector").removeClass("selected"),$(".menu-color-selector.color-bright").addClass("selected")),$(".menu-w").hasClass("color-scheme-dark")&&$(".menu-w").hasClass("color-style-dark")&&($(".menu-color-selector").removeClass("selected"),$(".menu-color-selector.color-dark").addClass("selected")),$(".menu-w").hasClass("color-scheme-light")&&($(".menu-color-selector").removeClass("selected"),$(".menu-color-selector.color-light").addClass("selected")),$(".menu-w").hasClass("color-style-transparent")&&($(".menu-color-selector").removeClass("selected"),$(".menu-color-selector.color-transparent").addClass("selected")),$(".menu-w").hasClass("menu-position-side")&&$(".menu-w").hasClass("menu-side-left")&&$(".menu-position-selector").val("left"),$(".menu-w").hasClass("menu-with-image")?$(".with-image-selector").val("yes"):$(".with-image-selector").val("no"),$(".menu-w").hasClass("menu-position-top")?($(".menu-position-selector").val("top"),$(".with-image-selector-w").show()):$(".with-image-selector-w").hide(),$(".menu-w").hasClass("menu-position-side")&&$(".menu-w").hasClass("menu-side-right")&&$(".menu-position-selector").val("right"),$(".menu-w").hasClass("sub-menu-color-bright")&&($(".sub-menu-color-selector").removeClass("selected"),$(".sub-menu-color-selector.color-bright").addClass("selected")),$(".menu-w").hasClass("sub-menu-color-dark")&&($(".sub-menu-color-selector").removeClass("selected"),$(".sub-menu-color-selector.color-dark").addClass("selected")),$(".menu-w").hasClass("sub-menu-color-light")&&($(".sub-menu-color-selector").removeClass("selected"),$(".sub-menu-color-selector.color-light").addClass("selected")),$(".menu-w").hasClass("sub-menu-style-flyout")&&$(".sub-menu-style-selector").val("flyout"),$(".menu-w").hasClass("sub-menu-style-inside")&&$(".sub-menu-style-selector").val("inside"),$(".menu-w").hasClass("sub-menu-style-over")&&$(".sub-menu-style-selector").val("over"),$(".top-bar").hasClass("color-scheme-bright")&&($(".top-bar-color-selector").removeClass("selected"),$(".top-bar-color-selector.color-bright").addClass("selected")),$(".top-bar").hasClass("color-scheme-dark")&&($(".top-bar-color-selector").removeClass("selected"),$(".top-bar-color-selector.color-dark").addClass("selected")),$(".top-bar").hasClass("color-scheme-light")&&($(".top-bar-color-selector").removeClass("selected"),$(".top-bar-color-selector.color-light").addClass("selected")),$(".top-bar").hasClass("color-scheme-transparent")&&($(".top-bar-color-selector").removeClass("selected"),$(".top-bar-color-selector.color-transparent").addClass("selected")),$("body").hasClass("full-screen")?$(".full-screen-selector").val("yes"):$(".full-screen-selector").val("no"),$(".top-bar").hasClass("d-none")?$(".top-bar-visibility-selector").val("no"):$(".top-bar-visibility-selector").val("yes"),$(".content-w .top-bar").length?$(".top-bar-above-menu-selector").val("no"):$(".top-bar-above-menu-selector").val("yes")}function o(){var e="light",o="default";$(".menu-color-selector.selected").hasClass("color-bright")&&(e="dark",o="bright"),$(".menu-color-selector.selected").hasClass("color-dark")&&(e="dark",o="default"),$(".menu-color-selector.selected").hasClass("color-light")&&(e="light",o="default"),$(".menu-color-selector.selected").hasClass("color-transparent")&&(e=$("body").hasClass("color-scheme-dark")?"dark":"light",o="transparent"),$(".menu-w").removeClass((function(e,o){return(o.match(/(^|\s)color-scheme-\S+/g)||[]).join(" ")})),$(".menu-w").removeClass((function(e,o){return(o.match(/(^|\s)color-style-\S+/g)||[]).join(" ")})),$(".menu-w").addClass("color-scheme-"+e).addClass("color-style-"+o);var s="light";$(".top-bar-color-selector.selected").hasClass("color-bright")&&(s="bright"),$(".top-bar-color-selector.selected").hasClass("color-dark")&&(s="dark"),$(".top-bar-color-selector.selected").hasClass("color-light")&&(s="light"),$(".top-bar-color-selector.selected").hasClass("color-transparent")&&(s="transparent"),$(".top-bar").removeClass((function(e,o){return(o.match(/(^|\s)color-scheme-\S+/g)||[]).join(" ")})),$(".top-bar").addClass("color-scheme-"+s);var l="light";$(".sub-menu-color-selector.selected").hasClass("color-bright")&&(l="bright"),$(".sub-menu-color-selector.selected").hasClass("color-dark")&&(l="dark"),$(".sub-menu-color-selector.selected").hasClass("color-light")&&(l="light"),$(".menu-w").removeClass((function(e,o){return(o.match(/(^|\s)sub-menu-color-\S+/g)||[]).join(" ")})),$(".menu-w").addClass("sub-menu-color-"+l);var t=$(".menu-position-selector").val();$(".menu-w").removeClass((function(e,o){return(o.match(/(^|\s)menu-position-\S+/g)||[]).join(" ")})),$(".menu-w").removeClass((function(e,o){return(o.match(/(^|\s)menu-side-\S+/g)||[]).join(" ")})),$("body").removeClass("menu-position-top").removeClass("menu-position-side").removeClass("menu-side-left").removeClass("menu-side-right"),"top"==t?($(".menu-w").addClass("menu-position-top"),$("body").addClass("menu-position-top"),$(".with-image-selector-w").slideDown()):$(".with-image-selector-w").hide(),"left"==t&&($(".menu-w").addClass("menu-position-side").addClass("menu-side-left"),$("body").addClass("menu-position-side").addClass("menu-side-left"),$(".menu-w .os-dropdown-position-left").removeClass("os-dropdown-position-left").addClass("os-dropdown-position-right")),"right"==t&&($(".menu-w").addClass("menu-position-side").addClass("menu-side-right"),$("body").addClass("menu-position-side").addClass("menu-side-right"),$(".menu-w .os-dropdown-position-right").removeClass("os-dropdown-position-right").addClass("os-dropdown-position-left"));var r=$(".menu-layout-selector").val();$(".menu-w").removeClass((function(e,o){return(o.match(/(^|\s)menu-layout-\S+/g)||[]).join(" ")})),$(".menu-w").addClass("menu-layout-"+r),"full"==r?$(".menu-w > .logged-user-w").removeClass("avatar-inline"):$(".menu-w > .logged-user-w").addClass("avatar-inline"),"mini"==r?($('.sub-menu-style-selector option[value="inside"]').attr("disabled","disabled"),"left"==t&&($(".menu-actions .os-dropdown-trigger").removeClass((function(e,o){return(o.match(/(^|\s)os-dropdown-position-\S+/g)||[]).join(" ")})),$(".menu-actions .os-dropdown-trigger").addClass("os-dropdown-position-right-center")),"right"==t&&($(".menu-actions .os-dropdown-trigger").removeClass((function(e,o){return(o.match(/(^|\s)os-dropdown-position-\S+/g)||[]).join(" ")})),$(".menu-actions .os-dropdown-trigger").addClass("os-dropdown-position-left-center")),"top"==t&&($(".menu-actions .os-dropdown-trigger").removeClass((function(e,o){return(o.match(/(^|\s)os-dropdown-position-\S+/g)||[]).join(" ")})),$(".menu-actions .os-dropdown-trigger").addClass("os-dropdown-position-left"))):($('.sub-menu-style-selector option[value="inside"]').removeAttr("disabled","disabled"),"left"==t&&($(".menu-actions .os-dropdown-trigger").removeClass((function(e,o){return(o.match(/(^|\s)os-dropdown-position-\S+/g)||[]).join(" ")})),$(".menu-actions .os-dropdown-trigger").addClass("os-dropdown-position-right")),"right"==t&&($(".menu-actions .os-dropdown-trigger").removeClass((function(e,o){return(o.match(/(^|\s)os-dropdown-position-\S+/g)||[]).join(" ")})),$(".menu-actions .os-dropdown-trigger").addClass("os-dropdown-position-left")),"top"==t&&($(".menu-actions .os-dropdown-trigger").removeClass((function(e,o){return(o.match(/(^|\s)os-dropdown-position-\S+/g)||[]).join(" ")})),$(".menu-actions .os-dropdown-trigger").addClass("os-dropdown-position-left")));var a=$(".sub-menu-style-selector").val();$(".menu-w").removeClass((function(e,o){return(o.match(/(^|\s)sub-menu-style-\S+/g)||[]).join(" ")})),$(".menu-w").addClass("sub-menu-style-"+a),"yes"==$(".top-bar-visibility-selector").val()?$(".top-bar").removeClass("d-none"):$(".top-bar").addClass("d-none"),"yes"==$(".full-screen-selector").val()?$("body").addClass("full-screen"):$("body").removeClass("full-screen"),"yes"==$(".with-image-selector").val()?$(".menu-w").addClass("menu-with-image"):$(".menu-w").removeClass("menu-with-image");var n=$(".top-bar");"yes"==$(".top-bar-above-menu-selector").val()?$(".content-w .top-bar").length&&(n=$(".content-w .top-bar"),$(".all-wrapper").prepend(n),$(".content-w .top-bar").remove()):$(".all-wrapper > .top-bar").length&&(n=$(".all-wrapper > .top-bar"),$(".content-w").prepend(n),$(".all-wrapper > .top-bar").remove()),"inside"==$(".sub-menu-style-selector").val()&&"top"!=$(".menu-position-selector").val()&&$(".menu-w.menu-activated-on-hover").length?($(".menu-activated-on-hover").off("mouseenter","ul.main-menu > li.has-sub-menu"),$(".menu-activated-on-hover").off("mouseleave","ul.main-menu > li.has-sub-menu"),$(".menu-w").removeClass("menu-activated-on-hover").addClass("menu-activated-on-click"),$(".sub-menu-color-selector.color-light").click(),os_init_sub_menus()):!$(".menu-w.menu-activated-on-click").length||"inside"==$(".sub-menu-style-selector").val()&&"top"!=$(".menu-position-selector").val()||($(".menu-activated-on-click").off("click","li.has-sub-menu > a"),$(".menu-w").addClass("menu-activated-on-hover").removeClass("menu-activated-on-click"),os_init_sub_menus())}$(".floated-customizer-btn").on("click",(function(){return $(".floated-customizer-panel").toggleClass("active"),!1})),e(),$(".floated-customizer-panel .color-selector").on("click",(function(){$(this).closest(".fcp-colors").find(".color-selector.selected").removeClass("selected"),$(this).addClass("selected"),o()})),$(".floated-customizer-panel select").on("change",(function(){o()})),$(".menu-layout-selector").on("change",(function(){"mini"==$(this).val()&&$(".sub-menu-style-selector").val("over"),o()})),$(".close-customizer-btn").on("click",(function(){return $(".floated-customizer-panel").toggleClass("active"),!1})),$(".with-image-selector").on("change",(function(){"yes"==$(this).val()&&$(".color-selector.menu-color-selector.color-bright").click()}))}));
 "use strict";function is_display_type(e){return $(".display-type").css("content")==e||$(".display-type").css("content")=='"'+e+'"'}function not_display_type(e){return $(".display-type").css("content")!=e&&$(".display-type").css("content")!='"'+e+'"'}function os_init_sub_menus(){var e;$(".menu-activated-on-hover").on("mouseenter","ul.main-menu > li.has-sub-menu",(function(){var t=$(this);clearTimeout(e),t.closest("ul").addClass("has-active").find("> li").removeClass("active"),t.addClass("active")})),$(".menu-activated-on-hover").on("mouseleave","ul.main-menu > li.has-sub-menu",(function(){var t=$(this);e=setTimeout((function(){t.removeClass("active").closest("ul").removeClass("has-active")}),30)})),$(".menu-activated-on-click").on("click","li.has-sub-menu > a",(function(e){var t=$(this).closest("li");return t.hasClass("active")?t.removeClass("active"):(t.closest("ul").find("li.active").removeClass("active"),t.addClass("active")),!1}))}$((function(){function e(e){$(".chat-content").append('<div class="chat-message self"><div class="chat-message-content-w"><div class="chat-message-content">'+e.val()+'</div></div><div class="chat-message-date">1:23pm</div><div class="chat-message-avatar"><img alt="" src="img/avatar1.jpg"></div></div>'),e.val("");var t=$(".chat-content-w");t.scrollTop(t[0].scrollHeight)}var t,o,a,s,n,r;($(".floated-chat-btn, .floated-chat-w .chat-close").on("click",(function(){return $(".floated-chat-w").toggleClass("active"),!1})),$(".message-input").on("keypress",(function(e){if(13==e.which){$(".chat-messages").append('<div class="message self"><div class="message-content">'+$(this).val()+"</div></div>"),$(this).val("");var t=$(".floated-chat-w .chat-messages");return t.scrollTop(t.prop("scrollHeight")),t.perfectScrollbar("update"),!1}})),$(".floated-chat-w .chat-messages").perfectScrollbar(),$("#fullCalendar").length)&&(o=(a=new Date).getDate(),s=a.getMonth(),n=a.getFullYear(),t=$("#fullCalendar").fullCalendar({header:{left:"prev,next today",center:"title",right:"month,agendaWeek,agendaDay"},selectable:!0,selectHelper:!0,select:function e(o,a,s){var n;return(n=prompt("Event Title:"))&&t.fullCalendar("renderEvent",{title:n,start:o,end:a,allDay:s},!0),t.fullCalendar("unselect")},editable:!0,events:[{title:"Long Event",start:new Date(n,s,3,12,0),end:new Date(n,s,7,14,0)},{title:"Lunch",start:new Date(n,s,o,12,0),end:new Date(n,s,o+2,14,0),allDay:!1},{title:"Click for Google",start:new Date(n,s,28),end:new Date(n,s,29),url:"http://google.com/"}]}));if($("#formValidate").length&&$("#formValidate").validator(),$("input.single-daterange").daterangepicker({singleDatePicker:!0,locale:{format:"DD/MM/YYYY"}}),$("input.multi-daterange").daterangepicker({startDate:"03/28/2017",endDate:"04/06/2017"}),$("#formValidate").length&&$("#formValidate").validator(),$("#dataTable1").length&&$("#dataTable1").DataTable({buttons:["copy","excel","pdf"]}),$("#editableTable").length&&$("#editableTable").editableTableWidget(),$(".step-trigger-btn").on("click",(function(){var e=$(this).attr("href");return $('.step-trigger[href="'+e+'"]').click(),!1})),$(".step-trigger").on("click",(function(){var e=$(this).prev(".step-trigger");if(e.length&&!e.hasClass("active")&&!e.hasClass("complete"))return!1;var t=$(this).attr("href");return $(this).closest(".step-triggers").find(".step-trigger").removeClass("active"),$(this).prev(".step-trigger").addClass("complete"),$(this).addClass("active"),$(".step-content").removeClass("active"),$(".step-content"+t).addClass("active"),!1})),$(".select2").length&&$(".select2").select2({width: 'resolve'}),$("#ckeditor1").length&&CKEDITOR.replace("ckeditor1"),"undefined"!=typeof Chart){var i='"Proxima Nova W01", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';if(Chart.defaults.global.defaultFontFamily=i,Chart.defaults.global.tooltips.titleFontSize=14,Chart.defaults.global.tooltips.titleMarginBottom=4,Chart.defaults.global.tooltips.displayColors=!1,Chart.defaults.global.tooltips.bodyFontSize=12,Chart.defaults.global.tooltips.xPadding=10,Chart.defaults.global.tooltips.yPadding=8,$("#liteLineChart").length){var l=$("#liteLineChart"),d=l[0].getContext("2d").createLinearGradient(0,0,0,200);d.addColorStop(0,"rgba(30,22,170,0.08)"),d.addColorStop(1,"rgba(30,22,170,0)");var c=[13,28,19,24,43,49];l.data("chart-data")&&(c=l.data("chart-data").split(","));var u,f=new Chart(l,{type:"line",data:{labels:["January 1","January 5","January 10","January 15","January 20","January 25"],datasets:[{label:"Sold",fill:!0,lineTension:.4,backgroundColor:d,borderColor:"#8f1cad",borderCapStyle:"butt",borderDash:[],borderDashOffset:0,borderJoinStyle:"miter",pointBorderColor:"#fff",pointBackgroundColor:"#2a2f37",pointBorderWidth:2,pointHoverRadius:6,pointHoverBackgroundColor:"#FC2055",pointHoverBorderColor:"#fff",pointHoverBorderWidth:2,pointRadius:4,pointHitRadius:5,data:c,spanGaps:!1}]},options:{legend:{display:!1},scales:{xAxes:[{display:!1,ticks:{fontSize:"11",fontColor:"#969da5"},gridLines:{color:"rgba(0,0,0,0.0)",zeroLineColor:"rgba(0,0,0,0.0)"}}],yAxes:[{display:!1,ticks:{beginAtZero:!0,max:55}}]}}})}if($("#liteLineChartV2").length){var g=$("#liteLineChartV2"),p=g[0].getContext("2d").createLinearGradient(0,0,0,100);p.addColorStop(0,"rgba(40,97,245,0.1)"),p.addColorStop(1,"rgba(40,97,245,0)");var h=[13,28,19,24,43,49,40,35,42,46];g.data("chart-data")&&(h=g.data("chart-data").split(","));var C,b=new Chart(g,{type:"line",data:{labels:["1","3","6","9","12","15","18","21","24","27"],datasets:[{label:"Balance",fill:!0,lineTension:.35,backgroundColor:p,borderColor:"#2861f5",borderCapStyle:"butt",borderDash:[],borderDashOffset:0,borderJoinStyle:"miter",pointBorderColor:"#2861f5",pointBackgroundColor:"#fff",pointBorderWidth:2,pointHoverRadius:3,pointHoverBackgroundColor:"#FC2055",pointHoverBorderColor:"#fff",pointHoverBorderWidth:2,pointRadius:3,pointHitRadius:10,data:h,spanGaps:!1}]},options:{legend:{display:!1},scales:{xAxes:[{ticks:{fontSize:"10",fontColor:"#969da5"},gridLines:{color:"rgba(0,0,0,0.0)",zeroLineColor:"rgba(0,0,0,0.0)"}}],yAxes:[{display:!1,ticks:{beginAtZero:!0,max:55}}]}}})}if($("#liteLineChartV3").length){var v=$("#liteLineChartV3"),m=v[0].getContext("2d").createLinearGradient(0,0,0,70);m.addColorStop(0,"rgba(40,97,245,0.2)"),m.addColorStop(1,"rgba(40,97,245,0)");var k=[13,28,19,24,43,49,40,35,42,46,38];v.data("chart-data")&&(k=v.data("chart-data").split(","));var y,w=new Chart(v,{type:"line",data:{labels:["","FEB","","MAR","","APR","","MAY","","JUN","","JUL",""],datasets:[{label:"Balance",fill:!0,lineTension:.15,backgroundColor:m,borderColor:"#2861f5",borderCapStyle:"butt",borderDash:[],borderDashOffset:0,borderJoinStyle:"miter",pointBorderColor:"#2861f5",pointBackgroundColor:"#fff",pointBorderWidth:2,pointHoverRadius:3,pointHoverBackgroundColor:"#FC2055",pointHoverBorderColor:"#fff",pointHoverBorderWidth:0,pointRadius:0,pointHitRadius:10,data:k,spanGaps:!1}]},options:{legend:{display:!1},scales:{xAxes:[{ticks:{fontSize:"10",fontColor:"#969da5"},gridLines:{color:"rgba(0,0,0,0.0)",zeroLineColor:"rgba(0,0,0,0.0)"}}],yAxes:[{display:!1,ticks:{beginAtZero:!0,max:55}}]}}})}if($("#lineChart").length)var B=$("#lineChart"),x,S=new Chart(B,{type:"line",data:{labels:["1","5","10","15","20","25","30","35"],datasets:[{label:"Visitors Graph",fill:!1,lineTension:.3,backgroundColor:"#fff",borderColor:"#047bf8",borderCapStyle:"butt",borderDash:[],borderDashOffset:0,borderJoinStyle:"miter",pointBorderColor:"#fff",pointBackgroundColor:"#141E41",pointBorderWidth:3,pointHoverRadius:10,pointHoverBackgroundColor:"#FC2055",pointHoverBorderColor:"#fff",pointHoverBorderWidth:3,pointRadius:5,pointHitRadius:10,data:[27,20,44,24,29,22,43,52],spanGaps:!1}]},options:{legend:{display:!1},scales:{xAxes:[{ticks:{fontSize:"11",fontColor:"#969da5"},gridLines:{color:"rgba(0,0,0,0.05)",zeroLineColor:"rgba(0,0,0,0.05)"}}],yAxes:[{display:!1,ticks:{beginAtZero:!0,max:65}}]}}});if($("#barChart1").length){var D=$("#barChart1"),A;new Chart(D,{type:"bar",data:{labels:["January","February","March","April","May","June"],datasets:[{label:"My First dataset",backgroundColor:["#5797FC","#629FFF","#6BA4FE","#74AAFF","#7AAEFF","#85B4FF"],borderColor:["rgba(255,99,132,0)","rgba(54, 162, 235, 0)","rgba(255, 206, 86, 0)","rgba(75, 192, 192, 0)","rgba(153, 102, 255, 0)","rgba(255, 159, 64, 0)"],borderWidth:1,data:[24,42,18,34,56,28]}]},options:{scales:{xAxes:[{display:!1,ticks:{fontSize:"11",fontColor:"#969da5"},gridLines:{color:"rgba(0,0,0,0.05)",zeroLineColor:"rgba(0,0,0,0.05)"}}],yAxes:[{ticks:{beginAtZero:!0},gridLines:{color:"rgba(0,0,0,0.05)",zeroLineColor:"#6896f9"}}]},legend:{display:!1},animation:{animateScale:!0}}})}if($("#pieChart1").length){var T=$("#pieChart1"),L;new Chart(T,{type:"pie",data:{labels:["Red","Blue","Yellow","Green","Purple"],datasets:[{data:[300,50,100,30,70],backgroundColor:["#5797fc","#7e6fff","#4ecc48","#ffcc29","#f37070"],hoverBackgroundColor:["#5797fc","#7e6fff","#4ecc48","#ffcc29","#f37070"],borderWidth:0}]},options:{legend:{position:"bottom",labels:{boxWidth:15,fontColor:"#3e4b5b"}},animation:{animateScale:!0}}})}if($("#donutChart").length){var H=$("#donutChart"),R;new Chart(H,{type:"doughnut",data:{labels:["Red","Blue","Yellow","Green","Purple"],datasets:[{data:[300,50,100,30,70],backgroundColor:["#5797fc","#7e6fff","#4ecc48","#ffcc29","#f37070"],hoverBackgroundColor:["#5797fc","#7e6fff","#4ecc48","#ffcc29","#f37070"],borderWidth:0}]},options:{legend:{display:!1},animation:{animateScale:!0},cutoutPercentage:80}})}if($("#donutChart1").length){var F=$("#donutChart1"),W;new Chart(F,{type:"doughnut",data:{labels:["Red","Blue","Yellow","Green","Purple"],datasets:[{data:[300,50,100,30,70],backgroundColor:["#5797fc","#7e6fff","#4ecc48","#ffcc29","#f37070"],hoverBackgroundColor:["#5797fc","#7e6fff","#4ecc48","#ffcc29","#f37070"],borderWidth:6,hoverBorderColor:"transparent"}]},options:{legend:{display:!1},animation:{animateScale:!0},cutoutPercentage:80}})}}if($(".mobile-menu-trigger").on("click",(function(){return $(".menu-mobile .menu-and-user").slideToggle(200,"swing"),!1})),os_init_sub_menus(),$(".content-panel-toggler, .content-panel-close, .content-panel-open").on("click",(function(){$(".all-wrapper").toggleClass("content-panel-active")})),$(".more-messages").on("click",(function(){return $(this).hide(),$(".older-pack").slideDown(100),$(".aec-full-message-w.show-pack").removeClass("show-pack"),!1})),$(".ae-list").perfectScrollbar({wheelPropagation:!0}),$(".ae-list .ae-item").on("click",(function(){return $(".ae-item.active").removeClass("active"),$(this).addClass("active"),!1})),"undefined"!=typeof CKEDITOR&&(CKEDITOR.disableAutoInline=!0,$("#ckeditorEmail").length&&(CKEDITOR.config.uiColor="#ffffff",CKEDITOR.config.toolbar=[["Bold","Italic","-","NumberedList","BulletedList","-","Link","Unlink","-","About"]],CKEDITOR.config.height=110,CKEDITOR.replace("ckeditor1"))),$(".ae-side-menu-toggler").on("click",(function(){$(".app-email-w").toggleClass("compact-side-menu")})),$(".ae-item").on("click",(function(){$(".app-email-w").addClass("forse-show-content")})),$(".app-email-w").length&&(is_display_type("phone")||is_display_type("tablet"))&&$(".app-email-w").addClass("compact-side-menu"),$(".chat-btn a").on("click",(function(){return e($(".chat-input input")),!1})),$(".chat-input input").on("keypress",(function(t){if(13==t.which)return e($(this)),!1})),$(".pipeline").length)var E=dragula($(".pipeline-body").toArray(),{}).on("drag",(function(){})).on("drop",(function(e){})).on("over",(function(e,t){$(t).closest(".pipeline-body").addClass("over")})).on("out",(function(e,t,o){var a;$(t).closest(".pipeline-body").removeClass("over");var s=$(o).closest(".pipeline-body")}));if($(".os-dropdown-trigger").on("mouseenter",(function(){$(this).addClass("over")})),$(".os-dropdown-trigger").on("mouseleave",(function(){$(this).removeClass("over")})),$('[data-toggle="tooltip"]').tooltip(),$('[data-toggle="popover"]').popover(),$(".tasks-header-toggler").on("click",(function(){return $(this).closest(".tasks-section").find(".tasks-list-w").slideToggle(100),!1})),$(".todo-sidebar-section-toggle").on("click",(function(){return $(this).closest(".todo-sidebar-section").find(".todo-sidebar-section-contents").slideToggle(100),!1})),$(".todo-sidebar-section-sub-section-toggler").on("click",(function(){return $(this).closest(".todo-sidebar-section-sub-section").find(".todo-sidebar-section-sub-section-content").slideToggle(100),!1})),$(".tasks-list").length)var J=dragula($(".tasks-list").toArray(),{moves:function e(t,o,a){return a.classList.contains("drag-handle")}}).on("drag",(function(){})).on("drop",(function(e){})).on("over",(function(e,t){$(t).closest(".tasks-list").addClass("over")})).on("out",(function(e,t,o){var a;$(t).closest(".tasks-list").removeClass("over");var s=$(o).closest(".tasks-list")}));$(".task-btn-done").on("click",(function(){return $(this).closest(".draggable-task").toggleClass("complete"),!1})),$(".task-btn-star").on("click",(function(){return $(this).closest(".draggable-task").toggleClass("favorite"),!1})),$(".task-btn-delete").on("click",(function(){if(confirm("Are you sure you want to delete this task?")){var e=$(this).closest(".draggable-task");e.addClass("pre-removed"),e.append('<a href="#" class="task-btn-undelete">Undo Delete</a>'),r=setTimeout((function(){e.slideUp(300,(function(){$(this).remove()}))}),5e3)}return!1})),$(".tasks-list").on("click",".task-btn-undelete",(function(){return $(this).closest(".draggable-task").removeClass("pre-removed"),$(this).remove(),void 0!==r&&clearTimeout(r),!1})),$(".fs-selector-trigger").on("click",(function(){$(this).closest(".fancy-selector-w").toggleClass("opened")})),$(".close-ticket-info").on("click",(function(){return $(".support-ticket-content-w").addClass("folded-info").removeClass("force-show-folded-info"),!1})),$(".show-ticket-info").on("click",(function(){return $(".support-ticket-content-w").removeClass("folded-info").addClass("force-show-folded-info"),!1})),$(".support-index .support-tickets .support-ticket").on("click",(function(){return $(".support-index").addClass("show-ticket-content"),!1})),$(".support-index .back-to-index").on("click",(function(){return $(".support-index").removeClass("show-ticket-content"),!1})),$(".onboarding-modal.show-on-load").modal("hide"),$(".onboarding-modal .onboarding-slider-w").length&&($(".onboarding-modal .onboarding-slider-w").slick({dots:!0,infinite:!1,adaptiveHeight:!0,slidesToShow:1,slidesToScroll:1}),$(".onboarding-modal").on("shown.bs.modal",(function(e){$(".onboarding-modal .onboarding-slider-w").slick("setPosition")}))),$(".floated-colors-btn").on("click",(function(){return $("body").hasClass("color-scheme-dark")?($(".menu-w").removeClass("color-scheme-dark").addClass("color-scheme-light").removeClass("selected-menu-color-bright").addClass("selected-menu-color-light"),$(this).find(".os-toggler-w").removeClass("on")):($(".menu-w, .top-bar").removeClass((function(e,t){return(t.match(/(^|\s)color-scheme-\S+/g)||[]).join(" ")})),$(".menu-w").removeClass((function(e,t){return(t.match(/(^|\s)color-style-\S+/g)||[]).join(" ")})),$(".menu-w").addClass("color-scheme-dark").addClass("color-style-transparent").removeClass("selected-menu-color-light").addClass("selected-menu-color-bright"),$(".top-bar").addClass("color-scheme-transparent"),$(this).find(".os-toggler-w").addClass("on")),$("body").toggleClass("color-scheme-dark"),!1})),$(".autosuggest-search-activator").on("click",(function(){var e=$(this).offset();$(this).find('input[type="text"]')&&(e=$(this).find('input[type="text"]').offset());var t=e.left,o=e.top;return $(".search-with-suggestions-w").css("left",t).css("top",o).addClass("over-search-field").fadeIn(300).find(".search-suggest-input").focus(),!1})),$(".search-suggest-input").on("keydown",(function(e){27==e.which&&$(".search-with-suggestions-w").fadeOut(),46!=e.which&&8!=e.which||($(".search-with-suggestions-w .ssg-item:last-child").show(),$(".search-with-suggestions-w .ssg-items.ssg-items-blocks").show(),$(".ssg-nothing-found").hide()),27!=e.which&&8!=e.which&&46!=e.which&&($(".search-with-suggestions-w .ssg-item:last-child").hide(),$(".search-with-suggestions-w .ssg-items.ssg-items-blocks").hide(),$(".ssg-nothing-found").show())})),$(".close-search-suggestions").on("click",(function(){return $(".search-with-suggestions-w").fadeOut(),!1})),$(".element-action-fold").on("click",(function(){var e=$(this).closest(".element-wrapper");e.find(".element-box-tp, .element-box").toggle(0);var t=$(this).find("i");return e.hasClass("folded")?(t.removeClass("os-icon-plus-circle").addClass("os-icon-minus-circle"),e.removeClass("folded")):(t.removeClass("os-icon-minus-circle").addClass("os-icon-plus-circle"),e.addClass("folded")),!1}))}));
+//Javascript codes
+
+(function (jQuery) {
+
+    $.fn.breakingNews = function (params) {
+        var defaults = {
+            width: '100%',
+            modul: 'breakingnews',
+            color: 'default',
+            border: false,
+            effect: 'fade',
+            fontstyle: 'normal',
+            autoplay: false,
+            timer: 4000,
+            feed: false,
+            feedlabels: false,
+            feedcount: 5
+        };
+        var feeds = [];
+        var labels = [];
+        var params = $.extend(defaults, params);
+
+        return this.each(function () {
+            //Variables------------------------------------
+            params.modul = $("#" + $(this).attr("id"));
+            var timername = params.modul;
+            var active = 0;
+            var previous = 0;
+            var count = params.modul.find("ul li").length;
+            var changestate = true;
+
+            if (params.feed != false) {
+                getRSS();
+            }
+            else {
+                params.modul.find("ul li").eq(active).fadeIn();
+            }
+            resizeEvent();
+
+            if (params.autoplay) {
+                timername = setInterval(function () { autoPlay() }, params.timer);
+                $(params.modul).on("mouseenter", function () {
+                    clearInterval(timername);
+                });
+
+                $(params.modul).on("mouseleave", function () {
+                    timername = setInterval(function () { autoPlay() }, params.timer);
+                });
+            }
+            else {
+                clearInterval(timername);
+            }
+
+            if (!params.border) {
+                params.modul.addClass("bn-bordernone");
+            }
+
+            if (params.fontstyle == "italic")
+                params.modul.addClass("bn-italic");
+
+            if (params.fontstyle == "bold")
+                params.modul.addClass("bn-bold");
+
+            if (params.fontstyle == "bold-italic")
+                params.modul.addClass("bn-bold bn-italic");
+
+            params.modul.addClass("bn-" + params.color);
+
+            //Events---------------------------------------
+            $(window).on("resize", function () {
+                resizeEvent();
+            });
+
+            params.modul.find(".bn-navi span").on("click", function () {
+                if (changestate) {
+                    changestate = false;
+                    if ($(this).index() == 0) {
+                        active--;
+                        if (active < 0)
+                            active = count - 1;
+
+                        changeNews();
+                    }
+                    else {
+                        active++;
+                        if (active == count)
+                            active = 0;
+
+                        changeNews();
+                    }
+                }
+            });
+
+            //functions------------------------------------
+            function resizeEvent() {
+                if (params.modul.width() < 480) {
+                    params.modul.find(".bn-title h2").css({ "display": "none" });
+                    params.modul.find(".bn-title").css({ "width": 10 });
+                    params.modul.find("ul").css({ "left": 30 });
+                }
+                else {
+                    params.modul.find(".bn-title h2").css({ "display": "inline-block" });
+                    params.modul.find(".bn-title").css({ "width": "auto" });
+                    params.modul.find("ul").css({ "left": $(params.modul).find(".bn-title").width() + 30 });
+                }
+            }
+
+            function autoPlay() {
+                active++;
+                if (active == count)
+                    active = 0;
+
+                changeNews();
+            }
+
+            function changeNews() {
+                if (params.effect == "fade") {
+                    params.modul.find("ul li").css({ "display": "none" });
+                    params.modul.find("ul li").eq(active).fadeIn("normal", function () {
+                        changestate = true;
+                    });
+                }
+                else if (params.effect == "slide-h") {
+                    params.modul.find("ul li").eq(previous).animate({ width: 0 }, function () {
+                        $(this).css({ "display": "none", "width": "100%" });
+                        params.modul.find("ul li").eq(active).css({ "width": 0, "display": "block" });
+                        params.modul.find("ul li").eq(active).animate({ width: "100%" }, function () {
+                            changestate = true;
+                            previous = active;
+                        });
+                    });
+                }
+                else if (params.effect == "slide-v") {
+                    if (previous <= active) {
+                        params.modul.find("ul li").eq(previous).animate({ top: -60 });
+                        params.modul.find("ul li").eq(active).css({ top: 60, "display": "block" });
+                        params.modul.find("ul li").eq(active).animate({ top: 0 }, function () {
+                            previous = active;
+                            changestate = true;
+                        });
+                    }
+                    else {
+                        params.modul.find("ul li").eq(previous).animate({ top: 60 });
+                        params.modul.find("ul li").eq(active).css({ top: -60, "display": "block" });
+                        params.modul.find("ul li").eq(active).animate({ top: 0 }, function () {
+                            previous = active;
+                            changestate = true;
+                        });
+                    }
+                }
+            }
+
+
+            function getRSSx(a, b, c) {
+                c = new XMLHttpRequest;
+                c.open('GET', a);
+                c.onload = b;
+                c.send()
+            }
+
+            function yql(a, b) {
+                return 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from ' + b + ' where url=\"' + a + '\" limit ' + params.feedcount) + '&format=json';
+            };
+
+            function getRSS() {
+                feeds = params.feed.split(",");
+                labels = params.feedlabels.split(",");
+                count = 0;
+                params.modul.find("ul").html("");
+                xx = 0;
+                for (k = 0; k < feeds.length; k++) {
+                    getRSSx(yql(feeds[k].trim(), 'rss'), function () {
+                        var resultx = JSON.parse(this.response);
+                        resultx = resultx.query.results.item;
+                        $(resultx).each(function (index, element) {
+                            count++;
+                            dataLink = $('<a>').prop('href', resultx[index].link).prop('hostname');
+                            params.modul.find("ul").append('<li><a target="_blank" href="' + resultx[index].link + '"><span>' + dataLink + '</span> - ' + resultx[index].title + '</a></li>');
+                            if (xx == 0)
+                                params.modul.find("ul li").eq(0).fadeIn();
+                            xx++;
+
+                        });
+
+                    })
+                }
+
+            }
+
+        });
+
+
+    };
+
+})(jQuery);
+
+var counties =[
+    {
+        "code": 1,
+        "name": "Mombasa",
+        "capital_city": "Mombasa (City)"
+    },
+    {
+        "code": 2,
+        "name": "Kwale",
+        "capital_city": "Kwale"
+    },
+    {
+        "code": 3,
+        "name": "Kilifi",
+        "capital_city": "Kilifi"
+    },
+    {
+        "code": 4,
+        "name": "Tana River",
+        "capital_city": "Hola"
+    },
+    {
+        "code": 5,
+        "name": "Lamu",
+        "capital_city": "Lamu"
+    },
+    {
+        "code": 6,
+        "name": "Taita Taveta",
+        "capital_city": "Voi"
+    },
+    {
+        "code": 7,
+        "name": "Garissa",
+        "capital_city": "Garissa"
+    },
+    {
+        "code": 8,
+        "name": "wajir",
+        "capital_city": "Wajir"
+    },
+    {
+        "code": 9,
+        "name": "Mandera",
+        "capital_city": "Mandera"
+    },
+    {
+        "code": 10,
+        "name": "Marsabit",
+        "capital_city": "Marsabit"
+    },
+    {
+        "code": 11,
+        "name": "Isiolo",
+        "capital_city": "Isiolo"
+    },
+    {
+        "code": 12,
+        "name": "Meru",
+        "capital_city": "Meru"
+    },
+    {
+        "code": 13,
+        "name": "Tharaka Nithi",
+        "capital_city": "Chuka"
+    },
+    {
+        "code": 14,
+        "name": "Embu",
+        "capital_city": "Embu"
+    },
+    {
+        "code": 15,
+        "name": "Kitui",
+        "capital_city": "Kitui"
+    },
+    {
+        "code": 16,
+        "name": "Machakos",
+        "capital_city": "Machakos"
+    },
+    {
+        "code": 17,
+        "name": "Makueni",
+        "capital_city": "Wote"
+    },
+    {
+        "code": 18,
+        "name": "Nyandarua",
+        "capital_city": "Ol Kalou"
+    },
+    {
+        "code": 19,
+        "name": "Nyeri",
+        "capital_city": "Nyeri"
+    },
+    {
+        "code": 20,
+        "name": "Kirinyaga",
+        "capital_city": "Kerugoya/Kutus"
+    },
+    {
+        "code": 21,
+        "name": "Murang'a",
+        "capital_city": "Murang'a"
+    },
+    {
+        "code": 22,
+        "name": "Kiambu",
+        "capital_city": "Kiambu"
+    },
+    {
+        "code": 23,
+        "name": "Turkana",
+        "capital_city": "Lodwar"
+    },
+    {
+        "code": 24,
+        "name": "West Pokot",
+        "capital_city": "Kapenguria"
+    },
+    {
+        "code": 25,
+        "name": "Samburu",
+        "capital_city": "Maralal"
+    },
+    {
+        "code": 26,
+        "name": "Trans Nzoia",
+        "capital_city": "Kitale"
+    },
+    {
+        "code": 27,
+        "name": "Uasin Gishu",
+        "capital_city": "Eldoret"
+    },
+    {
+        "code": 28,
+        "name": "Elgeyo Marakwet",
+        "capital_city": "Iten"
+    },
+    {
+        "code": 29,
+        "name": "Nandi",
+        "capital_city": "Kapsabet"
+    },
+    {
+        "code": 30,
+        "name": "Baringo",
+        "capital_city": "Kabarnet"
+    },
+    {
+        "code": 31,
+        "name": "Laikipia",
+        "capital_city": "Rumuruti"
+    },
+    {
+        "code": 32,
+        "name": "Nakuru",
+        "capital_city": "Nakuru"
+    },
+    {
+        "code": 33,
+        "name": "Narok",
+        "capital_city": "Narok"
+    },
+    {
+        "code": 34,
+        "name": "Kajiado",
+        "capital_city": "Kajiado"
+    },
+    {
+        "code": 35,
+        "name": "Kericho",
+        "capital_city": "Kericho"
+    },
+    {
+        "code": 36,
+        "name": "Bomet",
+        "capital_city": "Bomet"
+    },
+    {
+        "code": 37,
+        "name": "Kakamega",
+        "capital_city": "Kakamega"
+    },
+    {
+        "code": 38,
+        "name": "Vihiga",
+        "capital_city": "Vihiga"
+    },
+    {
+        "code": 39,
+        "name": "Bungoma",
+        "capital_city": "Bungoma"
+    },
+    {
+        "code": 40,
+        "name": "Busia",
+        "capital_city": "Busia"
+    },
+    {
+        "code": 41,
+        "name": "Siaya",
+        "capital_city": "Siaya"
+    },
+    {
+        "code": 42,
+        "name": "Kisumu",
+        "capital_city": "Kisumu"
+    },
+    {
+        "code": 43,
+        "name": "Homa Bay",
+        "capital_city": "Homa Bay"
+    },
+    {
+        "code": 44,
+        "name": "Migori",
+        "capital_city": "Migori"
+    },
+    {
+        "code": 45,
+        "name": "Kisii",
+        "capital_city": "Kisii"
+    },
+    {
+        "code": 46,
+        "name": "Nyamira",
+        "capital_city": "Nyamira"
+    },
+    {
+        "code": 47,
+        "name": "Nairobi",
+        "capital_city": "Nairobi (City)"
+    },
+    {
+        "code": 48,
+        "name": "Diaspora",
+        "capital_city": "Diaspora"
+    },
+    {
+        "code": 49,
+        "name": "Prisons",
+        "capital_city": "Prisons"
+    }
+]
+var constituencies = [
+    {
+        "county_code": 1,
+        "code": 1,
+        "name": "Changamwe"
+    },
+    {
+        "county_code": 1,
+        "code": 2,
+        "name": "Jomvu"
+    },
+    {
+        "county_code": 1,
+        "code": 3,
+        "name": "Kisauni"
+    },
+    {
+        "county_code": 1,
+        "code": 4,
+        "name": "Nyali"
+    },
+    {
+        "county_code": 1,
+        "code": 5,
+        "name": "Likoni"
+    },
+    {
+        "county_code": 1,
+        "code": 6,
+        "name": "Mvita"
+    },
+    {
+        "county_code": 2,
+        "code": 7,
+        "name": "Msambweni"
+    },
+    {
+        "county_code": 2,
+        "code": 8,
+        "name": "Lungalunga"
+    },
+    {
+        "county_code": 2,
+        "code": 9,
+        "name": "Matuga"
+    },
+    {
+        "county_code": 2,
+        "code": 10,
+        "name": "Kinango"
+    },
+    {
+        "county_code": 3,
+        "code": 11,
+        "name": "Kilifi North"
+    },
+    {
+        "county_code": 3,
+        "code": 12,
+        "name": "Kilifi South"
+    },
+    {
+        "county_code": 3,
+        "code": 13,
+        "name": "Kaloleni"
+    },
+    {
+        "county_code": 3,
+        "code": 14,
+        "name": "Rabai"
+    },
+    {
+        "county_code": 3,
+        "code": 15,
+        "name": "Ganze"
+    },
+    {
+        "county_code": 3,
+        "code": 16,
+        "name": "Malindi"
+    },
+    {
+        "county_code": 3,
+        "code": 17,
+        "name": "Magarini"
+    },
+    {
+        "county_code": 4,
+        "code": 18,
+        "name": "Garsen"
+    },
+    {
+        "county_code": 4,
+        "code": 19,
+        "name": "Galole"
+    },
+    {
+        "county_code": 4,
+        "code": 20,
+        "name": "Bura"
+    },
+    {
+        "county_code": 5,
+        "code": 21,
+        "name": "Lamu East"
+    },
+    {
+        "county_code": 5,
+        "code": 22,
+        "name": "Lamu West"
+    },
+    {
+        "county_code": 6,
+        "code": 23,
+        "name": "Taveta"
+    },
+    {
+        "county_code": 6,
+        "code": 24,
+        "name": "Wundanyi"
+    },
+    {
+        "county_code": 6,
+        "code": 25,
+        "name": "Mwatate"
+    },
+    {
+        "county_code": 6,
+        "code": 26,
+        "name": "Voi"
+    },
+    {
+        "county_code": 7,
+        "code": 27,
+        "name": "Garissa Township"
+    },
+    {
+        "county_code": 7,
+        "code": 28,
+        "name": "Balambala"
+    },
+    {
+        "county_code": 7,
+        "code": 29,
+        "name": "Lagdera"
+    },
+    {
+        "county_code": 7,
+        "code": 30,
+        "name": "Dadaab"
+    },
+    {
+        "county_code": 7,
+        "code": 31,
+        "name": "Fafi"
+    },
+    {
+        "county_code": 7,
+        "code": 32,
+        "name": "Ijara"
+    },
+    {
+        "county_code": 8,
+        "code": 33,
+        "name": "Wajir North"
+    },
+    {
+        "county_code": 8,
+        "code": 34,
+        "name": "Wajir East"
+    },
+    {
+        "county_code": 8,
+        "code": 35,
+        "name": "Tarbaj"
+    },
+    {
+        "county_code": 8,
+        "code": 36,
+        "name": "Wajir West"
+    },
+    {
+        "county_code": 8,
+        "code": 37,
+        "name": "Eldas"
+    },
+    {
+        "county_code": 8,
+        "code": 38,
+        "name": "Wajir South"
+    },
+    {
+        "county_code": 9,
+        "code": 39,
+        "name": "Mandera West"
+    },
+    {
+        "county_code": 9,
+        "code": 40,
+        "name": "Banissa"
+    },
+    {
+        "county_code": 9,
+        "code": 41,
+        "name": "Mandera North"
+    },
+    {
+        "county_code": 9,
+        "code": 42,
+        "name": "Mandera South"
+    },
+    {
+        "county_code": 9,
+        "code": 43,
+        "name": "Mandera East"
+    },
+    {
+        "county_code": 9,
+        "code": 44,
+        "name": "Lafey"
+    },
+    {
+        "county_code": 10,
+        "code": 45,
+        "name": "Moyale"
+    },
+    {
+        "county_code": 10,
+        "code": 46,
+        "name": "North Horr"
+    },
+    {
+        "county_code": 10,
+        "code": 47,
+        "name": "Saku"
+    },
+    {
+        "county_code": 10,
+        "code": 48,
+        "name": "Laisamis"
+    },
+    {
+        "county_code": 11,
+        "code": 49,
+        "name": "Isiolo North"
+    },
+    {
+        "county_code": 11,
+        "code": 50,
+        "name": "Isiolo South"
+    },
+    {
+        "county_code": 12,
+        "code": 51,
+        "name": "Igembe South"
+    },
+    {
+        "county_code": 12,
+        "code": 52,
+        "name": "Igembe Central"
+    },
+    {
+        "county_code": 12,
+        "code": 53,
+        "name": "Igembe North"
+    },
+    {
+        "county_code": 12,
+        "code": 54,
+        "name": "Tigania West"
+    },
+    {
+        "county_code": 12,
+        "code": 55,
+        "name": "Tigania East"
+    },
+    {
+        "county_code": 12,
+        "code": 56,
+        "name": "North Imenti"
+    },
+    {
+        "county_code": 12,
+        "code": 57,
+        "name": "Buuri"
+    },
+    {
+        "county_code": 12,
+        "code": 58,
+        "name": "Central Imenti"
+    },
+    {
+        "county_code": 12,
+        "code": 59,
+        "name": "South Imenti"
+    },
+    {
+        "county_code": 13,
+        "code": 60,
+        "name": "Maara"
+    },
+    {
+        "county_code": 13,
+        "code": 61,
+        "name": "Chuka/Igambang'ombe"
+    },
+    {
+        "county_code": 13,
+        "code": 62,
+        "name": "Tharaka"
+    },
+    {
+        "county_code": 14,
+        "code": 63,
+        "name": "Manyatta"
+    },
+    {
+        "county_code": 14,
+        "code": 64,
+        "name": "Runyenjes"
+    },
+    {
+        "county_code": 14,
+        "code": 65,
+        "name": "Mbeere South"
+    },
+    {
+        "county_code": 14,
+        "code": 66,
+        "name": "Mbeere North"
+    },
+    {
+        "county_code": 15,
+        "code": 67,
+        "name": "Mwingi North"
+    },
+    {
+        "county_code": 15,
+        "code": 68,
+        "name": "Mwingi West"
+    },
+    {
+        "county_code": 15,
+        "code": 69,
+        "name": "Mwingi Central"
+    },
+    {
+        "county_code": 15,
+        "code": 70,
+        "name": "Kitui West"
+    },
+    {
+        "county_code": 15,
+        "code": 71,
+        "name": "Kitui Rural"
+    },
+    {
+        "county_code": 15,
+        "code": 72,
+        "name": "Kitui Central"
+    },
+    {
+        "county_code": 15,
+        "code": 73,
+        "name": "Kitui East"
+    },
+    {
+        "county_code": 15,
+        "code": 74,
+        "name": "Kitui South"
+    },
+    {
+        "county_code": 16,
+        "code": 75,
+        "name": "Masinga"
+    },
+    {
+        "county_code": 16,
+        "code": 76,
+        "name": "Yatta"
+    },
+    {
+        "county_code": 16,
+        "code": 77,
+        "name": "Kangundo"
+    },
+    {
+        "county_code": 16,
+        "code": 78,
+        "name": "Matungulu"
+    },
+    {
+        "county_code": 16,
+        "code": 79,
+        "name": "Kathiani"
+    },
+    {
+        "county_code": 16,
+        "code": 80,
+        "name": "Mavoko"
+    },
+    {
+        "county_code": 16,
+        "code": 81,
+        "name": "Machakos Town"
+    },
+    {
+        "county_code": 16,
+        "code": 82,
+        "name": "Mwala"
+    },
+    {
+        "county_code": 17,
+        "code": 83,
+        "name": "Mbooni"
+    },
+    {
+        "county_code": 17,
+        "code": 84,
+        "name": "Kilome"
+    },
+    {
+        "county_code": 17,
+        "code": 85,
+        "name": "Kaiti"
+    },
+    {
+        "county_code": 17,
+        "code": 86,
+        "name": "Makueni"
+    },
+    {
+        "county_code": 17,
+        "code": 87,
+        "name": "Kibwezi West"
+    },
+    {
+        "county_code": 17,
+        "code": 88,
+        "name": "Kibwezi East"
+    },
+    {
+        "county_code": 18,
+        "code": 89,
+        "name": "Kinangop"
+    },
+    {
+        "county_code": 18,
+        "code": 90,
+        "name": "Kipipiri"
+    },
+    {
+        "county_code": 18,
+        "code": 91,
+        "name": "Ol Kalou"
+    },
+    {
+        "county_code": 18,
+        "code": 92,
+        "name": "Ol Jorok"
+    },
+    {
+        "county_code": 18,
+        "code": 93,
+        "name": "Ndaragwa"
+    },
+    {
+        "county_code": 19,
+        "code": 94,
+        "name": "Tetu"
+    },
+    {
+        "county_code": 19,
+        "code": 95,
+        "name": "Kieni"
+    },
+    {
+        "county_code": 19,
+        "code": 96,
+        "name": "Mathira"
+    },
+    {
+        "county_code": 19,
+        "code": 97,
+        "name": "Othaya"
+    },
+    {
+        "county_code": 19,
+        "code": 98,
+        "name": "Mukurweini"
+    },
+    {
+        "county_code": 19,
+        "code": 99,
+        "name": "Nyeri Town"
+    },
+    {
+        "county_code": 20,
+        "code": 100,
+        "name": "Mwea"
+    },
+    {
+        "county_code": 20,
+        "code": 101,
+        "name": "Gichugu"
+    },
+    {
+        "county_code": 20,
+        "code": 102,
+        "name": "Ndia"
+    },
+    {
+        "county_code": 20,
+        "code": 103,
+        "name": "Kirinyaga Central"
+    },
+    {
+        "county_code": 21,
+        "code": 104,
+        "name": "Kangema"
+    },
+    {
+        "county_code": 21,
+        "code": 105,
+        "name": "Mathioya"
+    },
+    {
+        "county_code": 21,
+        "code": 106,
+        "name": "Kiharu"
+    },
+    {
+        "county_code": 21,
+        "code": 107,
+        "name": "Kigumo"
+    },
+    {
+        "county_code": 21,
+        "code": 108,
+        "name": "Maragwa"
+    },
+    {
+        "county_code": 21,
+        "code": 109,
+        "name": "Kandara"
+    },
+    {
+        "county_code": 21,
+        "code": 110,
+        "name": "Gatanga"
+    },
+    {
+        "county_code": 22,
+        "code": 111,
+        "name": "Gatundu South"
+    },
+    {
+        "county_code": 22,
+        "code": 112,
+        "name": "Gatundu North"
+    },
+    {
+        "county_code": 22,
+        "code": 113,
+        "name": "Juja"
+    },
+    {
+        "county_code": 22,
+        "code": 114,
+        "name": "Thika Town"
+    },
+    {
+        "county_code": 22,
+        "code": 115,
+        "name": "Ruiru"
+    },
+    {
+        "county_code": 22,
+        "code": 116,
+        "name": "Githunguri"
+    },
+    {
+        "county_code": 22,
+        "code": 117,
+        "name": "Kiambu"
+    },
+    {
+        "county_code": 22,
+        "code": 118,
+        "name": "Kiambaa"
+    },
+    {
+        "county_code": 22,
+        "code": 119,
+        "name": "Kabete"
+    },
+    {
+        "county_code": 22,
+        "code": 120,
+        "name": "Kikuyu"
+    },
+    {
+        "county_code": 22,
+        "code": 121,
+        "name": "Limuru"
+    },
+    {
+        "county_code": 22,
+        "code": 122,
+        "name": "Lari"
+    },
+    {
+        "county_code": 23,
+        "code": 123,
+        "name": "Turkana North"
+    },
+    {
+        "county_code": 23,
+        "code": 124,
+        "name": "Turkana West"
+    },
+    {
+        "county_code": 23,
+        "code": 125,
+        "name": "Turkana Central"
+    },
+    {
+        "county_code": 23,
+        "code": 126,
+        "name": "Loima"
+    },
+    {
+        "county_code": 23,
+        "code": 127,
+        "name": "Turkana South"
+    },
+    {
+        "county_code": 23,
+        "code": 128,
+        "name": "Turkana East"
+    },
+    {
+        "county_code": 24,
+        "code": 129,
+        "name": "Kapenguria"
+    },
+    {
+        "county_code": 24,
+        "code": 130,
+        "name": "Sigor"
+    },
+    {
+        "county_code": 24,
+        "code": 131,
+        "name": "Kacheliba"
+    },
+    {
+        "county_code": 24,
+        "code": 132,
+        "name": "Pokot South"
+    },
+    {
+        "county_code": 25,
+        "code": 133,
+        "name": "Samburu West"
+    },
+    {
+        "county_code": 25,
+        "code": 134,
+        "name": "Samburu North"
+    },
+    {
+        "county_code": 25,
+        "code": 135,
+        "name": "Samburu East"
+    },
+    {
+        "county_code": 26,
+        "code": 136,
+        "name": "Kwanza"
+    },
+    {
+        "county_code": 26,
+        "code": 137,
+        "name": "Endebess"
+    },
+    {
+        "county_code": 26,
+        "code": 138,
+        "name": "Saboti"
+    },
+    {
+        "county_code": 26,
+        "code": 139,
+        "name": "Kiminini"
+    },
+    {
+        "county_code": 26,
+        "code": 140,
+        "name": "Cherangany"
+    },
+    {
+        "county_code": 27,
+        "code": 141,
+        "name": "Soy"
+    },
+    {
+        "county_code": 27,
+        "code": 142,
+        "name": "Turbo"
+    },
+    {
+        "county_code": 27,
+        "code": 143,
+        "name": "Moiben"
+    },
+    {
+        "county_code": 27,
+        "code": 144,
+        "name": "Ainabkoi"
+    },
+    {
+        "county_code": 27,
+        "code": 145,
+        "name": "Kapseret"
+    },
+    {
+        "county_code": 27,
+        "code": 146,
+        "name": "Kesses"
+    },
+    {
+        "county_code": 28,
+        "code": 147,
+        "name": "Marakwet East"
+    },
+    {
+        "county_code": 28,
+        "code": 148,
+        "name": "Marakwet West"
+    },
+    {
+        "county_code": 28,
+        "code": 149,
+        "name": "Keiyo North"
+    },
+    {
+        "county_code": 28,
+        "code": 150,
+        "name": "Keiyo South"
+    },
+    {
+        "county_code": 29,
+        "code": 151,
+        "name": "Tinderet"
+    },
+    {
+        "county_code": 29,
+        "code": 152,
+        "name": "Aldai"
+    },
+    {
+        "county_code": 29,
+        "code": 153,
+        "name": "Nandi Hills"
+    },
+    {
+        "county_code": 29,
+        "code": 154,
+        "name": "Chesumei"
+    },
+    {
+        "county_code": 29,
+        "code": 155,
+        "name": "Emgwen"
+    },
+    {
+        "county_code": 29,
+        "code": 156,
+        "name": "Mosop"
+    },
+    {
+        "county_code": 30,
+        "code": 157,
+        "name": "Tiaty"
+    },
+    {
+        "county_code": 30,
+        "code": 158,
+        "name": "Baringo  North"
+    },
+    {
+        "county_code": 30,
+        "code": 159,
+        "name": "Baringo Central"
+    },
+    {
+        "county_code": 30,
+        "code": 160,
+        "name": "Baringo South"
+    },
+    {
+        "county_code": 30,
+        "code": 161,
+        "name": "Mogotio"
+    },
+    {
+        "county_code": 30,
+        "code": 162,
+        "name": "Eldama Ravine"
+    },
+    {
+        "county_code": 31,
+        "code": 163,
+        "name": "Laikipia West"
+    },
+    {
+        "county_code": 31,
+        "code": 164,
+        "name": "Laikipia East"
+    },
+    {
+        "county_code": 31,
+        "code": 165,
+        "name": "Laikipia North"
+    },
+    {
+        "county_code": 32,
+        "code": 166,
+        "name": "Molo"
+    },
+    {
+        "county_code": 32,
+        "code": 167,
+        "name": "Njoro"
+    },
+    {
+        "county_code": 32,
+        "code": 168,
+        "name": "Naivasha"
+    },
+    {
+        "county_code": 32,
+        "code": 169,
+        "name": "Gilgil"
+    },
+    {
+        "county_code": 32,
+        "code": 170,
+        "name": "Kuresoi South"
+    },
+    {
+        "county_code": 32,
+        "code": 171,
+        "name": "Kuresoi North"
+    },
+    {
+        "county_code": 32,
+        "code": 172,
+        "name": "Subukia"
+    },
+    {
+        "county_code": 32,
+        "code": 173,
+        "name": "Rongai"
+    },
+    {
+        "county_code": 32,
+        "code": 174,
+        "name": "Bahati"
+    },
+    {
+        "county_code": 32,
+        "code": 175,
+        "name": "Nakuru Town West"
+    },
+    {
+        "county_code": 32,
+        "code": 176,
+        "name": "Nakuru Town East"
+    },
+    {
+        "county_code": 33,
+        "code": 177,
+        "name": "Kilgoris"
+    },
+    {
+        "county_code": 33,
+        "code": 178,
+        "name": "Emurua Dikirr"
+    },
+    {
+        "county_code": 33,
+        "code": 179,
+        "name": "Narok North"
+    },
+    {
+        "county_code": 33,
+        "code": 180,
+        "name": "Narok East"
+    },
+    {
+        "county_code": 33,
+        "code": 181,
+        "name": "Narok South"
+    },
+    {
+        "county_code": 33,
+        "code": 182,
+        "name": "Narok West"
+    },
+    {
+        "county_code": 34,
+        "code": 183,
+        "name": "Kajiado North"
+    },
+    {
+        "county_code": 34,
+        "code": 184,
+        "name": "Kajiado Central"
+    },
+    {
+        "county_code": 34,
+        "code": 185,
+        "name": "Kajiado East"
+    },
+    {
+        "county_code": 34,
+        "code": 186,
+        "name": "Kajiado West"
+    },
+    {
+        "county_code": 34,
+        "code": 187,
+        "name": "Kajiado South"
+    },
+    {
+        "county_code": 35,
+        "code": 188,
+        "name": "Kipkelion East"
+    },
+    {
+        "county_code": 35,
+        "code": 189,
+        "name": "Kipkelion West"
+    },
+    {
+        "county_code": 35,
+        "code": 190,
+        "name": "Ainamoi"
+    },
+    {
+        "county_code": 35,
+        "code": 191,
+        "name": "Bureti"
+    },
+    {
+        "county_code": 35,
+        "code": 192,
+        "name": "Belgut"
+    },
+    {
+        "county_code": 35,
+        "code": 193,
+        "name": "Sigowet/Soin"
+    },
+    {
+        "county_code": 36,
+        "code": 194,
+        "name": "Sotik"
+    },
+    {
+        "county_code": 36,
+        "code": 195,
+        "name": "Chepalungu"
+    },
+    {
+        "county_code": 36,
+        "code": 196,
+        "name": "Bomet East"
+    },
+    {
+        "county_code": 36,
+        "code": 197,
+        "name": "Bomet Central"
+    },
+    {
+        "county_code": 36,
+        "code": 198,
+        "name": "Konoin"
+    },
+    {
+        "county_code": 37,
+        "code": 199,
+        "name": "Lugari"
+    },
+    {
+        "county_code": 37,
+        "code": 200,
+        "name": "Likuyani"
+    },
+    {
+        "county_code": 37,
+        "code": 201,
+        "name": "Malava"
+    },
+    {
+        "county_code": 37,
+        "code": 202,
+        "name": "Lurambi"
+    },
+    {
+        "county_code": 37,
+        "code": 203,
+        "name": "Navakholo"
+    },
+    {
+        "county_code": 37,
+        "code": 204,
+        "name": "Mumias West"
+    },
+    {
+        "county_code": 37,
+        "code": 205,
+        "name": "Mumias East"
+    },
+    {
+        "county_code": 37,
+        "code": 206,
+        "name": "Matungu"
+    },
+    {
+        "county_code": 37,
+        "code": 207,
+        "name": "Butere"
+    },
+    {
+        "county_code": 37,
+        "code": 208,
+        "name": "Khwisero"
+    },
+    {
+        "county_code": 37,
+        "code": 209,
+        "name": "Shinyalu"
+    },
+    {
+        "county_code": 37,
+        "code": 210,
+        "name": "Ikolomani"
+    },
+    {
+        "county_code": 38,
+        "code": 211,
+        "name": "Vihiga"
+    },
+    {
+        "county_code": 38,
+        "code": 212,
+        "name": "Sabatia"
+    },
+    {
+        "county_code": 38,
+        "code": 213,
+        "name": "Hamisi"
+    },
+    {
+        "county_code": 38,
+        "code": 214,
+        "name": "Luanda"
+    },
+    {
+        "county_code": 38,
+        "code": 215,
+        "name": "Emuhaya"
+    },
+    {
+        "county_code": 39,
+        "code": 216,
+        "name": "Mt. Elgon"
+    },
+    {
+        "county_code": 39,
+        "code": 217,
+        "name": "Sirisia"
+    },
+    {
+        "county_code": 39,
+        "code": 218,
+        "name": "Kabuchai"
+    },
+    {
+        "county_code": 39,
+        "code": 219,
+        "name": "Bumula"
+    },
+    {
+        "county_code": 39,
+        "code": 220,
+        "name": "Kanduyi"
+    },
+    {
+        "county_code": 39,
+        "code": 221,
+        "name": "Webuye East"
+    },
+    {
+        "county_code": 39,
+        "code": 222,
+        "name": "Webuye West"
+    },
+    {
+        "county_code": 39,
+        "code": 223,
+        "name": "Kimilili"
+    },
+    {
+        "county_code": 39,
+        "code": 224,
+        "name": "Tongaren"
+    },
+    {
+        "county_code": 40,
+        "code": 225,
+        "name": "Teso North"
+    },
+    {
+        "county_code": 40,
+        "code": 226,
+        "name": "Teso South"
+    },
+    {
+        "county_code": 40,
+        "code": 227,
+        "name": "Nambale"
+    },
+    {
+        "county_code": 40,
+        "code": 228,
+        "name": "Matayos"
+    },
+    {
+        "county_code": 40,
+        "code": 229,
+        "name": "Butula"
+    },
+    {
+        "county_code": 40,
+        "code": 230,
+        "name": "Funyula"
+    },
+    {
+        "county_code": 40,
+        "code": 231,
+        "name": "Budalangi"
+    },
+    {
+        "county_code": 41,
+        "code": 232,
+        "name": "Ugenya"
+    },
+    {
+        "county_code": 41,
+        "code": 233,
+        "name": "Ugunja"
+    },
+    {
+        "county_code": 41,
+        "code": 234,
+        "name": "Alego Usonga"
+    },
+    {
+        "county_code": 41,
+        "code": 235,
+        "name": "Gem"
+    },
+    {
+        "county_code": 41,
+        "code": 236,
+        "name": "Bondo"
+    },
+    {
+        "county_code": 41,
+        "code": 237,
+        "name": "Rarieda"
+    },
+    {
+        "county_code": 42,
+        "code": 238,
+        "name": "Kisumu East"
+    },
+    {
+        "county_code": 42,
+        "code": 239,
+        "name": "Kisumu West"
+    },
+    {
+        "county_code": 42,
+        "code": 240,
+        "name": "Kisumu Central"
+    },
+    {
+        "county_code": 42,
+        "code": 241,
+        "name": "Seme"
+    },
+    {
+        "county_code": 42,
+        "code": 242,
+        "name": "Nyando"
+    },
+    {
+        "county_code": 42,
+        "code": 243,
+        "name": "Muhoroni"
+    },
+    {
+        "county_code": 42,
+        "code": 244,
+        "name": "Nyakach"
+    },
+    {
+        "county_code": 43,
+        "code": 245,
+        "name": "Kasipul"
+    },
+    {
+        "county_code": 43,
+        "code": 246,
+        "name": "Kabondo Kasipul"
+    },
+    {
+        "county_code": 43,
+        "code": 247,
+        "name": "Karachuonyo"
+    },
+    {
+        "county_code": 43,
+        "code": 248,
+        "name": "Rangwe"
+    },
+    {
+        "county_code": 43,
+        "code": 249,
+        "name": "Homa Bay Town"
+    },
+    {
+        "county_code": 43,
+        "code": 250,
+        "name": "Ndhiwa"
+    },
+    {
+        "county_code": 43,
+        "code": 251,
+        "name": "Suba North"
+    },
+    {
+        "county_code": 43,
+        "code": 252,
+        "name": "Suba South"
+    },
+    {
+        "county_code": 44,
+        "code": 253,
+        "name": "Rongo"
+    },
+    {
+        "county_code": 44,
+        "code": 254,
+        "name": "Awendo"
+    },
+    {
+        "county_code": 44,
+        "code": 255,
+        "name": "Suna East"
+    },
+    {
+        "county_code": 44,
+        "code": 256,
+        "name": "Suna West"
+    },
+    {
+        "county_code": 44,
+        "code": 257,
+        "name": "Uriri"
+    },
+    {
+        "county_code": 44,
+        "code": 258,
+        "name": "Nyatike"
+    },
+    {
+        "county_code": 44,
+        "code": 259,
+        "name": "Kuria West"
+    },
+    {
+        "county_code": 44,
+        "code": 260,
+        "name": "Kuria East"
+    },
+    {
+        "county_code": 45,
+        "code": 261,
+        "name": "Bonchari"
+    },
+    {
+        "county_code": 45,
+        "code": 262,
+        "name": "South Mugirango"
+    },
+    {
+        "county_code": 45,
+        "code": 263,
+        "name": "Bomachoge Borabu"
+    },
+    {
+        "county_code": 45,
+        "code": 264,
+        "name": "Bobasi"
+    },
+    {
+        "county_code": 45,
+        "code": 265,
+        "name": "Bomachoge Chache"
+    },
+    {
+        "county_code": 45,
+        "code": 266,
+        "name": "Nyaribari Masaba"
+    },
+    {
+        "county_code": 45,
+        "code": 267,
+        "name": "Nyaribari Chache"
+    },
+    {
+        "county_code": 45,
+        "code": 268,
+        "name": "Kitutu Chache North"
+    },
+    {
+        "county_code": 45,
+        "code": 269,
+        "name": "Kitutu Chache South"
+    },
+    {
+        "county_code": 46,
+        "code": 270,
+        "name": "Kitutu Masaba"
+    },
+    {
+        "county_code": 46,
+        "code": 271,
+        "name": "West Mugirango"
+    },
+    {
+        "county_code": 46,
+        "code": 272,
+        "name": "North Mugirango"
+    },
+    {
+        "county_code": 46,
+        "code": 273,
+        "name": "Borabu"
+    },
+    {
+        "county_code": 47,
+        "code": 274,
+        "name": "Westlands"
+    },
+    {
+        "county_code": 47,
+        "code": 275,
+        "name": "Dagoretti North"
+    },
+    {
+        "county_code": 47,
+        "code": 276,
+        "name": "Dagoretti South"
+    },
+    {
+        "county_code": 47,
+        "code": 277,
+        "name": "Langata"
+    },
+    {
+        "county_code": 47,
+        "code": 278,
+        "name": "Kibra"
+    },
+    {
+        "county_code": 47,
+        "code": 279,
+        "name": "Roysambu"
+    },
+    {
+        "county_code": 47,
+        "code": 280,
+        "name": "Kasarani"
+    },
+    {
+        "county_code": 47,
+        "code": 281,
+        "name": "Ruaraka"
+    },
+    {
+        "county_code": 47,
+        "code": 282,
+        "name": "Embakasi South"
+    },
+    {
+        "county_code": 47,
+        "code": 283,
+        "name": "Embakasi North"
+    },
+    {
+        "county_code": 47,
+        "code": 284,
+        "name": "Embakasi Central"
+    },
+    {
+        "county_code": 47,
+        "code": 285,
+        "name": "Embakasi East"
+    },
+    {
+        "county_code": 47,
+        "code": 286,
+        "name": "Embakasi West"
+    },
+    {
+        "county_code": 47,
+        "code": 287,
+        "name": "Makadara"
+    },
+    {
+        "county_code": 47,
+        "code": 288,
+        "name": "Kamukunji"
+    },
+    {
+        "county_code": 47,
+        "code": 289,
+        "name": "Starehe"
+    },
+    {
+        "county_code": 47,
+        "code": 290,
+        "name": "Mathare"
+    },
+    {
+        "county_code": 48,
+        "code": 291,
+        "name": "Diaspora"
+    },
+    {
+        "county_code": 49,
+        "code": 292,
+        "name": "Prisons"
+    }
+]
+var wards = [
+    {
+      "constituency_code": 1,
+      "code": 1,
+      "name": "Port Reitz"
+    },
+    {
+      "constituency_code": 1,
+      "code": 2,
+      "name": "Kipevu"
+    },
+    {
+      "constituency_code": 1,
+      "code": 3,
+      "name": "Airport"
+    },
+    {
+      "constituency_code": 1,
+      "code": 4,
+      "name": "Changamwe"
+    },
+    {
+      "constituency_code": 1,
+      "code": 5,
+      "name": "Chaani"
+    },
+    {
+      "constituency_code": 2,
+      "code": 6,
+      "name": "Jomvu Kuu"
+    },
+    {
+      "constituency_code": 2,
+      "code": 7,
+      "name": "Miritini"
+    },
+    {
+      "constituency_code": 2,
+      "code": 8,
+      "name": "Mikindani"
+    },
+    {
+      "constituency_code": 3,
+      "code": 9,
+      "name": "Mjambere"
+    },
+    {
+      "constituency_code": 3,
+      "code": 10,
+      "name": "Junda"
+    },
+    {
+      "constituency_code": 3,
+      "code": 11,
+      "name": "Bamburi"
+    },
+    {
+      "constituency_code": 3,
+      "code": 12,
+      "name": "Mwakirunge"
+    },
+    {
+      "constituency_code": 3,
+      "code": 13,
+      "name": "Mtopanga"
+    },
+    {
+      "constituency_code": 3,
+      "code": 14,
+      "name": "Magogoni"
+    },
+    {
+      "constituency_code": 3,
+      "code": 15,
+      "name": "Shanzu"
+    },
+    {
+      "constituency_code": 4,
+      "code": 16,
+      "name": "Frere Town"
+    },
+    {
+      "constituency_code": 4,
+      "code": 17,
+      "name": "Ziwa La Ng'ombe"
+    },
+    {
+      "constituency_code": 4,
+      "code": 18,
+      "name": "Mkomani"
+    },
+    {
+      "constituency_code": 4,
+      "code": 19,
+      "name": "Kongowea"
+    },
+    {
+      "constituency_code": 4,
+      "code": 20,
+      "name": "Kadzandani"
+    },
+    {
+      "constituency_code": 5,
+      "code": 21,
+      "name": "Mtongwe"
+    },
+    {
+      "constituency_code": 5,
+      "code": 22,
+      "name": "Shika Adabu"
+    },
+    {
+      "constituency_code": 5,
+      "code": 23,
+      "name": "Bofu"
+    },
+    {
+      "constituency_code": 5,
+      "code": 24,
+      "name": "Likoni"
+    },
+    {
+      "constituency_code": 5,
+      "code": 25,
+      "name": "Timbwani"
+    },
+    {
+      "constituency_code": 6,
+      "code": 26,
+      "name": "Mji Wa Kale/Makadara"
+    },
+    {
+      "constituency_code": 6,
+      "code": 27,
+      "name": "Tudor"
+    },
+    {
+      "constituency_code": 6,
+      "code": 28,
+      "name": "Tononoka"
+    },
+    {
+      "constituency_code": 6,
+      "code": 29,
+      "name": "Shimanzi/Ganjoni"
+    },
+    {
+      "constituency_code": 6,
+      "code": 30,
+      "name": "Majengo"
+    },
+    {
+      "constituency_code": 7,
+      "code": 31,
+      "name": "Gombato Bongwe"
+    },
+    {
+      "constituency_code": 7,
+      "code": 32,
+      "name": "Ukunda"
+    },
+    {
+      "constituency_code": 7,
+      "code": 33,
+      "name": "Kinondo"
+    },
+    {
+      "constituency_code": 7,
+      "code": 34,
+      "name": "Ramisi"
+    },
+    {
+      "constituency_code": 8,
+      "code": 35,
+      "name": "Pongwe/Kikoneni"
+    },
+    {
+      "constituency_code": 8,
+      "code": 36,
+      "name": "Dzombo"
+    },
+    {
+      "constituency_code": 8,
+      "code": 37,
+      "name": "Mwereni"
+    },
+    {
+      "constituency_code": 8,
+      "code": 38,
+      "name": "Vanga"
+    },
+    {
+      "constituency_code": 9,
+      "code": 39,
+      "name": "Tsimba Golini"
+    },
+    {
+      "constituency_code": 9,
+      "code": 40,
+      "name": "Waa"
+    },
+    {
+      "constituency_code": 9,
+      "code": 41,
+      "name": "Tiwi"
+    },
+    {
+      "constituency_code": 9,
+      "code": 42,
+      "name": "Kubo South"
+    },
+    {
+      "constituency_code": 9,
+      "code": 43,
+      "name": "Mkongani"
+    },
+    {
+      "constituency_code": 10,
+      "code": 44,
+      "name": "Ndavaya"
+    },
+    {
+      "constituency_code": 10,
+      "code": 45,
+      "name": "Puma"
+    },
+    {
+      "constituency_code": 10,
+      "code": 46,
+      "name": "Kinango"
+    },
+    {
+      "constituency_code": 10,
+      "code": 47,
+      "name": "Mackinnon Road"
+    },
+    {
+      "constituency_code": 10,
+      "code": 48,
+      "name": "Chengoni/Samburu"
+    },
+    {
+      "constituency_code": 10,
+      "code": 49,
+      "name": "Mwavumbo"
+    },
+    {
+      "constituency_code": 10,
+      "code": 50,
+      "name": "Kasemeni"
+    },
+    {
+      "constituency_code": 11,
+      "code": 51,
+      "name": "Tezo"
+    },
+    {
+      "constituency_code": 11,
+      "code": 52,
+      "name": "Sokoni"
+    },
+    {
+      "constituency_code": 11,
+      "code": 53,
+      "name": "Kibarani"
+    },
+    {
+      "constituency_code": 11,
+      "code": 54,
+      "name": "Dabaso"
+    },
+    {
+      "constituency_code": 11,
+      "code": 55,
+      "name": "Matsangoni"
+    },
+    {
+      "constituency_code": 11,
+      "code": 56,
+      "name": "Watamu"
+    },
+    {
+      "constituency_code": 11,
+      "code": 57,
+      "name": "Mnarani"
+    },
+    {
+      "constituency_code": 12,
+      "code": 58,
+      "name": "Junju"
+    },
+    {
+      "constituency_code": 12,
+      "code": 59,
+      "name": "Mwarakaya"
+    },
+    {
+      "constituency_code": 12,
+      "code": 60,
+      "name": "Shimo La Tewa"
+    },
+    {
+      "constituency_code": 12,
+      "code": 61,
+      "name": "Chasimba"
+    },
+    {
+      "constituency_code": 12,
+      "code": 62,
+      "name": "Mtepeni"
+    },
+    {
+      "constituency_code": 13,
+      "code": 63,
+      "name": "Mariakani"
+    },
+    {
+      "constituency_code": 13,
+      "code": 64,
+      "name": "Kayafungo"
+    },
+    {
+      "constituency_code": 13,
+      "code": 65,
+      "name": "Kaloleni"
+    },
+    {
+      "constituency_code": 13,
+      "code": 66,
+      "name": "Mwanamwinga"
+    },
+    {
+      "constituency_code": 14,
+      "code": 67,
+      "name": "Mwawesa"
+    },
+    {
+      "constituency_code": 14,
+      "code": 68,
+      "name": "Ruruma"
+    },
+    {
+      "constituency_code": 14,
+      "code": 69,
+      "name": "Kambe/Ribe"
+    },
+    {
+      "constituency_code": 14,
+      "code": 70,
+      "name": "Rabai/Kisurutini"
+    },
+    {
+      "constituency_code": 15,
+      "code": 71,
+      "name": "Ganze"
+    },
+    {
+      "constituency_code": 15,
+      "code": 72,
+      "name": "Bamba"
+    },
+    {
+      "constituency_code": 15,
+      "code": 73,
+      "name": "Jaribuni"
+    },
+    {
+      "constituency_code": 15,
+      "code": 74,
+      "name": "Sokoke"
+    },
+    {
+      "constituency_code": 16,
+      "code": 75,
+      "name": "Jilore"
+    },
+    {
+      "constituency_code": 16,
+      "code": 76,
+      "name": "Kakuyuni"
+    },
+    {
+      "constituency_code": 16,
+      "code": 77,
+      "name": "Ganda"
+    },
+    {
+      "constituency_code": 16,
+      "code": 78,
+      "name": "Malindi Town"
+    },
+    {
+      "constituency_code": 16,
+      "code": 79,
+      "name": "Shella"
+    },
+    {
+      "constituency_code": 17,
+      "code": 80,
+      "name": "Marafa"
+    },
+    {
+      "constituency_code": 17,
+      "code": 81,
+      "name": "Magarini"
+    },
+    {
+      "constituency_code": 17,
+      "code": 82,
+      "name": "Gongoni"
+    },
+    {
+      "constituency_code": 17,
+      "code": 83,
+      "name": "Adu"
+    },
+    {
+      "constituency_code": 17,
+      "code": 84,
+      "name": "Garashi"
+    },
+    {
+      "constituency_code": 17,
+      "code": 85,
+      "name": "Sabaki"
+    },
+    {
+      "constituency_code": 18,
+      "code": 86,
+      "name": "Kipini East"
+    },
+    {
+      "constituency_code": 18,
+      "code": 87,
+      "name": "Garsen South"
+    },
+    {
+      "constituency_code": 18,
+      "code": 88,
+      "name": "Kipini West"
+    },
+    {
+      "constituency_code": 18,
+      "code": 89,
+      "name": "Garsen Central"
+    },
+    {
+      "constituency_code": 18,
+      "code": 90,
+      "name": "Garsen West"
+    },
+    {
+      "constituency_code": 18,
+      "code": 91,
+      "name": "Garsen North"
+    },
+    {
+      "constituency_code": 19,
+      "code": 92,
+      "name": "Kinakomba"
+    },
+    {
+      "constituency_code": 19,
+      "code": 93,
+      "name": "Mikinduni"
+    },
+    {
+      "constituency_code": 19,
+      "code": 94,
+      "name": "Chewani"
+    },
+    {
+      "constituency_code": 19,
+      "code": 95,
+      "name": "Wayu"
+    },
+    {
+      "constituency_code": 20,
+      "code": 96,
+      "name": "Chewele"
+    },
+    {
+      "constituency_code": 20,
+      "code": 97,
+      "name": "Hirimani"
+    },
+    {
+      "constituency_code": 20,
+      "code": 98,
+      "name": "Bangale"
+    },
+    {
+      "constituency_code": 20,
+      "code": 99,
+      "name": "Sala"
+    },
+    {
+      "constituency_code": 20,
+      "code": 100,
+      "name": "Madogo"
+    },
+    {
+      "constituency_code": 21,
+      "code": 101,
+      "name": "Faza"
+    },
+    {
+      "constituency_code": 21,
+      "code": 102,
+      "name": "Kiunga"
+    },
+    {
+      "constituency_code": 21,
+      "code": 103,
+      "name": "Basuba"
+    },
+    {
+      "constituency_code": 22,
+      "code": 104,
+      "name": "Shella"
+    },
+    {
+      "constituency_code": 22,
+      "code": 105,
+      "name": "Mkomani"
+    },
+    {
+      "constituency_code": 22,
+      "code": 106,
+      "name": "Hindi"
+    },
+    {
+      "constituency_code": 22,
+      "code": 107,
+      "name": "Mkunumbi"
+    },
+    {
+      "constituency_code": 22,
+      "code": 108,
+      "name": "Hongwe"
+    },
+    {
+      "constituency_code": 22,
+      "code": 109,
+      "name": "Witu"
+    },
+    {
+      "constituency_code": 22,
+      "code": 110,
+      "name": "Bahari"
+    },
+    {
+      "constituency_code": 23,
+      "code": 111,
+      "name": "Chala"
+    },
+    {
+      "constituency_code": 23,
+      "code": 112,
+      "name": "Mahoo"
+    },
+    {
+      "constituency_code": 23,
+      "code": 113,
+      "name": "Bomani"
+    },
+    {
+      "constituency_code": 23,
+      "code": 114,
+      "name": "Mboghoni"
+    },
+    {
+      "constituency_code": 23,
+      "code": 115,
+      "name": "Mata"
+    },
+    {
+      "constituency_code": 24,
+      "code": 116,
+      "name": "Wundanyi/Mbale"
+    },
+    {
+      "constituency_code": 24,
+      "code": 117,
+      "name": "Werugha"
+    },
+    {
+      "constituency_code": 24,
+      "code": 118,
+      "name": "Wumingu/Kishushe"
+    },
+    {
+      "constituency_code": 24,
+      "code": 119,
+      "name": "Mwanda/Mgange"
+    },
+    {
+      "constituency_code": 25,
+      "code": 120,
+      "name": "Rong'e"
+    },
+    {
+      "constituency_code": 25,
+      "code": 121,
+      "name": "Mwatate"
+    },
+    {
+      "constituency_code": 25,
+      "code": 122,
+      "name": "Bura"
+    },
+    {
+      "constituency_code": 25,
+      "code": 123,
+      "name": "Chawia"
+    },
+    {
+      "constituency_code": 25,
+      "code": 124,
+      "name": "Wusi/Kishamba"
+    },
+    {
+      "constituency_code": 26,
+      "code": 125,
+      "name": "Mbololo"
+    },
+    {
+      "constituency_code": 26,
+      "code": 126,
+      "name": "Sagalla"
+    },
+    {
+      "constituency_code": 26,
+      "code": 127,
+      "name": "Kaloleni"
+    },
+    {
+      "constituency_code": 26,
+      "code": 128,
+      "name": "Marungu"
+    },
+    {
+      "constituency_code": 26,
+      "code": 129,
+      "name": "Kasigau"
+    },
+    {
+      "constituency_code": 26,
+      "code": 130,
+      "name": "Ngolia"
+    },
+    {
+      "constituency_code": 27,
+      "code": 131,
+      "name": "Waberi"
+    },
+    {
+      "constituency_code": 27,
+      "code": 132,
+      "name": "Galbet"
+    },
+    {
+      "constituency_code": 27,
+      "code": 133,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 27,
+      "code": 134,
+      "name": "Iftin"
+    },
+    {
+      "constituency_code": 28,
+      "code": 135,
+      "name": "Balambala"
+    },
+    {
+      "constituency_code": 28,
+      "code": 136,
+      "name": "Danyere"
+    },
+    {
+      "constituency_code": 28,
+      "code": 137,
+      "name": "Jara Jara"
+    },
+    {
+      "constituency_code": 28,
+      "code": 138,
+      "name": "Saka"
+    },
+    {
+      "constituency_code": 28,
+      "code": 139,
+      "name": "Sankuri"
+    },
+    {
+      "constituency_code": 29,
+      "code": 140,
+      "name": "Modogashe"
+    },
+    {
+      "constituency_code": 29,
+      "code": 141,
+      "name": "Benane"
+    },
+    {
+      "constituency_code": 29,
+      "code": 142,
+      "name": "Goreale"
+    },
+    {
+      "constituency_code": 29,
+      "code": 143,
+      "name": "Maalimin"
+    },
+    {
+      "constituency_code": 29,
+      "code": 144,
+      "name": "Sabena"
+    },
+    {
+      "constituency_code": 29,
+      "code": 145,
+      "name": "Baraki"
+    },
+    {
+      "constituency_code": 30,
+      "code": 146,
+      "name": "Dertu"
+    },
+    {
+      "constituency_code": 30,
+      "code": 147,
+      "name": "Dadaab"
+    },
+    {
+      "constituency_code": 30,
+      "code": 148,
+      "name": "Labasigale"
+    },
+    {
+      "constituency_code": 30,
+      "code": 149,
+      "name": "Damajale"
+    },
+    {
+      "constituency_code": 30,
+      "code": 150,
+      "name": "Liboi"
+    },
+    {
+      "constituency_code": 30,
+      "code": 151,
+      "name": "Abakaile"
+    },
+    {
+      "constituency_code": 31,
+      "code": 152,
+      "name": "Bura"
+    },
+    {
+      "constituency_code": 31,
+      "code": 153,
+      "name": "Dekaharia"
+    },
+    {
+      "constituency_code": 31,
+      "code": 154,
+      "name": "Jarajila"
+    },
+    {
+      "constituency_code": 31,
+      "code": 155,
+      "name": "Fafi"
+    },
+    {
+      "constituency_code": 31,
+      "code": 156,
+      "name": "Nanighi"
+    },
+    {
+      "constituency_code": 32,
+      "code": 157,
+      "name": "Hulugho"
+    },
+    {
+      "constituency_code": 32,
+      "code": 158,
+      "name": "Sangailu"
+    },
+    {
+      "constituency_code": 32,
+      "code": 159,
+      "name": "Ijara"
+    },
+    {
+      "constituency_code": 32,
+      "code": 160,
+      "name": "Masalani"
+    },
+    {
+      "constituency_code": 33,
+      "code": 161,
+      "name": "Gurar"
+    },
+    {
+      "constituency_code": 33,
+      "code": 162,
+      "name": "Bute"
+    },
+    {
+      "constituency_code": 33,
+      "code": 163,
+      "name": "Korondile"
+    },
+    {
+      "constituency_code": 33,
+      "code": 164,
+      "name": "Malkagufu"
+    },
+    {
+      "constituency_code": 33,
+      "code": 165,
+      "name": "Batalu"
+    },
+    {
+      "constituency_code": 33,
+      "code": 166,
+      "name": "Danaba"
+    },
+    {
+      "constituency_code": 33,
+      "code": 167,
+      "name": "Godoma"
+    },
+    {
+      "constituency_code": 34,
+      "code": 168,
+      "name": "Wagberi"
+    },
+    {
+      "constituency_code": 34,
+      "code": 169,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 34,
+      "code": 170,
+      "name": "Barwago"
+    },
+    {
+      "constituency_code": 34,
+      "code": 171,
+      "name": "Khorof/Harar"
+    },
+    {
+      "constituency_code": 35,
+      "code": 172,
+      "name": "Elben"
+    },
+    {
+      "constituency_code": 35,
+      "code": 173,
+      "name": "Sarman"
+    },
+    {
+      "constituency_code": 35,
+      "code": 174,
+      "name": "Tarbaj"
+    },
+    {
+      "constituency_code": 35,
+      "code": 175,
+      "name": "Wargadud"
+    },
+    {
+      "constituency_code": 36,
+      "code": 176,
+      "name": "Arbajahan"
+    },
+    {
+      "constituency_code": 36,
+      "code": 177,
+      "name": "Hadado/Athibohol"
+    },
+    {
+      "constituency_code": 36,
+      "code": 178,
+      "name": "Adamasajide"
+    },
+    {
+      "constituency_code": 36,
+      "code": 179,
+      "name": "Ganyure/Wagalla"
+    },
+    {
+      "constituency_code": 37,
+      "code": 180,
+      "name": "Eldas"
+    },
+    {
+      "constituency_code": 37,
+      "code": 181,
+      "name": "Della"
+    },
+    {
+      "constituency_code": 37,
+      "code": 182,
+      "name": "Lakoley South/Basir"
+    },
+    {
+      "constituency_code": 37,
+      "code": 183,
+      "name": "Elnur/Tula Tula"
+    },
+    {
+      "constituency_code": 38,
+      "code": 184,
+      "name": "Benane"
+    },
+    {
+      "constituency_code": 38,
+      "code": 185,
+      "name": "Burder"
+    },
+    {
+      "constituency_code": 38,
+      "code": 186,
+      "name": "Dadaja Bulla"
+    },
+    {
+      "constituency_code": 38,
+      "code": 187,
+      "name": "Habasswein"
+    },
+    {
+      "constituency_code": 38,
+      "code": 188,
+      "name": "Lagboghol South"
+    },
+    {
+      "constituency_code": 38,
+      "code": 189,
+      "name": "Ibrahim Ure"
+    },
+    {
+      "constituency_code": 38,
+      "code": 190,
+      "name": "Diif"
+    },
+    {
+      "constituency_code": 39,
+      "code": 191,
+      "name": "Takaba South"
+    },
+    {
+      "constituency_code": 39,
+      "code": 192,
+      "name": "Takaba"
+    },
+    {
+      "constituency_code": 39,
+      "code": 193,
+      "name": "Lagsure"
+    },
+    {
+      "constituency_code": 39,
+      "code": 194,
+      "name": "Dandu"
+    },
+    {
+      "constituency_code": 39,
+      "code": 195,
+      "name": "Gither"
+    },
+    {
+      "constituency_code": 40,
+      "code": 196,
+      "name": "Banissa"
+    },
+    {
+      "constituency_code": 40,
+      "code": 197,
+      "name": "Derkhale"
+    },
+    {
+      "constituency_code": 40,
+      "code": 198,
+      "name": "Guba"
+    },
+    {
+      "constituency_code": 40,
+      "code": 199,
+      "name": "Malkamari"
+    },
+    {
+      "constituency_code": 40,
+      "code": 200,
+      "name": "Kiliwehiri"
+    },
+    {
+      "constituency_code": 41,
+      "code": 201,
+      "name": "Ashabito"
+    },
+    {
+      "constituency_code": 41,
+      "code": 202,
+      "name": "Guticha"
+    },
+    {
+      "constituency_code": 41,
+      "code": 203,
+      "name": "Morothile"
+    },
+    {
+      "constituency_code": 41,
+      "code": 204,
+      "name": "Rhamu"
+    },
+    {
+      "constituency_code": 41,
+      "code": 205,
+      "name": "Rhamu-Dimtu"
+    },
+    {
+      "constituency_code": 42,
+      "code": 206,
+      "name": "Wargadud"
+    },
+    {
+      "constituency_code": 42,
+      "code": 207,
+      "name": "Kutulo"
+    },
+    {
+      "constituency_code": 42,
+      "code": 208,
+      "name": "Elwak South"
+    },
+    {
+      "constituency_code": 42,
+      "code": 209,
+      "name": "Elwak North"
+    },
+    {
+      "constituency_code": 42,
+      "code": 210,
+      "name": "Shimbir Fatuma"
+    },
+    {
+      "constituency_code": 43,
+      "code": 211,
+      "name": "Arabia"
+    },
+    {
+      "constituency_code": 43,
+      "code": 212,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 43,
+      "code": 213,
+      "name": "Neboi"
+    },
+    {
+      "constituency_code": 43,
+      "code": 214,
+      "name": "Khalalio"
+    },
+    {
+      "constituency_code": 43,
+      "code": 215,
+      "name": "Libehia"
+    },
+    {
+      "constituency_code": 44,
+      "code": 216,
+      "name": "Sala"
+    },
+    {
+      "constituency_code": 44,
+      "code": 217,
+      "name": "Fino"
+    },
+    {
+      "constituency_code": 44,
+      "code": 218,
+      "name": "Lafey"
+    },
+    {
+      "constituency_code": 44,
+      "code": 219,
+      "name": "Waranqara"
+    },
+    {
+      "constituency_code": 44,
+      "code": 220,
+      "name": "Alango Gof"
+    },
+    {
+      "constituency_code": 45,
+      "code": 221,
+      "name": "Butiye"
+    },
+    {
+      "constituency_code": 45,
+      "code": 222,
+      "name": "Sololo"
+    },
+    {
+      "constituency_code": 45,
+      "code": 223,
+      "name": "Heillu/Manyatta"
+    },
+    {
+      "constituency_code": 45,
+      "code": 224,
+      "name": "Golbo"
+    },
+    {
+      "constituency_code": 45,
+      "code": 225,
+      "name": "Moyale Township"
+    },
+    {
+      "constituency_code": 45,
+      "code": 226,
+      "name": "Uran"
+    },
+    {
+      "constituency_code": 45,
+      "code": 227,
+      "name": "Obbu"
+    },
+    {
+      "constituency_code": 46,
+      "code": 228,
+      "name": "Dukana"
+    },
+    {
+      "constituency_code": 46,
+      "code": 229,
+      "name": "Maikona"
+    },
+    {
+      "constituency_code": 46,
+      "code": 230,
+      "name": "Turbi"
+    },
+    {
+      "constituency_code": 46,
+      "code": 231,
+      "name": "North Horr"
+    },
+    {
+      "constituency_code": 46,
+      "code": 232,
+      "name": "Illeret"
+    },
+    {
+      "constituency_code": 47,
+      "code": 233,
+      "name": "Sagante/Jaldesa"
+    },
+    {
+      "constituency_code": 47,
+      "code": 234,
+      "name": "Karare"
+    },
+    {
+      "constituency_code": 47,
+      "code": 235,
+      "name": "Marsabit Central"
+    },
+    {
+      "constituency_code": 48,
+      "code": 236,
+      "name": "Loiyangalani"
+    },
+    {
+      "constituency_code": 48,
+      "code": 237,
+      "name": "Kargi/South Horr"
+    },
+    {
+      "constituency_code": 48,
+      "code": 238,
+      "name": "Korr/Ngurunit"
+    },
+    {
+      "constituency_code": 48,
+      "code": 239,
+      "name": "Logo Logo"
+    },
+    {
+      "constituency_code": 48,
+      "code": 240,
+      "name": "Laisamis"
+    },
+    {
+      "constituency_code": 49,
+      "code": 241,
+      "name": "Wabera"
+    },
+    {
+      "constituency_code": 49,
+      "code": 242,
+      "name": "Bulla Pesa"
+    },
+    {
+      "constituency_code": 49,
+      "code": 243,
+      "name": "Chari"
+    },
+    {
+      "constituency_code": 49,
+      "code": 244,
+      "name": "Cherab"
+    },
+    {
+      "constituency_code": 49,
+      "code": 245,
+      "name": "Ngare Mara"
+    },
+    {
+      "constituency_code": 49,
+      "code": 246,
+      "name": "Burat"
+    },
+    {
+      "constituency_code": 49,
+      "code": 247,
+      "name": "Oldo/Nyiro"
+    },
+    {
+      "constituency_code": 50,
+      "code": 248,
+      "name": "Garbatulla"
+    },
+    {
+      "constituency_code": 50,
+      "code": 249,
+      "name": "Kinna"
+    },
+    {
+      "constituency_code": 50,
+      "code": 250,
+      "name": "Sericho"
+    },
+    {
+      "constituency_code": 51,
+      "code": 251,
+      "name": "Maua"
+    },
+    {
+      "constituency_code": 51,
+      "code": 252,
+      "name": "Kiegoi/Antubochiu"
+    },
+    {
+      "constituency_code": 51,
+      "code": 253,
+      "name": "Athiru Gaiti"
+    },
+    {
+      "constituency_code": 51,
+      "code": 254,
+      "name": "Akachiu"
+    },
+    {
+      "constituency_code": 51,
+      "code": 255,
+      "name": "Kanuni"
+    },
+    {
+      "constituency_code": 52,
+      "code": 256,
+      "name": "Akirang'Ondu"
+    },
+    {
+      "constituency_code": 52,
+      "code": 257,
+      "name": "Athiru Ruujine"
+    },
+    {
+      "constituency_code": 52,
+      "code": 258,
+      "name": "Igembe East"
+    },
+    {
+      "constituency_code": 52,
+      "code": 259,
+      "name": "Njia"
+    },
+    {
+      "constituency_code": 52,
+      "code": 260,
+      "name": "Kangeta"
+    },
+    {
+      "constituency_code": 53,
+      "code": 261,
+      "name": "Antuambui"
+    },
+    {
+      "constituency_code": 53,
+      "code": 262,
+      "name": "Ntunene"
+    },
+    {
+      "constituency_code": 53,
+      "code": 263,
+      "name": "Antubetwe Kiongo"
+    },
+    {
+      "constituency_code": 53,
+      "code": 264,
+      "name": "Naathu"
+    },
+    {
+      "constituency_code": 53,
+      "code": 265,
+      "name": "Amwathi"
+    },
+    {
+      "constituency_code": 54,
+      "code": 266,
+      "name": "Athwana"
+    },
+    {
+      "constituency_code": 54,
+      "code": 267,
+      "name": "Akithii"
+    },
+    {
+      "constituency_code": 54,
+      "code": 268,
+      "name": "Kianjai"
+    },
+    {
+      "constituency_code": 54,
+      "code": 269,
+      "name": "Nkomo"
+    },
+    {
+      "constituency_code": 54,
+      "code": 270,
+      "name": "Mbeu"
+    },
+    {
+      "constituency_code": 55,
+      "code": 271,
+      "name": "Thangatha"
+    },
+    {
+      "constituency_code": 55,
+      "code": 272,
+      "name": "Mikinduri"
+    },
+    {
+      "constituency_code": 55,
+      "code": 273,
+      "name": "Kiguchwa"
+    },
+    {
+      "constituency_code": 55,
+      "code": 274,
+      "name": "Muthara"
+    },
+    {
+      "constituency_code": 55,
+      "code": 275,
+      "name": "Karama"
+    },
+    {
+      "constituency_code": 56,
+      "code": 276,
+      "name": "Municipality"
+    },
+    {
+      "constituency_code": 56,
+      "code": 277,
+      "name": "Ntima East"
+    },
+    {
+      "constituency_code": 56,
+      "code": 278,
+      "name": "Ntima West"
+    },
+    {
+      "constituency_code": 56,
+      "code": 279,
+      "name": "Nyaki West"
+    },
+    {
+      "constituency_code": 56,
+      "code": 280,
+      "name": "Nyaki East"
+    },
+    {
+      "constituency_code": 57,
+      "code": 281,
+      "name": "Timau"
+    },
+    {
+      "constituency_code": 57,
+      "code": 282,
+      "name": "Kisima"
+    },
+    {
+      "constituency_code": 57,
+      "code": 283,
+      "name": "Kiirua/Naari"
+    },
+    {
+      "constituency_code": 57,
+      "code": 284,
+      "name": "Ruiri/Rwarera"
+    },
+    {
+      "constituency_code": 57,
+      "code": 289,
+      "name": "Kibirichia"
+    },
+    {
+      "constituency_code": 58,
+      "code": 285,
+      "name": "Mwanganthia"
+    },
+    {
+      "constituency_code": 58,
+      "code": 286,
+      "name": "Abothuguchi Central"
+    },
+    {
+      "constituency_code": 58,
+      "code": 287,
+      "name": "Abothuguchi West"
+    },
+    {
+      "constituency_code": 58,
+      "code": 288,
+      "name": "Kiagu"
+    },
+    {
+      "constituency_code": 59,
+      "code": 290,
+      "name": "Mitunguu"
+    },
+    {
+      "constituency_code": 59,
+      "code": 291,
+      "name": "Igoji East"
+    },
+    {
+      "constituency_code": 59,
+      "code": 292,
+      "name": "Igoji West"
+    },
+    {
+      "constituency_code": 59,
+      "code": 293,
+      "name": "Abogeta East"
+    },
+    {
+      "constituency_code": 59,
+      "code": 294,
+      "name": "Abogeta West"
+    },
+    {
+      "constituency_code": 59,
+      "code": 295,
+      "name": "Nkuene"
+    },
+    {
+      "constituency_code": 60,
+      "code": 296,
+      "name": "Mitheru"
+    },
+    {
+      "constituency_code": 60,
+      "code": 297,
+      "name": "Muthambi"
+    },
+    {
+      "constituency_code": 60,
+      "code": 298,
+      "name": "Mwimbi"
+    },
+    {
+      "constituency_code": 60,
+      "code": 299,
+      "name": "Ganga"
+    },
+    {
+      "constituency_code": 60,
+      "code": 300,
+      "name": "Chogoria"
+    },
+    {
+      "constituency_code": 61,
+      "code": 301,
+      "name": "Mariani"
+    },
+    {
+      "constituency_code": 61,
+      "code": 302,
+      "name": "Karingani"
+    },
+    {
+      "constituency_code": 61,
+      "code": 303,
+      "name": "Magumoni"
+    },
+    {
+      "constituency_code": 61,
+      "code": 304,
+      "name": "Mugwe"
+    },
+    {
+      "constituency_code": 61,
+      "code": 305,
+      "name": "Igambang'Ombe"
+    },
+    {
+      "constituency_code": 62,
+      "code": 306,
+      "name": "Gatunga"
+    },
+    {
+      "constituency_code": 62,
+      "code": 307,
+      "name": "Mukothima"
+    },
+    {
+      "constituency_code": 62,
+      "code": 308,
+      "name": "Nkondi"
+    },
+    {
+      "constituency_code": 62,
+      "code": 309,
+      "name": "Chiakariga"
+    },
+    {
+      "constituency_code": 62,
+      "code": 310,
+      "name": "Marimanti"
+    },
+    {
+      "constituency_code": 63,
+      "code": 311,
+      "name": "Ruguru/Ngandori"
+    },
+    {
+      "constituency_code": 63,
+      "code": 312,
+      "name": "Kithimu"
+    },
+    {
+      "constituency_code": 63,
+      "code": 313,
+      "name": "Nginda"
+    },
+    {
+      "constituency_code": 63,
+      "code": 314,
+      "name": "Mbeti North"
+    },
+    {
+      "constituency_code": 63,
+      "code": 315,
+      "name": "Kirimari"
+    },
+    {
+      "constituency_code": 63,
+      "code": 316,
+      "name": "Gaturi South"
+    },
+    {
+      "constituency_code": 64,
+      "code": 317,
+      "name": "Gaturi North"
+    },
+    {
+      "constituency_code": 64,
+      "code": 318,
+      "name": "Kagaari South"
+    },
+    {
+      "constituency_code": 64,
+      "code": 319,
+      "name": "Central  Ward"
+    },
+    {
+      "constituency_code": 64,
+      "code": 320,
+      "name": "Kagaari North"
+    },
+    {
+      "constituency_code": 64,
+      "code": 321,
+      "name": "Kyeni North"
+    },
+    {
+      "constituency_code": 64,
+      "code": 322,
+      "name": "Kyeni South"
+    },
+    {
+      "constituency_code": 65,
+      "code": 323,
+      "name": "Mwea"
+    },
+    {
+      "constituency_code": 65,
+      "code": 324,
+      "name": "Makima"
+    },
+    {
+      "constituency_code": 65,
+      "code": 325,
+      "name": "Mbeti South"
+    },
+    {
+      "constituency_code": 65,
+      "code": 326,
+      "name": "Mavuria"
+    },
+    {
+      "constituency_code": 65,
+      "code": 327,
+      "name": "Kiambere"
+    },
+    {
+      "constituency_code": 66,
+      "code": 328,
+      "name": "Nthawa"
+    },
+    {
+      "constituency_code": 66,
+      "code": 329,
+      "name": "Muminji"
+    },
+    {
+      "constituency_code": 66,
+      "code": 330,
+      "name": "Evurore"
+    },
+    {
+      "constituency_code": 67,
+      "code": 331,
+      "name": "Ngomeni"
+    },
+    {
+      "constituency_code": 67,
+      "code": 332,
+      "name": "Kyuso"
+    },
+    {
+      "constituency_code": 67,
+      "code": 333,
+      "name": "Mumoni"
+    },
+    {
+      "constituency_code": 67,
+      "code": 334,
+      "name": "Tseikuru"
+    },
+    {
+      "constituency_code": 67,
+      "code": 335,
+      "name": "Tharaka"
+    },
+    {
+      "constituency_code": 68,
+      "code": 336,
+      "name": "Kyome/Thaana"
+    },
+    {
+      "constituency_code": 68,
+      "code": 337,
+      "name": "Nguutani"
+    },
+    {
+      "constituency_code": 68,
+      "code": 338,
+      "name": "Migwani"
+    },
+    {
+      "constituency_code": 68,
+      "code": 339,
+      "name": "Kiomo/Kyethani"
+    },
+    {
+      "constituency_code": 69,
+      "code": 340,
+      "name": "Central"
+    },
+    {
+      "constituency_code": 69,
+      "code": 341,
+      "name": "Kivou"
+    },
+    {
+      "constituency_code": 69,
+      "code": 342,
+      "name": "Nguni"
+    },
+    {
+      "constituency_code": 69,
+      "code": 343,
+      "name": "Nuu"
+    },
+    {
+      "constituency_code": 69,
+      "code": 344,
+      "name": "Mui"
+    },
+    {
+      "constituency_code": 69,
+      "code": 345,
+      "name": "Waita"
+    },
+    {
+      "constituency_code": 70,
+      "code": 346,
+      "name": "Mutonguni"
+    },
+    {
+      "constituency_code": 70,
+      "code": 347,
+      "name": "Kauwi"
+    },
+    {
+      "constituency_code": 70,
+      "code": 348,
+      "name": "Matinyani"
+    },
+    {
+      "constituency_code": 70,
+      "code": 349,
+      "name": "Kwa Mutonga/Kithumula"
+    },
+    {
+      "constituency_code": 71,
+      "code": 350,
+      "name": "Kisasi"
+    },
+    {
+      "constituency_code": 71,
+      "code": 351,
+      "name": "Mbitini"
+    },
+    {
+      "constituency_code": 71,
+      "code": 352,
+      "name": "Kwavonza/Yatta"
+    },
+    {
+      "constituency_code": 71,
+      "code": 353,
+      "name": "Kanyangi"
+    },
+    {
+      "constituency_code": 72,
+      "code": 354,
+      "name": "Miambani"
+    },
+    {
+      "constituency_code": 72,
+      "code": 355,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 72,
+      "code": 356,
+      "name": "Kyangwithya West"
+    },
+    {
+      "constituency_code": 72,
+      "code": 357,
+      "name": "Mulango"
+    },
+    {
+      "constituency_code": 72,
+      "code": 358,
+      "name": "Kyangwithya East"
+    },
+    {
+      "constituency_code": 73,
+      "code": 359,
+      "name": "Zombe/Mwitika"
+    },
+    {
+      "constituency_code": 73,
+      "code": 360,
+      "name": "Nzambani"
+    },
+    {
+      "constituency_code": 73,
+      "code": 361,
+      "name": "Chuluni"
+    },
+    {
+      "constituency_code": 73,
+      "code": 362,
+      "name": "Voo/Kyamatu"
+    },
+    {
+      "constituency_code": 73,
+      "code": 363,
+      "name": "Endau/Malalani"
+    },
+    {
+      "constituency_code": 73,
+      "code": 364,
+      "name": "Mutito/Kaliku"
+    },
+    {
+      "constituency_code": 74,
+      "code": 365,
+      "name": "Ikanga/Kyatune"
+    },
+    {
+      "constituency_code": 74,
+      "code": 366,
+      "name": "Mutomo"
+    },
+    {
+      "constituency_code": 74,
+      "code": 367,
+      "name": "Mutha"
+    },
+    {
+      "constituency_code": 74,
+      "code": 368,
+      "name": "Ikutha"
+    },
+    {
+      "constituency_code": 74,
+      "code": 369,
+      "name": "Kanziko"
+    },
+    {
+      "constituency_code": 74,
+      "code": 370,
+      "name": "Athi"
+    },
+    {
+      "constituency_code": 75,
+      "code": 371,
+      "name": "Kivaa"
+    },
+    {
+      "constituency_code": 75,
+      "code": 372,
+      "name": "Masinga Central"
+    },
+    {
+      "constituency_code": 75,
+      "code": 373,
+      "name": "Ekalakala"
+    },
+    {
+      "constituency_code": 75,
+      "code": 374,
+      "name": "Muthesya"
+    },
+    {
+      "constituency_code": 75,
+      "code": 375,
+      "name": "Ndithini"
+    },
+    {
+      "constituency_code": 76,
+      "code": 376,
+      "name": "Ndalani"
+    },
+    {
+      "constituency_code": 76,
+      "code": 377,
+      "name": "Matuu"
+    },
+    {
+      "constituency_code": 76,
+      "code": 378,
+      "name": "Kithimani"
+    },
+    {
+      "constituency_code": 76,
+      "code": 379,
+      "name": "Ikombe"
+    },
+    {
+      "constituency_code": 76,
+      "code": 380,
+      "name": "Katangi"
+    },
+    {
+      "constituency_code": 77,
+      "code": 381,
+      "name": "Kangundo North"
+    },
+    {
+      "constituency_code": 77,
+      "code": 382,
+      "name": "Kangundo Central"
+    },
+    {
+      "constituency_code": 77,
+      "code": 383,
+      "name": "Kangundo East"
+    },
+    {
+      "constituency_code": 77,
+      "code": 384,
+      "name": "Kangundo West"
+    },
+    {
+      "constituency_code": 78,
+      "code": 385,
+      "name": "Tala"
+    },
+    {
+      "constituency_code": 78,
+      "code": 386,
+      "name": "Matungulu North"
+    },
+    {
+      "constituency_code": 78,
+      "code": 387,
+      "name": "Matungulu East"
+    },
+    {
+      "constituency_code": 78,
+      "code": 388,
+      "name": "Matungulu West"
+    },
+    {
+      "constituency_code": 78,
+      "code": 389,
+      "name": "Kyeleni"
+    },
+    {
+      "constituency_code": 79,
+      "code": 390,
+      "name": "Mitaboni"
+    },
+    {
+      "constituency_code": 79,
+      "code": 391,
+      "name": "Kathiani Central"
+    },
+    {
+      "constituency_code": 79,
+      "code": 392,
+      "name": "Upper Kaewa/Iveti"
+    },
+    {
+      "constituency_code": 79,
+      "code": 393,
+      "name": "Lower Kaewa/Kaani"
+    },
+    {
+      "constituency_code": 80,
+      "code": 394,
+      "name": "Athi River"
+    },
+    {
+      "constituency_code": 80,
+      "code": 395,
+      "name": "Kinanie"
+    },
+    {
+      "constituency_code": 80,
+      "code": 396,
+      "name": "Muthwani"
+    },
+    {
+      "constituency_code": 80,
+      "code": 397,
+      "name": "Syokimau/Mulolongo"
+    },
+    {
+      "constituency_code": 81,
+      "code": 398,
+      "name": "Kalama"
+    },
+    {
+      "constituency_code": 81,
+      "code": 399,
+      "name": "Mua"
+    },
+    {
+      "constituency_code": 81,
+      "code": 400,
+      "name": "Mutituni"
+    },
+    {
+      "constituency_code": 81,
+      "code": 401,
+      "name": "Machakos Central"
+    },
+    {
+      "constituency_code": 81,
+      "code": 402,
+      "name": "Mumbuni North"
+    },
+    {
+      "constituency_code": 81,
+      "code": 403,
+      "name": "Muvuti/Kiima-Kimwe"
+    },
+    {
+      "constituency_code": 81,
+      "code": 404,
+      "name": "Kola"
+    },
+    {
+      "constituency_code": 82,
+      "code": 405,
+      "name": "Mbiuni"
+    },
+    {
+      "constituency_code": 82,
+      "code": 406,
+      "name": "Makutano/ Mwala"
+    },
+    {
+      "constituency_code": 82,
+      "code": 407,
+      "name": "Masii"
+    },
+    {
+      "constituency_code": 82,
+      "code": 408,
+      "name": "Muthetheni"
+    },
+    {
+      "constituency_code": 82,
+      "code": 409,
+      "name": "Wamunyu"
+    },
+    {
+      "constituency_code": 82,
+      "code": 410,
+      "name": "Kibauni"
+    },
+    {
+      "constituency_code": 83,
+      "code": 411,
+      "name": "Tulimani"
+    },
+    {
+      "constituency_code": 83,
+      "code": 412,
+      "name": "Mbooni"
+    },
+    {
+      "constituency_code": 83,
+      "code": 413,
+      "name": "Kithungo/Kitundu"
+    },
+    {
+      "constituency_code": 83,
+      "code": 414,
+      "name": "Kiteta/Kisau"
+    },
+    {
+      "constituency_code": 83,
+      "code": 415,
+      "name": "Waia-Kako"
+    },
+    {
+      "constituency_code": 83,
+      "code": 416,
+      "name": "Kalawa"
+    },
+    {
+      "constituency_code": 84,
+      "code": 417,
+      "name": "Kasikeu"
+    },
+    {
+      "constituency_code": 84,
+      "code": 418,
+      "name": "Mukaa"
+    },
+    {
+      "constituency_code": 84,
+      "code": 419,
+      "name": "Kiima Kiu/Kalanzoni"
+    },
+    {
+      "constituency_code": 85,
+      "code": 420,
+      "name": "Ukia"
+    },
+    {
+      "constituency_code": 85,
+      "code": 421,
+      "name": "Kee"
+    },
+    {
+      "constituency_code": 85,
+      "code": 422,
+      "name": "Kilungu"
+    },
+    {
+      "constituency_code": 85,
+      "code": 423,
+      "name": "Ilima"
+    },
+    {
+      "constituency_code": 86,
+      "code": 424,
+      "name": "Wote"
+    },
+    {
+      "constituency_code": 86,
+      "code": 425,
+      "name": "Muvau/Kikuumini"
+    },
+    {
+      "constituency_code": 86,
+      "code": 426,
+      "name": "Mavindini"
+    },
+    {
+      "constituency_code": 86,
+      "code": 427,
+      "name": "Kitise/Kithuki"
+    },
+    {
+      "constituency_code": 86,
+      "code": 428,
+      "name": "Kathonzweni"
+    },
+    {
+      "constituency_code": 86,
+      "code": 429,
+      "name": "Nzaui/Kilili/Kalamba"
+    },
+    {
+      "constituency_code": 86,
+      "code": 430,
+      "name": "Mbitini"
+    },
+    {
+      "constituency_code": 87,
+      "code": 431,
+      "name": "Makindu"
+    },
+    {
+      "constituency_code": 87,
+      "code": 432,
+      "name": "Nguumo"
+    },
+    {
+      "constituency_code": 87,
+      "code": 433,
+      "name": "Kikumbulyu North"
+    },
+    {
+      "constituency_code": 87,
+      "code": 434,
+      "name": "Kikumbulyu South"
+    },
+    {
+      "constituency_code": 87,
+      "code": 435,
+      "name": "Nguu/Masumba"
+    },
+    {
+      "constituency_code": 87,
+      "code": 436,
+      "name": "Emali/Mulala"
+    },
+    {
+      "constituency_code": 88,
+      "code": 437,
+      "name": "Masongaleni"
+    },
+    {
+      "constituency_code": 88,
+      "code": 438,
+      "name": "Mtito Andei"
+    },
+    {
+      "constituency_code": 88,
+      "code": 439,
+      "name": "Thange"
+    },
+    {
+      "constituency_code": 88,
+      "code": 440,
+      "name": "Ivingoni/Nzambani"
+    },
+    {
+      "constituency_code": 89,
+      "code": 441,
+      "name": "Engineer"
+    },
+    {
+      "constituency_code": 89,
+      "code": 442,
+      "name": "Gathara"
+    },
+    {
+      "constituency_code": 89,
+      "code": 443,
+      "name": "North Kinangop"
+    },
+    {
+      "constituency_code": 89,
+      "code": 444,
+      "name": "Murungaru"
+    },
+    {
+      "constituency_code": 89,
+      "code": 445,
+      "name": "Njabini\Kiburu"
+    },
+    {
+      "constituency_code": 89,
+      "code": 446,
+      "name": "Nyakio"
+    },
+    {
+      "constituency_code": 89,
+      "code": 447,
+      "name": "Githabai"
+    },
+    {
+      "constituency_code": 89,
+      "code": 448,
+      "name": "Magumu"
+    },
+    {
+      "constituency_code": 90,
+      "code": 449,
+      "name": "Wanjohi"
+    },
+    {
+      "constituency_code": 90,
+      "code": 450,
+      "name": "Kipipiri"
+    },
+    {
+      "constituency_code": 90,
+      "code": 451,
+      "name": "Geta"
+    },
+    {
+      "constituency_code": 90,
+      "code": 452,
+      "name": "Githioro"
+    },
+    {
+      "constituency_code": 91,
+      "code": 453,
+      "name": "Karau"
+    },
+    {
+      "constituency_code": 91,
+      "code": 454,
+      "name": "Kanjuiri Range"
+    },
+    {
+      "constituency_code": 91,
+      "code": 455,
+      "name": "Mirangine"
+    },
+    {
+      "constituency_code": 91,
+      "code": 456,
+      "name": "Kaimbaga"
+    },
+    {
+      "constituency_code": 91,
+      "code": 457,
+      "name": "Rurii"
+    },
+    {
+      "constituency_code": 92,
+      "code": 458,
+      "name": "Gathanji"
+    },
+    {
+      "constituency_code": 92,
+      "code": 459,
+      "name": "Gatimu"
+    },
+    {
+      "constituency_code": 92,
+      "code": 460,
+      "name": "Weru"
+    },
+    {
+      "constituency_code": 92,
+      "code": 461,
+      "name": "Charagita"
+    },
+    {
+      "constituency_code": 93,
+      "code": 462,
+      "name": "Leshau/Pondo"
+    },
+    {
+      "constituency_code": 93,
+      "code": 463,
+      "name": "Kiriita"
+    },
+    {
+      "constituency_code": 93,
+      "code": 464,
+      "name": "Central"
+    },
+    {
+      "constituency_code": 93,
+      "code": 465,
+      "name": "Shamata"
+    },
+    {
+      "constituency_code": 94,
+      "code": 466,
+      "name": "Dedan Kimanthi"
+    },
+    {
+      "constituency_code": 94,
+      "code": 467,
+      "name": "Wamagana"
+    },
+    {
+      "constituency_code": 94,
+      "code": 468,
+      "name": "Aguthi-Gaaki"
+    },
+    {
+      "constituency_code": 95,
+      "code": 469,
+      "name": "Mweiga"
+    },
+    {
+      "constituency_code": 95,
+      "code": 470,
+      "name": "Naromoru Kiamathaga"
+    },
+    {
+      "constituency_code": 95,
+      "code": 471,
+      "name": "Mwiyogo/Endarasha"
+    },
+    {
+      "constituency_code": 95,
+      "code": 472,
+      "name": "Mugunda"
+    },
+    {
+      "constituency_code": 95,
+      "code": 473,
+      "name": "Gatarakwa"
+    },
+    {
+      "constituency_code": 95,
+      "code": 474,
+      "name": "Thegu River"
+    },
+    {
+      "constituency_code": 95,
+      "code": 475,
+      "name": "Kabaru"
+    },
+    {
+      "constituency_code": 95,
+      "code": 476,
+      "name": "Gakawa"
+    },
+    {
+      "constituency_code": 96,
+      "code": 477,
+      "name": "Ruguru"
+    },
+    {
+      "constituency_code": 96,
+      "code": 478,
+      "name": "Magutu"
+    },
+    {
+      "constituency_code": 96,
+      "code": 479,
+      "name": "Iriaini"
+    },
+    {
+      "constituency_code": 96,
+      "code": 480,
+      "name": "Konyu"
+    },
+    {
+      "constituency_code": 96,
+      "code": 481,
+      "name": "Kirimukuyu"
+    },
+    {
+      "constituency_code": 96,
+      "code": 482,
+      "name": "Karatina Town"
+    },
+    {
+      "constituency_code": 97,
+      "code": 483,
+      "name": "Mahiga"
+    },
+    {
+      "constituency_code": 97,
+      "code": 484,
+      "name": "Iria-Ini"
+    },
+    {
+      "constituency_code": 97,
+      "code": 485,
+      "name": "Chinga"
+    },
+    {
+      "constituency_code": 97,
+      "code": 486,
+      "name": "Karima"
+    },
+    {
+      "constituency_code": 98,
+      "code": 487,
+      "name": "Gikondi"
+    },
+    {
+      "constituency_code": 98,
+      "code": 488,
+      "name": "Rugi"
+    },
+    {
+      "constituency_code": 98,
+      "code": 489,
+      "name": "Mukurwe-Ini West"
+    },
+    {
+      "constituency_code": 98,
+      "code": 490,
+      "name": "Mukurwe-Ini Central"
+    },
+    {
+      "constituency_code": 99,
+      "code": 491,
+      "name": "Kiganjo/Mathari"
+    },
+    {
+      "constituency_code": 99,
+      "code": 492,
+      "name": "Rware"
+    },
+    {
+      "constituency_code": 99,
+      "code": 493,
+      "name": "Gatitu/Muruguru"
+    },
+    {
+      "constituency_code": 99,
+      "code": 494,
+      "name": "Ruring'u"
+    },
+    {
+      "constituency_code": 99,
+      "code": 495,
+      "name": "Kamakwa/Mukaro"
+    },
+    {
+      "constituency_code": 100,
+      "code": 496,
+      "name": "Mutithi"
+    },
+    {
+      "constituency_code": 100,
+      "code": 497,
+      "name": "Kangai"
+    },
+    {
+      "constituency_code": 100,
+      "code": 498,
+      "name": "Thiba"
+    },
+    {
+      "constituency_code": 100,
+      "code": 499,
+      "name": "Wamumu"
+    },
+    {
+      "constituency_code": 100,
+      "code": 500,
+      "name": "Nyangati"
+    },
+    {
+      "constituency_code": 100,
+      "code": 501,
+      "name": "Murinduko"
+    },
+    {
+      "constituency_code": 100,
+      "code": 502,
+      "name": "Gathigiriri"
+    },
+    {
+      "constituency_code": 100,
+      "code": 503,
+      "name": "Tebere"
+    },
+    {
+      "constituency_code": 101,
+      "code": 504,
+      "name": "Kabare"
+    },
+    {
+      "constituency_code": 101,
+      "code": 505,
+      "name": "Baragwi"
+    },
+    {
+      "constituency_code": 101,
+      "code": 506,
+      "name": "Njukiini"
+    },
+    {
+      "constituency_code": 101,
+      "code": 507,
+      "name": "Ngariama"
+    },
+    {
+      "constituency_code": 101,
+      "code": 508,
+      "name": "Karumandi"
+    },
+    {
+      "constituency_code": 102,
+      "code": 509,
+      "name": "Mukure"
+    },
+    {
+      "constituency_code": 102,
+      "code": 510,
+      "name": "Kiine"
+    },
+    {
+      "constituency_code": 102,
+      "code": 511,
+      "name": "Kariti"
+    },
+    {
+      "constituency_code": 103,
+      "code": 512,
+      "name": "Mutira"
+    },
+    {
+      "constituency_code": 103,
+      "code": 513,
+      "name": "Kanyekini"
+    },
+    {
+      "constituency_code": 103,
+      "code": 514,
+      "name": "Kerugoya"
+    },
+    {
+      "constituency_code": 103,
+      "code": 515,
+      "name": "Inoi"
+    },
+    {
+      "constituency_code": 104,
+      "code": 516,
+      "name": "Kanyenya-Ini"
+    },
+    {
+      "constituency_code": 104,
+      "code": 517,
+      "name": "Muguru"
+    },
+    {
+      "constituency_code": 104,
+      "code": 518,
+      "name": "Rwathia"
+    },
+    {
+      "constituency_code": 105,
+      "code": 519,
+      "name": "Gitugi"
+    },
+    {
+      "constituency_code": 105,
+      "code": 520,
+      "name": "Kiru"
+    },
+    {
+      "constituency_code": 105,
+      "code": 521,
+      "name": "Kamacharia"
+    },
+    {
+      "constituency_code": 106,
+      "code": 522,
+      "name": "Wangu"
+    },
+    {
+      "constituency_code": 106,
+      "code": 523,
+      "name": "Mugoiri"
+    },
+    {
+      "constituency_code": 106,
+      "code": 524,
+      "name": "Mbiri"
+    },
+    {
+      "constituency_code": 106,
+      "code": 525,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 106,
+      "code": 526,
+      "name": "Murarandia"
+    },
+    {
+      "constituency_code": 106,
+      "code": 527,
+      "name": "Gaturi"
+    },
+    {
+      "constituency_code": 107,
+      "code": 528,
+      "name": "Kahumbu"
+    },
+    {
+      "constituency_code": 107,
+      "code": 529,
+      "name": "Muthithi"
+    },
+    {
+      "constituency_code": 107,
+      "code": 530,
+      "name": "Kigumo"
+    },
+    {
+      "constituency_code": 107,
+      "code": 531,
+      "name": "Kangari"
+    },
+    {
+      "constituency_code": 107,
+      "code": 532,
+      "name": "Kinyona"
+    },
+    {
+      "constituency_code": 108,
+      "code": 533,
+      "name": "Kimorori/Wempa"
+    },
+    {
+      "constituency_code": 108,
+      "code": 534,
+      "name": "Makuyu"
+    },
+    {
+      "constituency_code": 108,
+      "code": 535,
+      "name": "Kambiti"
+    },
+    {
+      "constituency_code": 108,
+      "code": 536,
+      "name": "Kamahuha"
+    },
+    {
+      "constituency_code": 108,
+      "code": 537,
+      "name": "Ichagaki"
+    },
+    {
+      "constituency_code": 108,
+      "code": 538,
+      "name": "Nginda"
+    },
+    {
+      "constituency_code": 109,
+      "code": 539,
+      "name": "Ng'araria"
+    },
+    {
+      "constituency_code": 109,
+      "code": 540,
+      "name": "Muruka"
+    },
+    {
+      "constituency_code": 109,
+      "code": 541,
+      "name": "Kagundu-Ini"
+    },
+    {
+      "constituency_code": 109,
+      "code": 542,
+      "name": "Gaichanjiru"
+    },
+    {
+      "constituency_code": 109,
+      "code": 543,
+      "name": "Ithiru"
+    },
+    {
+      "constituency_code": 109,
+      "code": 544,
+      "name": "Ruchu"
+    },
+    {
+      "constituency_code": 110,
+      "code": 545,
+      "name": "Ithanga"
+    },
+    {
+      "constituency_code": 110,
+      "code": 546,
+      "name": "Kakuzi/Mitubiri"
+    },
+    {
+      "constituency_code": 110,
+      "code": 547,
+      "name": "Mugumo-Ini"
+    },
+    {
+      "constituency_code": 110,
+      "code": 548,
+      "name": "Kihumbu-Ini"
+    },
+    {
+      "constituency_code": 110,
+      "code": 549,
+      "name": "Gatanga"
+    },
+    {
+      "constituency_code": 110,
+      "code": 550,
+      "name": "Kariara"
+    },
+    {
+      "constituency_code": 111,
+      "code": 551,
+      "name": "Kiamwangi"
+    },
+    {
+      "constituency_code": 111,
+      "code": 552,
+      "name": "Kiganjo"
+    },
+    {
+      "constituency_code": 111,
+      "code": 553,
+      "name": "Ndarugu"
+    },
+    {
+      "constituency_code": 111,
+      "code": 554,
+      "name": "Ngenda"
+    },
+    {
+      "constituency_code": 112,
+      "code": 555,
+      "name": "Gituamba"
+    },
+    {
+      "constituency_code": 112,
+      "code": 556,
+      "name": "Githobokoni"
+    },
+    {
+      "constituency_code": 112,
+      "code": 557,
+      "name": "Chania"
+    },
+    {
+      "constituency_code": 112,
+      "code": 558,
+      "name": "Mang'u"
+    },
+    {
+      "constituency_code": 113,
+      "code": 559,
+      "name": "Murera"
+    },
+    {
+      "constituency_code": 113,
+      "code": 560,
+      "name": "Theta"
+    },
+    {
+      "constituency_code": 113,
+      "code": 561,
+      "name": "Juja"
+    },
+    {
+      "constituency_code": 113,
+      "code": 562,
+      "name": "Witeithie"
+    },
+    {
+      "constituency_code": 113,
+      "code": 563,
+      "name": "Kalimoni"
+    },
+    {
+      "constituency_code": 114,
+      "code": 564,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 114,
+      "code": 565,
+      "name": "Kamenu"
+    },
+    {
+      "constituency_code": 114,
+      "code": 566,
+      "name": "Hospital"
+    },
+    {
+      "constituency_code": 114,
+      "code": 567,
+      "name": "Gatuanyaga"
+    },
+    {
+      "constituency_code": 114,
+      "code": 568,
+      "name": "Ngoliba"
+    },
+    {
+      "constituency_code": 115,
+      "code": 569,
+      "name": "Gitothua"
+    },
+    {
+      "constituency_code": 115,
+      "code": 570,
+      "name": "Biashara"
+    },
+    {
+      "constituency_code": 115,
+      "code": 571,
+      "name": "Gatongora"
+    },
+    {
+      "constituency_code": 115,
+      "code": 572,
+      "name": "Kahawa Sukari"
+    },
+    {
+      "constituency_code": 115,
+      "code": 573,
+      "name": "Kahawa Wendani"
+    },
+    {
+      "constituency_code": 115,
+      "code": 574,
+      "name": "Kiuu"
+    },
+    {
+      "constituency_code": 115,
+      "code": 575,
+      "name": "Mwiki"
+    },
+    {
+      "constituency_code": 115,
+      "code": 576,
+      "name": "Mwihoko"
+    },
+    {
+      "constituency_code": 116,
+      "code": 577,
+      "name": "Githunguri"
+    },
+    {
+      "constituency_code": 116,
+      "code": 578,
+      "name": "Githiga"
+    },
+    {
+      "constituency_code": 116,
+      "code": 579,
+      "name": "Ikinu"
+    },
+    {
+      "constituency_code": 116,
+      "code": 580,
+      "name": "Ngewa"
+    },
+    {
+      "constituency_code": 116,
+      "code": 581,
+      "name": "Komothai"
+    },
+    {
+      "constituency_code": 117,
+      "code": 582,
+      "name": "Ting'ang'a"
+    },
+    {
+      "constituency_code": 117,
+      "code": 583,
+      "name": "Ndumberi"
+    },
+    {
+      "constituency_code": 117,
+      "code": 584,
+      "name": "Riabai"
+    },
+    {
+      "constituency_code": 117,
+      "code": 585,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 118,
+      "code": 586,
+      "name": "Cianda"
+    },
+    {
+      "constituency_code": 118,
+      "code": 587,
+      "name": "Karuri"
+    },
+    {
+      "constituency_code": 118,
+      "code": 588,
+      "name": "Ndenderu"
+    },
+    {
+      "constituency_code": 118,
+      "code": 589,
+      "name": "Muchatha"
+    },
+    {
+      "constituency_code": 118,
+      "code": 590,
+      "name": "Kihara"
+    },
+    {
+      "constituency_code": 119,
+      "code": 591,
+      "name": "Gitaru"
+    },
+    {
+      "constituency_code": 119,
+      "code": 592,
+      "name": "Muguga"
+    },
+    {
+      "constituency_code": 119,
+      "code": 593,
+      "name": "Nyadhuna"
+    },
+    {
+      "constituency_code": 119,
+      "code": 594,
+      "name": "Kabete"
+    },
+    {
+      "constituency_code": 119,
+      "code": 595,
+      "name": "Uthiru"
+    },
+    {
+      "constituency_code": 120,
+      "code": 596,
+      "name": "Karai"
+    },
+    {
+      "constituency_code": 120,
+      "code": 597,
+      "name": "Nachu"
+    },
+    {
+      "constituency_code": 120,
+      "code": 598,
+      "name": "Sigona"
+    },
+    {
+      "constituency_code": 120,
+      "code": 599,
+      "name": "Kikuyu"
+    },
+    {
+      "constituency_code": 120,
+      "code": 600,
+      "name": "Kinoo"
+    },
+    {
+      "constituency_code": 121,
+      "code": 601,
+      "name": "Bibirioni"
+    },
+    {
+      "constituency_code": 121,
+      "code": 602,
+      "name": "Limuru Central"
+    },
+    {
+      "constituency_code": 121,
+      "code": 603,
+      "name": "Ndeiya"
+    },
+    {
+      "constituency_code": 121,
+      "code": 604,
+      "name": "Limuru East"
+    },
+    {
+      "constituency_code": 121,
+      "code": 605,
+      "name": "Ngecha Tigoni"
+    },
+    {
+      "constituency_code": 122,
+      "code": 606,
+      "name": "Kinale"
+    },
+    {
+      "constituency_code": 122,
+      "code": 607,
+      "name": "Kijabe"
+    },
+    {
+      "constituency_code": 122,
+      "code": 608,
+      "name": "Nyanduma"
+    },
+    {
+      "constituency_code": 122,
+      "code": 609,
+      "name": "Kamburu"
+    },
+    {
+      "constituency_code": 122,
+      "code": 610,
+      "name": "Lari/Kirenga"
+    },
+    {
+      "constituency_code": 123,
+      "code": 611,
+      "name": "Kaeris"
+    },
+    {
+      "constituency_code": 123,
+      "code": 612,
+      "name": "Lake Zone"
+    },
+    {
+      "constituency_code": 123,
+      "code": 613,
+      "name": "Lapur"
+    },
+    {
+      "constituency_code": 123,
+      "code": 614,
+      "name": "Kaaleng/Kaikor"
+    },
+    {
+      "constituency_code": 123,
+      "code": 615,
+      "name": "Kibish"
+    },
+    {
+      "constituency_code": 123,
+      "code": 616,
+      "name": "Nakalale"
+    },
+    {
+      "constituency_code": 124,
+      "code": 617,
+      "name": "Kakuma"
+    },
+    {
+      "constituency_code": 124,
+      "code": 618,
+      "name": "Lopur"
+    },
+    {
+      "constituency_code": 124,
+      "code": 619,
+      "name": "Letea"
+    },
+    {
+      "constituency_code": 124,
+      "code": 620,
+      "name": "Songot"
+    },
+    {
+      "constituency_code": 124,
+      "code": 621,
+      "name": "Kalobeyei"
+    },
+    {
+      "constituency_code": 124,
+      "code": 622,
+      "name": "Lokichoggio"
+    },
+    {
+      "constituency_code": 124,
+      "code": 623,
+      "name": "Nanaam"
+    },
+    {
+      "constituency_code": 125,
+      "code": 624,
+      "name": "Kerio Delta"
+    },
+    {
+      "constituency_code": 125,
+      "code": 625,
+      "name": "Kang'atotha"
+    },
+    {
+      "constituency_code": 125,
+      "code": 626,
+      "name": "Kalokol"
+    },
+    {
+      "constituency_code": 125,
+      "code": 627,
+      "name": "Lodwar Township"
+    },
+    {
+      "constituency_code": 125,
+      "code": 628,
+      "name": "Kanamkemer"
+    },
+    {
+      "constituency_code": 126,
+      "code": 629,
+      "name": "Kotaruk/Lobei"
+    },
+    {
+      "constituency_code": 126,
+      "code": 630,
+      "name": "Turkwel"
+    },
+    {
+      "constituency_code": 126,
+      "code": 631,
+      "name": "Loima"
+    },
+    {
+      "constituency_code": 126,
+      "code": 632,
+      "name": "Lokiriama/Lorengippi"
+    },
+    {
+      "constituency_code": 127,
+      "code": 633,
+      "name": "Kaputir"
+    },
+    {
+      "constituency_code": 127,
+      "code": 634,
+      "name": "Katilu"
+    },
+    {
+      "constituency_code": 127,
+      "code": 635,
+      "name": "Lobokat"
+    },
+    {
+      "constituency_code": 127,
+      "code": 636,
+      "name": "Kalapata"
+    },
+    {
+      "constituency_code": 127,
+      "code": 637,
+      "name": "Lokichar"
+    },
+    {
+      "constituency_code": 128,
+      "code": 638,
+      "name": "Kapedo/Napeitom"
+    },
+    {
+      "constituency_code": 128,
+      "code": 639,
+      "name": "Katilia"
+    },
+    {
+      "constituency_code": 128,
+      "code": 640,
+      "name": "Lokori/Kochodin"
+    },
+    {
+      "constituency_code": 129,
+      "code": 641,
+      "name": "Riwo"
+    },
+    {
+      "constituency_code": 129,
+      "code": 642,
+      "name": "Kapenguria"
+    },
+    {
+      "constituency_code": 129,
+      "code": 643,
+      "name": "Mnagei"
+    },
+    {
+      "constituency_code": 129,
+      "code": 644,
+      "name": "Siyoi"
+    },
+    {
+      "constituency_code": 129,
+      "code": 645,
+      "name": "Endugh"
+    },
+    {
+      "constituency_code": 129,
+      "code": 646,
+      "name": "Sook"
+    },
+    {
+      "constituency_code": 130,
+      "code": 647,
+      "name": "Sekerr"
+    },
+    {
+      "constituency_code": 130,
+      "code": 648,
+      "name": "Masool"
+    },
+    {
+      "constituency_code": 130,
+      "code": 649,
+      "name": "Lomut"
+    },
+    {
+      "constituency_code": 130,
+      "code": 650,
+      "name": "Weiwei"
+    },
+    {
+      "constituency_code": 131,
+      "code": 651,
+      "name": "Suam"
+    },
+    {
+      "constituency_code": 131,
+      "code": 652,
+      "name": "Kodich"
+    },
+    {
+      "constituency_code": 131,
+      "code": 653,
+      "name": "Kasei"
+    },
+    {
+      "constituency_code": 131,
+      "code": 654,
+      "name": "Kapchok"
+    },
+    {
+      "constituency_code": 131,
+      "code": 655,
+      "name": "Kiwawa"
+    },
+    {
+      "constituency_code": 131,
+      "code": 656,
+      "name": "Alale"
+    },
+    {
+      "constituency_code": 132,
+      "code": 657,
+      "name": "Chepareria"
+    },
+    {
+      "constituency_code": 132,
+      "code": 658,
+      "name": "Batei"
+    },
+    {
+      "constituency_code": 132,
+      "code": 659,
+      "name": "Lelan"
+    },
+    {
+      "constituency_code": 132,
+      "code": 660,
+      "name": "Tapach"
+    },
+    {
+      "constituency_code": 133,
+      "code": 661,
+      "name": "Lodokejek"
+    },
+    {
+      "constituency_code": 133,
+      "code": 662,
+      "name": "Suguta Marmar"
+    },
+    {
+      "constituency_code": 133,
+      "code": 663,
+      "name": "Maralal"
+    },
+    {
+      "constituency_code": 133,
+      "code": 664,
+      "name": "Loosuk"
+    },
+    {
+      "constituency_code": 133,
+      "code": 665,
+      "name": "Poro"
+    },
+    {
+      "constituency_code": 134,
+      "code": 666,
+      "name": "El-Barta"
+    },
+    {
+      "constituency_code": 134,
+      "code": 667,
+      "name": "Nachola"
+    },
+    {
+      "constituency_code": 134,
+      "code": 668,
+      "name": "Ndoto"
+    },
+    {
+      "constituency_code": 134,
+      "code": 669,
+      "name": "Nyiro"
+    },
+    {
+      "constituency_code": 134,
+      "code": 670,
+      "name": "Angata Nanyokie"
+    },
+    {
+      "constituency_code": 134,
+      "code": 671,
+      "name": "Baawa"
+    },
+    {
+      "constituency_code": 135,
+      "code": 672,
+      "name": "Waso"
+    },
+    {
+      "constituency_code": 135,
+      "code": 673,
+      "name": "Wamba West"
+    },
+    {
+      "constituency_code": 135,
+      "code": 674,
+      "name": "Wamba East"
+    },
+    {
+      "constituency_code": 135,
+      "code": 675,
+      "name": "Wamba North"
+    },
+    {
+      "constituency_code": 136,
+      "code": 676,
+      "name": "Kapomboi"
+    },
+    {
+      "constituency_code": 136,
+      "code": 677,
+      "name": "Kwanza"
+    },
+    {
+      "constituency_code": 136,
+      "code": 678,
+      "name": "Keiyo"
+    },
+    {
+      "constituency_code": 136,
+      "code": 679,
+      "name": "Bidii"
+    },
+    {
+      "constituency_code": 137,
+      "code": 680,
+      "name": "Chepchoina"
+    },
+    {
+      "constituency_code": 137,
+      "code": 681,
+      "name": "Endebess"
+    },
+    {
+      "constituency_code": 137,
+      "code": 682,
+      "name": "Matumbei"
+    },
+    {
+      "constituency_code": 138,
+      "code": 683,
+      "name": "Kinyoro"
+    },
+    {
+      "constituency_code": 138,
+      "code": 684,
+      "name": "Matisi"
+    },
+    {
+      "constituency_code": 138,
+      "code": 685,
+      "name": "Tuwani"
+    },
+    {
+      "constituency_code": 138,
+      "code": 686,
+      "name": "Saboti"
+    },
+    {
+      "constituency_code": 138,
+      "code": 687,
+      "name": "Machewa"
+    },
+    {
+      "constituency_code": 139,
+      "code": 688,
+      "name": "Kiminini"
+    },
+    {
+      "constituency_code": 139,
+      "code": 689,
+      "name": "Waitaluk"
+    },
+    {
+      "constituency_code": 139,
+      "code": 690,
+      "name": "Sirende"
+    },
+    {
+      "constituency_code": 139,
+      "code": 691,
+      "name": "Hospital"
+    },
+    {
+      "constituency_code": 139,
+      "code": 692,
+      "name": "Sikhendu"
+    },
+    {
+      "constituency_code": 139,
+      "code": 693,
+      "name": "Nabiswa"
+    },
+    {
+      "constituency_code": 140,
+      "code": 694,
+      "name": "Sinyerere"
+    },
+    {
+      "constituency_code": 140,
+      "code": 695,
+      "name": "Makutano"
+    },
+    {
+      "constituency_code": 140,
+      "code": 696,
+      "name": "Kaplamai"
+    },
+    {
+      "constituency_code": 140,
+      "code": 697,
+      "name": "Motosiet"
+    },
+    {
+      "constituency_code": 140,
+      "code": 698,
+      "name": "Cherangany/Suwerwa"
+    },
+    {
+      "constituency_code": 140,
+      "code": 699,
+      "name": "Chepsiro/Kiptoror"
+    },
+    {
+      "constituency_code": 140,
+      "code": 700,
+      "name": "Sitatunga"
+    },
+    {
+      "constituency_code": 141,
+      "code": 701,
+      "name": "Moi's Bridge"
+    },
+    {
+      "constituency_code": 141,
+      "code": 702,
+      "name": "Kapkures"
+    },
+    {
+      "constituency_code": 141,
+      "code": 703,
+      "name": "Ziwa"
+    },
+    {
+      "constituency_code": 141,
+      "code": 704,
+      "name": "Segero/Barsombe"
+    },
+    {
+      "constituency_code": 141,
+      "code": 705,
+      "name": "Kipsomba"
+    },
+    {
+      "constituency_code": 141,
+      "code": 706,
+      "name": "Soy"
+    },
+    {
+      "constituency_code": 141,
+      "code": 707,
+      "name": "Kuinet/Kapsuswa"
+    },
+    {
+      "constituency_code": 142,
+      "code": 708,
+      "name": "Ngenyilel"
+    },
+    {
+      "constituency_code": 142,
+      "code": 709,
+      "name": "Tapsagoi"
+    },
+    {
+      "constituency_code": 142,
+      "code": 710,
+      "name": "Kamagut"
+    },
+    {
+      "constituency_code": 142,
+      "code": 711,
+      "name": "Kiplombe"
+    },
+    {
+      "constituency_code": 142,
+      "code": 712,
+      "name": "Kapsaos"
+    },
+    {
+      "constituency_code": 142,
+      "code": 713,
+      "name": "Huruma"
+    },
+    {
+      "constituency_code": 143,
+      "code": 714,
+      "name": "Tembelio"
+    },
+    {
+      "constituency_code": 143,
+      "code": 715,
+      "name": "Sergoit"
+    },
+    {
+      "constituency_code": 143,
+      "code": 716,
+      "name": "Karuna/Meibeki"
+    },
+    {
+      "constituency_code": 143,
+      "code": 717,
+      "name": "Moiben"
+    },
+    {
+      "constituency_code": 143,
+      "code": 718,
+      "name": "Kimumu"
+    },
+    {
+      "constituency_code": 144,
+      "code": 719,
+      "name": "Kapsoya"
+    },
+    {
+      "constituency_code": 144,
+      "code": 720,
+      "name": "Kaptagat"
+    },
+    {
+      "constituency_code": 144,
+      "code": 721,
+      "name": "Ainabkoi/Olare"
+    },
+    {
+      "constituency_code": 145,
+      "code": 722,
+      "name": "Simat/Kapseret"
+    },
+    {
+      "constituency_code": 145,
+      "code": 723,
+      "name": "Kipkenyo"
+    },
+    {
+      "constituency_code": 145,
+      "code": 724,
+      "name": "Ngeria"
+    },
+    {
+      "constituency_code": 145,
+      "code": 725,
+      "name": "Megun"
+    },
+    {
+      "constituency_code": 145,
+      "code": 726,
+      "name": "Langas"
+    },
+    {
+      "constituency_code": 146,
+      "code": 727,
+      "name": "Racecourse"
+    },
+    {
+      "constituency_code": 146,
+      "code": 728,
+      "name": "Cheptiret/Kipchamo"
+    },
+    {
+      "constituency_code": 146,
+      "code": 729,
+      "name": "Tulwet/Chuiyat"
+    },
+    {
+      "constituency_code": 146,
+      "code": 730,
+      "name": "Tarakwa"
+    },
+    {
+      "constituency_code": 147,
+      "code": 731,
+      "name": "Kapyego"
+    },
+    {
+      "constituency_code": 147,
+      "code": 732,
+      "name": "Sambirir"
+    },
+    {
+      "constituency_code": 147,
+      "code": 733,
+      "name": "Endo"
+    },
+    {
+      "constituency_code": 147,
+      "code": 734,
+      "name": "Embobut / Embulot"
+    },
+    {
+      "constituency_code": 148,
+      "code": 735,
+      "name": "Lelan"
+    },
+    {
+      "constituency_code": 148,
+      "code": 736,
+      "name": "Sengwer"
+    },
+    {
+      "constituency_code": 148,
+      "code": 737,
+      "name": "Cherang'any/Chebororwa"
+    },
+    {
+      "constituency_code": 148,
+      "code": 738,
+      "name": "Moiben/Kuserwo"
+    },
+    {
+      "constituency_code": 148,
+      "code": 739,
+      "name": "Kapsowar"
+    },
+    {
+      "constituency_code": 148,
+      "code": 740,
+      "name": "Arror"
+    },
+    {
+      "constituency_code": 149,
+      "code": 741,
+      "name": "Emsoo"
+    },
+    {
+      "constituency_code": 149,
+      "code": 742,
+      "name": "Kamariny"
+    },
+    {
+      "constituency_code": 149,
+      "code": 743,
+      "name": "Kapchemutwa"
+    },
+    {
+      "constituency_code": 149,
+      "code": 744,
+      "name": "Tambach"
+    },
+    {
+      "constituency_code": 150,
+      "code": 745,
+      "name": "Kaptarakwa"
+    },
+    {
+      "constituency_code": 150,
+      "code": 746,
+      "name": "Chepkorio"
+    },
+    {
+      "constituency_code": 150,
+      "code": 747,
+      "name": "Soy North"
+    },
+    {
+      "constituency_code": 150,
+      "code": 748,
+      "name": "Soy South"
+    },
+    {
+      "constituency_code": 150,
+      "code": 749,
+      "name": "Kabiemit"
+    },
+    {
+      "constituency_code": 150,
+      "code": 750,
+      "name": "Metkei"
+    },
+    {
+      "constituency_code": 151,
+      "code": 751,
+      "name": "Songhor/Soba"
+    },
+    {
+      "constituency_code": 151,
+      "code": 752,
+      "name": "Tindiret"
+    },
+    {
+      "constituency_code": 151,
+      "code": 753,
+      "name": "Chemelil/Chemase"
+    },
+    {
+      "constituency_code": 151,
+      "code": 754,
+      "name": "Kapsimotwo"
+    },
+    {
+      "constituency_code": 152,
+      "code": 755,
+      "name": "Kabwareng"
+    },
+    {
+      "constituency_code": 152,
+      "code": 756,
+      "name": "Terik"
+    },
+    {
+      "constituency_code": 152,
+      "code": 757,
+      "name": "Kemeloi-Maraba"
+    },
+    {
+      "constituency_code": 152,
+      "code": 758,
+      "name": "Kobujoi"
+    },
+    {
+      "constituency_code": 152,
+      "code": 759,
+      "name": "Kaptumo-Kaboi"
+    },
+    {
+      "constituency_code": 152,
+      "code": 760,
+      "name": "Koyo-Ndurio"
+    },
+    {
+      "constituency_code": 153,
+      "code": 761,
+      "name": "Nandi Hills"
+    },
+    {
+      "constituency_code": 153,
+      "code": 762,
+      "name": "Chepkunyuk"
+    },
+    {
+      "constituency_code": 153,
+      "code": 763,
+      "name": "Ol'Lessos"
+    },
+    {
+      "constituency_code": 153,
+      "code": 764,
+      "name": "Kapchorua"
+    },
+    {
+      "constituency_code": 154,
+      "code": 765,
+      "name": "Chemundu/Kapng'etuny"
+    },
+    {
+      "constituency_code": 154,
+      "code": 766,
+      "name": "Kosirai"
+    },
+    {
+      "constituency_code": 154,
+      "code": 767,
+      "name": "Lelmokwo/Ngechek"
+    },
+    {
+      "constituency_code": 154,
+      "code": 768,
+      "name": "Kaptel/Kamoiywo"
+    },
+    {
+      "constituency_code": 154,
+      "code": 769,
+      "name": "Kiptuya"
+    },
+    {
+      "constituency_code": 155,
+      "code": 770,
+      "name": "Chepkumia"
+    },
+    {
+      "constituency_code": 155,
+      "code": 771,
+      "name": "Kapkangani"
+    },
+    {
+      "constituency_code": 155,
+      "code": 772,
+      "name": "Kapsabet"
+    },
+    {
+      "constituency_code": 155,
+      "code": 773,
+      "name": "Kilibwoni"
+    },
+    {
+      "constituency_code": 156,
+      "code": 774,
+      "name": "Chepterwai"
+    },
+    {
+      "constituency_code": 156,
+      "code": 775,
+      "name": "Kipkaren"
+    },
+    {
+      "constituency_code": 156,
+      "code": 776,
+      "name": "Kurgung/Surungai"
+    },
+    {
+      "constituency_code": 156,
+      "code": 777,
+      "name": "Kabiyet"
+    },
+    {
+      "constituency_code": 156,
+      "code": 778,
+      "name": "Ndalat"
+    },
+    {
+      "constituency_code": 156,
+      "code": 779,
+      "name": "Kabisaga"
+    },
+    {
+      "constituency_code": 156,
+      "code": 780,
+      "name": "Sangalo/Kebulonik"
+    },
+    {
+      "constituency_code": 157,
+      "code": 781,
+      "name": "Tirioko"
+    },
+    {
+      "constituency_code": 157,
+      "code": 782,
+      "name": "Kolowa"
+    },
+    {
+      "constituency_code": 157,
+      "code": 783,
+      "name": "Ribkwo"
+    },
+    {
+      "constituency_code": 157,
+      "code": 784,
+      "name": "Silale"
+    },
+    {
+      "constituency_code": 157,
+      "code": 785,
+      "name": "Loiyamorock"
+    },
+    {
+      "constituency_code": 157,
+      "code": 786,
+      "name": "Tangulbei/Korossi"
+    },
+    {
+      "constituency_code": 157,
+      "code": 787,
+      "name": "Churo/Amaya"
+    },
+    {
+      "constituency_code": 158,
+      "code": 788,
+      "name": "Barwessa"
+    },
+    {
+      "constituency_code": 158,
+      "code": 789,
+      "name": "Kabartonjo"
+    },
+    {
+      "constituency_code": 158,
+      "code": 790,
+      "name": "Saimo/Kipsaraman"
+    },
+    {
+      "constituency_code": 158,
+      "code": 791,
+      "name": "Saimo/Soi"
+    },
+    {
+      "constituency_code": 158,
+      "code": 792,
+      "name": "Bartabwa"
+    },
+    {
+      "constituency_code": 159,
+      "code": 793,
+      "name": "Kabarnet"
+    },
+    {
+      "constituency_code": 159,
+      "code": 794,
+      "name": "Sacho"
+    },
+    {
+      "constituency_code": 159,
+      "code": 795,
+      "name": "Tenges"
+    },
+    {
+      "constituency_code": 159,
+      "code": 796,
+      "name": "Ewalel/Chapchap"
+    },
+    {
+      "constituency_code": 159,
+      "code": 797,
+      "name": "Kapropita"
+    },
+    {
+      "constituency_code": 160,
+      "code": 798,
+      "name": "Marigat"
+    },
+    {
+      "constituency_code": 160,
+      "code": 799,
+      "name": "Ilchamus"
+    },
+    {
+      "constituency_code": 160,
+      "code": 800,
+      "name": "Mochongoi"
+    },
+    {
+      "constituency_code": 160,
+      "code": 801,
+      "name": "Mukutani"
+    },
+    {
+      "constituency_code": 161,
+      "code": 802,
+      "name": "Mogotio"
+    },
+    {
+      "constituency_code": 161,
+      "code": 803,
+      "name": "Emining"
+    },
+    {
+      "constituency_code": 161,
+      "code": 804,
+      "name": "Kisanana"
+    },
+    {
+      "constituency_code": 162,
+      "code": 805,
+      "name": "Lembus"
+    },
+    {
+      "constituency_code": 162,
+      "code": 806,
+      "name": "Lembus Kwen"
+    },
+    {
+      "constituency_code": 162,
+      "code": 807,
+      "name": "Ravine"
+    },
+    {
+      "constituency_code": 162,
+      "code": 808,
+      "name": "Mumberes/Maji Mazuri"
+    },
+    {
+      "constituency_code": 162,
+      "code": 809,
+      "name": "Lembus/Perkerra"
+    },
+    {
+      "constituency_code": 162,
+      "code": 810,
+      "name": "Koibatek"
+    },
+    {
+      "constituency_code": 163,
+      "code": 811,
+      "name": "Ol-Moran"
+    },
+    {
+      "constituency_code": 163,
+      "code": 812,
+      "name": "Rumuruti Township"
+    },
+    {
+      "constituency_code": 163,
+      "code": 813,
+      "name": "Githiga"
+    },
+    {
+      "constituency_code": 163,
+      "code": 814,
+      "name": "Marmanet"
+    },
+    {
+      "constituency_code": 163,
+      "code": 815,
+      "name": "Igwamiti"
+    },
+    {
+      "constituency_code": 163,
+      "code": 816,
+      "name": "Salama"
+    },
+    {
+      "constituency_code": 164,
+      "code": 817,
+      "name": "Ngobit"
+    },
+    {
+      "constituency_code": 164,
+      "code": 818,
+      "name": "Tigithi"
+    },
+    {
+      "constituency_code": 164,
+      "code": 819,
+      "name": "Thingithu"
+    },
+    {
+      "constituency_code": 164,
+      "code": 820,
+      "name": "Nanyuki"
+    },
+    {
+      "constituency_code": 164,
+      "code": 821,
+      "name": "Umande"
+    },
+    {
+      "constituency_code": 165,
+      "code": 822,
+      "name": "Sosian"
+    },
+    {
+      "constituency_code": 165,
+      "code": 823,
+      "name": "Segera"
+    },
+    {
+      "constituency_code": 165,
+      "code": 824,
+      "name": "Mugogodo West"
+    },
+    {
+      "constituency_code": 165,
+      "code": 825,
+      "name": "Mugogodo East"
+    },
+    {
+      "constituency_code": 166,
+      "code": 826,
+      "name": "Mariashoni"
+    },
+    {
+      "constituency_code": 166,
+      "code": 827,
+      "name": "Elburgon"
+    },
+    {
+      "constituency_code": 166,
+      "code": 828,
+      "name": "Turi"
+    },
+    {
+      "constituency_code": 166,
+      "code": 829,
+      "name": "Molo"
+    },
+    {
+      "constituency_code": 167,
+      "code": 830,
+      "name": "Mau Narok"
+    },
+    {
+      "constituency_code": 167,
+      "code": 831,
+      "name": "Mauche"
+    },
+    {
+      "constituency_code": 167,
+      "code": 832,
+      "name": "Kihingo"
+    },
+    {
+      "constituency_code": 167,
+      "code": 833,
+      "name": "Nessuit"
+    },
+    {
+      "constituency_code": 167,
+      "code": 834,
+      "name": "Lare"
+    },
+    {
+      "constituency_code": 167,
+      "code": 835,
+      "name": "Njoro"
+    },
+    {
+      "constituency_code": 168,
+      "code": 836,
+      "name": "Biashara"
+    },
+    {
+      "constituency_code": 168,
+      "code": 837,
+      "name": "Hells Gate"
+    },
+    {
+      "constituency_code": 168,
+      "code": 838,
+      "name": "Lake View"
+    },
+    {
+      "constituency_code": 168,
+      "code": 839,
+      "name": "Mai Mahiu"
+    },
+    {
+      "constituency_code": 168,
+      "code": 840,
+      "name": "Maiella"
+    },
+    {
+      "constituency_code": 168,
+      "code": 841,
+      "name": "Olkaria"
+    },
+    {
+      "constituency_code": 168,
+      "code": 842,
+      "name": "Naivasha East"
+    },
+    {
+      "constituency_code": 168,
+      "code": 843,
+      "name": "Viwandani"
+    },
+    {
+      "constituency_code": 169,
+      "code": 844,
+      "name": "Gilgil"
+    },
+    {
+      "constituency_code": 169,
+      "code": 845,
+      "name": "Elementaita"
+    },
+    {
+      "constituency_code": 169,
+      "code": 846,
+      "name": "Mbaruk/Eburu"
+    },
+    {
+      "constituency_code": 169,
+      "code": 847,
+      "name": "Malewa West"
+    },
+    {
+      "constituency_code": 169,
+      "code": 848,
+      "name": "Murindati"
+    },
+    {
+      "constituency_code": 170,
+      "code": 849,
+      "name": "Amalo"
+    },
+    {
+      "constituency_code": 170,
+      "code": 850,
+      "name": "Keringet"
+    },
+    {
+      "constituency_code": 170,
+      "code": 851,
+      "name": "Kiptagich"
+    },
+    {
+      "constituency_code": 170,
+      "code": 852,
+      "name": "Tinet"
+    },
+    {
+      "constituency_code": 171,
+      "code": 853,
+      "name": "Kiptororo"
+    },
+    {
+      "constituency_code": 171,
+      "code": 854,
+      "name": "Nyota"
+    },
+    {
+      "constituency_code": 171,
+      "code": 855,
+      "name": "Sirikwa"
+    },
+    {
+      "constituency_code": 171,
+      "code": 856,
+      "name": "Kamara"
+    },
+    {
+      "constituency_code": 172,
+      "code": 857,
+      "name": "Subukia"
+    },
+    {
+      "constituency_code": 172,
+      "code": 858,
+      "name": "Waseges"
+    },
+    {
+      "constituency_code": 172,
+      "code": 859,
+      "name": "Kabazi"
+    },
+    {
+      "constituency_code": 173,
+      "code": 860,
+      "name": "Menengai West"
+    },
+    {
+      "constituency_code": 173,
+      "code": 861,
+      "name": "Soin"
+    },
+    {
+      "constituency_code": 173,
+      "code": 862,
+      "name": "Visoi"
+    },
+    {
+      "constituency_code": 173,
+      "code": 863,
+      "name": "Mosop"
+    },
+    {
+      "constituency_code": 173,
+      "code": 864,
+      "name": "Solai"
+    },
+    {
+      "constituency_code": 174,
+      "code": 865,
+      "name": "Dundori"
+    },
+    {
+      "constituency_code": 174,
+      "code": 866,
+      "name": "Kabatini"
+    },
+    {
+      "constituency_code": 174,
+      "code": 867,
+      "name": "Kiamaina"
+    },
+    {
+      "constituency_code": 174,
+      "code": 868,
+      "name": "Lanet/Umoja"
+    },
+    {
+      "constituency_code": 174,
+      "code": 869,
+      "name": "Bahati"
+    },
+    {
+      "constituency_code": 175,
+      "code": 870,
+      "name": "Barut"
+    },
+    {
+      "constituency_code": 175,
+      "code": 871,
+      "name": "London"
+    },
+    {
+      "constituency_code": 175,
+      "code": 872,
+      "name": "Kaptembwo"
+    },
+    {
+      "constituency_code": 175,
+      "code": 873,
+      "name": "Kapkures"
+    },
+    {
+      "constituency_code": 175,
+      "code": 874,
+      "name": "Rhoda"
+    },
+    {
+      "constituency_code": 175,
+      "code": 875,
+      "name": "Shaabab"
+    },
+    {
+      "constituency_code": 176,
+      "code": 876,
+      "name": "Biashara"
+    },
+    {
+      "constituency_code": 176,
+      "code": 877,
+      "name": "Kivumbini"
+    },
+    {
+      "constituency_code": 176,
+      "code": 878,
+      "name": "Flamingo"
+    },
+    {
+      "constituency_code": 176,
+      "code": 879,
+      "name": "Menengai"
+    },
+    {
+      "constituency_code": 176,
+      "code": 880,
+      "name": "Nakuru East"
+    },
+    {
+      "constituency_code": 177,
+      "code": 881,
+      "name": "Kilgoris Central"
+    },
+    {
+      "constituency_code": 177,
+      "code": 882,
+      "name": "Keyian"
+    },
+    {
+      "constituency_code": 177,
+      "code": 883,
+      "name": "Angata Barikoi"
+    },
+    {
+      "constituency_code": 177,
+      "code": 884,
+      "name": "Shankoe"
+    },
+    {
+      "constituency_code": 177,
+      "code": 885,
+      "name": "Kimintet"
+    },
+    {
+      "constituency_code": 177,
+      "code": 886,
+      "name": "Lolgorian"
+    },
+    {
+      "constituency_code": 178,
+      "code": 887,
+      "name": "Ilkerin"
+    },
+    {
+      "constituency_code": 178,
+      "code": 888,
+      "name": "Ololmasani"
+    },
+    {
+      "constituency_code": 178,
+      "code": 889,
+      "name": "Mogondo"
+    },
+    {
+      "constituency_code": 178,
+      "code": 890,
+      "name": "Kapsasian"
+    },
+    {
+      "constituency_code": 179,
+      "code": 891,
+      "name": "Olpusimoru"
+    },
+    {
+      "constituency_code": 179,
+      "code": 892,
+      "name": "Olokurto"
+    },
+    {
+      "constituency_code": 179,
+      "code": 893,
+      "name": "Narok Town"
+    },
+    {
+      "constituency_code": 179,
+      "code": 894,
+      "name": "Nkareta"
+    },
+    {
+      "constituency_code": 179,
+      "code": 895,
+      "name": "Olorropil"
+    },
+    {
+      "constituency_code": 179,
+      "code": 896,
+      "name": "Melili"
+    },
+    {
+      "constituency_code": 180,
+      "code": 897,
+      "name": "Mosiro"
+    },
+    {
+      "constituency_code": 180,
+      "code": 898,
+      "name": "Ildamat"
+    },
+    {
+      "constituency_code": 180,
+      "code": 899,
+      "name": "Keekonyokie"
+    },
+    {
+      "constituency_code": 180,
+      "code": 900,
+      "name": "Suswa"
+    },
+    {
+      "constituency_code": 181,
+      "code": 901,
+      "name": "Majimoto/Naroosura"
+    },
+    {
+      "constituency_code": 181,
+      "code": 902,
+      "name": "Ololulung'a"
+    },
+    {
+      "constituency_code": 181,
+      "code": 903,
+      "name": "Melelo"
+    },
+    {
+      "constituency_code": 181,
+      "code": 904,
+      "name": "Loita"
+    },
+    {
+      "constituency_code": 181,
+      "code": 905,
+      "name": "Sogoo"
+    },
+    {
+      "constituency_code": 181,
+      "code": 906,
+      "name": "Sagamian"
+    },
+    {
+      "constituency_code": 182,
+      "code": 907,
+      "name": "Ilmotiok"
+    },
+    {
+      "constituency_code": 182,
+      "code": 908,
+      "name": "Mara"
+    },
+    {
+      "constituency_code": 182,
+      "code": 909,
+      "name": "Siana"
+    },
+    {
+      "constituency_code": 182,
+      "code": 910,
+      "name": "Naikarra"
+    },
+    {
+      "constituency_code": 183,
+      "code": 911,
+      "name": "Olkeri"
+    },
+    {
+      "constituency_code": 183,
+      "code": 912,
+      "name": "Ongata Rongai"
+    },
+    {
+      "constituency_code": 183,
+      "code": 913,
+      "name": "Nkaimurunya"
+    },
+    {
+      "constituency_code": 183,
+      "code": 914,
+      "name": "Oloolua"
+    },
+    {
+      "constituency_code": 183,
+      "code": 915,
+      "name": "Ngong"
+    },
+    {
+      "constituency_code": 184,
+      "code": 916,
+      "name": "Purko"
+    },
+    {
+      "constituency_code": 184,
+      "code": 917,
+      "name": "Ildamat"
+    },
+    {
+      "constituency_code": 184,
+      "code": 918,
+      "name": "Dalalekutuk"
+    },
+    {
+      "constituency_code": 184,
+      "code": 919,
+      "name": "Matapato North"
+    },
+    {
+      "constituency_code": 184,
+      "code": 920,
+      "name": "Matapato South"
+    },
+    {
+      "constituency_code": 185,
+      "code": 921,
+      "name": "Kaputiei North"
+    },
+    {
+      "constituency_code": 185,
+      "code": 922,
+      "name": "Kitengela"
+    },
+    {
+      "constituency_code": 185,
+      "code": 923,
+      "name": "Oloosirkon/Sholinke"
+    },
+    {
+      "constituency_code": 185,
+      "code": 924,
+      "name": "Kenyawa-Poka"
+    },
+    {
+      "constituency_code": 185,
+      "code": 925,
+      "name": "Imaroro"
+    },
+    {
+      "constituency_code": 186,
+      "code": 926,
+      "name": "Keekonyokie"
+    },
+    {
+      "constituency_code": 186,
+      "code": 927,
+      "name": "Iloodokilani"
+    },
+    {
+      "constituency_code": 186,
+      "code": 928,
+      "name": "Magadi"
+    },
+    {
+      "constituency_code": 186,
+      "code": 929,
+      "name": "Ewuaso Oonkidong'I"
+    },
+    {
+      "constituency_code": 186,
+      "code": 930,
+      "name": "Mosiro"
+    },
+    {
+      "constituency_code": 187,
+      "code": 931,
+      "name": "Entonet/Lenkisim"
+    },
+    {
+      "constituency_code": 187,
+      "code": 932,
+      "name": "Mbirikani/Eselenkei"
+    },
+    {
+      "constituency_code": 187,
+      "code": 933,
+      "name": "Kuku"
+    },
+    {
+      "constituency_code": 187,
+      "code": 934,
+      "name": "Rombo"
+    },
+    {
+      "constituency_code": 187,
+      "code": 935,
+      "name": "Kimana"
+    },
+    {
+      "constituency_code": 188,
+      "code": 936,
+      "name": "Londiani"
+    },
+    {
+      "constituency_code": 188,
+      "code": 937,
+      "name": "Kedowa/Kimugul"
+    },
+    {
+      "constituency_code": 188,
+      "code": 938,
+      "name": "Chepseon"
+    },
+    {
+      "constituency_code": 188,
+      "code": 939,
+      "name": "Tendeno/Sorget"
+    },
+    {
+      "constituency_code": 189,
+      "code": 940,
+      "name": "Kunyak"
+    },
+    {
+      "constituency_code": 189,
+      "code": 941,
+      "name": "Kamasian"
+    },
+    {
+      "constituency_code": 189,
+      "code": 942,
+      "name": "Kipkelion"
+    },
+    {
+      "constituency_code": 189,
+      "code": 943,
+      "name": "Chilchila"
+    },
+    {
+      "constituency_code": 190,
+      "code": 944,
+      "name": "Kapsoit"
+    },
+    {
+      "constituency_code": 190,
+      "code": 945,
+      "name": "Ainamoi"
+    },
+    {
+      "constituency_code": 190,
+      "code": 946,
+      "name": "Kapkugerwet"
+    },
+    {
+      "constituency_code": 190,
+      "code": 947,
+      "name": "Kipchebor"
+    },
+    {
+      "constituency_code": 190,
+      "code": 948,
+      "name": "Kipchimchim"
+    },
+    {
+      "constituency_code": 190,
+      "code": 949,
+      "name": "Kapsaos"
+    },
+    {
+      "constituency_code": 191,
+      "code": 950,
+      "name": "Kisiara"
+    },
+    {
+      "constituency_code": 191,
+      "code": 951,
+      "name": "Tebesonik"
+    },
+    {
+      "constituency_code": 191,
+      "code": 952,
+      "name": "Cheboin"
+    },
+    {
+      "constituency_code": 191,
+      "code": 953,
+      "name": "Chemosot"
+    },
+    {
+      "constituency_code": 191,
+      "code": 954,
+      "name": "Litein"
+    },
+    {
+      "constituency_code": 191,
+      "code": 955,
+      "name": "Cheplanget"
+    },
+    {
+      "constituency_code": 191,
+      "code": 956,
+      "name": "Kapkatet"
+    },
+    {
+      "constituency_code": 192,
+      "code": 957,
+      "name": "Waldai"
+    },
+    {
+      "constituency_code": 192,
+      "code": 958,
+      "name": "Kabianga"
+    },
+    {
+      "constituency_code": 192,
+      "code": 959,
+      "name": "Cheptororiet/Seretut"
+    },
+    {
+      "constituency_code": 192,
+      "code": 960,
+      "name": "Chaik"
+    },
+    {
+      "constituency_code": 192,
+      "code": 961,
+      "name": "Kapsuser"
+    },
+    {
+      "constituency_code": 193,
+      "code": 962,
+      "name": "Sigowet"
+    },
+    {
+      "constituency_code": 193,
+      "code": 963,
+      "name": "Kaplelartet"
+    },
+    {
+      "constituency_code": 193,
+      "code": 964,
+      "name": "Soliat"
+    },
+    {
+      "constituency_code": 193,
+      "code": 965,
+      "name": "Soin"
+    },
+    {
+      "constituency_code": 194,
+      "code": 966,
+      "name": "Ndanai/Abosi"
+    },
+    {
+      "constituency_code": 194,
+      "code": 967,
+      "name": "Chemagel"
+    },
+    {
+      "constituency_code": 194,
+      "code": 968,
+      "name": "Kipsonoi"
+    },
+    {
+      "constituency_code": 194,
+      "code": 969,
+      "name": "Kapletundo"
+    },
+    {
+      "constituency_code": 194,
+      "code": 970,
+      "name": "Rongena/Manaret"
+    },
+    {
+      "constituency_code": 195,
+      "code": 971,
+      "name": "Kong'asis"
+    },
+    {
+      "constituency_code": 195,
+      "code": 972,
+      "name": "Nyangores"
+    },
+    {
+      "constituency_code": 195,
+      "code": 973,
+      "name": "Sigor"
+    },
+    {
+      "constituency_code": 195,
+      "code": 974,
+      "name": "Chebunyo"
+    },
+    {
+      "constituency_code": 195,
+      "code": 975,
+      "name": "Siongiroi"
+    },
+    {
+      "constituency_code": 196,
+      "code": 976,
+      "name": "Merigi"
+    },
+    {
+      "constituency_code": 196,
+      "code": 977,
+      "name": "Kembu"
+    },
+    {
+      "constituency_code": 196,
+      "code": 978,
+      "name": "Longisa"
+    },
+    {
+      "constituency_code": 196,
+      "code": 979,
+      "name": "Kipreres"
+    },
+    {
+      "constituency_code": 196,
+      "code": 980,
+      "name": "Chemaner"
+    },
+    {
+      "constituency_code": 197,
+      "code": 981,
+      "name": "Silibwet Township"
+    },
+    {
+      "constituency_code": 197,
+      "code": 982,
+      "name": "Ndaraweta"
+    },
+    {
+      "constituency_code": 197,
+      "code": 983,
+      "name": "Singorwet"
+    },
+    {
+      "constituency_code": 197,
+      "code": 984,
+      "name": "Chesoen"
+    },
+    {
+      "constituency_code": 197,
+      "code": 985,
+      "name": "Mutarakwa"
+    },
+    {
+      "constituency_code": 198,
+      "code": 986,
+      "name": "Chepchabas"
+    },
+    {
+      "constituency_code": 198,
+      "code": 987,
+      "name": "Kimulot"
+    },
+    {
+      "constituency_code": 198,
+      "code": 988,
+      "name": "Mogogosiek"
+    },
+    {
+      "constituency_code": 198,
+      "code": 989,
+      "name": "Boito"
+    },
+    {
+      "constituency_code": 198,
+      "code": 990,
+      "name": "Embomos"
+    },
+    {
+      "constituency_code": 199,
+      "code": 991,
+      "name": "Mautuma"
+    },
+    {
+      "constituency_code": 199,
+      "code": 992,
+      "name": "Lugari"
+    },
+    {
+      "constituency_code": 199,
+      "code": 993,
+      "name": "Lumakanda"
+    },
+    {
+      "constituency_code": 199,
+      "code": 994,
+      "name": "Chekalini"
+    },
+    {
+      "constituency_code": 199,
+      "code": 995,
+      "name": "Chevaywa"
+    },
+    {
+      "constituency_code": 199,
+      "code": 996,
+      "name": "Lwandeti"
+    },
+    {
+      "constituency_code": 200,
+      "code": 997,
+      "name": "Likuyani"
+    },
+    {
+      "constituency_code": 200,
+      "code": 998,
+      "name": "Sango"
+    },
+    {
+      "constituency_code": 200,
+      "code": 999,
+      "name": "Kongoni"
+    },
+    {
+      "constituency_code": 200,
+      "code": 1000,
+      "name": "Nzoia"
+    },
+    {
+      "constituency_code": 200,
+      "code": 1001,
+      "name": "Sinoko"
+    },
+    {
+      "constituency_code": 201,
+      "code": 1002,
+      "name": "West Kabras"
+    },
+    {
+      "constituency_code": 201,
+      "code": 1003,
+      "name": "Chemuche"
+    },
+    {
+      "constituency_code": 201,
+      "code": 1004,
+      "name": "East Kabras"
+    },
+    {
+      "constituency_code": 201,
+      "code": 1005,
+      "name": "Butali/Chegulo"
+    },
+    {
+      "constituency_code": 201,
+      "code": 1006,
+      "name": "Manda-Shivanga"
+    },
+    {
+      "constituency_code": 201,
+      "code": 1007,
+      "name": "Shirugu-Mugai"
+    },
+    {
+      "constituency_code": 201,
+      "code": 1008,
+      "name": "South Kabras"
+    },
+    {
+      "constituency_code": 202,
+      "code": 1009,
+      "name": "Butsotso East"
+    },
+    {
+      "constituency_code": 202,
+      "code": 1010,
+      "name": "Butsotso South"
+    },
+    {
+      "constituency_code": 202,
+      "code": 1011,
+      "name": "Butsotso Central"
+    },
+    {
+      "constituency_code": 202,
+      "code": 1012,
+      "name": "Sheywe"
+    },
+    {
+      "constituency_code": 202,
+      "code": 1013,
+      "name": "Mahiakalo"
+    },
+    {
+      "constituency_code": 202,
+      "code": 1014,
+      "name": "Shirere"
+    },
+    {
+      "constituency_code": 203,
+      "code": 1015,
+      "name": "Ingostse-Mathia"
+    },
+    {
+      "constituency_code": 203,
+      "code": 1016,
+      "name": "Shinoyi-Shikomari-Esumeyia"
+    },
+    {
+      "constituency_code": 203,
+      "code": 1017,
+      "name": "Bunyala West"
+    },
+    {
+      "constituency_code": 203,
+      "code": 1018,
+      "name": "Bunyala East"
+    },
+    {
+      "constituency_code": 203,
+      "code": 1019,
+      "name": "Bunyala Central"
+    },
+    {
+      "constituency_code": 204,
+      "code": 1020,
+      "name": "Mumias Central"
+    },
+    {
+      "constituency_code": 204,
+      "code": 1021,
+      "name": "Mumias North"
+    },
+    {
+      "constituency_code": 204,
+      "code": 1022,
+      "name": "Etenje"
+    },
+    {
+      "constituency_code": 204,
+      "code": 1023,
+      "name": "Musanda"
+    },
+    {
+      "constituency_code": 205,
+      "code": 1024,
+      "name": "Lusheya/Lubinu"
+    },
+    {
+      "constituency_code": 205,
+      "code": 1025,
+      "name": "Malaha/Isongo/Makunga"
+    },
+    {
+      "constituency_code": 205,
+      "code": 1026,
+      "name": "East Wanga"
+    },
+    {
+      "constituency_code": 206,
+      "code": 1027,
+      "name": "Koyonzo"
+    },
+    {
+      "constituency_code": 206,
+      "code": 1028,
+      "name": "Kholera"
+    },
+    {
+      "constituency_code": 206,
+      "code": 1029,
+      "name": "Khalaba"
+    },
+    {
+      "constituency_code": 206,
+      "code": 1030,
+      "name": "Mayoni"
+    },
+    {
+      "constituency_code": 206,
+      "code": 1031,
+      "name": "Namamali"
+    },
+    {
+      "constituency_code": 207,
+      "code": 1032,
+      "name": "Marama West"
+    },
+    {
+      "constituency_code": 207,
+      "code": 1033,
+      "name": "Marama Central"
+    },
+    {
+      "constituency_code": 207,
+      "code": 1034,
+      "name": "Marenyo - Shianda"
+    },
+    {
+      "constituency_code": 207,
+      "code": 1035,
+      "name": "Marama North"
+    },
+    {
+      "constituency_code": 207,
+      "code": 1036,
+      "name": "Marama South"
+    },
+    {
+      "constituency_code": 208,
+      "code": 1037,
+      "name": "Kisa North"
+    },
+    {
+      "constituency_code": 208,
+      "code": 1038,
+      "name": "Kisa East"
+    },
+    {
+      "constituency_code": 208,
+      "code": 1039,
+      "name": "Kisa West"
+    },
+    {
+      "constituency_code": 208,
+      "code": 1040,
+      "name": "Kisa Central"
+    },
+    {
+      "constituency_code": 209,
+      "code": 1041,
+      "name": "Isukha North"
+    },
+    {
+      "constituency_code": 209,
+      "code": 1042,
+      "name": "Murhanda"
+    },
+    {
+      "constituency_code": 209,
+      "code": 1043,
+      "name": "Isukha Central"
+    },
+    {
+      "constituency_code": 209,
+      "code": 1044,
+      "name": "Isukha South"
+    },
+    {
+      "constituency_code": 209,
+      "code": 1045,
+      "name": "Isukha East"
+    },
+    {
+      "constituency_code": 209,
+      "code": 1046,
+      "name": "Isukha West"
+    },
+    {
+      "constituency_code": 210,
+      "code": 1047,
+      "name": "Idakho South"
+    },
+    {
+      "constituency_code": 210,
+      "code": 1048,
+      "name": "Idakho East"
+    },
+    {
+      "constituency_code": 210,
+      "code": 1049,
+      "name": "Idakho North"
+    },
+    {
+      "constituency_code": 210,
+      "code": 1050,
+      "name": "Idakho Central"
+    },
+    {
+      "constituency_code": 211,
+      "code": 1051,
+      "name": "Lugaga-Wamuluma"
+    },
+    {
+      "constituency_code": 211,
+      "code": 1052,
+      "name": "South Maragoli"
+    },
+    {
+      "constituency_code": 211,
+      "code": 1053,
+      "name": "Central Maragoli"
+    },
+    {
+      "constituency_code": 211,
+      "code": 1054,
+      "name": "Mungoma"
+    },
+    {
+      "constituency_code": 212,
+      "code": 1055,
+      "name": "Lyaduywa/Izava"
+    },
+    {
+      "constituency_code": 212,
+      "code": 1056,
+      "name": "West Sabatia"
+    },
+    {
+      "constituency_code": 212,
+      "code": 1057,
+      "name": "Chavakali"
+    },
+    {
+      "constituency_code": 212,
+      "code": 1058,
+      "name": "North Maragoli"
+    },
+    {
+      "constituency_code": 212,
+      "code": 1059,
+      "name": "Wodanga"
+    },
+    {
+      "constituency_code": 212,
+      "code": 1060,
+      "name": "Busali"
+    },
+    {
+      "constituency_code": 213,
+      "code": 1061,
+      "name": "Shiru"
+    },
+    {
+      "constituency_code": 213,
+      "code": 1062,
+      "name": "Gisambai"
+    },
+    {
+      "constituency_code": 213,
+      "code": 1063,
+      "name": "Shamakhokho"
+    },
+    {
+      "constituency_code": 213,
+      "code": 1064,
+      "name": "Banja"
+    },
+    {
+      "constituency_code": 213,
+      "code": 1065,
+      "name": "Muhudu"
+    },
+    {
+      "constituency_code": 213,
+      "code": 1066,
+      "name": "Tambua"
+    },
+    {
+      "constituency_code": 213,
+      "code": 1067,
+      "name": "Jepkoyai"
+    },
+    {
+      "constituency_code": 214,
+      "code": 1068,
+      "name": "Luanda Township"
+    },
+    {
+      "constituency_code": 214,
+      "code": 1069,
+      "name": "Wemilabi"
+    },
+    {
+      "constituency_code": 214,
+      "code": 1070,
+      "name": "Mwibona"
+    },
+    {
+      "constituency_code": 214,
+      "code": 1071,
+      "name": "Luanda South"
+    },
+    {
+      "constituency_code": 214,
+      "code": 1072,
+      "name": "Emabungo"
+    },
+    {
+      "constituency_code": 215,
+      "code": 1073,
+      "name": "North East Bunyore"
+    },
+    {
+      "constituency_code": 215,
+      "code": 1074,
+      "name": "Central Bunyore"
+    },
+    {
+      "constituency_code": 215,
+      "code": 1075,
+      "name": "West Bunyore"
+    },
+    {
+      "constituency_code": 216,
+      "code": 1076,
+      "name": "Cheptais"
+    },
+    {
+      "constituency_code": 216,
+      "code": 1077,
+      "name": "Chesikaki"
+    },
+    {
+      "constituency_code": 216,
+      "code": 1078,
+      "name": "Chepyuk"
+    },
+    {
+      "constituency_code": 216,
+      "code": 1079,
+      "name": "Kapkateny"
+    },
+    {
+      "constituency_code": 216,
+      "code": 1080,
+      "name": "Kaptama"
+    },
+    {
+      "constituency_code": 216,
+      "code": 1081,
+      "name": "Elgon"
+    },
+    {
+      "constituency_code": 217,
+      "code": 1082,
+      "name": "Namwela"
+    },
+    {
+      "constituency_code": 217,
+      "code": 1083,
+      "name": "Malakisi/South Kulisiru"
+    },
+    {
+      "constituency_code": 217,
+      "code": 1084,
+      "name": "Lwandanyi"
+    },
+    {
+      "constituency_code": 218,
+      "code": 1085,
+      "name": "Kabuchai/Chwele"
+    },
+    {
+      "constituency_code": 218,
+      "code": 1086,
+      "name": "West Nalondo"
+    },
+    {
+      "constituency_code": 218,
+      "code": 1087,
+      "name": "Bwake/Luuya"
+    },
+    {
+      "constituency_code": 218,
+      "code": 1088,
+      "name": "Mukuyuni"
+    },
+    {
+      "constituency_code": 219,
+      "code": 1089,
+      "name": "South Bukusu"
+    },
+    {
+      "constituency_code": 219,
+      "code": 1090,
+      "name": "Bumula"
+    },
+    {
+      "constituency_code": 219,
+      "code": 1091,
+      "name": "Khasoko"
+    },
+    {
+      "constituency_code": 219,
+      "code": 1092,
+      "name": "Kabula"
+    },
+    {
+      "constituency_code": 219,
+      "code": 1093,
+      "name": "Kimaeti"
+    },
+    {
+      "constituency_code": 219,
+      "code": 1094,
+      "name": "West Bukusu"
+    },
+    {
+      "constituency_code": 219,
+      "code": 1095,
+      "name": "Siboti"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1096,
+      "name": "Bukembe West"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1097,
+      "name": "Bukembe East"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1098,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1099,
+      "name": "Khalaba"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1100,
+      "name": "Musikoma"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1101,
+      "name": "East Sang'Alo"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1102,
+      "name": "Marakaru/Tuuti"
+    },
+    {
+      "constituency_code": 220,
+      "code": 1103,
+      "name": "West Sang'alo"
+    },
+    {
+      "constituency_code": 221,
+      "code": 1104,
+      "name": "Mihuu"
+    },
+    {
+      "constituency_code": 221,
+      "code": 1105,
+      "name": "Ndivisi"
+    },
+    {
+      "constituency_code": 221,
+      "code": 1106,
+      "name": "Maraka"
+    },
+    {
+      "constituency_code": 222,
+      "code": 1107,
+      "name": "Misikhu"
+    },
+    {
+      "constituency_code": 222,
+      "code": 1108,
+      "name": "Sitikho"
+    },
+    {
+      "constituency_code": 222,
+      "code": 1109,
+      "name": "Matulo"
+    },
+    {
+      "constituency_code": 222,
+      "code": 1110,
+      "name": "Bokoli"
+    },
+    {
+      "constituency_code": 223,
+      "code": 1111,
+      "name": "Kibingei"
+    },
+    {
+      "constituency_code": 223,
+      "code": 1112,
+      "name": "Kimilili"
+    },
+    {
+      "constituency_code": 223,
+      "code": 1113,
+      "name": "Maeni"
+    },
+    {
+      "constituency_code": 223,
+      "code": 1114,
+      "name": "Kamukuywa"
+    },
+    {
+      "constituency_code": 224,
+      "code": 1115,
+      "name": "Mbakalo"
+    },
+    {
+      "constituency_code": 224,
+      "code": 1116,
+      "name": "Naitiri/Kabuyefwe"
+    },
+    {
+      "constituency_code": 224,
+      "code": 1117,
+      "name": "Milima"
+    },
+    {
+      "constituency_code": 224,
+      "code": 1118,
+      "name": "Ndalu/ Tabani"
+    },
+    {
+      "constituency_code": 224,
+      "code": 1119,
+      "name": "Tongaren"
+    },
+    {
+      "constituency_code": 224,
+      "code": 1120,
+      "name": "Soysambu/ Mitua"
+    },
+    {
+      "constituency_code": 225,
+      "code": 1121,
+      "name": "Malaba Central"
+    },
+    {
+      "constituency_code": 225,
+      "code": 1122,
+      "name": "Malaba North"
+    },
+    {
+      "constituency_code": 225,
+      "code": 1123,
+      "name": "Ang'Urai South"
+    },
+    {
+      "constituency_code": 225,
+      "code": 1124,
+      "name": "Ang'Urai North"
+    },
+    {
+      "constituency_code": 225,
+      "code": 1125,
+      "name": "Ang'Urai East"
+    },
+    {
+      "constituency_code": 225,
+      "code": 1126,
+      "name": "Malaba South"
+    },
+    {
+      "constituency_code": 226,
+      "code": 1127,
+      "name": "Ang'orom"
+    },
+    {
+      "constituency_code": 226,
+      "code": 1128,
+      "name": "Chakol South"
+    },
+    {
+      "constituency_code": 226,
+      "code": 1129,
+      "name": "Chakol North"
+    },
+    {
+      "constituency_code": 226,
+      "code": 1130,
+      "name": "Amukura West"
+    },
+    {
+      "constituency_code": 226,
+      "code": 1131,
+      "name": "Amukura East"
+    },
+    {
+      "constituency_code": 226,
+      "code": 1132,
+      "name": "Amukura Central"
+    },
+    {
+      "constituency_code": 227,
+      "code": 1133,
+      "name": "Nambale Township"
+    },
+    {
+      "constituency_code": 227,
+      "code": 1134,
+      "name": "Bukhayo North/Waltsi"
+    },
+    {
+      "constituency_code": 227,
+      "code": 1135,
+      "name": "Bukhayo East"
+    },
+    {
+      "constituency_code": 227,
+      "code": 1136,
+      "name": "Bukhayo Central"
+    },
+    {
+      "constituency_code": 228,
+      "code": 1137,
+      "name": "Bukhayo West"
+    },
+    {
+      "constituency_code": 228,
+      "code": 1138,
+      "name": "Mayenje"
+    },
+    {
+      "constituency_code": 228,
+      "code": 1139,
+      "name": "Matayos South"
+    },
+    {
+      "constituency_code": 228,
+      "code": 1140,
+      "name": "Busibwabo"
+    },
+    {
+      "constituency_code": 228,
+      "code": 1141,
+      "name": "Burumba"
+    },
+    {
+      "constituency_code": 229,
+      "code": 1142,
+      "name": "Marachi West"
+    },
+    {
+      "constituency_code": 229,
+      "code": 1143,
+      "name": "Kingandole"
+    },
+    {
+      "constituency_code": 229,
+      "code": 1144,
+      "name": "Marachi Central"
+    },
+    {
+      "constituency_code": 229,
+      "code": 1145,
+      "name": "Marachi East"
+    },
+    {
+      "constituency_code": 229,
+      "code": 1146,
+      "name": "Marachi North"
+    },
+    {
+      "constituency_code": 229,
+      "code": 1147,
+      "name": "Elugulu"
+    },
+    {
+      "constituency_code": 230,
+      "code": 1148,
+      "name": "Namboboto Nambuku"
+    },
+    {
+      "constituency_code": 230,
+      "code": 1149,
+      "name": "Nangina"
+    },
+    {
+      "constituency_code": 230,
+      "code": 1150,
+      "name": "Ageng'a Nanguba"
+    },
+    {
+      "constituency_code": 230,
+      "code": 1151,
+      "name": "Bwiri"
+    },
+    {
+      "constituency_code": 231,
+      "code": 1152,
+      "name": "Bunyala Central"
+    },
+    {
+      "constituency_code": 231,
+      "code": 1153,
+      "name": "Bunyala North"
+    },
+    {
+      "constituency_code": 231,
+      "code": 1154,
+      "name": "Bunyala West"
+    },
+    {
+      "constituency_code": 231,
+      "code": 1155,
+      "name": "Bunyala South"
+    },
+    {
+      "constituency_code": 232,
+      "code": 1156,
+      "name": "West Ugenya"
+    },
+    {
+      "constituency_code": 232,
+      "code": 1157,
+      "name": "Ukwala"
+    },
+    {
+      "constituency_code": 232,
+      "code": 1158,
+      "name": "North Ugenya"
+    },
+    {
+      "constituency_code": 232,
+      "code": 1159,
+      "name": "East Ugenya"
+    },
+    {
+      "constituency_code": 233,
+      "code": 1160,
+      "name": "Sidindi"
+    },
+    {
+      "constituency_code": 233,
+      "code": 1161,
+      "name": "Sigomere"
+    },
+    {
+      "constituency_code": 233,
+      "code": 1162,
+      "name": "Ugunja"
+    },
+    {
+      "constituency_code": 234,
+      "code": 1163,
+      "name": "Usonga"
+    },
+    {
+      "constituency_code": 234,
+      "code": 1164,
+      "name": "West Alego"
+    },
+    {
+      "constituency_code": 234,
+      "code": 1165,
+      "name": "Central Alego"
+    },
+    {
+      "constituency_code": 234,
+      "code": 1166,
+      "name": "Siaya Township"
+    },
+    {
+      "constituency_code": 234,
+      "code": 1167,
+      "name": "North Alego"
+    },
+    {
+      "constituency_code": 234,
+      "code": 1168,
+      "name": "South East Alego"
+    },
+    {
+      "constituency_code": 235,
+      "code": 1169,
+      "name": "North Gem"
+    },
+    {
+      "constituency_code": 235,
+      "code": 1170,
+      "name": "West Gem"
+    },
+    {
+      "constituency_code": 235,
+      "code": 1171,
+      "name": "Central Gem"
+    },
+    {
+      "constituency_code": 235,
+      "code": 1172,
+      "name": "Yala Township"
+    },
+    {
+      "constituency_code": 235,
+      "code": 1173,
+      "name": "East Gem"
+    },
+    {
+      "constituency_code": 235,
+      "code": 1174,
+      "name": "South Gem"
+    },
+    {
+      "constituency_code": 236,
+      "code": 1175,
+      "name": "West Yimbo"
+    },
+    {
+      "constituency_code": 236,
+      "code": 1176,
+      "name": "Central Sakwa"
+    },
+    {
+      "constituency_code": 236,
+      "code": 1177,
+      "name": "South Sakwa"
+    },
+    {
+      "constituency_code": 236,
+      "code": 1178,
+      "name": "Yimbo East"
+    },
+    {
+      "constituency_code": 236,
+      "code": 1179,
+      "name": "West Sakwa"
+    },
+    {
+      "constituency_code": 236,
+      "code": 1180,
+      "name": "North Sakwa"
+    },
+    {
+      "constituency_code": 237,
+      "code": 1181,
+      "name": "East Asembo"
+    },
+    {
+      "constituency_code": 237,
+      "code": 1182,
+      "name": "West Asembo"
+    },
+    {
+      "constituency_code": 237,
+      "code": 1183,
+      "name": "North Uyoma"
+    },
+    {
+      "constituency_code": 237,
+      "code": 1184,
+      "name": "South Uyoma"
+    },
+    {
+      "constituency_code": 237,
+      "code": 1185,
+      "name": "West Uyoma"
+    },
+    {
+      "constituency_code": 238,
+      "code": 1186,
+      "name": "Kajulu"
+    },
+    {
+      "constituency_code": 238,
+      "code": 1187,
+      "name": "Kolwa East"
+    },
+    {
+      "constituency_code": 238,
+      "code": 1188,
+      "name": "Manyatta 'B'"
+    },
+    {
+      "constituency_code": 238,
+      "code": 1189,
+      "name": "Nyalenda 'A'"
+    },
+    {
+      "constituency_code": 238,
+      "code": 1190,
+      "name": "Kolwa Central"
+    },
+    {
+      "constituency_code": 239,
+      "code": 1191,
+      "name": "South West Kisumu"
+    },
+    {
+      "constituency_code": 239,
+      "code": 1192,
+      "name": "Central Kisumu"
+    },
+    {
+      "constituency_code": 239,
+      "code": 1193,
+      "name": "Kisumu North"
+    },
+    {
+      "constituency_code": 239,
+      "code": 1194,
+      "name": "West Kisumu"
+    },
+    {
+      "constituency_code": 239,
+      "code": 1195,
+      "name": "North West Kisumu"
+    },
+    {
+      "constituency_code": 240,
+      "code": 1196,
+      "name": "Railways"
+    },
+    {
+      "constituency_code": 240,
+      "code": 1197,
+      "name": "Migosi"
+    },
+    {
+      "constituency_code": 240,
+      "code": 1198,
+      "name": "Shaurimoyo Kaloleni"
+    },
+    {
+      "constituency_code": 240,
+      "code": 1199,
+      "name": "Market Milimani"
+    },
+    {
+      "constituency_code": 240,
+      "code": 1200,
+      "name": "Kondele"
+    },
+    {
+      "constituency_code": 240,
+      "code": 1201,
+      "name": "Nyalenda B"
+    },
+    {
+      "constituency_code": 241,
+      "code": 1202,
+      "name": "West Seme"
+    },
+    {
+      "constituency_code": 241,
+      "code": 1203,
+      "name": "Central Seme"
+    },
+    {
+      "constituency_code": 241,
+      "code": 1204,
+      "name": "East Seme"
+    },
+    {
+      "constituency_code": 241,
+      "code": 1205,
+      "name": "North Seme"
+    },
+    {
+      "constituency_code": 242,
+      "code": 1206,
+      "name": "East Kano/Wawidhi"
+    },
+    {
+      "constituency_code": 242,
+      "code": 1207,
+      "name": "Awasi/Onjiko"
+    },
+    {
+      "constituency_code": 242,
+      "code": 1208,
+      "name": "Ahero"
+    },
+    {
+      "constituency_code": 242,
+      "code": 1209,
+      "name": "Kabonyo/Kanyagwal"
+    },
+    {
+      "constituency_code": 242,
+      "code": 1210,
+      "name": "Kobura"
+    },
+    {
+      "constituency_code": 243,
+      "code": 1211,
+      "name": "Miwani"
+    },
+    {
+      "constituency_code": 243,
+      "code": 1212,
+      "name": "Ombeyi"
+    },
+    {
+      "constituency_code": 243,
+      "code": 1213,
+      "name": "Masogo/Nyang'oma"
+    },
+    {
+      "constituency_code": 243,
+      "code": 1214,
+      "name": "Chemelil"
+    },
+    {
+      "constituency_code": 243,
+      "code": 1215,
+      "name": "Muhoroni/Koru"
+    },
+    {
+      "constituency_code": 244,
+      "code": 1216,
+      "name": "South West Nyakach"
+    },
+    {
+      "constituency_code": 244,
+      "code": 1217,
+      "name": "North Nyakach"
+    },
+    {
+      "constituency_code": 244,
+      "code": 1218,
+      "name": "Central Nyakach"
+    },
+    {
+      "constituency_code": 244,
+      "code": 1219,
+      "name": "West Nyakach"
+    },
+    {
+      "constituency_code": 244,
+      "code": 1220,
+      "name": "South East Nyakach"
+    },
+    {
+      "constituency_code": 245,
+      "code": 1221,
+      "name": "West Kasipul"
+    },
+    {
+      "constituency_code": 245,
+      "code": 1222,
+      "name": "South Kasipul"
+    },
+    {
+      "constituency_code": 245,
+      "code": 1223,
+      "name": "Central Kasipul"
+    },
+    {
+      "constituency_code": 245,
+      "code": 1224,
+      "name": "East Kamagak"
+    },
+    {
+      "constituency_code": 245,
+      "code": 1225,
+      "name": "West Kamagak"
+    },
+    {
+      "constituency_code": 246,
+      "code": 1226,
+      "name": "Kabondo East"
+    },
+    {
+      "constituency_code": 246,
+      "code": 1227,
+      "name": "Kabondo West"
+    },
+    {
+      "constituency_code": 246,
+      "code": 1228,
+      "name": "Kokwanyo/Kakelo"
+    },
+    {
+      "constituency_code": 246,
+      "code": 1229,
+      "name": "Kojwach"
+    },
+    {
+      "constituency_code": 247,
+      "code": 1230,
+      "name": "West Karachuonyo"
+    },
+    {
+      "constituency_code": 247,
+      "code": 1231,
+      "name": "North Karachuonyo"
+    },
+    {
+      "constituency_code": 247,
+      "code": 1232,
+      "name": "Central"
+    },
+    {
+      "constituency_code": 247,
+      "code": 1233,
+      "name": "Kanyaluo"
+    },
+    {
+      "constituency_code": 247,
+      "code": 1234,
+      "name": "Kibiri"
+    },
+    {
+      "constituency_code": 247,
+      "code": 1235,
+      "name": "Wangchieng"
+    },
+    {
+      "constituency_code": 247,
+      "code": 1236,
+      "name": "Kendu Bay Town"
+    },
+    {
+      "constituency_code": 248,
+      "code": 1237,
+      "name": "West Gem"
+    },
+    {
+      "constituency_code": 248,
+      "code": 1238,
+      "name": "East Gem"
+    },
+    {
+      "constituency_code": 248,
+      "code": 1239,
+      "name": "Kagan"
+    },
+    {
+      "constituency_code": 248,
+      "code": 1240,
+      "name": "Kochia"
+    },
+    {
+      "constituency_code": 249,
+      "code": 1241,
+      "name": "Homa Bay Central"
+    },
+    {
+      "constituency_code": 249,
+      "code": 1242,
+      "name": "Homa Bay Arujo"
+    },
+    {
+      "constituency_code": 249,
+      "code": 1243,
+      "name": "Homa Bay West"
+    },
+    {
+      "constituency_code": 249,
+      "code": 1244,
+      "name": "Homa Bay East"
+    },
+    {
+      "constituency_code": 250,
+      "code": 1245,
+      "name": "Kwabwai"
+    },
+    {
+      "constituency_code": 250,
+      "code": 1246,
+      "name": "Kanyadoto"
+    },
+    {
+      "constituency_code": 250,
+      "code": 1247,
+      "name": "Kanyikela"
+    },
+    {
+      "constituency_code": 250,
+      "code": 1248,
+      "name": "Kabuoch North"
+    },
+    {
+      "constituency_code": 250,
+      "code": 1249,
+      "name": "Kabuoch South/Pala"
+    },
+    {
+      "constituency_code": 250,
+      "code": 1250,
+      "name": "Kanyamwa Kologi"
+    },
+    {
+      "constituency_code": 250,
+      "code": 1251,
+      "name": "Kanyamwa Kosewe"
+    },
+    {
+      "constituency_code": 251,
+      "code": 1252,
+      "name": "Mfangano Island"
+    },
+    {
+      "constituency_code": 251,
+      "code": 1253,
+      "name": "Rusinga Island"
+    },
+    {
+      "constituency_code": 251,
+      "code": 1254,
+      "name": "Kasgunga"
+    },
+    {
+      "constituency_code": 251,
+      "code": 1255,
+      "name": "Gembe"
+    },
+    {
+      "constituency_code": 251,
+      "code": 1256,
+      "name": "Lambwe"
+    },
+    {
+      "constituency_code": 252,
+      "code": 1257,
+      "name": "Gwassi South"
+    },
+    {
+      "constituency_code": 252,
+      "code": 1258,
+      "name": "Gwassi North"
+    },
+    {
+      "constituency_code": 252,
+      "code": 1259,
+      "name": "Kaksingri West"
+    },
+    {
+      "constituency_code": 252,
+      "code": 1260,
+      "name": "Ruma-Kaksingri"
+    },
+    {
+      "constituency_code": 253,
+      "code": 1261,
+      "name": "North Kamagambo"
+    },
+    {
+      "constituency_code": 253,
+      "code": 1262,
+      "name": "Central Kamagambo"
+    },
+    {
+      "constituency_code": 253,
+      "code": 1263,
+      "name": "East Kamagambo"
+    },
+    {
+      "constituency_code": 253,
+      "code": 1264,
+      "name": "South Kamagambo"
+    },
+    {
+      "constituency_code": 254,
+      "code": 1265,
+      "name": "North Sakwa"
+    },
+    {
+      "constituency_code": 254,
+      "code": 1266,
+      "name": "South Sakwa"
+    },
+    {
+      "constituency_code": 254,
+      "code": 1267,
+      "name": "West Sakwa"
+    },
+    {
+      "constituency_code": 254,
+      "code": 1268,
+      "name": "Central Sakwa"
+    },
+    {
+      "constituency_code": 255,
+      "code": 1269,
+      "name": "God Jope"
+    },
+    {
+      "constituency_code": 255,
+      "code": 1270,
+      "name": "Suna Central"
+    },
+    {
+      "constituency_code": 255,
+      "code": 1271,
+      "name": "Kakrao"
+    },
+    {
+      "constituency_code": 255,
+      "code": 1272,
+      "name": "Kwa"
+    },
+    {
+      "constituency_code": 256,
+      "code": 1273,
+      "name": "Wiga"
+    },
+    {
+      "constituency_code": 256,
+      "code": 1274,
+      "name": "Wasweta Ii"
+    },
+    {
+      "constituency_code": 256,
+      "code": 1275,
+      "name": "Ragana-Oruba"
+    },
+    {
+      "constituency_code": 256,
+      "code": 1276,
+      "name": "Wasimbete"
+    },
+    {
+      "constituency_code": 257,
+      "code": 1277,
+      "name": "West Kanyamkago"
+    },
+    {
+      "constituency_code": 257,
+      "code": 1278,
+      "name": "North Kanyamkago"
+    },
+    {
+      "constituency_code": 257,
+      "code": 1279,
+      "name": "Central Kanyamkago"
+    },
+    {
+      "constituency_code": 257,
+      "code": 1280,
+      "name": "South Kanyamkago"
+    },
+    {
+      "constituency_code": 257,
+      "code": 1281,
+      "name": "East Kanyamkago"
+    },
+    {
+      "constituency_code": 258,
+      "code": 1282,
+      "name": "Kachien'g"
+    },
+    {
+      "constituency_code": 258,
+      "code": 1283,
+      "name": "Kanyasa"
+    },
+    {
+      "constituency_code": 258,
+      "code": 1284,
+      "name": "North Kadem"
+    },
+    {
+      "constituency_code": 258,
+      "code": 1285,
+      "name": "Macalder/Kanyarwanda"
+    },
+    {
+      "constituency_code": 258,
+      "code": 1286,
+      "name": "Kaler"
+    },
+    {
+      "constituency_code": 258,
+      "code": 1287,
+      "name": "Got Kachola"
+    },
+    {
+      "constituency_code": 258,
+      "code": 1288,
+      "name": "Muhuru"
+    },
+    {
+      "constituency_code": 259,
+      "code": 1289,
+      "name": "Bukira East"
+    },
+    {
+      "constituency_code": 259,
+      "code": 1290,
+      "name": "Bukira Centrl/Ikerege"
+    },
+    {
+      "constituency_code": 259,
+      "code": 1291,
+      "name": "Isibania"
+    },
+    {
+      "constituency_code": 259,
+      "code": 1292,
+      "name": "Makerero"
+    },
+    {
+      "constituency_code": 259,
+      "code": 1293,
+      "name": "Masaba"
+    },
+    {
+      "constituency_code": 259,
+      "code": 1294,
+      "name": "Tagare"
+    },
+    {
+      "constituency_code": 259,
+      "code": 1295,
+      "name": "Nyamosense/Komosoko"
+    },
+    {
+      "constituency_code": 260,
+      "code": 1296,
+      "name": "Gokeharaka/Getambwega"
+    },
+    {
+      "constituency_code": 260,
+      "code": 1297,
+      "name": "Ntimaru West"
+    },
+    {
+      "constituency_code": 260,
+      "code": 1298,
+      "name": "Ntimaru East"
+    },
+    {
+      "constituency_code": 260,
+      "code": 1299,
+      "name": "Nyabasi East"
+    },
+    {
+      "constituency_code": 260,
+      "code": 1300,
+      "name": "Nyabasi West"
+    },
+    {
+      "constituency_code": 261,
+      "code": 1301,
+      "name": "Bomariba"
+    },
+    {
+      "constituency_code": 261,
+      "code": 1302,
+      "name": "Bogiakumu"
+    },
+    {
+      "constituency_code": 261,
+      "code": 1303,
+      "name": "Bomorenda"
+    },
+    {
+      "constituency_code": 261,
+      "code": 1304,
+      "name": "Riana"
+    },
+    {
+      "constituency_code": 262,
+      "code": 1305,
+      "name": "Tabaka"
+    },
+    {
+      "constituency_code": 262,
+      "code": 1306,
+      "name": "Boikang'a"
+    },
+    {
+      "constituency_code": 262,
+      "code": 1307,
+      "name": "Bogetenga"
+    },
+    {
+      "constituency_code": 262,
+      "code": 1308,
+      "name": "Borabu / Chitago"
+    },
+    {
+      "constituency_code": 262,
+      "code": 1309,
+      "name": "Moticho"
+    },
+    {
+      "constituency_code": 262,
+      "code": 1310,
+      "name": "Getenga"
+    },
+    {
+      "constituency_code": 263,
+      "code": 1311,
+      "name": "Bombaba Borabu"
+    },
+    {
+      "constituency_code": 263,
+      "code": 1312,
+      "name": "Boochi Borabu"
+    },
+    {
+      "constituency_code": 263,
+      "code": 1313,
+      "name": "Bokimonge"
+    },
+    {
+      "constituency_code": 263,
+      "code": 1314,
+      "name": "Magenche"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1315,
+      "name": "Masige West"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1316,
+      "name": "Masige East"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1317,
+      "name": "Basi Central"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1318,
+      "name": "Nyacheki"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1319,
+      "name": "Basi Bogetaorio"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1320,
+      "name": "Bobasi Chache"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1321,
+      "name": "Sameta/Mokwerero"
+    },
+    {
+      "constituency_code": 264,
+      "code": 1322,
+      "name": "Bobasi Boitangare"
+    },
+    {
+      "constituency_code": 265,
+      "code": 1323,
+      "name": "Majoge Basi"
+    },
+    {
+      "constituency_code": 265,
+      "code": 1324,
+      "name": "Boochi/Tendere"
+    },
+    {
+      "constituency_code": 265,
+      "code": 1325,
+      "name": "Bosoti/Sengera"
+    },
+    {
+      "constituency_code": 266,
+      "code": 1326,
+      "name": "Ichuni"
+    },
+    {
+      "constituency_code": 266,
+      "code": 1327,
+      "name": "Nyamasibi"
+    },
+    {
+      "constituency_code": 266,
+      "code": 1328,
+      "name": "Masimba"
+    },
+    {
+      "constituency_code": 266,
+      "code": 1329,
+      "name": "Gesusu"
+    },
+    {
+      "constituency_code": 266,
+      "code": 1330,
+      "name": "Kiamokama"
+    },
+    {
+      "constituency_code": 267,
+      "code": 1331,
+      "name": "Bobaracho"
+    },
+    {
+      "constituency_code": 267,
+      "code": 1332,
+      "name": "Kisii Central"
+    },
+    {
+      "constituency_code": 267,
+      "code": 1333,
+      "name": "Keumbu"
+    },
+    {
+      "constituency_code": 267,
+      "code": 1334,
+      "name": "Kiogoro"
+    },
+    {
+      "constituency_code": 267,
+      "code": 1335,
+      "name": "Birongo"
+    },
+    {
+      "constituency_code": 267,
+      "code": 1336,
+      "name": "Ibeno"
+    },
+    {
+      "constituency_code": 268,
+      "code": 1337,
+      "name": "Monyerero"
+    },
+    {
+      "constituency_code": 268,
+      "code": 1338,
+      "name": "Sensi"
+    },
+    {
+      "constituency_code": 268,
+      "code": 1339,
+      "name": "Marani"
+    },
+    {
+      "constituency_code": 268,
+      "code": 1340,
+      "name": "Kegogi"
+    },
+    {
+      "constituency_code": 269,
+      "code": 1341,
+      "name": "Bogusero"
+    },
+    {
+      "constituency_code": 269,
+      "code": 1342,
+      "name": "Bogeka"
+    },
+    {
+      "constituency_code": 269,
+      "code": 1343,
+      "name": "Nyakoe"
+    },
+    {
+      "constituency_code": 269,
+      "code": 1344,
+      "name": "Kitutu   Central"
+    },
+    {
+      "constituency_code": 269,
+      "code": 1345,
+      "name": "Nyatieko"
+    },
+    {
+      "constituency_code": 270,
+      "code": 1346,
+      "name": "Rigoma"
+    },
+    {
+      "constituency_code": 270,
+      "code": 1347,
+      "name": "Gachuba"
+    },
+    {
+      "constituency_code": 270,
+      "code": 1348,
+      "name": "Kemera"
+    },
+    {
+      "constituency_code": 270,
+      "code": 1349,
+      "name": "Magombo"
+    },
+    {
+      "constituency_code": 270,
+      "code": 1350,
+      "name": "Manga"
+    },
+    {
+      "constituency_code": 270,
+      "code": 1351,
+      "name": "Gesima"
+    },
+    {
+      "constituency_code": 271,
+      "code": 1352,
+      "name": "Nyamaiya"
+    },
+    {
+      "constituency_code": 271,
+      "code": 1353,
+      "name": "Bogichora"
+    },
+    {
+      "constituency_code": 271,
+      "code": 1354,
+      "name": "Bosamaro"
+    },
+    {
+      "constituency_code": 271,
+      "code": 1355,
+      "name": "Bonyamatuta"
+    },
+    {
+      "constituency_code": 271,
+      "code": 1356,
+      "name": "Township"
+    },
+    {
+      "constituency_code": 272,
+      "code": 1357,
+      "name": "Itibo"
+    },
+    {
+      "constituency_code": 272,
+      "code": 1358,
+      "name": "Bomwagamo"
+    },
+    {
+      "constituency_code": 272,
+      "code": 1359,
+      "name": "Bokeira"
+    },
+    {
+      "constituency_code": 272,
+      "code": 1360,
+      "name": "Magwagwa"
+    },
+    {
+      "constituency_code": 272,
+      "code": 1361,
+      "name": "Ekerenyo"
+    },
+    {
+      "constituency_code": 273,
+      "code": 1362,
+      "name": "Mekenene"
+    },
+    {
+      "constituency_code": 273,
+      "code": 1363,
+      "name": "Kiabonyoru"
+    },
+    {
+      "constituency_code": 273,
+      "code": 1364,
+      "name": "Nyansiongo"
+    },
+    {
+      "constituency_code": 273,
+      "code": 1365,
+      "name": "Esise"
+    },
+    {
+      "constituency_code": 274,
+      "code": 1366,
+      "name": "Kitisuru"
+    },
+    {
+      "constituency_code": 274,
+      "code": 1367,
+      "name": "Parklands/Highridge"
+    },
+    {
+      "constituency_code": 274,
+      "code": 1368,
+      "name": "Karura"
+    },
+    {
+      "constituency_code": 274,
+      "code": 1369,
+      "name": "Kangemi"
+    },
+    {
+      "constituency_code": 274,
+      "code": 1370,
+      "name": "Mountain View"
+    },
+    {
+      "constituency_code": 275,
+      "code": 1371,
+      "name": "Kilimani"
+    },
+    {
+      "constituency_code": 275,
+      "code": 1372,
+      "name": "Kawangware"
+    },
+    {
+      "constituency_code": 275,
+      "code": 1373,
+      "name": "Gatina"
+    },
+    {
+      "constituency_code": 275,
+      "code": 1374,
+      "name": "Kileleshwa"
+    },
+    {
+      "constituency_code": 275,
+      "code": 1375,
+      "name": "Kabiro"
+    },
+    {
+      "constituency_code": 276,
+      "code": 1376,
+      "name": "Mutu-Ini"
+    },
+    {
+      "constituency_code": 276,
+      "code": 1377,
+      "name": "Ngando"
+    },
+    {
+      "constituency_code": 276,
+      "code": 1378,
+      "name": "Riruta"
+    },
+    {
+      "constituency_code": 276,
+      "code": 1379,
+      "name": "Uthiru/Ruthimitu"
+    },
+    {
+      "constituency_code": 276,
+      "code": 1380,
+      "name": "Waithaka"
+    },
+    {
+      "constituency_code": 277,
+      "code": 1381,
+      "name": "Karen"
+    },
+    {
+      "constituency_code": 277,
+      "code": 1382,
+      "name": "Nairobi West"
+    },
+    {
+      "constituency_code": 277,
+      "code": 1383,
+      "name": "Mugumu-Ini"
+    },
+    {
+      "constituency_code": 277,
+      "code": 1384,
+      "name": "South C"
+    },
+    {
+      "constituency_code": 277,
+      "code": 1385,
+      "name": "Nyayo Highrise"
+    },
+    {
+      "constituency_code": 278,
+      "code": 1386,
+      "name": "Laini Saba"
+    },
+    {
+      "constituency_code": 278,
+      "code": 1387,
+      "name": "Lindi"
+    },
+    {
+      "constituency_code": 278,
+      "code": 1388,
+      "name": "Makina"
+    },
+    {
+      "constituency_code": 278,
+      "code": 1389,
+      "name": "Woodley/Kenyatta Golf Course"
+    },
+    {
+      "constituency_code": 278,
+      "code": 1390,
+      "name": "Sarangombe"
+    },
+    {
+      "constituency_code": 279,
+      "code": 1391,
+      "name": "Githurai"
+    },
+    {
+      "constituency_code": 279,
+      "code": 1392,
+      "name": "Kahawa West"
+    },
+    {
+      "constituency_code": 279,
+      "code": 1393,
+      "name": "Zimmerman"
+    },
+    {
+      "constituency_code": 279,
+      "code": 1394,
+      "name": "Roysambu"
+    },
+    {
+      "constituency_code": 279,
+      "code": 1395,
+      "name": "Kahawa"
+    },
+    {
+      "constituency_code": 280,
+      "code": 1396,
+      "name": "Clay City"
+    },
+    {
+      "constituency_code": 280,
+      "code": 1397,
+      "name": "Mwiki"
+    },
+    {
+      "constituency_code": 280,
+      "code": 1398,
+      "name": "Kasarani"
+    },
+    {
+      "constituency_code": 280,
+      "code": 1399,
+      "name": "Njiru"
+    },
+    {
+      "constituency_code": 280,
+      "code": 1400,
+      "name": "Ruai"
+    },
+    {
+      "constituency_code": 281,
+      "code": 1401,
+      "name": "Baba Dogo"
+    },
+    {
+      "constituency_code": 281,
+      "code": 1402,
+      "name": "Utalii"
+    },
+    {
+      "constituency_code": 281,
+      "code": 1403,
+      "name": "Mathare North"
+    },
+    {
+      "constituency_code": 281,
+      "code": 1404,
+      "name": "Lucky Summer"
+    },
+    {
+      "constituency_code": 281,
+      "code": 1405,
+      "name": "Korogocho"
+    },
+    {
+      "constituency_code": 282,
+      "code": 1406,
+      "name": "Imara Daima"
+    },
+    {
+      "constituency_code": 282,
+      "code": 1407,
+      "name": "Kwa Njenga"
+    },
+    {
+      "constituency_code": 282,
+      "code": 1408,
+      "name": "Kwa Reuben"
+    },
+    {
+      "constituency_code": 282,
+      "code": 1409,
+      "name": "Pipeline"
+    },
+    {
+      "constituency_code": 282,
+      "code": 1410,
+      "name": "Kware"
+    },
+    {
+      "constituency_code": 283,
+      "code": 1411,
+      "name": "Kariobangi North"
+    },
+    {
+      "constituency_code": 283,
+      "code": 1412,
+      "name": "Dandora Area I"
+    },
+    {
+      "constituency_code": 283,
+      "code": 1413,
+      "name": "Dandora Area Ii"
+    },
+    {
+      "constituency_code": 283,
+      "code": 1414,
+      "name": "Dandora Area Iii"
+    },
+    {
+      "constituency_code": 283,
+      "code": 1415,
+      "name": "Dandora Area Iv"
+    },
+    {
+      "constituency_code": 284,
+      "code": 1416,
+      "name": "Kayole North"
+    },
+    {
+      "constituency_code": 284,
+      "code": 1417,
+      "name": "Kayole Central"
+    },
+    {
+      "constituency_code": 284,
+      "code": 1418,
+      "name": "Kayole South"
+    },
+    {
+      "constituency_code": 284,
+      "code": 1419,
+      "name": "Komarock"
+    },
+    {
+      "constituency_code": 284,
+      "code": 1420,
+      "name": "Matopeni/Spring Valley"
+    },
+    {
+      "constituency_code": 285,
+      "code": 1421,
+      "name": "Upper Savannah"
+    },
+    {
+      "constituency_code": 285,
+      "code": 1422,
+      "name": "Lower Savannah"
+    },
+    {
+      "constituency_code": 285,
+      "code": 1423,
+      "name": "Embakasi"
+    },
+    {
+      "constituency_code": 285,
+      "code": 1424,
+      "name": "Utawala"
+    },
+    {
+      "constituency_code": 285,
+      "code": 1425,
+      "name": "Mihango"
+    },
+    {
+      "constituency_code": 286,
+      "code": 1426,
+      "name": "Umoja I"
+    },
+    {
+      "constituency_code": 286,
+      "code": 1427,
+      "name": "Umoja Ii"
+    },
+    {
+      "constituency_code": 286,
+      "code": 1428,
+      "name": "Mowlem"
+    },
+    {
+      "constituency_code": 286,
+      "code": 1429,
+      "name": "Kariobangi South"
+    },
+    {
+      "constituency_code": 287,
+      "code": 1430,
+      "name": "Maringo/Hamza"
+    },
+    {
+      "constituency_code": 287,
+      "code": 1431,
+      "name": "Viwandani"
+    },
+    {
+      "constituency_code": 287,
+      "code": 1432,
+      "name": "Harambee"
+    },
+    {
+      "constituency_code": 287,
+      "code": 1433,
+      "name": "Makongeni"
+    },
+    {
+      "constituency_code": 288,
+      "code": 1434,
+      "name": "Pumwani"
+    },
+    {
+      "constituency_code": 288,
+      "code": 1435,
+      "name": "Eastleigh North"
+    },
+    {
+      "constituency_code": 288,
+      "code": 1436,
+      "name": "Eastleigh South"
+    },
+    {
+      "constituency_code": 288,
+      "code": 1437,
+      "name": "Airbase"
+    },
+    {
+      "constituency_code": 288,
+      "code": 1438,
+      "name": "California"
+    },
+    {
+      "constituency_code": 289,
+      "code": 1439,
+      "name": "Nairobi Central"
+    },
+    {
+      "constituency_code": 289,
+      "code": 1440,
+      "name": "Ngara"
+    },
+    {
+      "constituency_code": 289,
+      "code": 1441,
+      "name": "Pangani"
+    },
+    {
+      "constituency_code": 289,
+      "code": 1442,
+      "name": "Ziwani/Kariokor"
+    },
+    {
+      "constituency_code": 289,
+      "code": 1443,
+      "name": "Landimawe"
+    },
+    {
+      "constituency_code": 289,
+      "code": 1444,
+      "name": "Nairobi South"
+    },
+    {
+      "constituency_code": 290,
+      "code": 1445,
+      "name": "Hospital"
+    },
+    {
+      "constituency_code": 290,
+      "code": 1446,
+      "name": "Mabatini"
+    },
+    {
+      "constituency_code": 290,
+      "code": 1447,
+      "name": "Huruma"
+    },
+    {
+      "constituency_code": 290,
+      "code": 1448,
+      "name": "Ngei"
+    },
+    {
+      "constituency_code": 290,
+      "code": 1449,
+      "name": "Mlango Kubwa"
+    },
+    {
+      "constituency_code": 290,
+      "code": 1450,
+      "name": "Kiamaiko"
+    },
+    {
+      "constituency_code": 291,
+      "code": 5000,
+      "name": "Tanzania"
+    },
+    {
+      "constituency_code": 291,
+      "code": 5001,
+      "name": "Uganda"
+    },
+    {
+      "constituency_code": 291,
+      "code": 5002,
+      "name": "Rwanda"
+    },
+    {
+      "constituency_code": 291,
+      "code": 5003,
+      "name": "Burundi"
+    },
+    {
+      "constituency_code": 291,
+      "code": 5004,
+      "name": "South Africa"
+    },
+    {
+      "constituency_code": 292,
+      "code": 1451,
+      "name": "Prisons"
+    }
+  ];
 var Api = function () {
+    var scanPoints = 2.0;
+    var reportPoints = 5.0;
+    var penaltyPoints = 20.0;
+
     // http://localhost:3000/api/Book
     var systemEmail = 'order@bookcounterfeit.com';
     var domainUrl = 'http://localhost:3001/api';
     var postBookURL = domainUrl + '/Book';
-    // var getVerifyBookURL = 'http://localhost:8000/verify/book/';
+    var laravelDomain = 'http://localhost:8000';
     var getVerifyBookURL = domainUrl + '/Book/';
     var postBookShipmentURL = domainUrl + '/BookRegisterShipment';
     var postOrderURL = domainUrl + '/OrderContract';
@@ -15958,6 +25149,9 @@ var Api = function () {
     var postDistributorURL = domainUrl + '/Distributor';
     var postCustomerURL = domainUrl + '/Customer';
     var postCustomerReviewURL = domainUrl + '/updateShipmentReview';
+    var postReportviewURL = domainUrl + '/Report';
+    var postCustomerScanPointsURL = domainUrl + '/updateCustomerPoints';
+    var postBuyBookURL = domainUrl + '/PurchaseRequest';
 
     // var postBookURL = '/book';
 
@@ -15967,8 +25161,12 @@ var Api = function () {
     // Book
     var bookForm = $("#book_form");
     var bookVerifyForm = $("#verify_form");
+    var bookVerifyFormOthers = $("#verify_form_others");
     var bookShipmentForm = $("#frmregisterBookShipment");
     var frmEditBook = $("#frmEditBook");
+
+    // Transaction
+    var transactionForm = $("#transaction_form");
 
     // Order
     var frmAddOrder = $("#frmAddOrder");
@@ -15996,14 +25194,22 @@ var Api = function () {
     // Profile
     var frmProfile = $("#frmProfile");
 
+    // Report
+    var frmReport = $("#frmReport");
+    var frmReportOthers = $("#frmReportOthers");
+
     // Login
     var frmLogin = $("#frmLogin");
 
     var frmRegister = $("#frmRegister");
 
+    // Buy Book
+    var frmBuyBook = $("#frmBuyBook");
+
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookVerifySbtBtn = $('#verify_form .btn-verify-book');
+    var bookVerifySbtBtnOthers = $('#verify_form_others .btn-verify-book-others');
     var bookShipmentSbtBtn = $('#frmregisterBookShipment .btn-add-book-shipment');
     var bookEditSbtBtn = $('#frmEditBook .btn-edit-book');
     var bookDeleteSbtBtn = $('#frmDeleteBook .btn-delete-book');
@@ -16032,7 +25238,501 @@ var Api = function () {
 
     var profileEditSbtBtn = $('#frmProfile .btn-profile');
 
+    var reportPostSbtBtn = $('#frmReport .btn-report');
+    var reportPostSbtBtnOthers = $('#frmReportOthers .btn-report-others');
+    var buyBookPostSbtBtn = $('#frmBuyBook .btn-buy-book');
+
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
+
+    var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
+
+    var transactionHistorySbtBtn = $('#transaction_form .btn-transaction-history');
+
+    /**
+     * Posting the book purchase form
+     */
+    var handleBuyBook = function () {
+        console.log("handleBuyBook");
+
+        $("#add-error-buy-book-bag").hide();
+        var buyBookId = "P-" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        buyBookPostSbtBtn.on('click', function () {
+            var json = frmBuyBook.serializeArray();
+
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            var bookID = jsonData["book"];
+            var purchasedByVal = jsonData["purchasedBy"];
+
+            var book = "resource:org.evin.book.track.Book#" + bookID;
+            var purchasedBy = "resource:org.evin.book.track.Customer#" + jsonData["purchasedBy"];
+            var purchasedTo = "resource:org.evin.book.track.Customer#" + jsonData["purchasedTo"];
+
+            delete jsonData["purchasedToMemberId"];
+
+            // Add update time
+            jsonData["createdAt"] = currentDateTime();
+            // Append ID
+            jsonData["id"] = buyBookId;
+            jsonData["book"] = book;
+            jsonData["purchasedBy"] = purchasedBy;
+            jsonData["purchasedTo"] = purchasedTo;
+
+            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + purchasedByVal + ". Awaiting Approval!";
+
+            var jsonDataSMS = {
+                message: smsApprovalMessage
+            };
+
+            console.log("bookID = " + bookID + " purchasedBy = " + purchasedByVal + " smsApprovalMessage = " + smsApprovalMessage);
+
+            var smsURL = laravelDomain + '/general/sms/send/';
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: postBuyBookURL,
+                data: jsonData,
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#loader").show();
+                },
+                success: function (data) {
+
+                    // SEND SMS 
+                    $.ajax({
+                        type: 'POST',
+                        url: smsURL,
+                        data: jsonDataSMS,
+                        dataType: 'json',
+                        beforeSend: function () {
+                            $("#loader").show();
+                        },
+                        success: function (data) {
+                            // hide loader
+                            $("#loader").hide();
+                            console.log("Success +++> " + JSON.stringify(data));
+                            $("#add-error-buy-book-bag").hide();
+                            $("#add-buy-book-msgs").show();
+
+                            msgHTML = '<div class="alert alert-primary" role="alert">'
+                                + 'Request sent successfully. Await Approval from the store.'
+                                + '</div>';
+
+                            $('#add-buy-book-msgs').html(msgHTML);
+
+                            // window.location.reload();
+
+                        },
+                        error: function (data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-buy-book-msgs").hide();
+
+                                $('#add-buy-book-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-buy-book-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+
+                            $("#add-error-buy-book-bag").show();
+                        }
+                    }); // END Ajax
+
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-buy-book-msgs").hide();
+
+                        $('#add-buy-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-buy-book-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#add-error-buy-book-bag").show();
+                }
+            }); // END Ajax
+
+        }); // END Onclick Submit
+
+    };
+
+    /**
+     * 
+     * https://stackoverflow.com/questions/20481141/jquery-change-json-data-in-cookie
+     * updates cookie and sends accountBaalnce
+     */
+    var handlePostReport = function () {
+        console.log("handlePostReview");
+        $("#add-error-bag").hide();
+        var reportId = "Re_" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        reportPostSbtBtn.on('click', function () {
+            var json = frmReport.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+            var loggedInUserEmail = jsonData["reportedBy"];
+            var book = jsonData["book"];
+            var reportedBy = "resource:org.evin.book.track.Customer#" + jsonData["reportedBy"];
+            var reportedTo = jsonData["reportedTo"];
+            var store = jsonData["store"];
+
+            var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
+
+            var getCustomerEmailURL = domainUrl + "/queries/getCustomerEmailonMemberID?memberId=" + store;
+
+            console.log("loggedInUserEmail ==> " + loggedInUserEmail);
+
+            // Append ID
+            jsonData["id"] = reportId;
+            jsonData["book"] = "resource:org.evin.book.track.Book#" + book;
+            jsonData["reportedBy"] = reportedBy;
+            jsonData["reportedTo"] = "resource:org.evin.book.track.Publisher#" + reportedTo;
+            // jsonData["store"] = "resource:org.evin.book.track.Customer#" + store;
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // Add  created time
+            jsonData["createdAt"] = currentDateTime();
+
+            var msgHTML = "";
+
+            $("#add-error-report-bag").hide();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // Get Customer Email Based on MemberID
+            $.ajax({
+                type: 'GET',
+                url: getCustomerEmailURL,
+                beforeSend: function () {
+                    //calls the loader id tag
+                    $("#loader").show();
+                },
+                success: function (customerEmailData) {
+                    console.log("customerEmailData +++> " + JSON.stringify(customerEmailData[0]));
+
+                    console.log("customerEmailData SIZE==  = " + customerEmailData.length);
+
+                    console.log("Final jsonData => " + JSON.stringify(jsonData));
+
+                    if (customerEmailData.length == 0) {
+                        $("#loader").hide();
+
+                        msgHTML = '<div class="alert alert-danger" role="alert">'
+                            + 'The store ' + store + ' does not exist. Kindly re-check the code.'
+                            + '</div>';
+
+                        $('#add-review-msgs').html(msgHTML);
+
+                    } else {
+
+                        console.log("customerEmailData.email = " + customerEmailData[0].email);
+
+                        var customerEmail = customerEmailData[0].email;
+
+                        jsonData["store"] = "resource:org.evin.book.track.Customer#" + customerEmail;
+
+                        // Report Book
+                        $.ajax({
+                            type: 'POST',
+                            url: postReportviewURL,
+                            data: jsonData,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                $("#loader").hide();
+                                console.log("Success +++> " + JSON.stringify(data));
+                                $("#add-error-report-bag").hide();
+                                $("#add-review-msgs").show();
+                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                    + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
+                                    + '</div>';
+
+                                $('#add-review-msgs').html(msgHTML);
+
+                                // window.location.reload();
+
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-review-msgs").hide();
+
+                                    $('#add-review-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-review-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                // Show modal to display error showed
+                                $("#add-error-report-bag").show();
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    $("#loader").hide();
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-book-msgs").hide();
+
+                        $('#add-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-book-errors').html(errors.error.message);
+                        // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
+                }
+            }); //end Get Customer Email Based on MemberID
+
+        });
+    };
+
+    /**
+ * 
+ * https://stackoverflow.com/questions/20481141/jquery-change-json-data-in-cookie
+ * updates cookie and sends accountBaalnce
+ */
+    var handlePostReportOthers = function () {
+        console.log("handlePostReportOthers");
+        $("#add-error-bag").hide();
+        var reportId = "Re_" + randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+        reportPostSbtBtnOthers.on('click', function () {
+            var json = frmReportOthers.serializeArray();
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+            var loggedInUserEmail = jsonData["reportedBy"];
+            var book = jsonData["book"];
+            var reportedBy = "resource:org.evin.book.track.Customer#" + jsonData["reportedBy"];
+            var reportedTo = jsonData["reportedTo"];
+            var store = jsonData["store"];
+
+            var getCustomerEmailURL = domainUrl + "/queries/getCustomerEmailonMemberID?memberId=" + store;
+
+            console.log("loggedInUserEmail ==> " + loggedInUserEmail);
+
+            // Append ID
+            jsonData["id"] = reportId;
+            jsonData["book"] = "resource:org.evin.book.track.Book#" + book;
+            jsonData["reportedBy"] = reportedBy;
+            jsonData["reportedTo"] = "resource:org.evin.book.track.Publisher#" + reportedTo;
+            // jsonData["store"] = "resource:org.evin.book.track.Customer#" + store;
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // Add  created time
+            jsonData["createdAt"] = currentDateTime();
+
+            var msgHTML = "";
+
+            $("#add-error-report-bag").hide();
+
+            // var customerDetailsURL = 
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // Get Customer Email Based on MemberID
+            $.ajax({
+                type: 'GET',
+                url: getCustomerEmailURL,
+                beforeSend: function () {
+                    //calls the loader id tag
+                    $("#loader").show();
+                },
+                success: function (customerEmailData) {
+                    console.log("customerEmailData +++> " + JSON.stringify(customerEmailData[0]));
+
+                    console.log("customerEmailData SIZE==  = " + customerEmailData.length);
+
+                    console.log("Final jsonData => " + JSON.stringify(jsonData));
+
+                    if (customerEmailData.length == 0) {
+                        $("#loader").hide();
+
+                        msgHTML = '<div class="alert alert-danger" role="alert">'
+                            + 'The store ' + store + ' does not exist. Kindly re-check the code.'
+                            + '</div>';
+
+                        $('#add-review-msgs').html(msgHTML);
+
+                    } else {
+
+                        console.log("customerEmailData.email = " + customerEmailData[0].email);
+
+                        var customerEmail = customerEmailData[0].email;
+
+                        jsonData["store"] = "resource:org.evin.book.track.Customer#" + customerEmail;
+
+
+                        // Report Book
+                        $.ajax({
+                            type: 'POST',
+                            url: postReportviewURL,
+                            data: jsonData,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                $("#loader").hide();
+                                console.log("Success +++> " + JSON.stringify(data));
+                                $("#add-error-report-bag").hide();
+                                $("#add-review-msgs").show();
+                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                    + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
+                                    + '</div>';
+
+                                $('#add-review-msgs').html(msgHTML);
+
+                                // window.location.reload();
+
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-review-msgs").hide();
+
+                                    $('#add-review-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-review-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-review-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                // Show modal to display error showed
+                                $("#add-error-report-bag").show();
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    $("#loader").hide();
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-book-msgs").hide();
+
+                        $('#add-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-book-errors').html(errors.error.message);
+                        // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
+                }
+            }); //end Get Customer Email Based on MemberID
+
+        });
+    };
 
     var handlePostReview = function () {
         console.log("handlePostReview");
@@ -16201,12 +25901,12 @@ var Api = function () {
         });
     };
 
-    var handleVerifyBook = function () {
-        console.log("handlePostBook");
+    var handleVerifyBookOthers = function () {
+        console.log("handleVerifyBookOthers");
         $("#add-error-bag").hide();
 
         // Prevent submit by enter button
-        bookVerifyForm.on('keyup keypress', function (e) {
+        bookVerifyFormOthers.on('keyup keypress', function (e) {
             var keyCode = e.keyCode || e.which;
             if (keyCode === 13) {
                 e.preventDefault();
@@ -16214,21 +25914,28 @@ var Api = function () {
             }
         });
 
-        bookVerifySbtBtn.on('click', function () {
-            var json = bookVerifyForm.serializeArray();
+        bookVerifySbtBtnOthers.on('click', function () {
+            var json = bookVerifyFormOthers.serializeArray();
             var jsonData = {};
+            var loggedInUserEmail = $("#loggedInUser").val();
+            var loggedInUser = "resource:org.evin.book.track.Customer#" + loggedInUserEmail;
+
+            var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
+
+            console.log("LoggedInUserEmail => " + loggedInUserEmail);
 
             $.each(json, function (i, field) {
                 jsonData[field.name] = field.value;
             });
 
+
             // Append ID
             var bookID = jsonData["book_serial"];
 
+            delete jsonData["loggedInUser"];
+
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
-            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
-            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
 
             var msgHTML = "";
 
@@ -16250,11 +25957,205 @@ var Api = function () {
                     $("#loader").show();
                 },
                 success: function (data) {
+
                     $("#loader").hide();
                     console.log("Success +++> " + JSON.stringify(data));
                     console.log("data.id = " + data.id);
 
                     window.location.href = '/verify/book/' + data.id;
+                },
+                error: function (data) {
+                    $("#loader").hide();
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-book-msgs").hide();
+
+                        $('#add-book-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        // $('#add-book-errors').html(errors.error.message);
+                        $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    $('#addBookModal').modal('show');
+                    $("#add-error-bag").show();
+                }
+            });
+
+        });
+    };
+
+    var handleVerifyBook = function () {
+        console.log("handleVerifyBook");
+        $("#add-error-bag").hide();
+
+        // Prevent submit by enter button
+        bookVerifyForm.on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        bookVerifySbtBtn.on('click', function () {
+            var json = bookVerifyForm.serializeArray();
+            var jsonData = {};
+            var loggedInUserEmail = $("#loggedInUser").val();
+            var loggedInUser = "resource:org.evin.book.track.Customer#" + loggedInUserEmail;
+
+            var getCustomerURL = postCustomerURL + "/" + loggedInUserEmail;
+
+            console.log("LoggedInUserEmail => " + loggedInUserEmail);
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+
+            // Append ID
+            var bookID = jsonData["book_serial"];
+
+            delete jsonData["loggedInUser"];
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+        
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
+
+            var msgHTML = "";
+
+            var getBookTrailUrl = getVerifyBookURL + bookID + '?filter={"where":{"id":"' + bookID + '"},"include":"resolve"}';
+
+            console.log("SUBMIT URL = " + getBookTrailUrl);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'GET',
+                url: getBookTrailUrl,
+                beforeSend: function () {//calls the loader id tag
+                    $("#book_form .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+
+                    // Get Customer Details
+                    $.ajax({
+                        type: 'GET',
+                        url: getCustomerURL,
+                        beforeSend: function () {
+                            //calls the loader id tag
+                            $("#loader").show();
+                        },
+                        success: function (customerData) {
+                            console.log("customerData +++> " + JSON.stringify(customerData));
+                            console.log("customerData.accountBalance = " + customerData.accountBalance);
+
+                            var postPoints = {
+                                accountBalance: customerData.accountBalance + scanPoints,
+                                customer: loggedInUser,
+                                updatedAt: currentDateTime(),
+                                participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+                            };
+
+                            // Add Posting Points
+                            $.ajax({
+                                type: 'POST',
+                                url: postCustomerScanPointsURL,
+                                data: postPoints,
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    //calls the loader id tag
+                                    $("#loader").show();
+                                },
+                                success: function (datas) {
+                                    $("#loader").hide();
+                                    console.log("Success +++> " + JSON.stringify(data));
+                                    console.log("data.id = " + data.id);
+
+                                    window.location.href = '/verify/book/' + data.id;
+                                },
+                                error: function (data) {
+                                    $("#loader").hide();
+                                    var errors = $.parseJSON(data.responseText);
+                                    var status = errors.error.statusCode;
+
+                                    if (status == 422) {
+                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                        $("#add-book-msgs").hide();
+
+                                        $('#add-book-errors').html('');
+                                        $.each(errors.error.details.messages, function (key, value) {
+                                            console.log('Error Value' + value + ' Key ' + key);
+                                            $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                        });
+
+                                    } else {
+                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                        $('#add-book-errors').html(errors.error.message);
+                                        // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                                    }
+                                    // hide loader
+                                    $("#loader").hide();
+
+                                    // Show modal to display error showed
+                                    $('#addBookModal').modal('show');
+                                    $("#add-error-bag").show();
+                                }
+                            }); //end post points ajax
+                        },
+                        error: function (data) {
+                            $("#loader").hide();
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-book-msgs").hide();
+
+                                $('#add-book-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-book-errors').html(errors.error.message);
+                                // $('#add-book-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                            }
+                            // hide loader
+                            $("#loader").hide();
+
+                            // Show modal to display error showed
+                            $('#addBookModal').modal('show');
+                            $("#add-error-bag").show();
+                        }
+                    }); //end Get Customer Details
+
+
                 },
                 error: function (data) {
                     $("#loader").hide();
@@ -16304,6 +26205,12 @@ var Api = function () {
                 jsonData[field.name] = field.value;
             });
 
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+        
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
+
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
             var msgHTML = "";
@@ -16314,7 +26221,9 @@ var Api = function () {
             var updateBookShipmentData = {
                 "$class": "org.evin.book.track.updateBookShipment",
                 "book": "resource:org.evin.book.track.Book#" + jsonData["book"],
-                "shipmentId": jsonData["shipment"]
+                "shipmentId": jsonData["shipment"],
+                "updatedAt": currentDateTime(),
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             $.ajaxSetup({
@@ -17234,6 +27143,12 @@ var Api = function () {
                 jsonData[field.name] = field.value;
             });
 
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
+
             // Append ID
             jsonData["shipmentId"] = shipmentId;
 
@@ -17246,18 +27161,6 @@ var Api = function () {
             // Delete Owner Variable from JSON
             delete jsonData["owner"];
 
-            // update latitude
-            // jsonData.location = {
-            //     "$class": "org.evin.book.track.Location",
-            //     "latLong": getLocation
-            // }
-
-            //update owner
-            // jsonData.shipOwnership = [{
-            //     "$class": "org.evin.book.track.ShipOwnership",
-            //     "owner": owner,
-            //     "shipment": "resource:org.evin.book.track.Shipment#" + shipmentId
-            // }];
 
             var updateInitialShipOwnership = {
                 "$class": "org.evin.book.track.ShipOwnership",
@@ -17293,7 +27196,9 @@ var Api = function () {
                     var orderstatusData = {
                         "$class": "org.evin.book.track.updateOrderStatus",
                         "order": "resource:org.evin.book.track.OrderContract#" + jsonData.contract,
-                        "orderStatus": "PROCESSED"
+                        "orderStatus": "PROCESSED",
+                        "updatedAt": currentDateTime(),
+                        "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
                     }
 
                     console.log('Json Sent orderstatusData => ' + JSON.stringify(orderstatusData));
@@ -17435,8 +27340,13 @@ var Api = function () {
             // Add updated time
             jsonData["updatedAt"] = currentDateTime();
 
-            // Set Default Status
-            // jsonData["ShipmentStatus"] = ShipmentStatus;
+            var updatedAt = jsonData["updatedAt"];
+
+            var loggedInEmail = jsonData["loggedInEmail"];
+            var userRole = jsonData["userRole"];
+        
+            delete jsonData["loggedInEmail"];
+            delete jsonData["userRole"];
 
             // Delete Owner Variable from JSON
             delete jsonData["owner"];
@@ -17452,20 +27362,26 @@ var Api = function () {
             var updateOrderStatusData = {
                 "$class": "org.evin.book.track.updateOrderStatus",
                 "order": "resource:org.evin.book.track.OrderContract#" + jsonData["contract"],
-                "orderStatus": "DELIVERED"
+                "orderStatus": "DELIVERED",
+                "updatedAt": updatedAt,
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             var updateShipmentStatusURL = domainUrl + "/updateShipmentStatus";
 
             var editShipmentDistributorData = {
                 "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
-                "ShipmentStatus": jsonData["ShipmentStatus"]
+                "ShipmentStatus": jsonData["ShipmentStatus"],
+                "updatedAt": updatedAt,
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             var updateShipmentItemStatusURL = domainUrl + "/updateShipmentItemStatus";
             var editShipmentItemStatusData = {
                 "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
-                "itemStatus": jsonData["itemStatus"]
+                "itemStatus": jsonData["itemStatus"],
+                "updatedAt": updatedAt,
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             var postCustomerOwnerURL = domainUrl + '/ShipOwnership';
@@ -17785,6 +27701,8 @@ var Api = function () {
             if (jsonData['role'] == 'Admin') {
                 var profileEditURL = domainUrl + '/Admin/' + memberId;
             } else if (jsonData['role'] == 'Customer') {
+                jsonData['firstName'] = jsonData['firstNameCustomer'];
+                delete jsonData['firstNameCustomer'];
                 var profileEditURL = domainUrl + '/Customer/' + memberId;
             } else if (jsonData['role'] == 'Publisher') {
                 var profileEditURL = domainUrl + '/Publisher/' + memberId;
@@ -19130,7 +29048,8 @@ var Api = function () {
 
             if (jsonData["participant"] == "Customer") {
                 //remove business name
-                delete jsonData["name"];
+                jsonData["firstName"] = jsonData["firstNameCustomer"];
+                delete jsonData["firstNameCustomer"];
                 delete jsonData["participant"];
                 jsonData["memberId"] = "C-" + memberID;
 
@@ -19187,7 +29106,9 @@ var Api = function () {
                 });
             } else if (jsonData["participant"] == "Distributor") {
                 // remove individual name
-                delete jsonData["firstName"];
+                // delete jsonData["firstName"];
+                //remove business name
+                // delete jsonData["name"];
                 delete jsonData["lastName"];
                 delete jsonData["participant"];
 
@@ -19208,7 +29129,7 @@ var Api = function () {
                         $("#add-error-reg-bag").hide();
 
                         msgHTML = '<div class="alert alert-primary" role="alert">'
-                            + data.name + ' Added Successfuly. You will be redirected to Login momentarily'
+                            + data.firstName + ' Added Successfuly. You will be redirected to Login momentarily'
                             + '</div>';
 
                         $('#msgAlert').html(msgHTML);
@@ -19248,7 +29169,9 @@ var Api = function () {
                 // Publisher
 
                 // remove individual name
-                delete jsonData["firstName"];
+                // delete jsonData["firstName"];
+                //remove business name
+                // delete jsonData["name"];
                 delete jsonData["lastName"];
                 delete jsonData["participant"];
 
@@ -19269,7 +29192,7 @@ var Api = function () {
                         $("#add-error-reg-bag").hide();
 
                         msgHTML = '<div class="alert alert-primary" role="alert">'
-                            + data.name + ' Added Successfuly. You will be redirected to Login momentarily'
+                            + data.firstName + ' Added Successfuly. You will be redirected to Login momentarily'
                             + '</div>';
 
                         $('#msgAlert').html(msgHTML);
@@ -19328,6 +29251,279 @@ var Api = function () {
         });
     };
 
+    var handleFetchWards = function () {
+        var wardsBaseURL = 'https://frozen-basin-45055.herokuapp.com/api/wards?county=';
+        var county = $("#county").val();
+        var county = "Nairobi";
+        var wardsURL = wardsBaseURL + county;
+
+        console.log("COUNTY = " + county);
+        console.log("Wards = " + wards[0].name);
+        console.log("Wards Size = " + wards.length);
+
+        var denomination = document.getElementById("ward")
+        for (var i = 0; i < wards.length; i++) {
+            var option = document.createElement("OPTION"),
+                txt = document.createTextNode(wards[i].name);
+            option.appendChild(txt);
+            option.setAttribute("value", wards[i].name);
+            denomination.insertBefore(option, denomination.lastChild);
+        }
+
+    };
+
+    /**
+     * Extracts value after Hash
+     * @param {*} words 
+     */
+    function getValueAfterHash(words) {
+        var n = words.split("#");
+        return n[n.length - 1];
+    
+    }
+    /**
+     * Function to post transaction history
+     */
+    var handleTransactionHistory = function () {
+        console.log("handleTransactionHistory");
+        $("#add-transaction-error-bag").hide();
+
+        // Get the model basedon the transaction
+        function getModel(transName){
+
+            if(transName == "getIsConfimedReportHistorian"){
+                var IDs = new Object();
+
+                IDs['model'] = "Report";
+                IDs['filter'] = "report";
+
+                return IDs;
+
+            }else if(transName == "getOrderStatusHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "OrderContract";
+                IDs['filter'] = "order";
+                
+                return IDs;
+
+            }else if(transName == "getShipmentStatusHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "Shipment";
+                IDs['filter'] = "shipment";
+                
+                return IDs;
+            }else if(transName == "getShipmentItemStatusHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "Shipment";
+                IDs['filter'] = "shipment";
+                
+                return IDs;
+
+            }else if(transName == "getScanBookHistorian"){
+
+                var IDs = new Object();
+
+                IDs['model'] = "Customer";
+                IDs['filter'] = "customer";
+                
+                return IDs;
+            }
+            
+        }
+
+        // Format the data
+        function formatData(transName, data){
+
+            var msgHTML = "";
+
+            if(transName == "getIsConfimedReportHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].report) + '</td>'
+                    + '<td>' + data[i].isConfirmed + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#records").html(msgHTML);
+
+                $('#transactionViewModal').modal('show');
+
+            }else if(transName == "getOrderStatusHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].order) + '</td>'
+                    + '<td>' + data[i].orderStatus + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#order_status").html(msgHTML);
+
+                $('#orderStatusViewModal').modal('show');
+
+            }else if(transName == "getShipmentStatusHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                    + '<td>' + data[i].ShipmentStatus + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#shipment_status").html(msgHTML);
+
+                $('#shipmentStatusViewModal').modal('show');
+                
+            }else if(transName == "getShipmentItemStatusHistorian"){
+                
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                    + '<td>' + data[i].itemStatus + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#shipment_item_status").html(msgHTML);
+
+                $('#shipmentItemStatusViewModal').modal('show');
+
+            }else if(transName == "getScanBookHistorian"){
+
+                for(var i = 0; i < data.length; i++){
+                    msgHTML += '<tr>'
+                    + '<td>' + getValueAfterHash(data[i].customer) + '</td>'
+                    + '<td>' + data[i].accountBalance + '</td>'
+                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                    + '<td>' + data[i].updatedAt + '</td>'
+                    + '<td>' + data[i].timestamp + '</td>'
+                    + '</tr>';
+                }
+
+                $("#customer_book_scan_status").html(msgHTML);
+
+                $('#customerBookScanStatusViewModal').modal('show');
+              
+            }
+            
+        }
+
+        transactionHistorySbtBtn.on('click', function () {
+            var json = transactionForm.serializeArray();
+            var jsonData = {};
+
+            console.log("handleTransactionHistory");
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            var loggedInUser = jsonData['loggedInUser'];
+            var role = jsonData['role'];
+            var transName = jsonData['transaction_name'];
+            var itemID = jsonData['itemID'];
+            var modelName = getModel(transName);
+
+            console.log("Here => " + loggedInUser + " " + role + " " + transName + " " + itemID + " " + modelName['model']);
+
+            console.log("JSON SENT => " + JSON.stringify(jsonData));
+
+            // var saveUrl = "./formdata?view=828:0&KF=" + userID + "&oper=edit";
+            console.log("Progress Sent Data =>" + JSON.stringify(jsonData));
+
+            var msgHTML = "";
+
+            var getIsConfimedReportHistorianURL = domainUrl + "/queries/"+ transName +"?"+ modelName['filter'] +"=resource%3Aorg.evin.book.track."+ modelName['model'] +"%23" + itemID;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // data:  JSON.stringify(jsonData),
+            $.ajax({
+                type: 'GET',
+                url: getIsConfimedReportHistorianURL,
+                beforeSend: function () {//calls the loader id tag
+                    $("#book_form .close").click();
+                    $("#loader").show();
+                },
+                success: function (data) {
+
+                    $("#loader").hide();
+
+                    // console.log("Success +++> " + JSON.stringify(data));
+                    console.log(data);
+                    console.log(data.length);
+
+                    if(data.length > 0){
+
+                        formatData(transName, data);
+
+                    }else{
+                        msgHTML = '<div class="alert alert-warning" role="alert">'
+                        + 'No Transaction history found for ' + itemID + ' item ID.'
+                        + '</div>';
+    
+                        $("#add-transaction-msgs").html(msgHTML);
+                    }
+                    
+
+
+                    // window.location.href = '/verify/book/' + data.id;
+                },
+                error: function (data) {
+                    $("#loader").hide();
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-transaction-msgs").hide();
+
+                        $('#add-transaction-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-transaction-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-transaction-errors').html(errors.error.message);
+                        // $('#add-transaction-errors').html('<li>WARNING!!! The Book is a possible counterfeit.</li>');
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    // Show modal to display error showed
+                    // $('#transactionViewModal').modal('show');
+                    $("#add-transaction-error-bag").show();
+                }
+            });
+
+        });
+    };
+
+
     // function you can use:
     function getAfterHarsh(str) {
         return str.split('#')[1];
@@ -19360,6 +29556,7 @@ var Api = function () {
             handleEditBook();
             handleDeleteBook();
             handleVerifyBook();
+            handleVerifyBookOthers();
 
             // Handle Order EndPoints
             handlePostOrder();
@@ -19398,12 +29595,29 @@ var Api = function () {
 
             // Profile
             handleEditProfile();
+
+            // Review
+            handlePostReport();
+            handlePostReportOthers();
+
+            // Purchase Book
+            handleBuyBook();
+
+            // Transaction
+            handleTransactionHistory();
+
+            // Fetch Wards
+            // handleFetchWards();
         }
     }
 
 }();
 
 var domainUrl = 'http://localhost:3001/api';
+var postCustomerURL = domainUrl + '/Customer';
+var scanPoints = 2.0;
+var reportPoints = 5.0;
+var penaltyPoints = 20.0;
 /**
  * Show edit form with the values
 * @param {*} book_id 
@@ -19449,13 +29663,13 @@ function deleteBookForm(book_id) {
     $.ajax({
         type: 'GET',
         url: '/book/' + book_id,
-        success: function(data) {
+        success: function (data) {
             var BookID = data.book.id;
             $("#frmDeleteBook #delete-title").html("Delete Book (" + BookID + ")?");
             $("#frmDeleteBook input[name=book_id]").val(BookID);
             $('#deleteBookModal').modal('show');
         },
-        error: function(data) {
+        error: function (data) {
             console.log(data);
         }
     });
@@ -19520,13 +29734,13 @@ function orderDetailedView(order_id) {
             buyerInfo += data.order.buyer.email + ' , ' + data.order.buyer.firstName + ' ' + data.order.buyer.lastName;
             $("#buyerInfoView").html(buyerInfo);
 
-            sellerInfo += data.order.seller.email + ' , ' + data.order.seller.name;
+            sellerInfo += data.order.seller.email + ' , ' + data.order.seller.firstName;
             $("#sellerInfoView").html(sellerInfo);
 
             $("#arrivalDateTimeView").html(data.order.arrivalDateTime);
-            if(data.order.payOnArrival == true){
+            if (data.order.payOnArrival == true) {
                 $("#payOnArrivalView").html("Yes");
-            }else{
+            } else {
                 $("#payOnArrivalView").html("No");
             }
             $("#unitPriceView").html(data.order.unitPrice);
@@ -19546,14 +29760,14 @@ function orderDetailedView(order_id) {
  * Show edit form with the values
  * @param {*} shipment_id 
  */
-function editShipmentForm(shipment_id){
+function editShipmentForm(shipment_id) {
     console.log("Clicked Shipment Edit form");
-    
+
     $.ajax({
         type: 'GET',
         url: '/shipment/' + shipment_id + '/edit',
         success: function (data) {
-     
+
             // console.log("JSON +>" + JSON.stringify(data));
             // console.log("Buyer +>" + JSON.stringify(data.shipment.contract.buyer.email));
 
@@ -19578,14 +29792,14 @@ function editShipmentForm(shipment_id){
  * Show Review Form
  * @param {*} shipment_id 
  */
-function reviewForm(shipment_id){
+function reviewForm(shipment_id) {
     console.log("Clicked reviewForm form");
-    
+
     $.ajax({
         type: 'GET',
         url: '/shipment/' + shipment_id + '/edit',
         success: function (data) {
-     
+
             // console.log("JSON +>" + JSON.stringify(data));
             // console.log("Buyer +>" + JSON.stringify(data.shipment.contract.buyer.email));
             console.log("Shipment +>" + JSON.stringify(data.shipment.shipmentId));
@@ -19611,26 +29825,26 @@ function reviewForm(shipment_id){
  * Show Detailed View Of Shipment
  * @param {*} shipment_id 
  */
-function shipmentDetailedView(shipment_id){
+function shipmentDetailedView(shipment_id) {
     console.log("Clicked shipmentDetailedView");
     $("#view-detailed-shipment-error-bag").hide();
-    
+
     $.ajax({
         type: 'GET',
         url: '/shipment/' + shipment_id + '/edit',
         success: function (data) {
             var stars = '';
-     
+
             // console.log("JSON +>" + JSON.stringify(data));
             // console.log("Buyer +>" + JSON.stringify(data.shipment.contract.buyer.email));
             console.log("Shipment +>" + JSON.stringify(data.shipment.shipmentId));
 
             $("#add-review-error-bag").hide();
-            
+
             $("#shipmentIdView").html(data.shipment.shipmentId);
             $("#ShipmentStatusView").html(data.shipment.ShipmentStatus);
             $("#itemStatusView").html(data.shipment.itemStatus);
-            for(var i=0; i < data.shipment.feedbackScale;i++){
+            for (var i = 0; i < data.shipment.feedbackScale; i++) {
                 stars += '<i style="color:#ffd700;" class="typcn typcn-heart-full-outline"></i>';
             }
             $("#feedbackScaleView").html(stars);
@@ -19657,13 +29871,13 @@ function deleteOrderForm(order_id) {
     $.ajax({
         type: 'GET',
         url: '/order/' + order_id,
-        success: function(data) {
+        success: function (data) {
             var OrderID = data.order.contractId;
             $("#frmDeleteOrder #delete-title").html("Delete Order (" + OrderID + ")?");
             $("#frmDeleteOrder input[name=order_id]").val(OrderID);
             $('#deleteOrderModal').modal('show');
         },
-        error: function(data) {
+        error: function (data) {
             console.log(data);
         }
     });
@@ -19674,7 +29888,7 @@ function deleteOrderForm(order_id) {
  * @param {*} contractId 
  * @param {*} quantity 
  */
-function createShipmentOrder(contractId, quantity){
+function createShipmentOrder(contractId, quantity) {
 
     console.log("Clicked createShipmentOrder");
     $(".alert-danger").hide();
@@ -19706,7 +29920,7 @@ function editPublisherForm(publisher_id) {
 
             $("#frmEditPublisher input[name=memberId]").val(data.publisher.memberId);
             $("#frmEditPublisher input[name=email]").val(data.publisher.email);
-            $("#frmEditPublisher input[name=name]").val(data.publisher.name);
+            $("#frmEditPublisher input[name=name]").val(data.publisher.firstName);
             $("#frmEditPublisher input[name=telephone]").val(data.publisher.telephone);
             $("#frmEditPublisher input[name=accountBalance]").val(data.publisher.accountBalance);
             $("#frmEditPublisher input[name=country]").val(data.publisher.address.country);
@@ -19729,13 +29943,13 @@ function deletePublisherForm(publisherEmail) {
     $.ajax({
         type: 'GET',
         url: '/publisher/' + publisherEmail,
-        success: function(data) {
+        success: function (data) {
             var PublisherID = data.publisher.email;
             $("#frmDeletePublisher #delete-title").html("Delete Publisher (" + PublisherID + ")?");
             $("#frmDeletePublisher input[name=email]").val(PublisherID);
             $('#deletePublisherModal').modal('show');
         },
-        error: function(data) {
+        error: function (data) {
             console.log(data);
         }
     });
@@ -19761,7 +29975,7 @@ function editDistributorForm(distributor_id) {
 
             $("#frmEditDistributor input[name=memberId]").val(data.distributor.memberId);
             $("#frmEditDistributor input[name=email]").val(data.distributor.email);
-            $("#frmEditDistributor input[name=name]").val(data.distributor.name);
+            $("#frmEditDistributor input[name=name]").val(data.distributor.firstName);
             $("#frmEditDistributor input[name=telephone]").val(data.distributor.telephone);
             $("#frmEditDistributor input[name=accountBalance]").val(data.distributor.accountBalance);
             $("#frmEditDistributor input[name=country]").val(data.distributor.address.country);
@@ -19784,17 +29998,17 @@ function deleteDistributorForm(distributorEmail) {
     $.ajax({
         type: 'GET',
         url: '/distributor/' + distributorEmail,
-        success: function(data) {
+        success: function (data) {
             var DistributorID = data.distributor.email;
             $("#frmDeleteDistributor #delete-title").html("Delete Distributor (" + DistributorID + ")?");
             $("#frmDeleteDistributor input[name=email]").val(DistributorID);
             $('#deleteDistributorModal').modal('show');
         },
-        error: function(data) {
+        error: function (data) {
             console.log(data);
         }
     });
-} 
+}
 
 /**
  * Show edit form with the values
@@ -19816,7 +30030,7 @@ function editCustomerForm(customer_id) {
 
             $("#frmEditCustomer input[name=memberId]").val(data.customer.memberId);
             $("#frmEditCustomer input[name=email]").val(data.customer.email);
-            $("#frmEditCustomer input[name=name]").val(data.customer.name);
+            $("#frmEditCustomer input[name=name]").val(data.customer.firstName);
             $("#frmEditCustomer input[name=telephone]").val(data.customer.telephone);
             $("#frmEditCustomer input[name=accountBalance]").val(data.customer.accountBalance);
             $("#frmEditCustomer input[name=country]").val(data.customer.address.country);
@@ -19840,13 +30054,13 @@ function deleteCustomerForm(customerEmail) {
     $.ajax({
         type: 'GET',
         url: '/customer/' + customerEmail,
-        success: function(data) {
+        success: function (data) {
             var CustomerID = data.customer.email;
             $("#frmDeleteCustomer #delete-title").html("Delete Customer (" + CustomerID + ")?");
             $("#frmDeleteCustomer input[name=email]").val(CustomerID);
             $('#deleteCustomerModal').modal('show');
         },
-        error: function(data) {
+        error: function (data) {
             console.log(data);
         }
     });
@@ -19866,7 +30080,7 @@ function openAddBookForm(shipmentId) {
 
     $('#shipment').val('resource:org.evin.book.track.Shipment#' + shipmentId);
 
-} 
+}
 
 /**
  * 
@@ -19881,16 +30095,16 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
     $("#shipment_owner").val(shipmentId);
 
     $('#shipment_title').html('<i class="os-icon os-icon-truck"></i> Choose distributor for shipment ' + shipmentId);
-    if(unitsOrdered > unitsAdded){
+    if (unitsOrdered > unitsAdded) {
 
         diff = unitsOrdered - unitsAdded;
-        message = "You can't assign this Shipment to a distributor. Ensure You add more "+ diff +" books in the shipment before getting access to select ditributor.";
+        message = "You can't assign this Shipment to a distributor. Ensure You add more " + diff + " books in the shipment before getting access to select ditributor.";
 
         message = '<div class="alert alert-warning" >'
-                      + message               
-                    +'</div>';
+            + message
+            + '</div>';
 
-        console.log("Add more "+ diff +" books in the shipment.");
+        console.log("Add more " + diff + " books in the shipment.");
         $("#add-ship-ownership-error-bag").hide();
         // Hide the selector distributor and action buttons till
         // conditions are met
@@ -19900,13 +30114,13 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
 
-    }else if(unitsOrdered < unitsAdded){
+    } else if (unitsOrdered < unitsAdded) {
         diff = unitsAdded - unitsOrdered;
-        message = "You can't assign this Shipment to a distributor. You have registered more "+ diff +" books.";
+        message = "You can't assign this Shipment to a distributor. You have registered more " + diff + " books.";
         message = '<div class="alert alert-warning" >'
-                      + message               
-                    +'</div>';
-        console.log("You have registered more "+ diff +" books.");
+            + message
+            + '</div>';
+        console.log("You have registered more " + diff + " books.");
         $("#add-ship-ownership-error-bag").hide();
         // Hide the selector distributor and action buttons till
         // conditions are met
@@ -19916,7 +30130,7 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
 
-    }else{
+    } else {
         // Show the selector distributor and action buttons till
         // conditions are met
         $("#selectDistributorDropdown").show();
@@ -19925,7 +30139,7 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
         $.ajax({
             type: 'GET',
             url: domainUrl + '/Distributor/',
-            success: function(data) {
+            success: function (data) {
                 console.log("DATA ->" + JSON.stringify(data));
 
                 // $("#selectDistributor").html(selectOption);
@@ -19933,13 +30147,16 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
                 var citizenship = document.getElementById("selectDistributor")
                 for (var i = 0; i < data.length; i++) {
                     var option = document.createElement("OPTION"),
-                        txt = document.createTextNode(data[i].name);
+                        txt = document.createTextNode(data[i].firstName);
                     option.appendChild(txt);
                     option.setAttribute("value", data[i].email);
                     citizenship.insertBefore(option, citizenship.lastChild);
+
+                    console.log("data[i].firstName) ==> " + data[i].firstName);
+                    console.log("data[i].email) ==> " + data[i].email);
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 console.log(data);
             }
         });
@@ -19948,21 +30165,21 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
         $("#add-ship-ownership-error-bag").hide();
         diff = unitsAdded - unitsOrdered;
         console.log("Equal can continue coding " + diff);
-        
+
         // Books added correctly
-        if( diff == 0 && unitsAdded > 0){
+        if (diff == 0 && unitsAdded > 0) {
             // No Message
             message = "";
-        }else{
+        } else {
             // You haven't registered any
-            message = "You have registered more "+ diff +" books.";
+            message = "You have registered more " + diff + " books.";
         }
 
         $("#selectorMsgId").html(message);
         $('#selectDistributorModal').modal('show');
     }
 
-} 
+}
 
 function getBase64Encoded(rawStr) {
     var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
@@ -19981,7 +30198,7 @@ function getBase64Decoded(encStr) {
 /**
  * Set Token Login
  */
-function setToken(detailsData){
+function setToken(detailsData) {
     console.log("Generating Token... ");
 
     var txtHeader = document.getElementById("txtHeader");
@@ -19989,7 +30206,7 @@ function setToken(detailsData){
     var txtSecret = document.getElementById("txtSecret");
 
     var jsonData = {
-        "token":"34334trgggtrhtytyu5u5"
+        "token": "34334trgggtrhtytyu5u5"
     };
 
     // var jsonDataStringified = JSON.stringify(jsonData);
@@ -20006,7 +30223,7 @@ function setToken(detailsData){
 /**
  * Unseting token Logout
  */
-function UnSetToken(){
+function UnSetToken() {
 
     console.log("Unsetting Token... ");
 
@@ -20018,25 +30235,35 @@ function UnSetToken(){
 }
 
 //define a function to set cookies
-function setCookie(name,value,days) {
+function setCookie(name, value, days) {
     var expires = "";
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000)); // days
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // days
         // date.setTime(date.getTime() + (hours*60*60*1000)); // hours
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
- }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
 
- /*On logout deleteCookie*/
+/*On logout deleteCookie*/
 function deleteCookie(cname) {
     cookieValue = "LOGGED-OUT";
     document.cookie = cname + "=" + cookieValue + "; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 }
 
- function getRoleFromClass(words) {
+function getRoleFromClass(words) {
     var n = words.split(".");
+    return n[n.length - 1];
+
+}
+
+/**
+ * Get the value from a hash symbol
+ * @param {*} words 
+ */
+function getValueAfterHash(words) {
+    var n = words.split("#");
     return n[n.length - 1];
 
 }
@@ -20045,8 +30272,890 @@ $('.datetime').datetimepicker({
     // format: 'DD/MM/YYYY',
     format: 'YYYY-MM-DD',
     useCurrent: false, //Important! See issue #
-    minDate:new Date(),
+    minDate: new Date(),
 });
+
+// Notification For Updates
+$("#bn2").breakingNews({
+    effect: "slide-v",
+    autoplay: true,
+    timer: 3000,
+    color: "blue"
+});
+
+// Get current Date Time in GMT+0300 (East Africa Time)
+function currentDateTime() {
+    var dt = new Date();
+    dt.setHours(dt.getHours() + 3);
+
+    return dt;
+}
+
+/**
+ * Function to confirm 
+ * @param {*} reportID 
+ * @param {*} BookID 
+ * @param {*} ShipmentID 
+ * @param {*} reportedByEmail 
+ * @param {*} userRole 
+ * @param {*} loggedInEmail 
+ */
+function updateTrueIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEmail, userRole, loggedInEmail) {
+    console.log("Clicked updateIsConfirmedReport in helper-api");
+
+    var domainUrl = 'http://localhost:3001/api';
+    var laravelDomainUrl = 'http://localhost:8000';
+
+    var smsReportMessage = "Report Confirmed for " + reportedByEmail + ". You earned 5 points for helping fight counterfeit. Keep up the Fight!";
+
+    var jsonDataSMS = {
+        message: smsReportMessage
+    };
+
+    var smsURL = laravelDomainUrl + '/general/sms/send/';
+
+    // 1. Update Report isconfirmed
+    var jsonData = {
+        report: "resource:org.evin.book.track.Report#" + reportID,
+        isConfirmed: true,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+    };
+
+    // Email
+    var sendEmailURL = "/general/email/send/";
+    var jsonEmailData = {}
+    jsonEmailData = {
+        'message': smsReportMessage,
+        'to': reportedByEmail,
+        'subject': 'Book Counterfeit Report Confirmation'
+    };
+    console.log("updateIsConfirmedReport Data = " + JSON.stringify(jsonData));
+
+
+    var getCustomerURL = postCustomerURL + "/" + reportedByEmail;
+
+    var postCustomerScanPointsURL = domainUrl + '/updateCustomerPoints';
+
+    var msgHTML = '';
+
+    var confirmation = confirm("Are you sure you want to approve the report? You cannot undo after this.");
+
+    if (confirmation) {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: domainUrl + '/updateReportIsConfirmed',
+            data: jsonData,
+            dataType: 'json',
+            beforeSend: function () {
+                $("#loader").show();
+                $("#add-error-report-bag").hide();
+                $('#add-report-msgs').hide();
+            },
+            success: function (data) {
+
+                // Get Customer Details
+                $.ajax({
+                    type: 'GET',
+                    url: getCustomerURL,
+                    beforeSend: function () {
+                        //calls the loader id tag
+                        $("#loader").show();
+                    },
+                    success: function (customerData) {
+                        console.log("customerData +++> " + JSON.stringify(customerData));
+                        console.log("customerData.accountBalance = " + customerData.accountBalance);
+                        var postPoints = {
+                            accountBalance: customerData.accountBalance + reportPoints,
+                            customer: reportedByEmail,
+                            updatedAt: currentDateTime(),
+                            participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+                        };
+
+                        // Add Points
+                        $.ajax({
+                            type: 'POST',
+                            url: postCustomerScanPointsURL,
+                            data: postPoints,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                // SEND SMS 
+                                $.ajax({
+                                    type: 'POST',
+                                    url: smsURL,
+                                    data: jsonDataSMS,
+                                    dataType: 'json',
+                                    beforeSend: function () {
+                                        $("#loader").show();
+                                    },
+                                    success: function (data) {
+
+
+                                        console.log("smsURL -->" + data);
+
+                                        msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                            'Report confirmed!' +
+                                            '</div>';
+
+                                        if (data.success) {
+
+                                            $("#add-error-report-bag").hide();
+
+                                            // $('#add-report-msgs').html(msgHTML);
+
+                                        } else {
+
+                                            msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                'SMS Sending Failed!' +
+                                                '</div>';
+
+                                            // $('#add-report-msgs').html(msgHTML);
+                                        }
+
+                                        // window.location.reload();
+
+                                        // SEND Email 
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: sendEmailURL,
+                                            data: jsonEmailData,
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                $("#loader").show();
+                                            },
+                                            success: function (data) {
+                                                $('#add-report-msgs').show();
+
+                                                console.log("smsURL -->" + data);
+
+                                                // msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                                //     'Report confirmed!' +
+                                                //     '</div>';
+
+                                                $("#loader").hide();
+
+                                                if (data.success) {
+
+                                                    $("#add-error-report-bag").hide();
+
+                                                    $('#add-report-msgs').html(msgHTML);
+
+                                                } else {
+
+                                                    msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                        'Email Sending Failed!' +
+                                                        '</div>';
+
+                                                    $('#add-report-msgs').html(msgHTML);
+                                                }
+
+                                                window.location.reload();
+
+                                            },
+                                            error: function (data) {
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#add-report-msgs").hide();
+
+                                                    $('#add-report-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
+
+                                                } else {
+                                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                    $('#add-report-errors').html(errors.error.message);
+                                                }
+                                                // hide loader
+                                                $("#loader").hide();
+
+                                                $("#add-error-report-bag").show();
+                                            }
+                                        }); // END Email AJax
+
+                                    },
+                                    error: function (data) {
+                                        var errors = $.parseJSON(data.responseText);
+                                        var status = errors.error.statusCode;
+
+                                        if (status == 422) {
+                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                            $("#add-report-msgs").hide();
+
+                                            $('#add-report-errors').html('');
+                                            $.each(errors.error.details.messages, function (key, value) {
+                                                console.log('Error Value' + value + ' Key ' + key);
+                                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                            });
+
+                                        } else {
+                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                            $('#add-report-errors').html(errors.error.message);
+                                        }
+                                        // hide loader
+                                        $("#loader").hide();
+
+                                        $("#add-error-report-bag").show();
+                                    }
+                                }); // END Ajax
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-report-msgs").hide();
+
+                                    $('#add-report-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-report-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                $("#add-error-report-bag").show();
+                            }
+                        }); //end post points ajax
+
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#add-report-msgs").hide();
+
+                            $('#add-report-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-report-errors').html(errors.error.message);
+                        }
+                        // hide loader
+                        $("#loader").hide();
+
+                        $("#add-error-report-bag").show();
+                    }
+                }); //end Get Customer Details
+            },
+            error: function (data) {
+                var errors = $.parseJSON(data.responseText);
+                var status = errors.error.statusCode;
+
+                if (status == 422) {
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                    $("#add-report-msgs").hide();
+
+                    $('#add-report-errors').html('');
+                    $.each(errors.error.details.messages, function (key, value) {
+                        console.log('Error Value' + value + ' Key ' + key);
+                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                    });
+
+                } else {
+                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                    $('#add-report-errors').html(errors.error.message);
+                }
+                // hide loader
+                $("#loader").hide();
+
+                $("#add-error-report-bag").show();
+            }
+        });
+    }
+}
+
+/**
+ * Function to confirm 
+ * @param {*} reportID 
+ * @param {*} BookID 
+ * @param {*} ShipmentID 
+ * @param {*} reportedByEmail 
+ * @param {*} userRole 
+ * @param {*} loggedInEmail 
+ */
+function updateFalseIsConfirmedReport(reportID, BookID, ShipmentID, reportedByEmail, userRole, loggedInEmail) {
+    console.log("Clicked updateFalseIsConfirmedReport in helper-api");
+
+    var domainUrl = 'http://localhost:3001/api';
+    var laravelDomainUrl = 'http://localhost:8000';
+
+    var smsReportMessage = "Report Declined for " + reportedByEmail + ". You are penalized " + penaltyPoints + " points for providing inaccurate reports counterfeit.";
+
+    var jsonDataSMS = {
+        message: smsReportMessage
+    };
+
+    var smsURL = laravelDomainUrl + '/general/sms/send/';
+
+    // 1. Update Report isconfirmed
+    var jsonData = {
+        report: "resource:org.evin.book.track.Report#" + reportID,
+        isConfirmed: false,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+    };
+
+    // Email
+    var sendEmailURL = "/general/email/send/";
+    var jsonEmailData = {}
+    jsonEmailData = {
+        'message': smsReportMessage,
+        'to': reportedByEmail,
+        'subject': 'Book Counterfeit Report Confirmation'
+    };
+
+    console.log("updateFalseIsConfirmedReport Data = " + JSON.stringify(jsonData));
+
+
+    var getCustomerURL = postCustomerURL + "/" + reportedByEmail;
+
+    var postCustomerScanPointsURL = domainUrl + '/updateCustomerPoints';
+
+    var msgHTML = '';
+
+    var confirmation = confirm("Are you sure you want to decline the report? You cannot undo after this.");
+
+    if (confirmation) {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: domainUrl + '/updateReportIsConfirmed',
+            data: jsonData,
+            dataType: 'json',
+            beforeSend: function () {
+                $("#loader").show();
+                $("#add-error-report-bag").hide();
+                $('#add-report-msgs').hide();
+            },
+            success: function (data) {
+
+
+                // Get Customer Details
+                $.ajax({
+                    type: 'GET',
+                    url: getCustomerURL,
+                    beforeSend: function () {
+                        //calls the loader id tag
+                        $("#loader").show();
+                    },
+                    success: function (customerData) {
+                        console.log("customerData +++> " + JSON.stringify(customerData));
+                        console.log("customerData.accountBalance = " + customerData.accountBalance);
+                        var postPoints = {
+                            accountBalance: customerData.accountBalance - penaltyPoints,
+                            customer: reportedByEmail,
+                            updatedAt: currentDateTime(),
+                            participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+                        };
+
+                        // Add Points
+                        $.ajax({
+                            type: 'POST',
+                            url: postCustomerScanPointsURL,
+                            data: postPoints,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                //calls the loader id tag
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+
+                                // SEND SMS 
+                                $.ajax({
+                                    type: 'POST',
+                                    url: smsURL,
+                                    data: jsonDataSMS,
+                                    dataType: 'json',
+                                    beforeSend: function () {
+                                        $("#loader").show();
+                                    },
+                                    success: function (data) {
+
+
+                                        console.log("smsURL -->" + data);
+
+                                        msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                            'Report declined!' +
+                                            '</div>';
+
+                                        if (data.success) {
+
+                                            $("#add-error-report-bag").hide();
+
+                                            // $('#add-report-msgs').html(msgHTML);
+
+                                        } else {
+
+                                            msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                'SMS Sending Failed!' +
+                                                '</div>';
+
+                                            // $('#add-report-msgs').html(msgHTML);
+                                        }
+
+                                        // window.location.reload();
+
+                                        // SEND Email 
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: sendEmailURL,
+                                            data: jsonEmailData,
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                $("#loader").show();
+                                            },
+                                            success: function (data) {
+                                                $('#add-report-msgs').show();
+
+                                                console.log("smsURL -->" + data);
+
+                                                // msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                                //     'Report confirmed!' +
+                                                //     '</div>';
+
+                                                $("#loader").hide();
+
+                                                if (data.success) {
+
+                                                    $("#add-error-report-bag").hide();
+
+                                                    $('#add-report-msgs').html(msgHTML);
+
+                                                } else {
+
+                                                    msgHTML += '<div class="alert alert-danger" role="alert">' +
+                                                        'Email Sending Failed!' +
+                                                        '</div>';
+
+                                                    $('#add-report-msgs').html(msgHTML);
+                                                }
+
+                                                window.location.reload();
+
+                                            },
+                                            error: function (data) {
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#add-report-msgs").hide();
+
+                                                    $('#add-report-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
+
+                                                } else {
+                                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                    $('#add-report-errors').html(errors.error.message);
+                                                }
+                                                // hide loader
+                                                $("#loader").hide();
+
+                                                $("#add-error-report-bag").show();
+                                            }
+                                        }); // END Email AJax
+
+                                    },
+                                    error: function (data) {
+                                        var errors = $.parseJSON(data.responseText);
+                                        var status = errors.error.statusCode;
+
+                                        if (status == 422) {
+                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                            $("#add-report-msgs").hide();
+
+                                            $('#add-report-errors').html('');
+                                            $.each(errors.error.details.messages, function (key, value) {
+                                                console.log('Error Value' + value + ' Key ' + key);
+                                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                            });
+
+                                        } else {
+                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                            $('#add-report-errors').html(errors.error.message);
+                                        }
+                                        // hide loader
+                                        $("#loader").hide();
+
+                                        $("#add-error-report-bag").show();
+                                    }
+                                }); // END Ajax
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-report-msgs").hide();
+
+                                    $('#add-report-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-report-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                $("#add-error-report-bag").show();
+                            }
+                        }); //end post points ajax
+
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#add-report-msgs").hide();
+
+                            $('#add-report-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-report-errors').html(errors.error.message);
+                        }
+                        // hide loader
+                        $("#loader").hide();
+
+                        $("#add-error-report-bag").show();
+                    }
+                }); //end Get Customer Details
+
+            },
+            error: function (data) {
+                var errors = $.parseJSON(data.responseText);
+                var status = errors.error.statusCode;
+
+                if (status == 422) {
+                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                    $("#add-report-msgs").hide();
+
+                    $('#add-report-errors').html('');
+                    $.each(errors.error.details.messages, function (key, value) {
+                        console.log('Error Value' + value + ' Key ' + key);
+                        $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                    });
+
+                } else {
+                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                    $('#add-report-errors').html(errors.error.message);
+                }
+                // hide loader
+                $("#loader").hide();
+
+                $("#add-error-report-bag").show();
+            }
+        });
+    }
+
+
+}
+
+/**
+ * FUnction to purchase book
+ * @param {*} purchaseRequestID 
+ * @param {*} BookID 
+ * @param {*} ShipmentID 
+ * @param {*} customerEmail 
+ */
+function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEmail, userRole, loggedInEmail) {
+    console.log("Clicked updatePurchaseRequest");
+
+    var domainUrl = 'http://localhost:3001/api';
+    var laravelDomainUrl = 'http://localhost:8000';
+
+    var smsPurchaseMessage = "Purchase Completed for " + customerEmail + ". Thank you for using book counterfeit app";
+
+    var jsonDataSMS = {
+        message: smsPurchaseMessage
+    };
+
+    var smsURL = laravelDomainUrl + '/general/sms/send/';
+
+    // 1. Update Purchase Request
+    var jsonData = {
+        purchaseRequest: "resource:org.evin.book.track.PurchaseRequest#" + purchaseRequestID,
+        status: true,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+    };
+
+    // 2. Update Book as sold in its flag
+    var jsonDataBook = {
+        book: "resource:org.evin.book.track.Book#" + BookID,
+        sold: true,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+    };
+
+    // 3. Update Final Owner in Supply Chain
+    var jsonDataShipOwnership = {
+        owner: "resource:org.evin.book.track.Customer#" + customerEmail,
+        shipment: "resource:org.evin.book.track.Shipment#" + ShipmentID,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+    };
+
+    var msgHTML = '';
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: domainUrl + '/updatePurchaseRequestStatus',
+        data: jsonData,
+        dataType: 'json',
+        beforeSend: function () {
+            $("#loader").show();
+            $("#add-error-request-bag").hide();
+            $('#add-request-msgs').hide();
+        },
+        success: function (data) {
+
+            // Update Book sold
+            $.ajax({
+                type: 'POST',
+                url: domainUrl + '/updateBookSold',
+                data: jsonDataBook,
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#loader").show();
+                    $("#add-error-request-bag").hide();
+                    $('#add-request-msgs').hide();
+                },
+                success: function (data) {
+
+                    // SEND SMS 
+                    $.ajax({
+                        type: 'POST',
+                        url: smsURL,
+                        data: jsonDataSMS,
+                        dataType: 'json',
+                        beforeSend: function () {
+                            $("#loader").show();
+                        },
+                        success: function (data) {
+                            $("#loader").hide();
+                            console.log(data);
+                            $("#add-error-request-bag").hide();
+                            $('#add-request-msgs').show();
+                            msgHTML = '<div class="alert alert-primary" role="alert">' +
+                                'Request confirmed!' +
+                                '</div>';
+
+                            $('#add-request-msgs').html(msgHTML);
+
+                            window.location.reload();
+
+                        },
+                        error: function (data) {
+                            var errors = $.parseJSON(data.responseText);
+                            var status = errors.error.statusCode;
+
+                            if (status == 422) {
+                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                $("#add-request-msgs").hide();
+
+                                $('#add-request-errors').html('');
+                                $.each(errors.error.details.messages, function (key, value) {
+                                    console.log('Error Value' + value + ' Key ' + key);
+                                    $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                                });
+
+                            } else {
+                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                $('#add-request-errors').html(errors.error.message);
+                            }
+                            // hide loader
+                            $("#loader").hide();
+
+                            $("#add-error-request-bag").show();
+                        }
+                    }); // END Ajax
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-request-msgs").hide();
+
+                        $('#add-request-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-request-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#add-error-request-bag").show();
+                }
+            });
+        },
+        error: function (data) {
+            var errors = $.parseJSON(data.responseText);
+            var status = errors.error.statusCode;
+
+            if (status == 422) {
+                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                $("#add-request-msgs").hide();
+
+                $('#add-request-errors').html('');
+                $.each(errors.error.details.messages, function (key, value) {
+                    console.log('Error Value' + value + ' Key ' + key);
+                    $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                });
+
+            } else {
+                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                $('#add-request-errors').html(errors.error.message);
+            }
+            // hide loader
+            $("#loader").hide();
+
+            $("#add-error-request-bag").show();
+        }
+    });
+}
+
+/**
+ * 
+ * @param {*} reportID 
+ */
+function traceReportConfirmation(reportID) {
+
+    console.log("Clicked traceReportConfirmation ID => " + reportID);
+
+    var msgHTML = '';
+
+    var getIsConfimedReportHistorianURL = domainUrl + "/queries/getIsConfimedReportHistorian?report=resource%3Aorg.evin.book.track.Report%23"+reportID;
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // SEND SMS 
+    $.ajax({
+        type: 'GET',
+        url: getIsConfimedReportHistorianURL ,
+        beforeSend: function () {
+            $("#loader").show();
+        },
+        success: function (data) {
+            $("#loader").hide();
+            console.log(data);
+            // $("#add-error-request-bag").hide();
+            // $('#add-request-msgs').show();
+            // msgHTML = '<div class="alert alert-primary" role="alert">' +
+            //     'Request confirmed!' +
+            //     '</div>';
+
+            // $('#add-request-msgs').html(msgHTML);
+
+            // window.location.reload();
+
+        },
+        error: function (data) {
+            var errors = $.parseJSON(data.responseText);
+            var status = errors.error.statusCode;
+
+            if (status == 422) {
+                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                $("#add-report-msgs").hide();
+
+                $('#add-report-errors').html('');
+                $.each(errors.error.details.messages, function (key, value) {
+                    console.log('Error Value' + value + ' Key ' + key);
+                    $('#add-report-errors').append('<li>' + key + ' ' + value + '</li>');
+                });
+
+            } else {
+                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                $('#add-report-errors').html(errors.error.message);
+            }
+            // hide loader
+            $("#loader").hide();
+
+            $("#add-error-report-bag").show();
+        }
+    }); // END Ajax
+
+}
 
 
 /*globals window, global, require*/
