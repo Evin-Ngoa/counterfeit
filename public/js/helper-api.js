@@ -119,7 +119,7 @@ function orderDetailedView(order_id) {
             buyerInfo += data.order.buyer.email + ' , ' + data.order.buyer.firstName + ' ' + data.order.buyer.lastName;
             $("#buyerInfoView").html(buyerInfo);
 
-            sellerInfo += data.order.seller.email + ' , ' + data.order.seller.name;
+            sellerInfo += data.order.seller.email + ' , ' + data.order.seller.firstName;
             $("#sellerInfoView").html(sellerInfo);
 
             $("#arrivalDateTimeView").html(data.order.arrivalDateTime);
@@ -305,7 +305,7 @@ function editPublisherForm(publisher_id) {
 
             $("#frmEditPublisher input[name=memberId]").val(data.publisher.memberId);
             $("#frmEditPublisher input[name=email]").val(data.publisher.email);
-            $("#frmEditPublisher input[name=name]").val(data.publisher.name);
+            $("#frmEditPublisher input[name=name]").val(data.publisher.firstName);
             $("#frmEditPublisher input[name=telephone]").val(data.publisher.telephone);
             $("#frmEditPublisher input[name=accountBalance]").val(data.publisher.accountBalance);
             $("#frmEditPublisher input[name=country]").val(data.publisher.address.country);
@@ -360,7 +360,7 @@ function editDistributorForm(distributor_id) {
 
             $("#frmEditDistributor input[name=memberId]").val(data.distributor.memberId);
             $("#frmEditDistributor input[name=email]").val(data.distributor.email);
-            $("#frmEditDistributor input[name=name]").val(data.distributor.name);
+            $("#frmEditDistributor input[name=name]").val(data.distributor.firstName);
             $("#frmEditDistributor input[name=telephone]").val(data.distributor.telephone);
             $("#frmEditDistributor input[name=accountBalance]").val(data.distributor.accountBalance);
             $("#frmEditDistributor input[name=country]").val(data.distributor.address.country);
@@ -415,7 +415,7 @@ function editCustomerForm(customer_id) {
 
             $("#frmEditCustomer input[name=memberId]").val(data.customer.memberId);
             $("#frmEditCustomer input[name=email]").val(data.customer.email);
-            $("#frmEditCustomer input[name=name]").val(data.customer.name);
+            $("#frmEditCustomer input[name=name]").val(data.customer.firstName);
             $("#frmEditCustomer input[name=telephone]").val(data.customer.telephone);
             $("#frmEditCustomer input[name=accountBalance]").val(data.customer.accountBalance);
             $("#frmEditCustomer input[name=country]").val(data.customer.address.country);
@@ -532,10 +532,13 @@ function selectDistributorForm(unitsOrdered, unitsAdded, shipmentId) {
                 var citizenship = document.getElementById("selectDistributor")
                 for (var i = 0; i < data.length; i++) {
                     var option = document.createElement("OPTION"),
-                        txt = document.createTextNode(data[i].name);
+                        txt = document.createTextNode(data[i].firstName);
                     option.appendChild(txt);
                     option.setAttribute("value", data[i].email);
                     citizenship.insertBefore(option, citizenship.lastChild);
+
+                    console.log("data[i].firstName) ==> " + data[i].firstName);
+                    console.log("data[i].email) ==> " + data[i].email);
                 }
             },
             error: function (data) {
