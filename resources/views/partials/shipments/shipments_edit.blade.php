@@ -62,6 +62,9 @@
                                         <option value="LOST">LOST</option>
                                     </select>
                                 </div>
+                                
+                                <input type="hidden" name="loggedInEmail" id="loggedInEmail" class="form-control" value="{{ \App\User::loggedInUserEmail() }}">
+                                <input type="hidden" name="userRole" id="userRole" class="form-control" value="{{ \App\User::getUserRole() }}">
                             </div>
                             @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
                             <div class="col-sm-6" style="display:none;">
@@ -71,7 +74,7 @@
                                 </div>
                             </div>
                             @elseif(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" style="display:none;">
                                 <div class="form-group">
                                     <label for="unitCount">Quantity</label>
                                     <input name="unitCount" id="unitCount" class="form-control" placeholder="Enter Number of Books" value="">
