@@ -81,8 +81,8 @@
 
                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
 
-                            <!-- Stats -->
-                            @include('dashboard.publisher.stats.index')
+                        <!-- Stats -->
+                        @include('dashboard.publisher.stats.index')
 
                         @endif
 
@@ -359,15 +359,35 @@
 
     <!-- Publisher-->
     @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
-    
-        <!-- Reports -->
-        @include('dashboard.publisher.report.index')
-        
-        <!-- Orders -->
-        @include('dashboard.publisher.order.index')
 
-        <!-- Shipments -->
-        @include('dashboard.publisher.shipment.index')
+    <!-- Orders -->
+    @include('dashboard.publisher.order.index')
+
+    <!-- Shipments -->
+    @include('dashboard.publisher.shipment.index')
+
+    <!-- Reports -->
+    @include('dashboard.publisher.report.index')
+
+    <!-- Map -->
+    <div class="row">
+        <div class="col-sm-12 col-xxxl-12">
+            <div class="element-wrapper">
+                <h6 class="element-header">Map Of Confirmed Reported Cases</h6>
+                <div class="element-box">
+                @if(!empty($ConfirmedReports))
+                    <div id="mapDash"></div>
+                    @else
+                    <div class="alert alert-primary">
+                        No confirmed cases at the momnet
+                    </div>
+                @endif
+                    <!-- <div id="map"></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     @endif
 
@@ -524,7 +544,13 @@
 </div>
 @endsection
 
+
+
 @section('footer_scripts')
+<!-- Publisher-->
+@if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
+    @include('layout.location_autocomplete', ['longitude' => 36.817709, 'latitude' => -1.284504 ])
+@endif
 <script>
 
 </script>
