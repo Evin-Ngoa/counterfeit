@@ -26,23 +26,13 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="">Select Publisher</label>
-                                    <select class="form-control" name="initialOwner" id="initialOwner">
-                                        <option value="">-Select-</option>
-                                        <option value="longhorn publishers" selected>Longhorn</option>
-                                        <option value="KLB publishers">KLB</option>
-                                        <option value="Moran publishers">Moran</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
                                     <label for="type">Subject</label>
                                     <input name="type" id="type" class="form-control" placeholder="Book Subject...Eg Kiswahili" value="">
                                     <input type="hidden" name="id" id="id" class="form-control" value="">
                                     <input type="hidden" name="sold" id="sold" class="form-control" value="">
                                     <!-- "$class": "org.evin.book.track.Book", -->
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.Book">
+                                    <input type="hidden" name="addedBy" id="addedBy" class="form-control" value="resource:org.evin.book.track.Publisher#{{ \App\User::loggedInUserEmail() }}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
