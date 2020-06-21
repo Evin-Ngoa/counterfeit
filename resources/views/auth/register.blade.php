@@ -71,11 +71,11 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for=""> First Name</label>
-                            <input class="form-control" name="firstName" id="firstName" placeholder="Enter First Name" type="text">
+                            <input class="form-control" name="firstNameCustomer" id="firstNameCustomer" placeholder="Enter First Name" type="text">
                             <div class="pre-icon os-icon os-icon-users"></div>
                             <input type="hidden" name="memberId" id="memberId" class="form-control" value="">
                             <!-- <input type="hidden" name="secret" id="secret" class="form-control" value="secretmy"> -->
-                            <input type="hidden" name="accountBalance" id="accountBalance" class="form-control" value="56000">
+                            <input type="hidden" name="accountBalance" id="accountBalance" class="form-control" value="0">
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="form-group" id="businessNameField">
                     <label for=""> Business Name</label>
-                    <input class="form-control" name="name" id="name" placeholder="Enter Business Name" type="text">
+                    <input class="form-control" name="firstName" id="firstName" placeholder="Enter Business Name" type="text">
                     <div class="pre-icon os-icon os-icon-briefcase"></div>
                 </div>
                 <div class="row" id="usernameField">
