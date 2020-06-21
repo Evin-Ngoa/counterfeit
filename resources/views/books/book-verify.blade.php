@@ -38,21 +38,26 @@ $purchasedToEmail = "N/A";
                 <div class="activity-box-w">
                     <div class="activity-time">{{ Carbon\Carbon::parse($groupOwner->timestamp)->isoFormat('MMM Do YYYY dddd')  }}</div>
                     <div class="activity-box">
-                        <div class="activity-avatar"><img alt="" src="/img/avatar1.jpg"></div>
+                    @if(isset($groupOwner->owner->avatar))
+                        <div class="activity-avatar"><img alt="" src="{{$groupOwner->owner->avatar}}"></div>
+                    @else
+                        <div class="activity-avatar"><img alt="" src="/img/avatar.png"></div>
+                    @endif
+                        
                         <div class="activity-info">
-                            @if(isset($groupOwner->owner->name))
+                            @if(isset($groupOwner->owner->firstName))
                             <?php
                             if ($first) {
                                 $reportedTo = $groupOwner->owner->email;
                                 $first = false;
                             }
                             ?>
-                            <div class="activity-role">{{ $groupOwner->owner->name }}</div>
+                            <div class="activity-role">{{ $groupOwner->owner->firstName }}</div>
                             @else
                             <div class="activity-role">{{ $groupOwner->owner->firstName }} {{ $groupOwner->owner->lastName }} </div>
                             @endif
 
-                            @if(isset($groupOwner->owner->address->country))
+                            @if(isset($groupOwner->owner->address->country) && isset($groupOwner->owner->address->county))
                             <strong class="activity-title">{{ $groupOwner->owner->address->country}} , {{ $groupOwner->owner->address->county }} , {{ $groupOwner->owner->address->street }}</strong>
                             @endif
                             <?php
