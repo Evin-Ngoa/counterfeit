@@ -20,7 +20,7 @@
                     @else
                     <div class="up-head-w" style="background-image:url({{\App\User::getUserProfile(\App\User::getUserRole(),\App\User::loggedInUserEmail())}})">
                         @endif
-                        <div class="up-social"><a href="#"><i class="os-icon os-icon-twitter"></i></a><a href="#"><i class="os-icon os-icon-facebook"></i></a></div>
+                        <div class="up-social" style="display:none;"><a href="#"><i class="os-icon os-icon-twitter"></i></a><a href="#"><i class="os-icon os-icon-facebook"></i></a></div>
                         <div class="up-main-info">
                             @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
                             <h2 class="up-header">{{ \App\User::getParticipantNames() }}</h2>
@@ -56,7 +56,7 @@
                     <div class="up-contents">
                         <div class="m-b">
                             <div class="row m-b">
-                                <div class="col-sm-6 b-r b-b">
+                                <div class="col-sm-4 b-r b-b">
                                     <div class="el-tablo centered padded-v">
                                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
                                         <div class="value">{{ $booksPubCount }}</div>
@@ -70,7 +70,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-sm-6 b-b">
+                                <div class="col-sm-4 b-b">
                                     <div class="el-tablo centered padded-v">
                                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
                                         <div class="value">{{ $shipmentsCount }}</div>
@@ -82,6 +82,12 @@
                                         <div class="value">{{ $deliveredOrdersCount }}</div>
                                         <div class="label">Delivered Orders</div>
                                         @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 b-b">
+                                    <div class="el-tablo centered padded-v">
+                                        <div class="value">{{ $points }}</div>
+                                        <div class="label">Points</div>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +184,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for=""> First Name</label>
-                                        <input class="form-control" name="firstName" id="firstName" placeholder="Enter First Name" type="text" value="{{ \App\User::getParticipantFirstName() }}">
+                                        <input class="form-control" name="firstNameCustomer" id="firstNameCustomer" placeholder="Enter First Name" type="text" value="{{ \App\User::getParticipantFirstName() }}">
                                         <!-- <div class="pre-icon os-icon os-icon-users"></div> -->
                                     </div>
                                 </div>
@@ -195,7 +201,7 @@
                             @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR)
                             <div class="form-group" id="businessNameField">
                                 <label for=""> Business Name</label>
-                                <input class="form-control" name="name" id="name" data-error="Your Name cannot be null address is invalid" placeholder="Enter Business Name" type="text" value="{{ \App\User::getParticipantNames() }}">
+                                <input class="form-control" name="firstName" id="firstName" data-error="Your Name cannot be null address is invalid" placeholder="Enter Business Name" type="text" value="{{ \App\User::getParticipantNames() }}">
                             </div>
                             @endif
                             <div class="form-group">
