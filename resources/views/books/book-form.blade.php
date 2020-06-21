@@ -35,6 +35,8 @@
                             <div class="col-sm-8">
                                 <input class="form-control" name="book_serial" id="book_serial" placeholder="Enter Book Serial" type="text">
                                 <input class="form-control" name="loggedInUser" id="loggedInUser" value="{{\App\User::loggedInUserEmail()}}" type="hidden">
+                                <input type="hidden" name="loggedInEmail" id="loggedInEmail" class="form-control" value="{{ \App\User::loggedInUserEmail() }}">
+                                <input type="hidden" name="userRole" id="userRole" class="form-control" value="{{ \App\User::getUserRole() }}">
                             </div>
                         </div>
 
@@ -60,6 +62,8 @@
                             <div class="col-sm-8">
                                 <input class="form-control" name="book_serial" id="book_serial" placeholder="Enter Book Serial" type="text">
                                 <input class="form-control" name="loggedInUser" id="loggedInUser" value="{{\App\User::loggedInUserEmail()}}" type="hidden">
+                                <input type="hidden" name="loggedInEmail" id="loggedInEmail" class="form-control" value="{{ \App\User::loggedInUserEmail() }}">
+                                <input type="hidden" name="userRole" id="userRole" class="form-control" value="{{ \App\User::getUserRole() }}">
                             </div>
                         </div>
 
