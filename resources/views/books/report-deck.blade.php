@@ -23,6 +23,14 @@
             </div>
 
             <div class="form-group">
+                <label for="book">Precise Location</label>
+                <input type="text" name="location" id="autocomplete" class="form-control" onfocus="geolocate()" 
+                placeholder="Enter a location" autocomplete="off" aria-invalid="false" aria-describedby="autocomplete-error">
+                <input type="hidden" name="longitude" id="longitude">
+                <input type="hidden" name="latitude" id="latitude">
+            </div>
+
+            <div class="form-group">
                 <label for="book"> Book ID</label>
                 <input class="form-control" placeholder="Enter Book ID" type="text" name="book" id="book" value="{{ $id }}">
             </div>
