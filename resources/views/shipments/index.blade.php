@@ -124,12 +124,12 @@
                                         @if(isset($shipment->shipOwnership[1]))
                                         <a  onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Shipment Locked"><i class="os-icon os-icon-lock"></i></a>
                                             <div class="smaller lighter">
-                                                 Shipment Assigned to {{ $shipment->shipOwnership[1]->owner->name}}.
+                                                 Shipment Assigned to {{ $shipment->shipOwnership[1]->owner->firstName}}.
                                             </div>
                                         @else
                                         
                                             <a href="#" onclick="event.preventDefault();openAddBookForm('{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Register Book To This Shipment"><i class="os-icon os-icon-book"></i></a><a href="#" onclick="event.preventDefault();selectDistributorForm('{{ $shipment->unitCount }}','{{ count($shipment->bookRegisterShipment) }}','{{ $shipment->shipmentId }}');" data-placement="top" data-toggle="tooltip" title="Select Distributor"><i class="os-icon os-icon-truck"></i></a>
-                                            <a onclick="event.preventDefault();editShipmentForm('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Shipment"><i class="os-icon os-icon-edit"></i></a><a  onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a><a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a>
+                                            <a onclick="event.preventDefault();editShipmentForm('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Shipment"><i class="os-icon os-icon-edit"></i></a><a  onclick="event.preventDefault();shipmentDetailedView('{{ $shipment->shipmentId }}');" href="#" data-placement="top" data-toggle="tooltip" title="Detailed View"><i class="os-icon os-icon-eye"></i></a><!-- <a class="danger" href="#" data-placement="top" data-toggle="tooltip" title="Delete"><i class="os-icon os-icon-ui-15"></i></a> -->
                                         
                                         @endif
                                         </td>
