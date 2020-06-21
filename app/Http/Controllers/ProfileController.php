@@ -10,6 +10,7 @@ use App\Services\Distributor\DistributorService;
 use App\Services\Order\OrderService;
 use App\Services\Publisher\PublisherService;
 use App\Services\Shipment\ShipmentService;
+use App\Services\Auth\AuthService;
 use App\Services\Utils;
 use App\User;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class ProfileController extends Controller
     protected $customerservice;
     protected $publisherservice;
     protected $distributorservice;
+    protected $authservice;
 
     /**
      * Check if user is loggedin
@@ -33,7 +35,8 @@ class ProfileController extends Controller
         ShipmentService $shipmentservice,
         CustomerService $customerservice,
         PublisherService $publisherservice,
-        DistributorService $distributorservice
+        DistributorService $distributorservice,
+        AuthService $authservice
     ) {
         $this->utils = $utils;
         $this->bookservice = $bookservice;
@@ -42,6 +45,7 @@ class ProfileController extends Controller
         $this->customerservice = $customerservice;
         $this->publisherservice = $publisherservice;
         $this->distributorservice = $distributorservice;
+        $this->authservice = $authservice;
         $this->middleware('check.auth');
     }
 
@@ -54,6 +58,14 @@ class ProfileController extends Controller
     {
         $authEmail = User::loggedInUserEmail();
         $authRole = User::getUserRole();
+
+        // 0. Get User Details
+
+        $customerDetails = $this->authservice->getCustomerDetails($authEmail, $authRole);
+
+        // dd($customerDetails->accountBalance);
+
+        $points = $customerDetails->accountBalance;
 
         if (\App\User::getUserRole() == \App\Http\Traits\UserConstants::PUBLISHER) {
             // BOOKS COUNT
@@ -73,7 +85,7 @@ class ProfileController extends Controller
             }
             $shipmentsCount = count($shipments);
 
-            return view('profile.index')->with(compact('authRole', 'authEmail', 'booksPubCount', 'shipmentsCount'));
+            return view('profile.index')->with(compact('authRole', 'authEmail', 'booksPubCount', 'shipmentsCount', 'points'));
         }else if(\App\User::getUserRole() == \App\Http\Traits\UserConstants::DISTRIBUTOR){
             // 1. Active Orders
             $shipments = array();
@@ -84,7 +96,7 @@ class ProfileController extends Controller
                 // dd(count($shipment[$key]->shipOwnership));
                 // if the array has owners and its still processing
                 if(count($shipmentDistr[$key]->shipOwnership) > 0  && 
-                $shipmentDistr[$key]->ShipmentStatus == (OrderConstants::SHIP_WAITING || $shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_DISPATCHING || $shipmentPub[$key]->ShipmentStatus == OrderConstants::SHIP_SHIPPED_IN_TRANSIT)){
+                $shipmentDistr[$key]->ShipmentStatus == ($shipmentDistr[$key]->ShipmentStatus == OrderConstants::SHIP_WAITING || $shipmentDistr[$key]->ShipmentStatus == OrderConstants::SHIP_DISPATCHING || $shipmentDistr[$key]->ShipmentStatus == OrderConstants::SHIP_SHIPPED_IN_TRANSIT)){
                     // loop shipowners
                     foreach ($shipmentDistr[$key]->shipOwnership as $keys => $values) {
                         if ($shipmentDistr[$key]->shipOwnership[$keys]->owner->email == $authEmail) {
@@ -121,7 +133,7 @@ class ProfileController extends Controller
             // dd($shipmentsDelivered);
             $shipmentsDeliveredCount = count($shipmentsDelivered);
 
-            return view('profile.index')->with(compact('authRole', 'authEmail','shipmentsActiveCount','shipmentsDeliveredCount'));
+            return view('profile.index')->with(compact('authRole', 'authEmail','shipmentsActiveCount','shipmentsDeliveredCount', 'points'));
 
         }else if(\App\User::getUserRole() == \App\Http\Traits\UserConstants::CUSTOMER){
             // 1. ACTIVE ORDERS
@@ -152,7 +164,7 @@ class ProfileController extends Controller
 
             $deliveredOrdersCount = count($deliveredOrders);
 
-            return view('profile.index')->with(compact('authRole', 'authEmail', 'ordersActiveCount', 'deliveredOrdersCount'));
+            return view('profile.index')->with(compact('authRole', 'authEmail', 'ordersActiveCount', 'deliveredOrdersCount', 'points'));
 
         }
 
