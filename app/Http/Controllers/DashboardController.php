@@ -68,6 +68,7 @@ class DashboardController extends Controller
         $purchaseRequests = array();
         $arrayPurchaseRequests = array();
         $report = array();
+        $ConfirmedReports = array();
 
         // Orders
         if (\App\User::getUserRole() == \App\Http\Traits\UserConstants::PUBLISHER) {
@@ -109,7 +110,7 @@ class DashboardController extends Controller
             $reports = $this->reportservice->getAllReports();
 
             // dd($reports);
-
+            // Not yet inestigated
             foreach ($reports as $key => $value) {
                 // Active Shipments include waiting, dispatching and transit
                 if ($reports[$key]->reportedTo->email == \App\User::loggedInUserEmail() && $reports[$key]->isConfirmed == false && !isset($reports[$key]->updatedAt)) {
@@ -121,6 +122,18 @@ class DashboardController extends Controller
             $reportCount = count($report);
             // dd($reportCount);
 
+            // Not yet 
+            foreach ($reports as $key => $value) {
+                // Active Shipments include waiting, dispatching and transit
+                if ($reports[$key]->reportedTo->email == \App\User::loggedInUserEmail() && $reports[$key]->isConfirmed == true) {
+                    $arrayShip[$key] = $value;
+                    $ConfirmedReports = $arrayShip;
+                }
+            }
+            // dd($ConfirmedReports);
+            $ConfirmedReportCount = count($ConfirmedReports);
+            // dd($ConfirmedReportCount);
+
             return view('dashboard.index')->with(
                 compact(
                     'role', 
@@ -130,7 +143,9 @@ class DashboardController extends Controller
                     'shipments', 
                     'booksPubCount',
                     'report',
-                    'reportCount'
+                    'reportCount',
+                    'ConfirmedReports',
+                    'ConfirmedReportCount'
                 ));
 
         } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::CUSTOMER) {
@@ -265,7 +280,7 @@ class DashboardController extends Controller
                 if (count($shipmentDistr[$key]->shipOwnership) > 0) {
                     // loop shipowners
                     foreach ($shipmentDistr[$key]->shipOwnership as $keys => $values) {
-                        if ($shipmentDistr[$key]->shipOwnership[$keys]->owner->email == $email) {
+                        if ($shipmentDistr[$key]->shipOwnership[$keys]->owner->email == $email && ($shipmentDistr[$key]->ShipmentStatus == OrderConstants::SHIP_WAITING || $shipmentDistr[$key]->ShipmentStatus == OrderConstants::SHIP_DISPATCHING || $shipmentDistr[$key]->ShipmentStatus == OrderConstants::SHIP_SHIPPED_IN_TRANSIT)) {
                             $array[$key] = $value;
                             $shipments = $array;
                         }
