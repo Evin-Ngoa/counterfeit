@@ -1,5 +1,6 @@
     
     <script src="{{ asset ("js/app-bc.js") }}"></script>
+   
 
     <script>
         Api.init();
@@ -13,16 +14,17 @@
             window.location.assign('/auth/login');
         } else {
             console.log("Token -> " + JSON.stringify(authToken));
+            console.log("authTokenParsedData -> " + JSON.stringify(authTokenParsedData));
             console.log("Parsed Token -> " + authTokenParsedData.$class);
             if (authTokenParsedData.$class == "org.evin.book.track.Publisher") {
                 var pubID = authTokenParsedData.$class + "#" +authTokenParsedData.email;
                 // update Names & Role in dashboard 
-                $(".logged-user-name").text(authTokenParsedData.name);
+                $(".logged-user-name").text(authTokenParsedData.firstName);
                 $(".logged-user-role").text(getRoleFromClass(authTokenParsedData.$class));
                 $("#addedByAddBookForm").val(pubID);
             } else if (authTokenParsedData.$class == "org.evin.book.track.Distributor" || authTokenParsedData.$class == "org.evin.book.track.Admin") {
                 // update Names & Role in dashboard 
-                $(".logged-user-name").text(authTokenParsedData.name);
+                $(".logged-user-name").text(authTokenParsedData.firstName);
                 $(".logged-user-role").text(getRoleFromClass(authTokenParsedData.$class));
 
             } else {
@@ -55,7 +57,7 @@
                         // console.log("response email" + JSON.stringify(response[0].email));
                         var rearranged = [{
                             "id": response[0].email,
-                            "text": response[0].name
+                            "text": response[0].firstName
                         }];
                         // console.log("rearranged --> " + JSON.stringify(rearranged));
                         return {
@@ -67,3 +69,5 @@
             });
         });
     </script>
+
+    @include('layout.location_autocomplete', ['longitude' => 36.817709, 'latitude' => -1.284504])
