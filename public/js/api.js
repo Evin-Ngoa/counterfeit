@@ -3978,6 +3978,7 @@ var Api = function () {
                 // delete jsonData["firstName"];
                 //remove business name
                 // delete jsonData["name"];
+                delete jsonData["firstNameCustomer"];
                 delete jsonData["lastName"];
                 delete jsonData["participant"];
 
@@ -4041,6 +4042,7 @@ var Api = function () {
                 // delete jsonData["firstName"];
                 //remove business name
                 // delete jsonData["name"];
+                delete jsonData["firstNameCustomer"];
                 delete jsonData["lastName"];
                 delete jsonData["participant"];
 
