@@ -8,7 +8,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">OrderID</th>
-                                <th class="text-center">Seller</th>
+                                <th class="text-center">Buyer</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Unit Price [KES]</th>
                             </tr>
