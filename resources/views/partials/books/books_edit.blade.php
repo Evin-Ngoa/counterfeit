@@ -55,6 +55,12 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
+                                    <label for="maxPoints">Maximum Redeemable Points</label>
+                                    <input name="maxPoints" id="maxPoints" class="form-control" placeholder="Enter Maximum Points" value="300">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
                                     <label for="description">Book Description</label>
                                     <!-- <input name="description" id="description" class="form-control" placeholder="Any addition..." value=""> -->
                                     <textarea name="description" id="description" class="form-control" value=""></textarea>
