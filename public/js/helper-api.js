@@ -219,6 +219,7 @@ function shipmentDetailedView(shipment_id) {
         url: '/shipment/' + shipment_id + '/edit',
         success: function (data) {
             var stars = '';
+            var books = '';
 
             // console.log("JSON +>" + JSON.stringify(data));
             // console.log("Buyer +>" + JSON.stringify(data.shipment.contract.buyer.email));
@@ -233,6 +234,15 @@ function shipmentDetailedView(shipment_id) {
                 stars += '<i style="color:#ffd700;" class="typcn typcn-heart-full-outline"></i>';
             }
             $("#feedbackScaleView").html(stars);
+            for (var j = 0; j < data.shipment.bookRegisterShipment.length; j++) {
+                // Laat Loop ignore comma
+                if((data.shipment.bookRegisterShipment.length - 1) == j){
+                    books += data.shipment.bookRegisterShipment[j].book.id;
+                }else{
+                    books += data.shipment.bookRegisterShipment[j].book.id + ', ';
+                }
+            }
+            $("#booksAddedView").html(books);
             $("#feedbackMessageView").html(data.shipment.feedbackMessage);
             $("#unitCountView").html(data.shipment.unitCount);
             $("#contractIdView").html(data.shipment.contract.contractId);
