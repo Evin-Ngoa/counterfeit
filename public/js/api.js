@@ -2,6 +2,8 @@ var Api = function () {
     var scanPoints = 2.0;
     var reportPoints = 5.0;
     var penaltyPoints = 20.0;
+    var conversion = 10.0;
+    var maxAllowedPoints = 400;
 
     // http://localhost:3000/api/Book
     var systemEmail = 'order@bookcounterfeit.com';
@@ -20,6 +22,7 @@ var Api = function () {
     var postCustomerReviewURL = domainUrl + '/updateShipmentReview';
     var postReportviewURL = domainUrl + '/Report';
     var postCustomerScanPointsURL = domainUrl + '/updateCustomerPoints';
+    var postPublisherScanPointsURL = domainUrl + '/updatePublisherPoints';
     var postBuyBookURL = domainUrl + '/PurchaseRequest';
 
     // var postBookURL = '/book';
@@ -364,7 +367,7 @@ var Api = function () {
                                 $("#add-error-report-bag").hide();
                                 $("#add-review-msgs").show();
                                 msgHTML = '<div class="alert alert-primary" role="alert">'
-                                    + 'Report Sent Successfuly. You have earned extra ' + reportPoints + ' for helping in fighting counterfeit.'
+                                    + 'Report Sent Successfuly. You will earn extra ' + reportPoints + ' once verified by publisher for helping in fighting counterfeit.'
                                     + '</div>';
 
                                 $('#add-review-msgs').html(msgHTML);
@@ -903,7 +906,7 @@ var Api = function () {
 
             var loggedInEmail = jsonData["loggedInEmail"];
             var userRole = jsonData["userRole"];
-        
+
             delete jsonData["loggedInEmail"];
             delete jsonData["userRole"];
 
@@ -1076,7 +1079,7 @@ var Api = function () {
 
             var loggedInEmail = jsonData["loggedInEmail"];
             var userRole = jsonData["userRole"];
-        
+
             delete jsonData["loggedInEmail"];
             delete jsonData["userRole"];
 
@@ -1531,6 +1534,16 @@ var Api = function () {
                 jsonData[field.name] = field.value;
             });
             var publisherID = jsonData["seller"];
+
+            var buyerID = jsonData["buyer"];
+            var p = jsonData["pricePoints"];
+            if (p == "") {
+                p = 0;
+            }
+            var points = parseFloat(p);
+
+            var quantity = parseFloat(jsonData["quantity"]);
+
             // Append ID
             jsonData["contractId"] = orderId;
 
@@ -1563,6 +1576,7 @@ var Api = function () {
             var msgHTML = "";
 
             var checkPublisherExistsURL = domainUrl + '/Publisher/' + publisherID;
+            var checkCustomerPointsURL = domainUrl + '/Customer/' + buyerID;
 
             // send mail
             var sendEmailURL = "/sendemail/send";
@@ -1596,121 +1610,471 @@ var Api = function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            var checkCalc = points % 10;
+
+            console.log("checkCalc ===> " + checkCalc);
             // Disable Ajax Momentarily
 
-            // 1. Check Publisher checks
+            // 1. Check Publisher check
+            // 1. Check Customer Points
             // 2. Post Order
             // 3. Send SMS to Publisher
             // 4. Send Email to Customer
 
-            // check if publisher exists
-            $.ajax({
-                type: 'GET',
-                url: checkPublisherExistsURL,
-                dataType: 'json',
-                beforeSend: function () {//calls the loader id tag
-                    $("#frmAddOrder .close").click();
-                    $("#loader").show();
-                },
-                success: function (data) {
+            // Check if its divisible by 
+            if (points % 10 === 0) {
 
-                    // $("#loader").hide();
-                    console.log("Success Check Publisher +++> " + JSON.stringify(data));
-                    // Post Order
+                maximumPoints = quantity * maxAllowedPoints;
+
+                console.log("maximumPoints => " + maximumPoints);
+
+                console.log("Points => " + points);
+
+                // If points < maximum disallow
+                if (points < maximumPoints) {
+
+                    // hide error
+                    $("#add-order-error-bag").hide();
+
+                    // check if publisher exists
                     $.ajax({
-                        type: 'POST',
-                        url: postOrderURL,
-                        data: jsonData,
+                        type: 'GET',
+                        url: checkPublisherExistsURL,
                         dataType: 'json',
                         beforeSend: function () {//calls the loader id tag
                             $("#frmAddOrder .close").click();
                             $("#loader").show();
                         },
-                        success: function (data) {
+                        success: function (publisherData) {
 
-                            $("#loader").hide();
-                            console.log("Success +++> " + JSON.stringify(data));
+                            // $("#loader").hide();
+                            console.log("Success Check Publisher +++> " + JSON.stringify(publisherData));
 
-                            console.log("Sending SMS");
-                            // Send SMS
+                            var publisherPoints = publisherData.accountBalance;
+
+                            // check customer points
                             $.ajax({
-                                type: 'POST',
-                                url: sendSmsURL,
-                                data: jsonSMSData,
+                                type: 'GET',
+                                url: checkCustomerPointsURL,
                                 dataType: 'json',
                                 beforeSend: function () {//calls the loader id tag
                                     $("#frmAddOrder .close").click();
                                     $("#loader").show();
                                 },
-                                success: function (data) {
+                                success: function (customerData) {
+                                    console.log(customerData.accountBalance);
+                                    var customerPoints = customerData.accountBalance;
+                                    // if customer points
+                                    // 1. Update Customer Points subtract 
+                                    // 2. Add Publisher Points
+                                    // 3. Calculate Discount
+                                    if (customerPoints >= points) {
 
-                                    $("#loader").hide();
-                                    console.log("Success +++> " + JSON.stringify(data));
-                                    console.log("Data +++> " + data.data);
+                                        // Convert points into cash
+                                        var calcDiscount = points / conversion;
 
-                                    // Send Email
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: sendEmailURL,
-                                        data: jsonEmailData,
-                                        dataType: 'json',
-                                        beforeSend: function () {//calls the loader id tag
-                                            $("#frmAddOrder .close").click();
-                                            $("#loader").show();
-                                        },
-                                        success: function (data) {
+                                        jsonData["discountPoints"] = calcDiscount;
 
-                                            $("#loader").hide();
-                                            console.log("Success +++> " + JSON.stringify(data));
-                                            console.log("Data +++> " + data.data);
+                                        var savedDiscount = jsonData["discountPoints"];
+                                        publisherPoints = publisherPoints + points;
+                                        customerPoints = customerPoints - points;
 
-                                            if (data.success) {
-                                                $("#add-error-bag").hide();
-                                                $("#add-order-msgs").show();
-                                                msgHTML = '<div class="alert alert-primary" role="alert">'
-                                                    + 'Record Added Successfuly '
-                                                    + '</div>';
+                                        var customerPointsObj = {
+                                            accountBalance: customerPoints,
+                                            customer: buyerID,
+                                            updatedAt: currentDateTime(),
+                                            participantInvoking: "resource:org.evin.book.track.Customer#" + buyerID
+                                        };
+                                        var publisherPointsObj = {
+                                            accountBalance: publisherPoints,
+                                            publisher: publisherID,
+                                            updatedAt: currentDateTime(),
+                                            participantInvoking: "resource:org.evin.book.track.Publisher#" + publisherID
+                                        };
 
-                                                $('#add-order-msgs').html(msgHTML);
+                                        console.log("savedDiscount = " + savedDiscount + " publisherPoints = " + publisherPoints + " customerPoints = " + customerPoints);
+                                        console.log("customerPointsObj = " + JSON.stringify(customerPointsObj));
+                                        console.log("publisherPointsObj = " + JSON.stringify(publisherPointsObj));
 
-                                                $('#frmAddOrder').trigger("reset");
-                                                $("#frmAddOrder .close").click();
-                                                window.location.reload();
-                                                // window.location.reload();
-                                            } else {
-                                                // Error
-                                                $('#add-order-errors').html('An error occured!');
+                                        // Updating Customer Points
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: postCustomerScanPointsURL,
+                                            data: customerPointsObj,
+                                            dataType: 'json',
+                                            beforeSend: function () {
+                                                //calls the loader id tag
+                                                $("#loader").show();
+                                            },
+                                            success: function (customerPointData) {
+                                                console.log("Success customerPointData +++> " + JSON.stringify(customerPointData));
+
+                                                // Updating Publisher Points
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: postPublisherScanPointsURL,
+                                                    data: publisherPointsObj,
+                                                    dataType: 'json',
+                                                    beforeSend: function () {
+                                                        //calls the loader id tag
+                                                        $("#loader").show();
+                                                    },
+                                                    success: function (publisherPointData) {
+                                                        $("#loader").hide();
+                                                        console.log("Success +publisherPointData ++> " + JSON.stringify(publisherPointData));
+
+                                                        // Post Order
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: postOrderURL,
+                                                            data: jsonData,
+                                                            dataType: 'json',
+                                                            beforeSend: function () {//calls the loader id tag
+                                                                $("#frmAddOrder .close").click();
+                                                                $("#loader").show();
+                                                            },
+                                                            success: function (data) {
+
+                                                                $("#loader").hide();
+                                                                console.log("Success +++> " + JSON.stringify(data));
+
+                                                                console.log("Sending SMS");
+                                                                // Send SMS
+                                                                $.ajax({
+                                                                    type: 'POST',
+                                                                    url: sendSmsURL,
+                                                                    data: jsonSMSData,
+                                                                    dataType: 'json',
+                                                                    beforeSend: function () {//calls the loader id tag
+                                                                        $("#frmAddOrder .close").click();
+                                                                        $("#loader").show();
+                                                                    },
+                                                                    success: function (data) {
+
+                                                                        $("#loader").hide();
+                                                                        console.log("Success +++> " + JSON.stringify(data));
+                                                                        console.log("Data +++> " + data.data);
+
+                                                                        // Send Email
+                                                                        $.ajax({
+                                                                            type: 'POST',
+                                                                            url: sendEmailURL,
+                                                                            data: jsonEmailData,
+                                                                            dataType: 'json',
+                                                                            beforeSend: function () {//calls the loader id tag
+                                                                                $("#frmAddOrder .close").click();
+                                                                                $("#loader").show();
+                                                                            },
+                                                                            success: function (data) {
+
+                                                                                $("#loader").hide();
+                                                                                console.log("Success +++> " + JSON.stringify(data));
+                                                                                console.log("Data +++> " + data.data);
+
+                                                                                if (data.success) {
+                                                                                    $("#add-error-bag").hide();
+                                                                                    $("#add-order-msgs").show();
+                                                                                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                                                        + 'Record Added Successfuly '
+                                                                                        + '</div>';
+
+                                                                                    $('#add-order-msgs').html(msgHTML);
+
+                                                                                    $('#frmAddOrder').trigger("reset");
+                                                                                    $("#frmAddOrder .close").click();
+                                                                                    window.location.reload();
+                                                                                    // window.location.reload();
+                                                                                } else {
+                                                                                    // Error
+                                                                                    $('#add-order-errors').html('An error occured!');
+                                                                                    // Show modal to display error showed
+                                                                                    $('#addOrderModal').modal('show');
+                                                                                    $("#add-order-error-bag").show();
+                                                                                }
+                                                                            },
+                                                                            error: function (data) {
+                                                                                console.log("Error +++> " + JSON.stringify(data));
+                                                                                var errors = $.parseJSON(data.responseText);
+                                                                                var status = errors.error.statusCode;
+
+                                                                                $('#add-order-errors').html('An error occured!');
+
+                                                                                // hide loader
+                                                                                $("#loader").hide();
+
+                                                                                // Show modal to display error showed
+                                                                                $('#addOrderModal').modal('show');
+                                                                                $("#add-order-error-bag").show();
+                                                                            }
+                                                                        });
+
+                                                                    },
+                                                                    error: function (data) {
+                                                                        console.log("Error +++> " + JSON.stringify(data));
+                                                                        var errors = $.parseJSON(data.responseText);
+                                                                        var status = errors.error.statusCode;
+
+                                                                        $('#add-order-errors').html('An error occured!');
+
+                                                                        // hide loader
+                                                                        $("#loader").hide();
+
+                                                                        // Show modal to display error showed
+                                                                        $('#addOrderModal').modal('show');
+                                                                        $("#add-order-error-bag").show();
+                                                                    }
+                                                                });
+                                                                console.log("Sending Mail");
+
+
+                                                            },
+                                                            error: function (data) {
+
+                                                                var errors = $.parseJSON(data.responseText);
+                                                                var status = errors.error.statusCode;
+                                                                // if (status == 500) {
+                                                                if (status == 422) {
+                                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                                    $("#add-order-msgs").hide();
+
+                                                                    $('#add-order-errors').html('');
+                                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                                        $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                                    });
+
+                                                                } else {
+                                                                    $('#add-order-errors').html(errors.error.message);
+                                                                }
+                                                                // hide loader
+                                                                $("#loader").hide();
+
+                                                                // Show modal to display error showed
+                                                                $('#addOrderModal').modal('show');
+                                                                $("#add-order-error-bag").show();
+                                                            }
+                                                        });
+                                                    },
+                                                    error: function (data) {
+
+                                                        var errors = $.parseJSON(data.responseText);
+                                                        var status = errors.error.statusCode;
+
+                                                        if (status == 422) {
+                                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                            $("#add-order-msgs").hide();
+
+                                                            $('#add-order-errors').html('');
+                                                            $.each(errors.error.details.messages, function (key, value) {
+                                                                console.log('Error Value' + value + ' Key ' + key);
+                                                                $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                            });
+
+                                                        } else {
+                                                            $('#add-order-errors').html(errors.error.message);
+                                                        }
+                                                        // hide loader
+                                                        $("#loader").hide();
+
+                                                        // Show modal to display error showed
+                                                        $('#addOrderModal').modal('show');
+                                                        $("#add-order-error-bag").show();
+                                                    }
+                                                }); //end post points ajax
+                                            },
+                                            error: function (data) {
+
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#add-order-msgs").hide();
+
+                                                    $('#add-order-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
+
+                                                } else {
+                                                    $('#add-order-errors').html(errors.error.message);
+                                                }
+                                                // hide loader
+                                                $("#loader").hide();
+
                                                 // Show modal to display error showed
                                                 $('#addOrderModal').modal('show');
                                                 $("#add-order-error-bag").show();
                                             }
+                                        }); //end post points ajax
+
+                                    } else if (customerPoints < points) {
+                                        var ErrorHtml = "<strong>Error! </strong> You don't have enough points to redeem  " + points + ". You have points " + customerPoints + ".";
+
+                                        $('#add-order-errors').html(ErrorHtml);
+
+                                        // Show modal to display error showed
+                                        $('#addOrderModal').modal('show');
+                                        $("#add-order-error-bag").show();
+                                    } else {
+                                        // Post Order
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: postOrderURL,
+                                            data: jsonData,
+                                            dataType: 'json',
+                                            beforeSend: function () {//calls the loader id tag
+                                                $("#frmAddOrder .close").click();
+                                                $("#loader").show();
+                                            },
+                                            success: function (data) {
+
+                                                $("#loader").hide();
+                                                console.log("Success +++> " + JSON.stringify(data));
+
+                                                console.log("Sending SMS");
+                                                // Send SMS
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: sendSmsURL,
+                                                    data: jsonSMSData,
+                                                    dataType: 'json',
+                                                    beforeSend: function () {//calls the loader id tag
+                                                        $("#frmAddOrder .close").click();
+                                                        $("#loader").show();
+                                                    },
+                                                    success: function (data) {
+
+                                                        $("#loader").hide();
+                                                        console.log("Success +++> " + JSON.stringify(data));
+                                                        console.log("Data +++> " + data.data);
+
+                                                        // Send Email
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: sendEmailURL,
+                                                            data: jsonEmailData,
+                                                            dataType: 'json',
+                                                            beforeSend: function () {//calls the loader id tag
+                                                                $("#frmAddOrder .close").click();
+                                                                $("#loader").show();
+                                                            },
+                                                            success: function (data) {
+
+                                                                $("#loader").hide();
+                                                                console.log("Success +++> " + JSON.stringify(data));
+                                                                console.log("Data +++> " + data.data);
+
+                                                                if (data.success) {
+                                                                    $("#add-error-bag").hide();
+                                                                    $("#add-order-msgs").show();
+                                                                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                                        + 'Record Added Successfuly '
+                                                                        + '</div>';
+
+                                                                    $('#add-order-msgs').html(msgHTML);
+
+                                                                    $('#frmAddOrder').trigger("reset");
+                                                                    $("#frmAddOrder .close").click();
+                                                                    window.location.reload();
+                                                                    // window.location.reload();
+                                                                } else {
+                                                                    // Error
+                                                                    $('#add-order-errors').html('An error occured!');
+                                                                    // Show modal to display error showed
+                                                                    $('#addOrderModal').modal('show');
+                                                                    $("#add-order-error-bag").show();
+                                                                }
+                                                            },
+                                                            error: function (data) {
+                                                                console.log("Error +++> " + JSON.stringify(data));
+                                                                var errors = $.parseJSON(data.responseText);
+                                                                var status = errors.error.statusCode;
+
+                                                                $('#add-order-errors').html('An error occured!');
+
+                                                                // hide loader
+                                                                $("#loader").hide();
+
+                                                                // Show modal to display error showed
+                                                                $('#addOrderModal').modal('show');
+                                                                $("#add-order-error-bag").show();
+                                                            }
+                                                        });
+
+                                                    },
+                                                    error: function (data) {
+                                                        console.log("Error +++> " + JSON.stringify(data));
+                                                        var errors = $.parseJSON(data.responseText);
+                                                        var status = errors.error.statusCode;
+
+                                                        $('#add-order-errors').html('An error occured!');
+
+                                                        // hide loader
+                                                        $("#loader").hide();
+
+                                                        // Show modal to display error showed
+                                                        $('#addOrderModal').modal('show');
+                                                        $("#add-order-error-bag").show();
+                                                    }
+                                                });
+                                                console.log("Sending Mail");
 
 
-                                        },
-                                        error: function (data) {
-                                            console.log("Error +++> " + JSON.stringify(data));
-                                            var errors = $.parseJSON(data.responseText);
-                                            var status = errors.error.statusCode;
+                                            },
+                                            error: function (data) {
 
-                                            $('#add-order-errors').html('An error occured!');
+                                                var errors = $.parseJSON(data.responseText);
+                                                var status = errors.error.statusCode;
+                                                // if (status == 500) {
+                                                if (status == 422) {
+                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                    $("#add-order-msgs").hide();
 
-                                            // hide loader
-                                            $("#loader").hide();
+                                                    $('#add-order-errors').html('');
+                                                    $.each(errors.error.details.messages, function (key, value) {
+                                                        console.log('Error Value' + value + ' Key ' + key);
+                                                        $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                    });
 
-                                            // Show modal to display error showed
-                                            $('#addOrderModal').modal('show');
-                                            $("#add-order-error-bag").show();
-                                        }
-                                    });
+                                                } else {
+                                                    $('#add-order-errors').html(errors.error.message);
+                                                }
+                                                // hide loader
+                                                $("#loader").hide();
+
+                                                // Show modal to display error showed
+                                                $('#addOrderModal').modal('show');
+                                                $("#add-order-error-bag").show();
+                                            }
+                                        });
+                                    }
 
                                 },
                                 error: function (data) {
-                                    console.log("Error +++> " + JSON.stringify(data));
                                     var errors = $.parseJSON(data.responseText);
                                     var status = errors.error.statusCode;
+                                    // if (status == 500) {
+                                    if (status == 422) {
+                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                        $("#add-order-msgs").hide();
 
-                                    $('#add-order-errors').html('An error occured!');
+                                        $('#add-order-errors').html('');
+                                        $.each(errors.error.details.messages, function (key, value) {
+                                            console.log('Error Value' + value + ' Key ' + key);
+                                            $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
+                                        });
 
+                                    } else {
+                                        $('#add-order-errors').html(errors.error.message);
+                                    }
                                     // hide loader
                                     $("#loader").hide();
 
@@ -1718,9 +2082,7 @@ var Api = function () {
                                     $('#addOrderModal').modal('show');
                                     $("#add-order-error-bag").show();
                                 }
-                            });
-                            console.log("Sending Mail");
-
+                            }); // end chec user points
 
                         },
                         error: function (data) {
@@ -1751,34 +2113,29 @@ var Api = function () {
                         }
                     });
 
-                },
-                error: function (data) {
+                } else {
 
-                    var errors = $.parseJSON(data.responseText);
-                    var status = errors.error.statusCode;
-                    // if (status == 500) {
-                    if (status == 422) {
-                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                        $("#add-order-msgs").hide();
+                    var ErrorHtml = "<strong>Not Allowed! </strong> Maximum redeemable points (quantity) " + quantity + " X (Max Allowed Points per Book) " + maxAllowedPoints + " = " + maximumPoints;
 
-                        $('#add-order-errors').html('');
-                        $.each(errors.error.details.messages, function (key, value) {
-                            console.log('Error Value' + value + ' Key ' + key);
-                            $('#add-order-errors').append('<li>' + key + ' ' + value + '</li>');
-                        });
-
-                    } else {
-                        $('#add-order-errors').html(errors.error.message);
-                    }
-                    // hide loader
-                    $("#loader").hide();
+                    $('#add-order-errors').html(ErrorHtml);
 
                     // Show modal to display error showed
                     $('#addOrderModal').modal('show');
                     $("#add-order-error-bag").show();
+
                 }
-            });
+
+
+            } else {
+
+                var ErrorHtml = "<strong>Error! </strong> Use point values that are divisible by 5 and greater than 100.";
+
+                $('#add-order-errors').html(ErrorHtml);
+
+                // Show modal to display error showed
+                $('#addOrderModal').modal('show');
+                $("#add-order-error-bag").show();
+            }
 
 
         });
@@ -2213,7 +2570,7 @@ var Api = function () {
 
             var loggedInEmail = jsonData["loggedInEmail"];
             var userRole = jsonData["userRole"];
-        
+
             delete jsonData["loggedInEmail"];
             delete jsonData["userRole"];
 
@@ -3917,7 +4274,11 @@ var Api = function () {
 
             if (jsonData["participant"] == "Customer") {
                 //remove business name
-                jsonData["firstName"] = jsonData["firstNameCustomer"];
+                // jsonData["firstName"] = jsonData["firstNameCustomer"];
+                if (jsonData["isRetailer"] == "0") {
+                    jsonData["firstName"] = jsonData["firstNameCustomer"];
+                    delete jsonData["firstNameCustomer"];
+                }
                 delete jsonData["firstNameCustomer"];
                 delete jsonData["participant"];
                 jsonData["memberId"] = "C-" + memberID;
@@ -4150,7 +4511,7 @@ var Api = function () {
     function getValueAfterHash(words) {
         var n = words.split("#");
         return n[n.length - 1];
-    
+
     }
     /**
      * Function to post transaction history
@@ -4160,9 +4521,9 @@ var Api = function () {
         $("#add-transaction-error-bag").hide();
 
         // Get the model basedon the transaction
-        function getModel(transName){
+        function getModel(transName) {
 
-            if(transName == "getIsConfimedReportHistorian"){
+            if (transName == "getIsConfimedReportHistorian") {
                 var IDs = new Object();
 
                 IDs['model'] = "Report";
@@ -4170,131 +4531,131 @@ var Api = function () {
 
                 return IDs;
 
-            }else if(transName == "getOrderStatusHistorian"){
+            } else if (transName == "getOrderStatusHistorian") {
 
                 var IDs = new Object();
 
                 IDs['model'] = "OrderContract";
                 IDs['filter'] = "order";
-                
+
                 return IDs;
 
-            }else if(transName == "getShipmentStatusHistorian"){
+            } else if (transName == "getShipmentStatusHistorian") {
 
                 var IDs = new Object();
 
                 IDs['model'] = "Shipment";
                 IDs['filter'] = "shipment";
-                
+
                 return IDs;
-            }else if(transName == "getShipmentItemStatusHistorian"){
+            } else if (transName == "getShipmentItemStatusHistorian") {
 
                 var IDs = new Object();
 
                 IDs['model'] = "Shipment";
                 IDs['filter'] = "shipment";
-                
+
                 return IDs;
 
-            }else if(transName == "getScanBookHistorian"){
+            } else if (transName == "getScanBookHistorian") {
 
                 var IDs = new Object();
 
                 IDs['model'] = "Customer";
                 IDs['filter'] = "customer";
-                
+
                 return IDs;
             }
-            
+
         }
 
         // Format the data
-        function formatData(transName, data){
+        function formatData(transName, data) {
 
             var msgHTML = "";
 
-            if(transName == "getIsConfimedReportHistorian"){
+            if (transName == "getIsConfimedReportHistorian") {
 
-                for(var i = 0; i < data.length; i++){
+                for (var i = 0; i < data.length; i++) {
                     msgHTML += '<tr>'
-                    + '<td>' + getValueAfterHash(data[i].report) + '</td>'
-                    + '<td>' + data[i].isConfirmed + '</td>'
-                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                    + '<td>' + data[i].updatedAt + '</td>'
-                    + '<td>' + data[i].timestamp + '</td>'
-                    + '</tr>';
+                        + '<td>' + getValueAfterHash(data[i].report) + '</td>'
+                        + '<td>' + data[i].isConfirmed + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                        + '<td>' + data[i].updatedAt + '</td>'
+                        + '<td>' + data[i].timestamp + '</td>'
+                        + '</tr>';
                 }
 
                 $("#records").html(msgHTML);
 
                 $('#transactionViewModal').modal('show');
 
-            }else if(transName == "getOrderStatusHistorian"){
+            } else if (transName == "getOrderStatusHistorian") {
 
-                for(var i = 0; i < data.length; i++){
+                for (var i = 0; i < data.length; i++) {
                     msgHTML += '<tr>'
-                    + '<td>' + getValueAfterHash(data[i].order) + '</td>'
-                    + '<td>' + data[i].orderStatus + '</td>'
-                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                    + '<td>' + data[i].updatedAt + '</td>'
-                    + '<td>' + data[i].timestamp + '</td>'
-                    + '</tr>';
+                        + '<td>' + getValueAfterHash(data[i].order) + '</td>'
+                        + '<td>' + data[i].orderStatus + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                        + '<td>' + data[i].updatedAt + '</td>'
+                        + '<td>' + data[i].timestamp + '</td>'
+                        + '</tr>';
                 }
 
                 $("#order_status").html(msgHTML);
 
                 $('#orderStatusViewModal').modal('show');
 
-            }else if(transName == "getShipmentStatusHistorian"){
+            } else if (transName == "getShipmentStatusHistorian") {
 
-                for(var i = 0; i < data.length; i++){
+                for (var i = 0; i < data.length; i++) {
                     msgHTML += '<tr>'
-                    + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
-                    + '<td>' + data[i].ShipmentStatus + '</td>'
-                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                    + '<td>' + data[i].updatedAt + '</td>'
-                    + '<td>' + data[i].timestamp + '</td>'
-                    + '</tr>';
+                        + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                        + '<td>' + data[i].ShipmentStatus + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                        + '<td>' + data[i].updatedAt + '</td>'
+                        + '<td>' + data[i].timestamp + '</td>'
+                        + '</tr>';
                 }
 
                 $("#shipment_status").html(msgHTML);
 
                 $('#shipmentStatusViewModal').modal('show');
-                
-            }else if(transName == "getShipmentItemStatusHistorian"){
-                
-                for(var i = 0; i < data.length; i++){
+
+            } else if (transName == "getShipmentItemStatusHistorian") {
+
+                for (var i = 0; i < data.length; i++) {
                     msgHTML += '<tr>'
-                    + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
-                    + '<td>' + data[i].itemStatus + '</td>'
-                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                    + '<td>' + data[i].updatedAt + '</td>'
-                    + '<td>' + data[i].timestamp + '</td>'
-                    + '</tr>';
+                        + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                        + '<td>' + data[i].itemStatus + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                        + '<td>' + data[i].updatedAt + '</td>'
+                        + '<td>' + data[i].timestamp + '</td>'
+                        + '</tr>';
                 }
 
                 $("#shipment_item_status").html(msgHTML);
 
                 $('#shipmentItemStatusViewModal').modal('show');
 
-            }else if(transName == "getScanBookHistorian"){
+            } else if (transName == "getScanBookHistorian") {
 
-                for(var i = 0; i < data.length; i++){
+                for (var i = 0; i < data.length; i++) {
                     msgHTML += '<tr>'
-                    + '<td>' + getValueAfterHash(data[i].customer) + '</td>'
-                    + '<td>' + data[i].accountBalance + '</td>'
-                    + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                    + '<td>' + data[i].updatedAt + '</td>'
-                    + '<td>' + data[i].timestamp + '</td>'
-                    + '</tr>';
+                        + '<td>' + getValueAfterHash(data[i].customer) + '</td>'
+                        + '<td>' + data[i].accountBalance + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                        + '<td>' + data[i].updatedAt + '</td>'
+                        + '<td>' + data[i].timestamp + '</td>'
+                        + '</tr>';
                 }
 
                 $("#customer_book_scan_status").html(msgHTML);
 
                 $('#customerBookScanStatusViewModal').modal('show');
-              
+
             }
-            
+
         }
 
         transactionHistorySbtBtn.on('click', function () {
@@ -4322,7 +4683,7 @@ var Api = function () {
 
             var msgHTML = "";
 
-            var getIsConfimedReportHistorianURL = domainUrl + "/queries/"+ transName +"?"+ modelName['filter'] +"=resource%3Aorg.evin.book.track."+ modelName['model'] +"%23" + itemID;
+            var getIsConfimedReportHistorianURL = domainUrl + "/queries/" + transName + "?" + modelName['filter'] + "=resource%3Aorg.evin.book.track." + modelName['model'] + "%23" + itemID;
 
             $.ajaxSetup({
                 headers: {
@@ -4345,18 +4706,18 @@ var Api = function () {
                     console.log(data);
                     console.log(data.length);
 
-                    if(data.length > 0){
+                    if (data.length > 0) {
 
                         formatData(transName, data);
 
-                    }else{
+                    } else {
                         msgHTML = '<div class="alert alert-warning" role="alert">'
-                        + 'No Transaction history found for ' + itemID + ' item ID.'
-                        + '</div>';
-    
+                            + 'No Transaction history found for ' + itemID + ' item ID.'
+                            + '</div>';
+
                         $("#add-transaction-msgs").html(msgHTML);
                     }
-                    
+
 
 
                     // window.location.href = '/verify/book/' + data.id;
