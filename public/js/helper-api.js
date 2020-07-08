@@ -114,6 +114,17 @@ function orderDetailedView(order_id) {
             var buyerInfo = '';
             var sellerInfo = '';
 
+            var discount = data.order.discountPoints;
+            var points = data.order.discountPoints * 10;
+            var totalPrice = ( data.order.unitPrice * data.order.quantity ) - discount;
+
+            if(points > 0 && discount > 0){
+                var discountMsg = "Points Redeemed = " + points + ",<br> Total Discount = " + discount + ",<br> Total Amount = " + totalPrice;
+            }else{
+                var discountMsg = "<br> Total Amount = " + totalPrice;
+            }
+
+
             $("#orderIdView").html(data.order.contractId);
             $("#orderStatusView").html(data.order.orderStatus);
 
@@ -130,6 +141,7 @@ function orderDetailedView(order_id) {
                 $("#payOnArrivalView").html("No");
             }
             $("#unitPriceView").html(data.order.unitPrice);
+            $("#discountView").html(discountMsg);
             $("#quantityView").html(data.order.quantity);
             $("#descriptionView").html(data.order.description);
             $("#destinationAddressView").html(data.order.destinationAddress);
