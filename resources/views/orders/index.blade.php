@@ -101,9 +101,9 @@
                                     <td><span class="smaller text-center">
                                             {{ $order->unitPrice }} <br>
                                             @if($order->payOnArrival)
-                                            Pay On Arrival:<br>( Yes )
+                                                Pay On Arrival:<br>( Yes )
                                             @else
-                                            Pay On Arrival:<br>( No )
+                                                Pay On Arrival:<br>( No )
                                             @endif
                                         </span></td>
                                     <td><span class="smaller text-center">{{ $order->quantity }}</span></td>
