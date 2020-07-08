@@ -16,4 +16,17 @@ class Book extends Model
         "sold" => "required",
         "price" => "required"
     ];
+
+
+    /**
+     * Points Conversion Rate
+     */
+    public static function pointsConversionRate($points){
+
+        $currency = $points / 10;
+        // $currency = $points / env('CONVERSION_RATE');
+
+        return $currency;
+    }
+
 }
