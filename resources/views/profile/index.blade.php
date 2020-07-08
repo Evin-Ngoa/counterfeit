@@ -50,7 +50,7 @@
                                     <div class="value badge badge-pill badge-success">Online</div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 text-right"><a class="btn btn-primary btn-sm" href="#"><i class="os-icon os-icon-link-3"></i><span>Add to Friends</span></a></div>
+                            <div class="col-sm-6 text-right" style="display:none;"><a class="btn btn-primary btn-sm" href="#"><i class="os-icon os-icon-link-3"></i><span>Add to Friends</span></a></div>
                         </div>
                     </div>
                     <div class="up-contents">
@@ -258,7 +258,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="">County / Province</label>
-                                            <input class="form-control" data-error="Please input your county / province" placeholder="County" required="required" value="{{ \App\User::getParticipantAddCounty() }}">
+                                            <input class="form-control" data-error="Please input your county / province" placeholder="County" name="county" id="county" required="required" value="{{ \App\User::getParticipantAddCounty() }}">
                                             <div class="help-block form-text with-errors form-control-feedback"></div>
                                         </div>
                                     </div>
