@@ -28,6 +28,7 @@ function editBookForm(book_id) {
             $("#frmEditBook input[name=initialOwner]").val(data.book.initialOwner);
             $("#frmEditBook input[name=sold]").val(data.book.sold);
             $("#frmEditBook input[name=price]").val(data.book.price);
+            $("#frmEditBook input[name=maxPoints]").val(data.book.maxPoints);
             // $("#frmEditBook input[name=$class]").val(data.book.$class);
 
             $("#qrEditBox").html(qrCodeEdit);
