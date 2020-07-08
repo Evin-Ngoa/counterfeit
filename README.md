@@ -587,25 +587,33 @@ D:\NewsPlugin or http://tevratgundogdu.com/works/breakingnewsticker/index.html
 -------------------------------------------------------------
 
 To Do Tasks
-1. Forceful Address - middleware [XXXXXXXXXXXX]
+1. Forceful Address - middleware [XXXXXXXXXXXX][Low-Priority]
 2. Verification points only for customers while verifiy and reporting [DONE]
-3. Transfer of points while ordering upto publisher. [XXXXXXXXXXXX]
+3. Transfer of points while ordering upto publisher. [XXXXXXXXXXXX][NEXT][2] 
 4. Name of company to save to Firstname from name for mobile purposes [Done]
 5. Did you know Notifications [Foundation-Set]
 6. Login simulation for creating file. and permission file[XXXXXXXXXXXX]
 7. Check report and confirm in publisher. [In-progress] 
    a. in report, ensure memeberID for store finds the customer with the email [Done]
    b. in report confirmation of report ensure add points to reportedBY else [deduct if status is rejected - has to be done even though reports fake]. c. On implementing this delete the one added after reporting [done]
-   d. doing a js n logic.js for adding points because of mobile api in scanning [XXXXXXXXXXXX]
+   d. doing a js n logic.js for adding points because of mobile api in scanning [XXXXXXXXXXXX] 
+   https://medium.com/@abrahamnzok/custom-authentication-for-hyperledger-composer-rest-server-with-passport-jwt-d6fb04754549
 8. Report view for pulblisher and customers [Done]
 9. Historian for transactions to show.
   i. /updateOrderStatus [Done]
-  ii./updateShipmentStatus [Done]
+  ii. /updateShipmentStatus [Done]
   iii. /updateShipmentItemStatus [Done]
-  iv . /updateBookShipment [N/A]
-  v. //updateCustomerPoints [Done]
+  iv. /updateBookShipment [N/A]
+  v.  /updateCustomerPoints [Done]
   vi. /updateReportIsConfirmed [Done]
 9. Add to all transactions participantInvoking and updatedAt [Done]
 10. Google autocomplete in report and display on map. [Done]
 11. Profile stats [Done]
 12. UI Clean Up.[XXXXXXXXXXXX]
+13. Mobile Sign Up Customers. [xxxxxxxxxxxx][NEXT][3]
+14. Disributor initialize purchase request. [xxxxxxxxxxx][NEXT][4]
+15. Admin Historian [All]
+16. [Book-Historian][bookReigisterShipment][NEXT][1]
+
+[About Block Chain]
+https://www.nature.com/articles/s41431-019-0560-9)
