@@ -36,6 +36,10 @@
                                 <td class="text-left"><div id="itemStatusView"></div></td>
                             </tr>
                             <tr>
+                                <td class="text-left">Books Added</td>
+                                <td class="text-left"><div id="booksAddedView"></div></td>
+                            </tr>
+                            <tr>
                                 <td class="text-left">Customer Feedback Scale</td>
                                 <td class="text-left"><div id="feedbackScaleView"></div></td>
                             </tr>
