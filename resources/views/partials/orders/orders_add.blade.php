@@ -6,19 +6,18 @@
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Close</span><span class="os-icon os-icon-close"></span></button>
                 <div class="onboarding-side-by-side">
                     <div class="onboarding-media" style="display: none;"><img alt="" src="img/bigicon5.png" width="200px"></div>
-                    <div class="onboarding-content with-gradient">
+                    <div class="onboarding-content with-gradient" style="padding: 70px 70px 10px;">
                         <h4 class="onboarding-title"><i class="os-icon os-icon-mail-14"></i> Create Order</h4>
                         <div class="onboarding-text" style="display: block;">
                             <div class="alert alert-info borderless">
-                               <i class="os-icon os-icon-bell"></i> Ensure the details are correct. Once the order is processed you cannot edit the order.
+                                <i class="os-icon os-icon-bell"></i> Ensure the details are correct. Once the order is processed you cannot edit the order.
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-12">
                                 <div id="add-order-msgs"></div>
-
-                                <div class="alert alert-danger" id="add-order-error-bag">
+                                <div class="alert alert-danger" id="add-order-error-bag" style="display: none;">
                                     <ul id="add-order-errors">
                                     </ul>
                                 </div>
@@ -35,9 +34,9 @@
                                     <input name="arrivalDateTime" id="arrivalDateTime" class="form-control datetime" placeholder="DD/MM/YYYY" value="">
 
                                     <input type="hidden" name="buyer" id="buyer" class="form-control" value="{{\App\User::loggedInUserEmail()}}">
-                                  
+
                                     <input type="hidden" name="participantName" id="participantName" class="form-control" value="{{\App\User::getParticipantNames()}}">
-                                    
+
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.OrderContract">
                                 </div>
                             </div>
@@ -85,26 +84,7 @@
                                     @else
                                     <input type="hidden" name="orderStatus" id="orderStatus" class="form-control" value="WAITING">
                                     @endif
-                                    @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::DISTRIBUTOR || \App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER || \App\User::getUserRole()==\App\Http\Traits\UserConstants::ADMIN)
-                                    <div class="col-sm-6" style="display: none;">
-                                        <div class="form-group">
-                                            <label for="lateArrivalPenaltyFactor">% Discount Per Book on Late Arrival</label>
-                                            <input name="lateArrivalPenaltyFactor" id="lateArrivalPenaltyFactor" class="form-control" placeholder="Enter Penalty in decimal Eg 5% => 0.05" value="0.20">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6" style="display: none;">
-                                        <div class="form-group">
-                                            <label for="damagedPenaltyFactor">% Discount Per Book on Damaged Books</label>
-                                            <input name="damagedPenaltyFactor" id="damagedPenaltyFactor" class="form-control" placeholder="Use decimal Eg 10% => 0.10" value="0.10">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6" style="display: none;">
-                                        <div class="form-group">
-                                            <label for="lostPenaltyFactor">% Discount Per Book on Lost Books</label>
-                                            <input name="lostPenaltyFactor" id="lostPenaltyFactor" class="form-control" placeholder="Use decimal Eg 15% => 0.15" value="0.15">
-                                        </div>
-                                    </div>
-                                    @endif
+
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="destinationAddress">Delivery Address</label>
@@ -115,6 +95,12 @@
                                         <div class="form-group">
                                             <label for="description">Provide Book Description</label>
                                             <textarea name="description" id="description" class="form-control" value="" placeholder="Provide Book Name, subject, Author, Edition etc"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="pricePoints">Enter Points to redeem [Minimum 100 and Maximum 400 per book ; 1sh = 10 Points]</label>
+                                            <input type="number" class="form-control" name="pricePoints" id="pricePoints" min="100" max="400" step="10">
                                         </div>
                                     </div>
                                 </div>
