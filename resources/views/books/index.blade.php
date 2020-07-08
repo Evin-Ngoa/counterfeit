@@ -36,6 +36,7 @@
                                     <!-- <th class="text-center">Book ID</th> -->
                                     <th class="text-center">Book Type</th>
                                     <th class="text-center">Price</th>
+                                    <th class="text-center">Max Redeemable Points</th>
                                     <th class="text-center" style="display:none">initial Owner</th>
                                     <th class="text-center">Sold</th>
                                     <th class="text-center">Actions</th>
@@ -64,13 +65,16 @@
                                     <td class="nowrap">
                                         <div class="smaller text-center">{{ $book->price }}</div>
                                     </td>
+                                    <td class="nowrap">
+                                        <div class="smaller text-center">{{ $book->maxPoints }}</div>
+                                    </td>
                                     <td class="nowrap" style="display:none">
                                         <div class="smaller text-center">{{ $book->addedBy }}</div>
                                     </td>
                                     @if($book->sold)
-                                    <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
+                                        <td class="text-center"><a class="badge badge-danger-inverted" href="#">Sold</a></td>
                                     @else
-                                    <td class="text-center"><a class="badge badge-success-inverted" href="#">Not Sold</a></td>
+                                        <td class="text-center"><a class="badge badge-success-inverted" href="#">Not Sold</a></td>
                                     @endif
                                     <td class="row-actions">
                                         <a href="{{ route('verify.book', $book->id) }}" data-placement="top" data-toggle="tooltip" title="Track Book"><i class="os-icon os-icon-truck"></i></a><a onclick="event.preventDefault();editBookForm('{{$book->id}}');" href="#" data-placement="top" data-toggle="tooltip" title="Edit Book"><i class="os-icon os-icon-edit"></i></a><a class="danger" onclick="event.preventDefault();deleteBookForm('{{$book->id}}');" href="#" data-placement="top" data-toggle="tooltip" title="Delete Book"><i class="os-icon os-icon-ui-15"></i></a>
