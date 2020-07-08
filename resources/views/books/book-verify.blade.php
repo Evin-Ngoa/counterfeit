@@ -45,22 +45,23 @@ $purchasedToEmail = "N/A";
                     @endif
                         
                         <div class="activity-info">
-                            @if(isset($groupOwner->owner->firstName))
+                            @if(isset($groupOwner->owner->firstName) && isset($groupOwner->owner->lastName))
                             <?php
                             if ($first) {
-                                $reportedTo = $groupOwner->owner->email;
+                                // $reportedTo = $groupOwner->owner->email;
                                 $first = false;
                             }
                             ?>
+                            <div class="activity-role">{{ $groupOwner->owner->firstName }} {{ $groupOwner->owner->lastName }}</div>
+                            @elseif(isset($groupOwner->owner->firstName))
                             <div class="activity-role">{{ $groupOwner->owner->firstName }}</div>
-                            @else
-                            <div class="activity-role">{{ $groupOwner->owner->firstName }} {{ $groupOwner->owner->lastName }} </div>
                             @endif
 
                             @if(isset($groupOwner->owner->address->country) && isset($groupOwner->owner->address->county))
                             <strong class="activity-title">{{ $groupOwner->owner->address->country}} , {{ $groupOwner->owner->address->county }} , {{ $groupOwner->owner->address->street }}</strong>
                             @endif
                             <?php
+                                $reportedTo = $groupOwners->shipment->shipOwnership[0]->owner->email;
                                 $reportedToMemberId = $groupOwner->owner->memberId;
                                 $purchasedToEmail = $groupOwner->owner->email;
                             ?>
