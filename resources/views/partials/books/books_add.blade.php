@@ -13,9 +13,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div id="add-book-msgs"></div>
-                                <!-- <div class="alert alert-info" role="alert">
-                                    <strong>Sorry! </strong>No Records at the moment.
-                                </div> -->
+                               
                                 <div class="alert alert-danger" id="add-error-bag">
                                     <ul id="add-book-errors">
                                     </ul>
@@ -48,6 +46,12 @@
                                 <div class="form-group">
                                     <label for="price">Book Price</label>
                                     <input name="price" id="price" class="form-control" placeholder="Enter Price..." value="550">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="maxPoints">Maximum Redeemable Points</label>
+                                    <input name="maxPoints" id="maxPoints" class="form-control" placeholder="Enter Maximum Points" value="300">
                                 </div>
                             </div>
                             <div class="col-sm-6">
