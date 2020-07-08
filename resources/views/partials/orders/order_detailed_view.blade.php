@@ -46,6 +46,10 @@
                                 <td class="text-left"><div id="unitPriceView"></div></td>
                             </tr>
                             <tr>
+                                <td class="text-left">Payment Details</td>
+                                <td class="text-left"><div id="discountView"></div></td>
+                            </tr>
+                            <tr>
                                 <td class="text-left">Quantity</td>
                                 <td class="text-left"><div id="quantityView"></div></td>
                             </tr>
