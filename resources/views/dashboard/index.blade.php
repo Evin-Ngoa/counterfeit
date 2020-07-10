@@ -39,44 +39,43 @@
                     <div class="row">
                         <!-- Orders Customer-->
                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="{{ route('order.view',  ['id' => \App\User::loggedInUserEmail()]) }}">
-                                <div class="label">Active Orders</div>
-                                <div class="value">{{ $ordersCount }}</div>
-                                <!-- <div class="trending trending-up-basic"><span>12%</span><i class="os-icon os-icon-arrow-up2"></i></div> -->
-                            </a>
-                        </div>
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="#">
-                                <div class="label">Active Shipments</div>
-                                <div class="value">{{ $shipmentsCount }}</div>
-                                <div class="trending trending-down-basic"><span>12%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                            </a>
-                        </div>
-                        @if(\App\User::isCustomerRetailer())
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="#">
-                                <div class="label">Purchase Requests</div>
-                                <div class="value">{{ $purchaseRequestsCount }}</div>
-                            </a>
-                        </div>
-                        @else
-                        <div class="col-sm-4 col-xxxl-4" style="display: none;">
-                            <a class="element-box el-tablo" href="#">
-                                <div class="label">Delivered</div>
-                                <div class="value">{{ $ordersDeliveredCount }}</div>
-                                <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                            </a>
-                        </div>
-
-                        <div class="col-sm-4 col-xxxl-4">
-                            <a class="element-box el-tablo" href="#">
-                                <div class="label">Points</div>
-                                <div class="value">{{ $points }}</div>
-                                <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
-                            </a>
-                        </div>
-                        @endif
+                            <div class="col-sm-3 col-xxxl-3">
+                                <a class="element-box el-tablo" href="{{ route('order.view',  ['id' => \App\User::loggedInUserEmail()]) }}">
+                                    <div class="label">Active Orders</div>
+                                    <div class="value">{{ $ordersCount }}</div>
+                                    <!-- <div class="trending trending-up-basic"><span>12%</span><i class="os-icon os-icon-arrow-up2"></i></div> -->
+                                </a>
+                            </div>
+                            <div class="col-sm-3 col-xxxl-3">
+                                <a class="element-box el-tablo" href="#">
+                                    <div class="label">Active Shipments</div>
+                                    <div class="value">{{ $shipmentsCount }}</div>
+                                    <div class="trending trending-down-basic"><span>12%</span><i class="os-icon os-icon-arrow-down"></i></div>
+                                </a>
+                            </div>
+                                @if(\App\User::isCustomerRetailer())
+                                    <div class="col-sm-3 col-xxxl-3">
+                                        <a class="element-box el-tablo" href="#">
+                                            <div class="label">Purchase Requests</div>
+                                            <div class="value">{{ $purchaseRequestsCount }}</div>
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="col-sm-3 col-xxxl-3" style="display: none;">
+                                        <a class="element-box el-tablo" href="#">
+                                            <div class="label">Delivered</div>
+                                            <div class="value">{{ $ordersDeliveredCount }}</div>
+                                            <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
+                                        </a>
+                                    </div>
+                                @endif
+                            <div class="col-sm-3 col-xxxl-3">
+                                <a class="element-box el-tablo" href="#">
+                                    <div class="label">Points</div>
+                                    <div class="value">{{ $points }}</div>
+                                    <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
+                                </a>
+                            </div>
                         @endif
 
                         @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::PUBLISHER)
@@ -140,6 +139,9 @@
                                 <tr>
                                     <th class="text-center">Request ID</th>
                                     <th class="text-center">Book ID</th>
+                                    <th class="text-center">Sale Price</th>
+                                    <th class="text-center">Purchase Price</th>
+                                    <th class="text-center">Redemmed Points</th>
                                     <th class="text-center">Buyer Email</th>
                                     <th class="text-center">Seller Email</th>
                                     <th class="text-center">Status</th>
@@ -160,6 +162,29 @@
                                     <td class="text-center" style="font-size: .73rem;">
                                         {{-- \App\User::extractEmailFromResource($activeRequests->seller) --}}
                                         {{ $activeRequests->book->id}}
+                                    </td>
+                                    <td class="text-center" style="font-size: .73rem;">
+                                        {{ $activeRequests->book->price }}
+                                    </td>
+                                    <td class="text-center" style="font-size: .73rem;">
+                                            @if($activeRequests->usedPoints)
+                                                <?php
+                                                    $discountPrice = $activeRequests->book->maxPoints / 10 ;
+                                                    $purchasePrice = $activeRequests->book->price - $discountPrice ;
+                                                ?>
+                                                {{ $purchasePrice }}
+                                            @else
+                                                {{ $activeRequests->book->price }}
+                                            @endif
+                                 
+                                        
+                                    </td>
+                                    <td class="text-center" style="font-size: .73rem;">
+                                            @if($activeRequests->usedPoints)
+                                                Yes <br> ( {{ $activeRequests->book->maxPoints }} Points )
+                                            @else
+                                                No 
+                                            @endif
                                     </td>
                                     <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedBy->email}}</td>
                                     <td class="text-center" style="font-size: .73rem;">{{$activeRequests->purchasedTo->email}}</td>
