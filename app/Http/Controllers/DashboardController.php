@@ -134,6 +134,14 @@ class DashboardController extends Controller
             $ConfirmedReportCount = count($ConfirmedReports);
             // dd($ConfirmedReportCount);
 
+            // 5. Get Publisher Details
+
+            $publisherDetails = $this->authservice->getCustomerDetails($email, $role);
+
+            // dd($publisherDetails->accountBalance);
+
+            $points = $publisherDetails->accountBalance;
+
             return view('dashboard.index')->with(
                 compact(
                     'role', 
@@ -145,7 +153,8 @@ class DashboardController extends Controller
                     'report',
                     'reportCount',
                     'ConfirmedReports',
-                    'ConfirmedReportCount'
+                    'ConfirmedReportCount',
+                    'points'
                 ));
 
         } elseif (\App\User::getUserRole() == \App\Http\Traits\UserConstants::CUSTOMER) {
