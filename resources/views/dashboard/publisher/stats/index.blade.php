@@ -26,3 +26,10 @@
         <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
     </a>
 </div>
+<div class="col-sm-3 col-xxxl-3">
+    <a class="element-box el-tablo" href="{{ route('book.view', ['id' => \App\User::loggedInUserEmail()]) }}">
+        <div class="label">Publisher Points</div>
+        <div class="value">{{ $points }}</div>
+        <div class="trending trending-down-basic"><span>9%</span><i class="os-icon os-icon-arrow-down"></i></div>
+    </a>
+</div>
