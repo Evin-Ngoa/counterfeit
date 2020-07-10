@@ -85,6 +85,8 @@ function editOrderForm(order_id) {
             $("#frmEditOrder input[name=payOnArrival]").val(data.order.payOnArrival);
             $("#frmEditOrder textarea[name=destinationAddress]").val(data.order.destinationAddress);
             $("#frmEditOrder input[name=unitPrice]").val(data.order.unitPrice);
+            $("#frmEditOrder input[name=pricePoints]").val(data.order.pricePoints);
+            $("#frmEditOrder input[name=discountPoints]").val(data.order.discountPoints);
             $("#frmEditOrder input[name=quantity]").val(data.order.quantity);
             $("#frmEditOrder input[name=lateArrivalPenaltyFactor]").val(data.order.lateArrivalPenaltyFactor);
             $("#frmEditOrder input[name=damagedPenaltyFactor]").val(data.order.damagedPenaltyFactor);
