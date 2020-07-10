@@ -143,7 +143,7 @@
                 </div><span>Customers</span>
             </a>
         </li>
-
+        @endif
         <li class="sub-header"><span>Audit</span></li>
         <li class="selected {!! classActivePath('transaction') !!}">
             <a href="{{ route('transaction.index') }}">
@@ -152,7 +152,7 @@
                 </div><span>Transactions</span>
             </a>
         </li>
-        @endif
+
         <li class="sub-header"><span>Transactions Traceability</span></li>
         <li class="selected {!! classActivePath('traceability') !!}">
             <a href="{{ route('traceability.form') }}">
