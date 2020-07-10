@@ -26,6 +26,10 @@ class BookService
     public function getSingleBook($id){
         return $this->utils->findById('/Book/', $id);
     }
+
+    public function getSingleBookByRelation($id){
+        return $this->utils->findByIdRelation('/Book/', $id);
+    }
     
     /**
      * Track Book Ownership
