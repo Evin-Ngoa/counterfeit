@@ -38,6 +38,9 @@
                                     <!-- "$class": "org.evin.book.track.Shipment", -->
                                     <input type="hidden" name="$class" id="$class" class="form-control" value="org.evin.book.track.ShipOwnership">
                                     <input type="hidden" name="shipment" id="shipment" value="">
+                                    <input type="hidden" name="loggedInEmail" id="loggedInEmail" class="form-control" value="{{ \App\User::loggedInUserEmail() }}">
+                                    <input type="hidden" name="userRole" id="userRole" class="form-control" value="{{ \App\User::getUserRole() }}">
+                           
                                 </div>
                             </div>
                         </div>
