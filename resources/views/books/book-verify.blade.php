@@ -17,33 +17,33 @@ $purchasedToEmail = "N/A";
             </a>
         </div>
         <h6 class="element-header">Supply Chain For {{ $id }}</h6>
-        <?php 
-            $bookSold = '';
+        <?php
+        $bookSold = '';
         ?>
         <div class="element-box-tp">
             @if($groupOwners->sold)
-                <div class="alert alert-danger">
-                    Book Already Sold. By buying this book you are supporting counterfeit products. Please
-                    report this on the report deck form and earn points that you can redeem on your next purchase. 
-                    Help fight Counterfeits in Kenya.
-                </div>
+            <div class="alert alert-danger">
+                Book Already Sold. By buying this book you are supporting counterfeit products. Please
+                report this on the report deck form and earn points that you can redeem on your next purchase.
+                Help fight Counterfeits in Kenya.
+            </div>
             @endif
             <div class="activity-boxes-w">
                 @if($groupOwners)
-                <?php 
-                    $bookSold = $groupOwners->sold;
+                <?php
+                $bookSold = $groupOwners->sold;
                 ?>
                 @if(isset($groupOwners->shipment->shipOwnership))
                 @foreach ($groupOwners->shipment->shipOwnership as $groupOwner)
                 <div class="activity-box-w">
                     <div class="activity-time">{{ Carbon\Carbon::parse($groupOwner->timestamp)->isoFormat('MMM Do YYYY dddd')  }}</div>
                     <div class="activity-box">
-                    @if(isset($groupOwner->owner->avatar))
+                        @if(isset($groupOwner->owner->avatar))
                         <div class="activity-avatar"><img alt="" src="{{$groupOwner->owner->avatar}}"></div>
-                    @else
+                        @else
                         <div class="activity-avatar"><img alt="" src="/img/avatar.png"></div>
-                    @endif
-                        
+                        @endif
+
                         <div class="activity-info">
                             @if(isset($groupOwner->owner->firstName) && isset($groupOwner->owner->lastName))
                             <?php
@@ -61,9 +61,10 @@ $purchasedToEmail = "N/A";
                             <strong class="activity-title">{{ $groupOwner->owner->address->country}} , {{ $groupOwner->owner->address->county }} , {{ $groupOwner->owner->address->street }}</strong>
                             @endif
                             <?php
-                                $reportedTo = $groupOwners->shipment->shipOwnership[0]->owner->email;
-                                $reportedToMemberId = $groupOwner->owner->memberId;
-                                $purchasedToEmail = $groupOwner->owner->email;
+                            $reportedTo = $groupOwners->shipment->shipOwnership[0]->owner->email;
+                            $reportedToMemberId = $groupOwner->owner->memberId;
+                            $purchasedToEmail = $groupOwner->owner->email;
+                            $purchasedToPoints = $groupOwner->owner->accountBalance;
                             ?>
                         </div>
                     </div>
@@ -98,17 +99,60 @@ $purchasedToEmail = "N/A";
 
 @section('footer_scripts')
 <script>
-        console.log("Wards = " + wards[0].name);
-        console.log("Wards Size = " + wards.length);
+    console.log("Wards = " + wards[0].name);
+    console.log("Wards Size = " + wards.length);
 
-        var denomination = document.getElementById("ward")
-        for (var i = 0; i < wards.length; i++) {
-            var option = document.createElement("OPTION"),
-                txt = document.createTextNode(wards[i].name);
-            option.appendChild(txt);
-            option.setAttribute("value", wards[i].name);
-            denomination.insertBefore(option, denomination.lastChild);
+    var denomination = document.getElementById("ward")
+    for (var i = 0; i < wards.length; i++) {
+        var option = document.createElement("OPTION"),
+            txt = document.createTextNode(wards[i].name);
+        option.appendChild(txt);
+        option.setAttribute("value", wards[i].name);
+        denomination.insertBefore(option, denomination.lastChild);
+    }
+</script>
+<script>
+    $("#usedPoints").change(function() {
+        var value = $(this).val();
+        var userPoints = {{ $user->accountBalance }};
+        var maxBookPoints = {{ $book->maxPoints }};
+        var message = "<div style='color:blue;'> " + maxBookPoints + " points will be deducted from your account </div>";
+        var messageError = "<div style='color:red;'> " +  maxBookPoints + " You dont have enough points to redeem. You have "+ userPoints +". </div>";
+
+        // continue with purchase else
+        if(userPoints >= maxBookPoints){
+            $("#pointsMsg").html(message);
+        }else{
+            $("#pointsMsg").html(messageError);
+
+            // Disable Button
+            // $(".btn-buy-book").prop("disabled",true);
+            if(document.getElementById('usedPoints').checked) {
+                $(".btn-buy-book").prop("disabled",true);
+            } else {
+                $(".btn-buy-book").prop("disabled",false);
+            }
         }
+
+        // set value of bookPoints
+        $("#bookPoints").val(maxBookPoints);
+
+        console.log("usedPoints Value "+ value + " accountBalance " + userPoints + " maxBookPoints " + maxBookPoints);
+        // $.ajax({
+        //     type: "POST",
+        //     url: "set_home_vid.php",
+        //     async: true,
+        //     data: {
+        //         action1: value // as you are getting in php $_POST['action1'] 
+        //     },
+        //     success: function(msg) {
+        //         alert('Success');
+        //         if (msg != 'success') {
+        //             alert('Fail');
+        //         }
+        //     }
+        // });
+    });
 </script>
 @endsection
 
