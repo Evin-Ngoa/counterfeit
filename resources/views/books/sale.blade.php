@@ -25,7 +25,28 @@
                     <label for="store">Purchase From [BookShop ID]</label>
                     <input class="form-control" type="text" name="purchasedToMemberId" id="purchasedToMemberId" value="{{$reportedToMemberId}}" >
                     <input class="form-control" type="hidden" name="purchasedTo" id="purchasedTo" value="{{$purchasedToEmail}}">
+                    <input class="form-control" type="hidden" name="purchasedToPoints" id="purchasedToPoints" value="{{$purchasedToPoints}}">
                     <input class="form-control" type="hidden" name="purchasedBy" id="purchasedBy" value="{{\App\User::loggedInUserEmail()}}">
+                    <input class="form-control" type="hidden" name="bookPoints" id="bookPoints" value="{{$book->maxPoints}}">
+                    <input class="form-control" type="hidden" name="indCustomerPoints" id="indCustomerPoints" value="{{$user->accountBalance}}">
+                </div>
+                <div class="form-group">
+                    <div id="pointsMsg">
+                        
+                    </div>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        {{-- $book->shipment->contract->pricePoints --}}
+                        {{-- $book->pricePoints --}}
+                        {{-- $book->price --}}
+                        <?php 
+                            $discount = $book->maxPoints / 10;
+                            $newPrice = $book->price - $discount;
+                        ?>
+                        <input class="form-control" type="hidden" name="newPrice" id="newPrice" value="{{$newPrice}}">
+                        <input type="checkbox" class="form-check-input" name="usedPoints" id="usedPoints" value="1"> Redeem {{ $book->maxPoints }} Points and Pay {{ $newPrice }} instead of {{ $book->price }}.
+                    </label>
                 </div>
 
                 <div class="form-buttons-w">
