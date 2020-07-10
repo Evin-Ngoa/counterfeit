@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Auth\AuthService;
 use App\Services\Book\BookService;
 use App\Services\Utils;
 use Illuminate\Support\Facades\Validator;
@@ -14,11 +15,13 @@ class BookController extends Controller
 {
     protected $bookservice;
     protected $utils;
+    protected $authservice;
 
-    public function __construct(Utils $utils, BookService $bookservice)
+    public function __construct(Utils $utils, BookService $bookservice, AuthService $authservice)
     {
         $this->utils = $utils;
         $this->bookservice = $bookservice;
+        $this->authservice = $authservice;
 
         $this->middleware('check.auth');
         $this->middleware('auth.admin')->only('index');
@@ -63,12 +66,17 @@ class BookController extends Controller
      */
     public function verify($id)
     {
+        $email = \App\User::loggedInUserEmail();
+        $role = \App\User::getUserRole();
 
         $groupOwners = $this->bookservice->getBookSupplyChain($id);
-
+        $book = $this->bookservice->getSingleBookByRelation($id);
+        $user = $this->authservice->getCustomerDetails($email, $role);
+        
         // dd($groupOwners);
+        // dd($user);
 
-        return view('books.book-verify')->with(compact('groupOwners', 'id'));
+        return view('books.book-verify')->with(compact('groupOwners', 'id', 'book', 'user'));
     }
 
     /**
