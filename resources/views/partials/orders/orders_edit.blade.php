@@ -33,6 +33,8 @@
                                     <input type="hidden" name="buyer" id="buyer" class="form-control" value="">
                                     <input type="hidden" name="contractId" id="contractId" class="form-control" value="">
                                     <input type="hidden" name="createdAt" id="createdAt" class="form-control" value="">
+                                    <input type="hidden" name="pricePoints" id="pricePoints" class="form-control" value="">
+                                    <input type="hidden" name="discountPoints" id="discountPoints" class="form-control" value="">
                                     @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
                                         <input type="hidden" name="orderStatus" id="orderStatus"  value="WAITING">
                                     @endif
