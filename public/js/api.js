@@ -139,14 +139,26 @@ var Api = function () {
             });
 
             var bookID = jsonData["book"];
-            var purchasedByVal = jsonData["purchasedBy"];
 
             var book = "resource:org.evin.book.track.Book#" + bookID;
             var purchasedBy = "resource:org.evin.book.track.Customer#" + jsonData["purchasedBy"];
             var purchasedTo = "resource:org.evin.book.track.Customer#" + jsonData["purchasedTo"];
 
-            delete jsonData["purchasedToMemberId"];
+            var customerID = jsonData["purchasedBy"];
+            var bookShopID = jsonData["purchasedTo"];
 
+            // Add the points to here
+            var PurchasedToPoints = jsonData["purchasedToPoints"];
+            var indCustomerPoints = jsonData["indCustomerPoints"];
+            var newPrice = jsonData["newPrice"];
+
+            delete jsonData["purchasedToMemberId"];
+            delete jsonData["purchasedToPoints"];
+            delete jsonData["newPrice"];
+            delete jsonData["indCustomerPoints"];
+
+            console.log("PurchasedToPoints => " + PurchasedToPoints);
+            console.log("newPrice => " + newPrice);
             // Add update time
             jsonData["createdAt"] = currentDateTime();
             // Append ID
@@ -155,59 +167,222 @@ var Api = function () {
             jsonData["purchasedBy"] = purchasedBy;
             jsonData["purchasedTo"] = purchasedTo;
 
-            console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+            var bookPoints = jsonData["bookPoints"];
 
-            var msgHTML = "";
+            delete jsonData["bookPoints"];
 
-            var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + purchasedByVal + ". Awaiting Approval!";
+            if (jsonData["usedPoints"] == "1") {
+                jsonData["usedPoints"] = true;
+                // 0. Get Customer and bookshop points
+                // 1. Minus For customer
+                // 2. Add For bookshop
 
-            var jsonDataSMS = {
-                message: smsApprovalMessage
-            };
 
-            console.log("bookID = " + bookID + " purchasedBy = " + purchasedByVal + " smsApprovalMessage = " + smsApprovalMessage);
+                // Add points to bookshop
+                var totalBookShopPoints = parseInt(PurchasedToPoints) + parseInt(bookPoints);
+                var totalCustomerPoints = parseInt(indCustomerPoints) - parseInt(bookPoints);
 
-            var smsURL = laravelDomain + '/general/sms/send/';
+                console.log(PurchasedToPoints + " + " + bookPoints + " = totalCustomerPoints = " + totalBookShopPoints);
+                console.log(indCustomerPoints + " - " + bookPoints + " = totalCustomerPoints = " + totalCustomerPoints);
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+                var customerPointsObj = {
+                    accountBalance: totalCustomerPoints,
+                    customer: customerID,
+                    updatedAt: currentDateTime(),
+                    participantInvoking: "resource:org.evin.book.track.Customer#" + customerID
+                };
+                var bookshopPointsObj = {
+                    accountBalance: totalBookShopPoints,
+                    customer: bookShopID,
+                    updatedAt: currentDateTime(),
+                    participantInvoking: "resource:org.evin.book.track.Customer#" + bookShopID
+                };
 
-            $.ajax({
-                type: 'POST',
-                url: postBuyBookURL,
-                data: jsonData,
-                dataType: 'json',
-                beforeSend: function () {
-                    $("#loader").show();
-                },
-                success: function (data) {
 
-                    // SEND SMS 
+                console.log("JSONDATA = " + JSON.stringify(jsonData));
+                console.log("customerPointsObj = " + JSON.stringify(customerPointsObj));
+                console.log("bookshopPointsObj = " + JSON.stringify(bookshopPointsObj));
+
+                var msgHTML = "";
+
+                var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + customerID + ". Awaiting Approval!";
+
+                var jsonDataSMS = {
+                    message: smsApprovalMessage
+                };
+
+                console.log("bookID = " + bookID + " purchasedBy = " + customerID + " smsApprovalMessage = " + smsApprovalMessage);
+
+                var smsURL = laravelDomain + '/general/sms/send/';
+
+                delete jsonData["bookPoints"];
+
+                // Error if customer has less points
+                console.log("indCustomerPoints [" + indCustomerPoints + "] < bookPoints [" + bookPoints + "]");
+                if (parseInt(indCustomerPoints) < parseInt(bookPoints)) {
+
+                    // hide loader
+                    $("#loader").hide();
+
+                    var msgHTML = 'You dont have enough points to redeem.';
+
+                    $('#add-buy-book-errors').html(msgHTML);
+
+                    $("#add-error-buy-book-bag").show();
+
+                } else {
+                    $("#add-error-buy-book-bag").hide();
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+
+                    // Updating Customer Points
                     $.ajax({
                         type: 'POST',
-                        url: smsURL,
-                        data: jsonDataSMS,
+                        url: postCustomerScanPointsURL,
+                        data: customerPointsObj,
                         dataType: 'json',
                         beforeSend: function () {
+                            //calls the loader id tag
                             $("#loader").show();
                         },
-                        success: function (data) {
-                            // hide loader
-                            $("#loader").hide();
-                            console.log("Success +++> " + JSON.stringify(data));
-                            $("#add-error-buy-book-bag").hide();
-                            $("#add-buy-book-msgs").show();
+                        success: function (customerPointData) {
 
-                            msgHTML = '<div class="alert alert-primary" role="alert">'
-                                + 'Request sent successfully. Await Approval from the store.'
-                                + '</div>';
+                            console.log("Success customerPointData = " + JSON.stringify(customerPointData));
 
-                            $('#add-buy-book-msgs').html(msgHTML);
+                            // Updating BookStore Points
+                            $.ajax({
+                                type: 'POST',
+                                url: postCustomerScanPointsURL,
+                                data: bookshopPointsObj,
+                                dataType: 'json',
+                                beforeSend: function () {
+                                    //calls the loader id tag
+                                    $("#loader").show();
+                                },
+                                success: function (bookshopPointData) {
+                                    $("#loader").hide();
 
-                            // window.location.reload();
+                                    console.log("Success bookshopPointData = " + JSON.stringify(bookshopPointData));
+
+                                    // send Purchase Request
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: postBuyBookURL,
+                                        data: jsonData,
+                                        dataType: 'json',
+                                        beforeSend: function () {
+                                            $("#loader").show();
+                                        },
+                                        success: function (data) {
+
+                                            // SEND SMS 
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: smsURL,
+                                                data: jsonDataSMS,
+                                                dataType: 'json',
+                                                beforeSend: function () {
+                                                    $("#loader").show();
+                                                },
+                                                success: function (data) {
+                                                    // hide loader
+                                                    $("#loader").hide();
+                                                    console.log("Success +++> " + JSON.stringify(data));
+                                                    $("#add-error-buy-book-bag").hide();
+                                                    $("#add-buy-book-msgs").show();
+
+                                                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                        + 'Request sent successfully. Await Approval from the store.'
+                                                        + '</div>';
+
+                                                    $('#add-buy-book-msgs').html(msgHTML);
+
+                                                    // window.location.reload();
+
+                                                },
+                                                error: function (data) {
+                                                    var errors = $.parseJSON(data.responseText);
+                                                    var status = errors.error.statusCode;
+
+                                                    if (status == 422) {
+                                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                        $("#add-buy-book-msgs").hide();
+
+                                                        $('#add-buy-book-errors').html('');
+                                                        $.each(errors.error.details.messages, function (key, value) {
+                                                            console.log('Error Value' + value + ' Key ' + key);
+                                                            $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                        });
+
+                                                    } else {
+                                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                        $('#add-buy-book-errors').html(errors.error.message);
+                                                    }
+                                                    // hide loader
+                                                    $("#loader").hide();
+
+                                                    $("#add-error-buy-book-bag").show();
+                                                }
+                                            }); // END Ajax
+
+                                        },
+                                        error: function (data) {
+                                            var errors = $.parseJSON(data.responseText);
+                                            var status = errors.error.statusCode;
+
+                                            if (status == 422) {
+                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                $("#add-buy-book-msgs").hide();
+
+                                                $('#add-buy-book-errors').html('');
+                                                $.each(errors.error.details.messages, function (key, value) {
+                                                    console.log('Error Value' + value + ' Key ' + key);
+                                                    $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                });
+
+                                            } else {
+                                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                $('#add-buy-book-errors').html(errors.error.message);
+                                            }
+                                            // hide loader
+                                            $("#loader").hide();
+
+                                            $("#add-error-buy-book-bag").show();
+                                        }
+                                    }); // END Ajax
+                                },
+                                error: function (data) {
+                                    var errors = $.parseJSON(data.responseText);
+                                    var status = errors.error.statusCode;
+
+                                    if (status == 422) {
+                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                        $("#add-buy-book-msgs").hide();
+
+                                        $('#add-buy-book-errors').html('');
+                                        $.each(errors.error.details.messages, function (key, value) {
+                                            console.log('Error Value' + value + ' Key ' + key);
+                                            $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                        });
+
+                                    } else {
+                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                        $('#add-buy-book-errors').html(errors.error.message);
+                                    }
+                                    // hide loader
+                                    $("#loader").hide();
+
+                                    $("#add-error-buy-book-bag").show();
+                                }
+                            }); // END Ajax
 
                         },
                         error: function (data) {
@@ -235,33 +410,126 @@ var Api = function () {
                             $("#add-error-buy-book-bag").show();
                         }
                     }); // END Ajax
+                } // end if if(indCustomerPoints < bookPoints){
 
-                },
-                error: function (data) {
-                    var errors = $.parseJSON(data.responseText);
-                    var status = errors.error.statusCode;
+            } else {
 
-                    if (status == 422) {
-                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                        $("#add-buy-book-msgs").hide();
+                var msgHTML = "";
 
-                        $('#add-buy-book-errors').html('');
-                        $.each(errors.error.details.messages, function (key, value) {
-                            console.log('Error Value' + value + ' Key ' + key);
-                            $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
-                        });
+                var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + customerID + ". Awaiting Approval!";
 
-                    } else {
-                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                        $('#add-buy-book-errors').html(errors.error.message);
+                var jsonDataSMS = {
+                    message: smsApprovalMessage
+                };
+
+                console.log("bookID = " + bookID + " purchasedBy = " + customerID + " smsApprovalMessage = " + smsApprovalMessage);
+
+                var smsURL = laravelDomain + '/general/sms/send/';
+
+                delete jsonData["bookPoints"];
+
+                // console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+
+                console.log("JSONDATA2 false = " + JSON.stringify(jsonData));
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                    // hide loader
-                    $("#loader").hide();
+                });
 
-                    $("#add-error-buy-book-bag").show();
-                }
-            }); // END Ajax
+                $.ajax({
+                    type: 'POST',
+                    url: postBuyBookURL,
+                    data: jsonData,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#loader").show();
+                    },
+                    success: function (data) {
+
+                        // SEND SMS 
+                        $.ajax({
+                            type: 'POST',
+                            url: smsURL,
+                            data: jsonDataSMS,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+                                // hide loader
+                                $("#loader").hide();
+                                console.log("Success +++> " + JSON.stringify(data));
+                                $("#add-error-buy-book-bag").hide();
+                                $("#add-buy-book-msgs").show();
+
+                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                    + 'Request sent successfully. Await Approval from the store.'
+                                    + '</div>';
+
+                                $('#add-buy-book-msgs').html(msgHTML);
+
+                                // window.location.reload();
+
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-buy-book-msgs").hide();
+
+                                    $('#add-buy-book-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-buy-book-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                $("#add-error-buy-book-bag").show();
+                            }
+                        }); // END Ajax
+
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#add-buy-book-msgs").hide();
+
+                            $('#add-buy-book-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-buy-book-errors').html(errors.error.message);
+                        }
+                        // hide loader
+                        $("#loader").hide();
+
+                        $("#add-error-buy-book-bag").show();
+                    }
+                }); // END Ajax
+
+
+
+            } // end if (jsonData["usedPoints"] == "1")
+
 
         }); // END Onclick Submit
 
@@ -1083,6 +1351,8 @@ var Api = function () {
             delete jsonData["loggedInEmail"];
             delete jsonData["userRole"];
 
+            jsonData["participantInvoking"] = "resource:org.evin.book.track." + userRole + "#" + loggedInEmail;
+
             console.log("JSON SENT => " + JSON.stringify(jsonData));
 
             var msgHTML = "";
@@ -1107,7 +1377,6 @@ var Api = function () {
             $.ajax({
                 type: 'GET',
                 url: checkBookAvailabilityURL,
-                data: jsonData,
                 dataType: 'json',
                 beforeSend: function () {//calls the loader id tag
                     $("#frmregisterBookShipment .close").click();
@@ -1627,12 +1896,15 @@ var Api = function () {
 
                 maximumPoints = quantity * maxAllowedPoints;
 
+                // Find total points per book
+                points = quantity * points;
+
                 console.log("maximumPoints => " + maximumPoints);
 
                 console.log("Points => " + points);
 
                 // If points < maximum disallow
-                if (points < maximumPoints) {
+                if (points <= maximumPoints) {
 
                     // hide error
                     $("#add-order-error-bag").hide();
@@ -2381,6 +2653,9 @@ var Api = function () {
             // Add createdAt time
             jsonData["createdAt"] = currentDateTime();
 
+            // participantInvoking
+            // jsonData["participantInvoking"] = "resource:org.evin.book.track." + userRole + "#" + loggedInEmail;
+
             // Set Default Status
             // jsonData["ShipmentStatus"] = ShipmentStatus;
 
@@ -2391,7 +2666,8 @@ var Api = function () {
             var updateInitialShipOwnership = {
                 "$class": "org.evin.book.track.ShipOwnership",
                 "owner": owner,
-                "shipment": "resource:org.evin.book.track.Shipment#" + shipmentId
+                "shipment": "resource:org.evin.book.track.Shipment#" + shipmentId,
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
@@ -2613,7 +2889,8 @@ var Api = function () {
             var postCustomerOwnerURL = domainUrl + '/ShipOwnership';
             var postCustomerOwnerData = {
                 "shipment": "resource:org.evin.book.track.Shipment#" + jsonData["shipmentId"],
-                "owner": "resource:org.evin.book.track.Customer#" + jsonData["customerId"]
+                "owner": "resource:org.evin.book.track.Customer#" + jsonData["customerId"],
+                "participantInvoking": "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
             }
 
             console.log("JSON SENT => " + JSON.stringify(jsonData));
@@ -3835,6 +4112,8 @@ var Api = function () {
 
             var shipment = $('#shipment_owner').val();
             var owner = $('#selectDistributor').val();
+            var loggedInEmail = $('#loggedInEmail').val();
+            var userRole = $('#userRole').val();
 
             var shipmentClass = "resource:org.evin.book.track.Shipment#" + shipment;
             var ownerClass = "resource:org.evin.book.track.Distributor#" + owner;
@@ -3849,6 +4128,8 @@ var Api = function () {
             // Append ID
             jsonData["shipment"] = shipmentClass;
             jsonData["owner"] = ownerClass;
+            jsonData["participantInvoking"] = "resource:org.evin.book.track." + userRole + "#" + loggedInEmail;
+
 
             console.log("Save New Owner ID => " + shipment + " " + owner);
 
