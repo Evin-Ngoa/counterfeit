@@ -589,7 +589,7 @@ D:\NewsPlugin or http://tevratgundogdu.com/works/breakingnewsticker/index.html
 To Do Tasks
 1. Forceful Address - middleware [XXXXXXXXXXXX][Low-Priority]
 2. Verification points only for customers while verifiy and reporting [DONE]
-3. Transfer of points while ordering upto publisher. [XXXXXXXXXXXX][NEXT][2] 
+3. Transfer of points while ordering upto publisher. [DONE][NEXT][2] 
 4. Name of company to save to Firstname from name for mobile purposes [Done]
 5. Did you know Notifications [Foundation-Set]
 6. Login simulation for creating file. and permission file[XXXXXXXXXXXX]
@@ -613,7 +613,10 @@ To Do Tasks
 13. Mobile Sign Up Customers. [xxxxxxxxxxxx][NEXT][3]
 14. Disributor initialize purchase request. [xxxxxxxxxxx][NEXT][4]
 15. Admin Historian [All]
-16. [Book-Historian][bookReigisterShipment][NEXT][1]
+16. [Book-Historian][bookReigisterShipment][NEXT][1] http://localhost:3001/api/queries/getBookOwnershipHistorian?shipmentId=resource%3Aorg.evin.book.track.Shipment%23SHIP_VOITNKTXs6
+17. Penalizing users who do irrelevant purchase requests in decline button too purchase request
+18. Search Retailer using memberID
+19. Provide hint on which type of ID to use on selection of transaction type
 
 [About Block Chain]
 https://www.nature.com/articles/s41431-019-0560-9)
