@@ -82,6 +82,13 @@
                 </div><span>Verify Book</span>
             </a>
         </li>
+        <li class="selected {!! classActivePath('bookshop') !!}">
+            <a href="{{ route('bookshop.verify') }}">
+                <div class="icon-w">
+                    <div class="os-icon os-icon-cv-2"></div>
+                </div><span>Verify BookShop</span>
+            </a>
+        </li>
         @endif
 
 
