@@ -42,6 +42,12 @@ Route::group(['prefix' => 'verify', 'as' => 'verify.'], function () {
     Route::get('/book', ['as' => 'form', 'uses' => 'BookController@verify_form']);
 });
 
+
+//Verify Customer
+Route::group(['prefix' => 'bookshop', 'as' => 'bookshop.'], function () {
+    Route::get('/verify', ['as' => 'verify', 'uses' => 'CustomerController@verify_bookshop_form']);
+});
+
 // History update_avatar
 Route::resource('transaction', 'TransactionController');
 Route::resource('publisher', 'PublisherController');
