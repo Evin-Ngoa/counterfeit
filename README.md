@@ -591,7 +591,7 @@ To Do Tasks
 2. Verification points only for customers while verifiy and reporting [DONE]
 3. Transfer of points while ordering upto publisher. [DONE][NEXT][2] 
 4. Name of company to save to Firstname from name for mobile purposes [Done]
-5. Did you know Notifications [Foundation-Set]
+5. Did you know Notifications [Foundation-Set][DONE]
 6. Login simulation for creating file. and permission file[XXXXXXXXXXXX]
 7. Check report and confirm in publisher. [In-progress] 
    a. in report, ensure memeberID for store finds the customer with the email [Done]
@@ -603,7 +603,7 @@ To Do Tasks
   i. /updateOrderStatus [Done]
   ii. /updateShipmentStatus [Done]
   iii. /updateShipmentItemStatus [Done]
-  iv. /updateBookShipment [N/A]
+  iv. /updateBookShipment [DONE]
   v.  /updateCustomerPoints [Done]
   vi. /updateReportIsConfirmed [Done]
 9. Add to all transactions participantInvoking and updatedAt [Done]
@@ -615,8 +615,9 @@ To Do Tasks
 15. Admin Historian [All]
 16. [Book-Historian][bookReigisterShipment][NEXT][1] http://localhost:3001/api/queries/getBookOwnershipHistorian?shipmentId=resource%3Aorg.evin.book.track.Shipment%23SHIP_VOITNKTXs6
 17. Penalizing users who do irrelevant purchase requests in decline button too purchase request
-18. Search Retailer using memberID
-19. Provide hint on which type of ID to use on selection of transaction type
+18. Search Retailer using memberID [Done]
+19. Provide hint on which type of ID to use on selection of transaction type[Done]
+20. Possible graphs dashboard
 
 [About Block Chain]
 https://www.nature.com/articles/s41431-019-0560-9)
