@@ -4801,6 +4801,20 @@ var Api = function () {
         console.log("handleTransactionHistory");
         $("#add-transaction-error-bag").hide();
 
+        function readableTime(time){
+           var res = time.split("T");
+           var time = readableT(time);
+           return res[0] +" , " + time ;
+        }
+
+        function readableT(time){
+            var d = new Date(time);
+            var hours = d.getUTCHours();
+            var minutes = d.getUTCMinutes();
+            var seconds = d.getUTCSeconds();
+            return hours+":"+minutes+":"+seconds;
+        }
+
         // Get the model basedon the transaction
         function getModel(transName) {
 
@@ -4821,7 +4835,16 @@ var Api = function () {
 
                 return IDs;
 
-            } else if (transName == "getShipmentStatusHistorian") {
+            } else if (transName == "getBookOwnershipHistorian") {
+
+                var IDs = new Object();
+
+                IDs['model'] = "Shipment";
+                IDs['filter'] = "shipmentId";
+
+                return IDs;
+
+            }  else if (transName == "getShipmentStatusHistorian") {
 
                 var IDs = new Object();
 
@@ -4862,8 +4885,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].report) + '</td>'
                         + '<td>' + data[i].isConfirmed + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
@@ -4878,8 +4901,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].order) + '</td>'
                         + '<td>' + data[i].orderStatus + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
@@ -4894,14 +4917,29 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
                         + '<td>' + data[i].ShipmentStatus + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
                 $("#shipment_status").html(msgHTML);
 
                 $('#shipmentStatusViewModal').modal('show');
+
+            } else if (transName == "getBookOwnershipHistorian") {
+
+                for (var i = 0; i < data.length; i++) {
+                    msgHTML += '<tr>'
+                        + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].owner) + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
+                        + '</tr>';
+                }
+
+                $("#shipment_book_ownership").html(msgHTML);
+
+                $('#shipmentBookOwnershipStatusViewModal').modal('show');
 
             } else if (transName == "getShipmentItemStatusHistorian") {
 
@@ -4910,8 +4948,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
                         + '<td>' + data[i].itemStatus + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
@@ -4926,8 +4964,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].customer) + '</td>'
                         + '<td>' + data[i].accountBalance + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
