@@ -196,10 +196,11 @@
                                         @else
                                         @endif
                                     </td>
-                                    <td class="text-center" style="font-size: .73rem;">
-                                        <div class="pt-btn">
-                                            <a class="btn btn-success btn-sm" href="#" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}', '{{ \App\User::getUserRole() }}', '{{ \App\User::loggedInUserEmail() }}' );">Confirm</a>
-                                        </div>
+                                    <td class="row-actions" style="font-size: .73rem;">
+                                     
+                                            <a  href="#" class="success" data-placement="top" data-toggle="tooltip" data-original-title="Accept" onclick="event.preventDefault();updatePurchaseRequest('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}', '{{ \App\User::getUserRole() }}', '{{ \App\User::loggedInUserEmail() }}' );"><i class="os-icon os-icon-thumbs-up"></i></a>
+                                            <a  href="#" class="danger" data-placement="top" data-toggle="tooltip" data-original-title="Decline" onclick="event.preventDefault();updatePurchaseRequestDeclined('{{ $activeRequests->id }}', '{{ $activeRequests->book->id }}', '{{ $activeRequests->book->shipment->shipmentId }}', '{{ $activeRequests->purchasedBy->email }}', '{{ \App\User::getUserRole() }}', '{{ \App\User::loggedInUserEmail() }}' );"><i class="os-icon os-icon-thumbs-down"></i></a>
+                                     
                                     </td>
                                 </tr>
                                 @endforeach
