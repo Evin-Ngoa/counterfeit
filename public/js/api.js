@@ -740,7 +740,7 @@ var Api = function () {
                                 $("#add-error-report-bag").hide();
                                 $("#add-review-msgs").show();
                                 msgHTML = '<div class="alert alert-primary" role="alert">'
-                                    + 'Report Sent Successfuly. You will earn extra ' + reportPoints + ' once verified by publisher for helping in fighting counterfeit.'
+                                    + 'Report Sent Successfuly. You will earn extra ' + reportPoints + ' points once verified by publisher. Thank you for helping in fighting counterfeit.'
                                     + '</div>';
 
                                 $('#add-review-msgs').html(msgHTML);
