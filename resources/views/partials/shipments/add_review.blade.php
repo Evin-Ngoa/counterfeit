@@ -11,7 +11,7 @@
                         <div class="onboarding-text" style="display: block;">
                             <div class="alert alert-info borderless">
                                 <i class="os-icon os-icon-bell"></i>
-                                You can only edit the shipment status, item status and quantity.
+                                You can only rate this shipment once.
                             </div>
                         </div>
                         <div class="form-group row">
