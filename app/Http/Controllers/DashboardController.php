@@ -207,7 +207,7 @@ class DashboardController extends Controller
 
             foreach ($purchaseRequest as $key => $value) {
                 // Active Shipments include waiting, dispatching and transit
-                if ($purchaseRequest[$key]->purchasedTo->email == \App\User::loggedInUserEmail() && $purchaseRequest[$key]->status == false) {
+                if ($purchaseRequest[$key]->purchasedTo->email == \App\User::loggedInUserEmail() && $purchaseRequest[$key]->status == false && !isset($purchaseRequest[$key]->updatedAt)) {
                     $arrayShip[$key] = $value;
                     $purchaseRequests = $arrayShip;
                 }
