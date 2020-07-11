@@ -25209,6 +25209,8 @@ var Api = function () {
     // Buy Book
     var frmBuyBook = $("#frmBuyBook");
 
+    var frmVerifyBookShop = $("#verify_bookshop");
+
     // Buttons
     var bookSbtBtn = $('#book_form .btn-add-book');
     var bookVerifySbtBtn = $('#verify_form .btn-verify-book');
@@ -25250,6 +25252,109 @@ var Api = function () {
     var customerReviewSbtBtn = $('#frmAddReview .btn-add-review');
 
     var transactionHistorySbtBtn = $('#transaction_form .btn-transaction-history');
+
+    var verifyBookShopSbtBtn = $('#verify_bookshop .btn-verify-bookshop');
+
+    /**
+     * Handle Booshop Verification
+     */
+    var handleBookShopVerification = function () {
+        console.log("handleBookShopVerification");
+
+        verifyBookShopSbtBtn.on('click', function () {
+            var json = frmVerifyBookShop.serializeArray();
+
+            var jsonData = {};
+
+            $.each(json, function (i, field) {
+                jsonData[field.name] = field.value;
+            });
+
+            var bookshopID = jsonData["bookshop_id"];
+
+            var getBookShopURL = domainUrl + "/queries/getCustomerEmailonMemberID?memberId=" + bookshopID;
+
+            var msgBodyHTML = '';
+            var msgHeaderHTML = '';
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // Updating Customer Point
+            $.ajax({
+                type: 'GET',
+                url: getBookShopURL,
+                dataType: 'json',
+                beforeSend: function () {
+                    //calls the loader id tag
+                    $("#loader").show();
+                },
+                success: function (bookShopData) {
+                    console.log("bookShopData => " + JSON.stringify(bookShopData));
+                    console.log("bookShopData Size => " + bookShopData.length);
+
+                    $("#loader").hide();
+
+                    if (bookShopData.length > 0) {
+                        msgHeaderHTML +=  '<tr>'
+                        + '<td class="text-center">Customer ID </td>'
+                        + '<td class="text-center">Name</td>'
+                        + '<td class="text-center">Email</td>'
+                        + '<td class="text-center">Address</td>'
+                        + '</tr>';
+
+                        msgBodyHTML += '<tr>'
+                            + '<td>' + bookShopData[0].memberId + '</td>'
+                            + '<td>' + bookShopData[0].firstName + '</td>'
+                            + '<td>' + bookShopData[0].email + '</td>'
+                            + '<td>' + bookShopData[0].address.street + ' ' + bookShopData[0].address.county + ', ' + bookShopData[0].address.country  + '</td>'
+                            + '</tr>';
+                    } else {
+                        msgHeaderHTML +=  '<tr>'
+                        + '<td class="text-center"> Warning </td>'
+                        + '</tr>';
+
+                        msgBodyHTML += '<tr>'
+                            + '<td> The BookShop does not exist. Not a registered retail bookshop. Re-check the Bookshop ID or resist buying from the shop. </td>'
+                            + '</tr>';
+                    }
+
+                    $("#bookshop_header").html(msgHeaderHTML);
+                    $("#bookshop").html(msgBodyHTML);
+
+                    $('#bookShopViewModal').modal('show');
+
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#verify-bookshop-msgs").hide();
+
+                        $('#verify-bookshop-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#verify-bookshop-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#verify-bookshop-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#verify-error-bag").show();
+                }
+            }); // END Ajax
+        });
+    };
 
     /**
      * Posting the book purchase form
@@ -29932,18 +30037,18 @@ var Api = function () {
         console.log("handleTransactionHistory");
         $("#add-transaction-error-bag").hide();
 
-        function readableTime(time){
-           var res = time.split("T");
-           var time = readableT(time);
-           return res[0] +" , " + time ;
+        function readableTime(time) {
+            var res = time.split("T");
+            var time = readableT(time);
+            return res[0] + " , " + time;
         }
 
-        function readableT(time){
+        function readableT(time) {
             var d = new Date(time);
             var hours = d.getUTCHours();
             var minutes = d.getUTCMinutes();
             var seconds = d.getUTCSeconds();
-            return hours+":"+minutes+":"+seconds;
+            return hours + ":" + minutes + ":" + seconds;
         }
 
         // Get the model basedon the transaction
@@ -29975,7 +30080,7 @@ var Api = function () {
 
                 return IDs;
 
-            }  else if (transName == "getShipmentStatusHistorian") {
+            } else if (transName == "getShipmentStatusHistorian") {
 
                 var IDs = new Object();
 
@@ -30290,6 +30395,9 @@ var Api = function () {
 
             // Fetch Wards
             // handleFetchWards();
+
+            // Verify BookShop
+            handleBookShopVerification();
         }
     }
 
