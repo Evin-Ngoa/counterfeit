@@ -118,11 +118,11 @@ function orderDetailedView(order_id) {
 
             var discount = data.order.discountPoints;
             var points = data.order.discountPoints * 10;
-            var totalPrice = ( data.order.unitPrice * data.order.quantity ) - discount;
+            var totalPrice = (data.order.unitPrice * data.order.quantity) - discount;
 
-            if(points > 0 && discount > 0){
+            if (points > 0 && discount > 0) {
                 var discountMsg = "Points Redeemed = " + points + ",<br> Total Discount = " + discount + ",<br> Total Amount = " + totalPrice;
-            }else{
+            } else {
                 var discountMsg = "<br> Total Amount = " + totalPrice;
             }
 
@@ -251,9 +251,9 @@ function shipmentDetailedView(shipment_id) {
             $("#feedbackScaleView").html(stars);
             for (var j = 0; j < data.shipment.bookRegisterShipment.length; j++) {
                 // Laat Loop ignore comma
-                if((data.shipment.bookRegisterShipment.length - 1) == j){
+                if ((data.shipment.bookRegisterShipment.length - 1) == j) {
                     books += data.shipment.bookRegisterShipment[j].book.id;
-                }else{
+                } else {
                     books += data.shipment.bookRegisterShipment[j].book.id + ', ';
                 }
             }
@@ -1501,6 +1501,133 @@ function updatePurchaseRequest(purchaseRequestID, BookID, ShipmentID, customerEm
 }
 
 /**
+ * FUnction to purchase book
+ * @param {*} purchaseRequestID 
+ * @param {*} BookID 
+ * @param {*} ShipmentID 
+ * @param {*} customerEmail 
+ */
+function updatePurchaseRequestDeclined(purchaseRequestID, BookID, ShipmentID, customerEmail, userRole, loggedInEmail) {
+    console.log("Clicked updatePurchaseRequestDeclined");
+
+    var domainUrl = 'http://localhost:3001/api';
+    var laravelDomainUrl = 'http://localhost:8000';
+
+    var smsPurchaseMessage = "Purchase Declined for " + customerEmail + ". You have been warned not use purchase Request recklessly";
+
+    var jsonDataSMS = {
+        message: smsPurchaseMessage
+    };
+
+    var smsURL = laravelDomainUrl + '/general/sms/send/';
+
+    // 1. Update Purchase Request
+    var jsonData = {
+        purchaseRequest: "resource:org.evin.book.track.PurchaseRequest#" + purchaseRequestID,
+        status: false,
+        updatedAt: currentDateTime(),
+        participantInvoking: "resource:org.evin.book.track." + userRole + "#" + loggedInEmail
+    };
+
+
+    var msgHTML = '';
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: domainUrl + '/updatePurchaseRequestStatus',
+        data: jsonData,
+        dataType: 'json',
+        beforeSend: function () {
+            $("#loader").show();
+            $("#add-error-request-bag").hide();
+            $('#add-request-msgs').hide();
+        },
+        success: function (data) {
+
+
+            // SEND SMS 
+            $.ajax({
+                type: 'POST',
+                url: smsURL,
+                data: jsonDataSMS,
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    $("#loader").hide();
+                    console.log(data);
+                    $("#add-error-request-bag").hide();
+                    $('#add-request-msgs').show();
+                    msgHTML = '<div class="alert alert-success" role="alert">' +
+                        'Request Declined!' +
+                        '</div>';
+        
+                    $('#add-request-msgs').html(msgHTML);
+        
+                    window.location.reload();
+
+                },
+                error: function (data) {
+                    var errors = $.parseJSON(data.responseText);
+                    var status = errors.error.statusCode;
+
+                    if (status == 422) {
+                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                        $("#add-request-msgs").hide();
+
+                        $('#add-request-errors').html('');
+                        $.each(errors.error.details.messages, function (key, value) {
+                            console.log('Error Value' + value + ' Key ' + key);
+                            $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                        });
+
+                    } else {
+                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                        $('#add-request-errors').html(errors.error.message);
+                    }
+                    // hide loader
+                    $("#loader").hide();
+
+                    $("#add-error-request-bag").show();
+                }
+            }); // END Ajax
+        },
+        error: function (data) {
+            var errors = $.parseJSON(data.responseText);
+            var status = errors.error.statusCode;
+
+            if (status == 422) {
+                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                $("#add-request-msgs").hide();
+
+                $('#add-request-errors').html('');
+                $.each(errors.error.details.messages, function (key, value) {
+                    console.log('Error Value' + value + ' Key ' + key);
+                    $('#add-request-errors').append('<li>' + key + ' ' + value + '</li>');
+                });
+
+            } else {
+                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                $('#add-request-errors').html(errors.error.message);
+            }
+            // hide loader
+            $("#loader").hide();
+
+            $("#add-error-request-bag").show();
+        }
+    });
+}
+
+/**
  * 
  * @param {*} reportID 
  */
@@ -1510,7 +1637,7 @@ function traceReportConfirmation(reportID) {
 
     var msgHTML = '';
 
-    var getIsConfimedReportHistorianURL = domainUrl + "/queries/getIsConfimedReportHistorian?report=resource%3Aorg.evin.book.track.Report%23"+reportID;
+    var getIsConfimedReportHistorianURL = domainUrl + "/queries/getIsConfimedReportHistorian?report=resource%3Aorg.evin.book.track.Report%23" + reportID;
 
     $.ajaxSetup({
         headers: {
@@ -1521,7 +1648,7 @@ function traceReportConfirmation(reportID) {
     // SEND SMS 
     $.ajax({
         type: 'GET',
-        url: getIsConfimedReportHistorianURL ,
+        url: getIsConfimedReportHistorianURL,
         beforeSend: function () {
             $("#loader").show();
         },
