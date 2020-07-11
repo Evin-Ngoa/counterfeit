@@ -25302,366 +25302,364 @@ var Api = function () {
 
             delete jsonData["bookPoints"];
 
+            if (jsonData["usedPoints"] == "1") {
+                jsonData["usedPoints"] = true;
+                // 0. Get Customer and bookshop points
+                // 1. Minus For customer
+                // 2. Add For bookshop
 
 
-                if (jsonData["usedPoints"] == "1") {
-                    jsonData["usedPoints"] = true;
-                    // 0. Get Customer and bookshop points
-                    // 1. Minus For customer
-                    // 2. Add For bookshop
-    
-                    
-                    // Add points to bookshop
-                    var totalBookShopPoints = parseInt(PurchasedToPoints) + parseInt(bookPoints);
-                    var totalCustomerPoints = parseInt(indCustomerPoints) - parseInt(bookPoints);
-    
-                    console.log(PurchasedToPoints + " + " + bookPoints + " = totalCustomerPoints = " + totalBookShopPoints);
-                    console.log(indCustomerPoints + " - " + bookPoints + " = totalCustomerPoints = " + totalCustomerPoints);
-    
-                    var customerPointsObj = {
-                        accountBalance: totalCustomerPoints,
-                        customer: customerID,
-                        updatedAt: currentDateTime(),
-                        participantInvoking: "resource:org.evin.book.track.Customer#" + customerID
-                    };
-                    var bookshopPointsObj = {
-                        accountBalance: totalBookShopPoints,
-                        customer: bookShopID,
-                        updatedAt: currentDateTime(),
-                        participantInvoking: "resource:org.evin.book.track.Customer#" + bookShopID
-                    };
-    
-    
-                    console.log("JSONDATA = " + JSON.stringify(jsonData));
-                    console.log("customerPointsObj = " + JSON.stringify(customerPointsObj));
-                    console.log("bookshopPointsObj = " + JSON.stringify(bookshopPointsObj));
-    
-                    var msgHTML = "";
-    
-                    var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + customerID + ". Awaiting Approval!";
-    
-                    var jsonDataSMS = {
-                        message: smsApprovalMessage
-                    };
-    
-                    console.log("bookID = " + bookID + " purchasedBy = " + customerID + " smsApprovalMessage = " + smsApprovalMessage);
-    
-                    var smsURL = laravelDomain + '/general/sms/send/';
-    
-                    delete jsonData["bookPoints"];
+                // Add points to bookshop
+                var totalBookShopPoints = parseInt(PurchasedToPoints) + parseInt(bookPoints);
+                var totalCustomerPoints = parseInt(indCustomerPoints) - parseInt(bookPoints);
 
-                    // Error if customer has less points
-                    console.log("indCustomerPoints ["+indCustomerPoints+"] < bookPoints ["+bookPoints+"]");
-                    if(parseInt(indCustomerPoints) < parseInt(bookPoints)){
+                console.log(PurchasedToPoints + " + " + bookPoints + " = totalCustomerPoints = " + totalBookShopPoints);
+                console.log(indCustomerPoints + " - " + bookPoints + " = totalCustomerPoints = " + totalCustomerPoints);
 
-                        // hide loader
-                        $("#loader").hide();
+                var customerPointsObj = {
+                    accountBalance: totalCustomerPoints,
+                    customer: customerID,
+                    updatedAt: currentDateTime(),
+                    participantInvoking: "resource:org.evin.book.track.Customer#" + customerID
+                };
+                var bookshopPointsObj = {
+                    accountBalance: totalBookShopPoints,
+                    customer: bookShopID,
+                    updatedAt: currentDateTime(),
+                    participantInvoking: "resource:org.evin.book.track.Customer#" + bookShopID
+                };
 
-                        var msgHTML = 'You dont have enough points to redeem.';
 
-                        $('#add-buy-book-errors').html(msgHTML);
+                console.log("JSONDATA = " + JSON.stringify(jsonData));
+                console.log("customerPointsObj = " + JSON.stringify(customerPointsObj));
+                console.log("bookshopPointsObj = " + JSON.stringify(bookshopPointsObj));
 
-                        $("#add-error-buy-book-bag").show();
+                var msgHTML = "";
 
-                    }else{
-                        $("#add-error-buy-book-bag").hide();
-    
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-        
-        
-                        // Updating Customer Points
-                        $.ajax({
-                            type: 'POST',
-                            url: postCustomerScanPointsURL,
-                            data: customerPointsObj,
-                            dataType: 'json',
-                            beforeSend: function () {
-                                //calls the loader id tag
-                                $("#loader").show();
-                            },
-                            success: function (customerPointData) {
-        
-                                console.log("Success customerPointData = " + JSON.stringify(customerPointData));
-        
-                                // Updating BookStore Points
-                                $.ajax({
-                                    type: 'POST',
-                                    url: postCustomerScanPointsURL,
-                                    data: bookshopPointsObj,
-                                    dataType: 'json',
-                                    beforeSend: function () {
-                                        //calls the loader id tag
-                                        $("#loader").show();
-                                    },
-                                    success: function (bookshopPointData) {
-                                        $("#loader").hide();
-        
-                                        console.log("Success bookshopPointData = " + JSON.stringify(bookshopPointData));
-        
-                                        // send Purchase Request
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: postBuyBookURL,
-                                            data: jsonData,
-                                            dataType: 'json',
-                                            beforeSend: function () {
-                                                $("#loader").show();
-                                            },
-                                            success: function (data) {
-        
-                                                // SEND SMS 
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: smsURL,
-                                                    data: jsonDataSMS,
-                                                    dataType: 'json',
-                                                    beforeSend: function () {
-                                                        $("#loader").show();
-                                                    },
-                                                    success: function (data) {
-                                                        // hide loader
-                                                        $("#loader").hide();
-                                                        console.log("Success +++> " + JSON.stringify(data));
-                                                        $("#add-error-buy-book-bag").hide();
-                                                        $("#add-buy-book-msgs").show();
-        
-                                                        msgHTML = '<div class="alert alert-primary" role="alert">'
-                                                            + 'Request sent successfully. Await Approval from the store.'
-                                                            + '</div>';
-        
-                                                        $('#add-buy-book-msgs').html(msgHTML);
-        
-                                                        // window.location.reload();
-        
-                                                    },
-                                                    error: function (data) {
-                                                        var errors = $.parseJSON(data.responseText);
-                                                        var status = errors.error.statusCode;
-        
-                                                        if (status == 422) {
-                                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                                            $("#add-buy-book-msgs").hide();
-        
-                                                            $('#add-buy-book-errors').html('');
-                                                            $.each(errors.error.details.messages, function (key, value) {
-                                                                console.log('Error Value' + value + ' Key ' + key);
-                                                                $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
-                                                            });
-        
-                                                        } else {
-                                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                                            $('#add-buy-book-errors').html(errors.error.message);
-                                                        }
-                                                        // hide loader
-                                                        $("#loader").hide();
-        
-                                                        $("#add-error-buy-book-bag").show();
-                                                    }
-                                                }); // END Ajax
-        
-                                            },
-                                            error: function (data) {
-                                                var errors = $.parseJSON(data.responseText);
-                                                var status = errors.error.statusCode;
-        
-                                                if (status == 422) {
-                                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                                    $("#add-buy-book-msgs").hide();
-        
-                                                    $('#add-buy-book-errors').html('');
-                                                    $.each(errors.error.details.messages, function (key, value) {
-                                                        console.log('Error Value' + value + ' Key ' + key);
-                                                        $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
-                                                    });
-        
-                                                } else {
-                                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                                    $('#add-buy-book-errors').html(errors.error.message);
-                                                }
-                                                // hide loader
-                                                $("#loader").hide();
-        
-                                                $("#add-error-buy-book-bag").show();
-                                            }
-                                        }); // END Ajax
-                                    },
-                                    error: function (data) {
-                                        var errors = $.parseJSON(data.responseText);
-                                        var status = errors.error.statusCode;
-        
-                                        if (status == 422) {
-                                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                            $("#add-buy-book-msgs").hide();
-        
-                                            $('#add-buy-book-errors').html('');
-                                            $.each(errors.error.details.messages, function (key, value) {
-                                                console.log('Error Value' + value + ' Key ' + key);
-                                                $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
-                                            });
-        
-                                        } else {
-                                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                            $('#add-buy-book-errors').html(errors.error.message);
-                                        }
-                                        // hide loader
-                                        $("#loader").hide();
-        
-                                        $("#add-error-buy-book-bag").show();
-                                    }
-                                }); // END Ajax
-        
-                            },
-                            error: function (data) {
-                                var errors = $.parseJSON(data.responseText);
-                                var status = errors.error.statusCode;
-        
-                                if (status == 422) {
-                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
-                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
-                                    $("#add-buy-book-msgs").hide();
-        
-                                    $('#add-buy-book-errors').html('');
-                                    $.each(errors.error.details.messages, function (key, value) {
-                                        console.log('Error Value' + value + ' Key ' + key);
-                                        $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
-                                    });
-        
-                                } else {
-                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
-                                    $('#add-buy-book-errors').html(errors.error.message);
-                                }
-                                // hide loader
-                                $("#loader").hide();
-        
-                                $("#add-error-buy-book-bag").show();
-                            }
-                        }); // END Ajax
-                    } // end if if(indCustomerPoints < bookPoints){
-    
+                var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + customerID + ". Awaiting Approval!";
+
+                var jsonDataSMS = {
+                    message: smsApprovalMessage
+                };
+
+                console.log("bookID = " + bookID + " purchasedBy = " + customerID + " smsApprovalMessage = " + smsApprovalMessage);
+
+                var smsURL = laravelDomain + '/general/sms/send/';
+
+                delete jsonData["bookPoints"];
+
+                // Error if customer has less points
+                console.log("indCustomerPoints [" + indCustomerPoints + "] < bookPoints [" + bookPoints + "]");
+                if (parseInt(indCustomerPoints) < parseInt(bookPoints)) {
+
+                    // hide loader
+                    $("#loader").hide();
+
+                    var msgHTML = 'You dont have enough points to redeem.';
+
+                    $('#add-buy-book-errors').html(msgHTML);
+
+                    $("#add-error-buy-book-bag").show();
+
                 } else {
-    
-                    var msgHTML = "";
-    
-                    var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + customerID + ". Awaiting Approval!";
-    
-                    var jsonDataSMS = {
-                        message: smsApprovalMessage
-                    };
-    
-                    console.log("bookID = " + bookID + " purchasedBy = " + customerID + " smsApprovalMessage = " + smsApprovalMessage);
-    
-                    var smsURL = laravelDomain + '/general/sms/send/';
-    
-                    delete jsonData["bookPoints"];
-    
-                    // console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
-    
-                    console.log("JSONDATA2 false = " + JSON.stringify(jsonData));
-    
+                    $("#add-error-buy-book-bag").hide();
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-    
+
+
+                    // Updating Customer Points
                     $.ajax({
                         type: 'POST',
-                        url: postBuyBookURL,
-                        data: jsonData,
+                        url: postCustomerScanPointsURL,
+                        data: customerPointsObj,
                         dataType: 'json',
                         beforeSend: function () {
+                            //calls the loader id tag
                             $("#loader").show();
                         },
-                        success: function (data) {
-    
-                            // SEND SMS 
+                        success: function (customerPointData) {
+
+                            console.log("Success customerPointData = " + JSON.stringify(customerPointData));
+
+                            // Updating BookStore Points
                             $.ajax({
                                 type: 'POST',
-                                url: smsURL,
-                                data: jsonDataSMS,
+                                url: postCustomerScanPointsURL,
+                                data: bookshopPointsObj,
                                 dataType: 'json',
                                 beforeSend: function () {
+                                    //calls the loader id tag
                                     $("#loader").show();
                                 },
-                                success: function (data) {
-                                    // hide loader
+                                success: function (bookshopPointData) {
                                     $("#loader").hide();
-                                    console.log("Success +++> " + JSON.stringify(data));
-                                    $("#add-error-buy-book-bag").hide();
-                                    $("#add-buy-book-msgs").show();
-    
-                                    msgHTML = '<div class="alert alert-primary" role="alert">'
-                                        + 'Request sent successfully. Await Approval from the store.'
-                                        + '</div>';
-    
-                                    $('#add-buy-book-msgs').html(msgHTML);
-    
-                                    // window.location.reload();
-    
+
+                                    console.log("Success bookshopPointData = " + JSON.stringify(bookshopPointData));
+
+                                    // send Purchase Request
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: postBuyBookURL,
+                                        data: jsonData,
+                                        dataType: 'json',
+                                        beforeSend: function () {
+                                            $("#loader").show();
+                                        },
+                                        success: function (data) {
+
+                                            // SEND SMS 
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: smsURL,
+                                                data: jsonDataSMS,
+                                                dataType: 'json',
+                                                beforeSend: function () {
+                                                    $("#loader").show();
+                                                },
+                                                success: function (data) {
+                                                    // hide loader
+                                                    $("#loader").hide();
+                                                    console.log("Success +++> " + JSON.stringify(data));
+                                                    $("#add-error-buy-book-bag").hide();
+                                                    $("#add-buy-book-msgs").show();
+
+                                                    msgHTML = '<div class="alert alert-primary" role="alert">'
+                                                        + 'Request sent successfully. Await Approval from the store.'
+                                                        + '</div>';
+
+                                                    $('#add-buy-book-msgs').html(msgHTML);
+
+                                                    // window.location.reload();
+
+                                                },
+                                                error: function (data) {
+                                                    var errors = $.parseJSON(data.responseText);
+                                                    var status = errors.error.statusCode;
+
+                                                    if (status == 422) {
+                                                        console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                        console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                        $("#add-buy-book-msgs").hide();
+
+                                                        $('#add-buy-book-errors').html('');
+                                                        $.each(errors.error.details.messages, function (key, value) {
+                                                            console.log('Error Value' + value + ' Key ' + key);
+                                                            $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                        });
+
+                                                    } else {
+                                                        console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                        $('#add-buy-book-errors').html(errors.error.message);
+                                                    }
+                                                    // hide loader
+                                                    $("#loader").hide();
+
+                                                    $("#add-error-buy-book-bag").show();
+                                                }
+                                            }); // END Ajax
+
+                                        },
+                                        error: function (data) {
+                                            var errors = $.parseJSON(data.responseText);
+                                            var status = errors.error.statusCode;
+
+                                            if (status == 422) {
+                                                console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                                console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                                $("#add-buy-book-msgs").hide();
+
+                                                $('#add-buy-book-errors').html('');
+                                                $.each(errors.error.details.messages, function (key, value) {
+                                                    console.log('Error Value' + value + ' Key ' + key);
+                                                    $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                                });
+
+                                            } else {
+                                                console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                                $('#add-buy-book-errors').html(errors.error.message);
+                                            }
+                                            // hide loader
+                                            $("#loader").hide();
+
+                                            $("#add-error-buy-book-bag").show();
+                                        }
+                                    }); // END Ajax
                                 },
                                 error: function (data) {
                                     var errors = $.parseJSON(data.responseText);
                                     var status = errors.error.statusCode;
-    
+
                                     if (status == 422) {
                                         console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                                         console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
                                         $("#add-buy-book-msgs").hide();
-    
+
                                         $('#add-buy-book-errors').html('');
                                         $.each(errors.error.details.messages, function (key, value) {
                                             console.log('Error Value' + value + ' Key ' + key);
                                             $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
                                         });
-    
+
                                     } else {
                                         console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
                                         $('#add-buy-book-errors').html(errors.error.message);
                                     }
                                     // hide loader
                                     $("#loader").hide();
-    
+
                                     $("#add-error-buy-book-bag").show();
                                 }
                             }); // END Ajax
-    
+
                         },
                         error: function (data) {
                             var errors = $.parseJSON(data.responseText);
                             var status = errors.error.statusCode;
-    
+
                             if (status == 422) {
                                 console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
                                 console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
                                 $("#add-buy-book-msgs").hide();
-    
+
                                 $('#add-buy-book-errors').html('');
                                 $.each(errors.error.details.messages, function (key, value) {
                                     console.log('Error Value' + value + ' Key ' + key);
                                     $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
                                 });
-    
+
                             } else {
                                 console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
                                 $('#add-buy-book-errors').html(errors.error.message);
                             }
                             // hide loader
                             $("#loader").hide();
-    
+
                             $("#add-error-buy-book-bag").show();
                         }
                     }); // END Ajax
+                } // end if if(indCustomerPoints < bookPoints){
+
+            } else {
+
+                var msgHTML = "";
+
+                var smsApprovalMessage = "Confirm Purchase Request for book " + bookID + " by " + customerID + ". Awaiting Approval!";
+
+                var jsonDataSMS = {
+                    message: smsApprovalMessage
+                };
+
+                console.log("bookID = " + bookID + " purchasedBy = " + customerID + " smsApprovalMessage = " + smsApprovalMessage);
+
+                var smsURL = laravelDomain + '/general/sms/send/';
+
+                delete jsonData["bookPoints"];
+
+                // console.log("EDIT JSON SENT => " + JSON.stringify(jsonData));
+
+                console.log("JSONDATA2 false = " + JSON.stringify(jsonData));
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: postBuyBookURL,
+                    data: jsonData,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#loader").show();
+                    },
+                    success: function (data) {
+
+                        // SEND SMS 
+                        $.ajax({
+                            type: 'POST',
+                            url: smsURL,
+                            data: jsonDataSMS,
+                            dataType: 'json',
+                            beforeSend: function () {
+                                $("#loader").show();
+                            },
+                            success: function (data) {
+                                // hide loader
+                                $("#loader").hide();
+                                console.log("Success +++> " + JSON.stringify(data));
+                                $("#add-error-buy-book-bag").hide();
+                                $("#add-buy-book-msgs").show();
+
+                                msgHTML = '<div class="alert alert-primary" role="alert">'
+                                    + 'Request sent successfully. Await Approval from the store.'
+                                    + '</div>';
+
+                                $('#add-buy-book-msgs').html(msgHTML);
+
+                                // window.location.reload();
+
+                            },
+                            error: function (data) {
+                                var errors = $.parseJSON(data.responseText);
+                                var status = errors.error.statusCode;
+
+                                if (status == 422) {
+                                    console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                                    console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                                    $("#add-buy-book-msgs").hide();
+
+                                    $('#add-buy-book-errors').html('');
+                                    $.each(errors.error.details.messages, function (key, value) {
+                                        console.log('Error Value' + value + ' Key ' + key);
+                                        $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                                    });
+
+                                } else {
+                                    console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                                    $('#add-buy-book-errors').html(errors.error.message);
+                                }
+                                // hide loader
+                                $("#loader").hide();
+
+                                $("#add-error-buy-book-bag").show();
+                            }
+                        }); // END Ajax
+
+                    },
+                    error: function (data) {
+                        var errors = $.parseJSON(data.responseText);
+                        var status = errors.error.statusCode;
+
+                        if (status == 422) {
+                            console.log("Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.details));
+                            console.log("Errors >>!!!!!!! " + JSON.stringify(errors.error.details.messages));
+                            $("#add-buy-book-msgs").hide();
+
+                            $('#add-buy-book-errors').html('');
+                            $.each(errors.error.details.messages, function (key, value) {
+                                console.log('Error Value' + value + ' Key ' + key);
+                                $('#add-buy-book-errors').append('<li>' + key + ' ' + value + '</li>');
+                            });
+
+                        } else {
+                            console.log("NOT 422 Errors FLAG >>!!!!!!! " + JSON.stringify(errors.error.message));
+                            $('#add-buy-book-errors').html(errors.error.message);
+                        }
+                        // hide loader
+                        $("#loader").hide();
+
+                        $("#add-error-buy-book-bag").show();
+                    }
+                }); // END Ajax
 
 
 
-                } // end if (jsonData["usedPoints"] == "1")
+            } // end if (jsonData["usedPoints"] == "1")
 
 
         }); // END Onclick Submit
@@ -29934,6 +29932,20 @@ var Api = function () {
         console.log("handleTransactionHistory");
         $("#add-transaction-error-bag").hide();
 
+        function readableTime(time){
+           var res = time.split("T");
+           var time = readableT(time);
+           return res[0] +" , " + time ;
+        }
+
+        function readableT(time){
+            var d = new Date(time);
+            var hours = d.getUTCHours();
+            var minutes = d.getUTCMinutes();
+            var seconds = d.getUTCSeconds();
+            return hours+":"+minutes+":"+seconds;
+        }
+
         // Get the model basedon the transaction
         function getModel(transName) {
 
@@ -29954,7 +29966,16 @@ var Api = function () {
 
                 return IDs;
 
-            } else if (transName == "getShipmentStatusHistorian") {
+            } else if (transName == "getBookOwnershipHistorian") {
+
+                var IDs = new Object();
+
+                IDs['model'] = "Shipment";
+                IDs['filter'] = "shipmentId";
+
+                return IDs;
+
+            }  else if (transName == "getShipmentStatusHistorian") {
 
                 var IDs = new Object();
 
@@ -29995,8 +30016,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].report) + '</td>'
                         + '<td>' + data[i].isConfirmed + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
@@ -30011,8 +30032,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].order) + '</td>'
                         + '<td>' + data[i].orderStatus + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
@@ -30027,14 +30048,29 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
                         + '<td>' + data[i].ShipmentStatus + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
                 $("#shipment_status").html(msgHTML);
 
                 $('#shipmentStatusViewModal').modal('show');
+
+            } else if (transName == "getBookOwnershipHistorian") {
+
+                for (var i = 0; i < data.length; i++) {
+                    msgHTML += '<tr>'
+                        + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].owner) + '</td>'
+                        + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
+                        + '</tr>';
+                }
+
+                $("#shipment_book_ownership").html(msgHTML);
+
+                $('#shipmentBookOwnershipStatusViewModal').modal('show');
 
             } else if (transName == "getShipmentItemStatusHistorian") {
 
@@ -30043,8 +30079,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].shipment) + '</td>'
                         + '<td>' + data[i].itemStatus + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
@@ -30059,8 +30095,8 @@ var Api = function () {
                         + '<td>' + getValueAfterHash(data[i].customer) + '</td>'
                         + '<td>' + data[i].accountBalance + '</td>'
                         + '<td>' + getValueAfterHash(data[i].participantInvoking) + '</td>'
-                        + '<td>' + data[i].updatedAt + '</td>'
-                        + '<td>' + data[i].timestamp + '</td>'
+                        + '<td>' + readableTime(data[i].updatedAt) + '</td>'
+                        + '<td>' + readableTime(data[i].timestamp) + '</td>'
                         + '</tr>';
                 }
 
