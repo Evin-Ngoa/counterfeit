@@ -617,7 +617,17 @@ To Do Tasks
 17. Penalizing users who do irrelevant purchase requests in decline button too purchase request
 18. Search Retailer using memberID [Done]
 19. Provide hint on which type of ID to use on selection of transaction type[Done]
-20. Possible graphs dashboard
-
+20. Possible graphs dashboard. [LOW]
+21. Email in every shipment and add points too in order email.[HIGH]
+22. Notification Table SMS and Email.[LOW]
+23. BookShop / Institution to update the book shipment. [HIGH]
+24. Hash Passwords [HIGH]
+25. Break the order into book specification. [HIGH]
+26. Add Compulsory field mark (*)[HIGH]
+27. Disable Orders and Shipment sidebar in individual customers. leave for bookshop / institution.[HIGH]
+28. CHANGE IDS TO SHORTER FOR EASY MOBILE TYPE USE.[HIGH]
+29. Redirect on verifying book into next page o=and not bring error on the form for missing books. [HIGH]
+30. Documentation mobile part design and screenshot.
+31. Show only customer when purchasing a book [HIGH]
 [About Block Chain]
 https://www.nature.com/articles/s41431-019-0560-9)
