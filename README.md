@@ -626,8 +626,8 @@ To Do Tasks
 26. Add Compulsory field mark (*)[HIGH]
 27. Disable Orders and Shipment sidebar in individual customers. leave for bookshop / institution.[HIGH]
 28. CHANGE IDS TO SHORTER FOR EASY MOBILE TYPE USE.[HIGH]
-29. Redirect on verifying book into next page o=and not bring error on the form for missing books. [HIGH]
+29. Redirect on verifying book into next page and not bring error on the form for missing books. [HIGH]
 30. Documentation mobile part design and screenshot.
-31. Show only customer when purchasing a book [HIGH]
+31. Show only customer when purchasing a book [DONE]
 [About Block Chain]
 https://www.nature.com/articles/s41431-019-0560-9)
