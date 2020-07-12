@@ -52,7 +52,7 @@
                     <div class="col-sm-8">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input checked="" class="form-check-input" onclick="javascript:checkUser();" name="participant" type="radio" id="Customer" value="Customer">Customer
+                                <input checked="" class="form-check-input" onclick="javascript:checkUser();" name="participant" type="radio" id="Customer" value="Customer">Customer / BookShop
                             </label>
                         </div>
                         <div class="form-check">
@@ -191,7 +191,7 @@
             +'</div>'
             +'<div class="col-sm-6">'
             +'<div class="form-group">'
-            +'<label for="isRetailer">Are You A Retailer?</label>'
+            +'<label for="isRetailer">Are You A BookShop?</label>'
             +'<select name="isRetailer" onchange="enableName(this.value)" id="isRetailer" class="form-control" data-error="Please input your Username">'
             +'<option value="">- Select -</option>'
             +'<option value="1">Yes</option>'
