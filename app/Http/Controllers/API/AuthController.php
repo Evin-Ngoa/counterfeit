@@ -87,6 +87,13 @@ class AuthController extends BaseController
      * Login using 
      */
     public function getLogin($email,$secret){
+
+        $options = [
+            'cost' => 11
+          ];
+        // Generate Hash on sign up
+        $hash = password_hash($secret, PASSWORD_BCRYPT, $options);
+
         $baseUrl = Util::baseAPIUrl();
 
         $customer = Util::callAPI('GET', $baseUrl . '/api/Customer/'. $email , false);
@@ -104,16 +111,16 @@ class AuthController extends BaseController
             );  
         }
 
-        // If Passwords dont match
-        if($res->secret != $secret){
+        // If Passwords dont match  
+        if (!password_verify($secret, $res->secret)) {
             return response()->json(
                 array(
                     'success'=> false,
                     'data'=> 'Invalid Username / Password',
                     'status_code' => 401
                 )
-            );  
-        }
+            ); 
+        } 
         
         // http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23customer@gmail.com
         $ordersRaw = Util::callAPI('GET', $baseUrl . '/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23'. $email , false);
@@ -142,6 +149,19 @@ class AuthController extends BaseController
      */
     public function getLoginDemo($email,$secret){
 
+        $options = [
+            'cost' => 11
+          ];
+          echo 'Admin';
+        $hash = password_hash('admin123', PASSWORD_BCRYPT, $options);
+        dd($hash);
+
+        if (password_verify($secret, $hash)) {
+            echo 'Password is valid!\n';
+        } else {
+            echo 'Invalid password.\n';
+        }
+
         $customer = array(
             "\$class" => "org.evin.book.track.Customer",
             "isRetailer" => "0",
@@ -151,7 +171,7 @@ class AuthController extends BaseController
             "lastName" => "Kiama",
             "avatar" => "http://mastercard.us.evincloud.com/public/img/avatar.png",
             "userName" => "pk-kiama",
-            "secret" => "kaaradapk",
+            "secret" => '$2y$11$MiDEscuxxng6srXz5oTQEeEHlFDFstq9NQfClPskcOIDJkHudDSuK',
             "firstTimeLogin" => 1,
             "address" => array(
               "\$class" => "org.evin.book.track.Address",
@@ -180,15 +200,25 @@ class AuthController extends BaseController
         }
 
         // If Passwords dont match
-        if($res->secret != $secret){
+        // if($res->secret != $secret){
+        //     return response()->json(
+        //         array(
+        //             'success'=> false,
+        //             'data'=> 'Invalid Username / Password',
+        //             'status_code' => 401
+        //         )
+        //     );  
+        // }
+
+        if (!password_verify($secret, $res->secret)) {
             return response()->json(
                 array(
                     'success'=> false,
                     'data'=> 'Invalid Username / Password',
                     'status_code' => 401
                 )
-            );  
-        }
+            ); 
+        } 
         
         // http://localhost:3001/api/queries/getCustomerOrders?buyer=resource%3Aorg.evin.book.track.Customer%23customer@gmail.com
         $ordersRaw = array(
