@@ -48,11 +48,11 @@
                 </div>
                 <div id="msgAlert"></div>
                 <div class="form-group row">
-                    <label class="col-sm-12 col-form-label">Select User Type You Registerd With:</label>
+                    <label class="col-sm-12 col-form-label">Select User Type You Registered With:</label>
                     <div class="col-sm-12">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input checked="" class="form-check-input" name="participant" type="radio" id="Customer" value="Customer">Customer
+                                <input checked="" class="form-check-input" name="participant" type="radio" id="Customer" value="Customer">Customer / BookShop
                             </label>
                         </div>
                         <div class="form-check">
