@@ -583,6 +583,13 @@ echo $messages[rand(0, count($messages) - 1)];
 
 D:\NewsPlugin or http://tevratgundogdu.com/works/breakingnewsticker/index.html
 
+Web Credentials
+customer@gmail.com - kaaradapk - $2y$11$MiDEscuxxng6srXz5oTQEeEHlFDFstq9NQfClPskcOIDJkHudDSuK
+customer-evin@gmail.com - 123456 - $2y$11$S2km385NKHlsLcZAd/ohsOPVlLsZczjLh0segNINbY1vWy6aZdPb2
+distributor@gmail.com - kaaradabdk - $2y$11$zaQSC80FT.C1yTnNf26XBeLtYu4uAjCqys0cx/zNCl8k9/231S49G
+publisher1@gmail.com - kaarada - $2y$11$1eyrh4wTKzEDAhhvxVqjIOw0LuegGON8RKesFv3oMe.Xp9i6iSLJm
+publisher2@gmail.com - kaaradakbs - $2y$11$bq9Tl0KaKOn2zYIPf8LHYuHSjOBNe.sdCNq6IxLWrqmYR2OGstlLS
+admin@book-counterfeit-composer.com - admin123 - $2y$11$rvQnj4Tyw7RLrsyfF6gkz.IYilC0o4hbhvjzajMNjOraKiJ1uMYSa
 
 -------------------------------------------------------------
 
