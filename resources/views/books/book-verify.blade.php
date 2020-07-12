@@ -85,15 +85,16 @@ $purchasedToEmail = "N/A";
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-lg-6">
-            @include('books.report-deck')
+    @if(\App\User::getUserRole()==\App\Http\Traits\UserConstants::CUSTOMER)
+        <div class="row">
+            <div class="col-lg-6">
+                @include('books.report-deck')
+            </div>
+            <div class="col-lg-6">
+                @include('books.sale')
+            </div>
         </div>
-        <div class="col-lg-6">
-            @include('books.sale')
-        </div>
-    </div>
+    @endif
 </div>
 @endsection
 
