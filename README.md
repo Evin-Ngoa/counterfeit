@@ -18,7 +18,7 @@ Counterfeit System for books Using hyperledger fabric
 
 dropdown Select Location dependent
 https://phppot.com/jquery/jquery-dependent-dropdown-list-countries-and-states/
-
+```
 {
   "$class": "org.evin.book.track.OrderContract",
   "contractId": "CON_001",
@@ -36,7 +36,7 @@ https://phppot.com/jquery/jquery-dependent-dropdown-list-countries-and-states/
   "lostPenaltyFactor": 0.5,
   "createdAt": "2020-05-24T22:34:55.403Z"
 }
-
+```
 
 Urls in mobile and data
 =============================================================================
@@ -46,6 +46,7 @@ http://localhost:8000/api/qrcodes/{id}
 http://localhost:8000/api/qrcodes/BOOK_001 
 
 Respond Success
+```
 {
    "success":true,
    "data":{
@@ -298,13 +299,15 @@ Respond Success
    },
    "message":"Qrcode retrieved successfully."
 }
-
+```
 Respond Failure
+```
 {
   "success": false,
   "data": "Unknown \"Book\" id \"BOOK_004\".",
   "status_code": 404
 }
+```
 ------------------------------------------------------------------------------
 
 http://localhost:8000/api/profile/{id}
@@ -312,6 +315,7 @@ http://localhost:8000/api/profile/{id}
 http://localhost:8000/api/profile/customer@gmail.com
 
 Respond Success
+ ```
 {
   "success": true,
   "data": {
@@ -336,14 +340,15 @@ Respond Success
   },
   "message": "Retriving Customer Profile Successfully"
 }
-
+```
 Respond Failure
+```
 {
   "success": false,
   "data": "Customer Does not exist",
   "status_code": 404
 }
-
+```
 ---------------------------------------------------------------------
 
 http://localhost:8000/api/login/{email-id}/{secret}
@@ -351,7 +356,7 @@ http://localhost:8000/api/login/{email-id}/{secret}
 http://localhost:8000/api/login/customer@gmail.com/kaaradapk
 
 Respond Success
-
+```
 {
   "data": {
     "$class": "org.evin.book.track.Customer",
@@ -395,14 +400,15 @@ Respond Success
   ],
   "status_code": 200
 }
-
+```
 Respond Failure
-
+```
 {
   "success": false,
   "data": "Invalid Username / Password",
   "status_code": 401
 }
+```
 ----------------------------------------------------------------------
 
 
@@ -410,6 +416,7 @@ Respond Failure
 Composer Data 
 BOOKS
 ------------
+```
 {
   "$class": "org.evin.book.track.Book",
   "id": "BOOK_001",
@@ -427,7 +434,6 @@ BOOKS
   "shipment": "resource:org.evin.book.track.Shipment#SHIP_hRSgxcVWU7",
   "createdAt": "2020-06-04T20:26:36.084Z"
 }
-
 {
   "$class": "org.evin.book.track.Book",
   "id": "BOOK_002",
@@ -445,9 +451,10 @@ BOOKS
   "shipment": "resource:org.evin.book.track.Shipment#SHIP_hRSgxcVWU7",
   "createdAt": "2020-06-04T20:26:36.084Z"
 }
-
+```
 New OrderContact
 ---------------------
+```
 {
   "$class": "org.evin.book.track.OrderContract",
   "contractId": "CON_DBn1jTnJoT",
@@ -462,9 +469,10 @@ New OrderContact
   "orderStatus": "DELIVERED",
   "createdAt": "2020-06-04T20:40:14.000Z"
 }
-
+```
 New Shipment
 ----------------------
+```
 {
   "$class": "org.evin.book.track.Shipment",
   "shipmentId": "SHIP_hRSgxcVWU7",
@@ -513,11 +521,11 @@ New Shipment
   "contract": "resource:org.evin.book.track.OrderContract#CON_DBn1jTnJoT",
   "createdAt": "2020-06-04T20:55:30.000Z"
 }
-
+```
 New Customer
 -----------------------------------------------
 Retailer 
-
+```
 {
   "$class": "org.evin.book.track.Customer",
   "isRetailer": "1",
@@ -538,10 +546,10 @@ Retailer
   },
   "accountBalance": 56000
 }
-
+```
 ------------------------------------------------
 Purchase Request
-
+```
 {
   "$class": "org.evin.book.track.PurchaseRequest",
   "id": "P-B2qJ5TrwEL",
@@ -551,10 +559,10 @@ Purchase Request
   "status": false,
   "createdAt": "2020-06-15T11:33:13.000Z"
 }
-
+```
 ---------------------------------------------------
 Report
-
+```
 {
   "$class": "org.evin.book.track.Report",
   "id": "Re_aPTOhMCUbP",
@@ -567,7 +575,7 @@ Report
   "isConfirmed": false,
   "createdAt": "2020-06-19T11:00:17.000Z"
 }
-
+```
 
 ---------------------------------------------------
 
