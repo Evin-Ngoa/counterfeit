@@ -1,6 +1,8 @@
 # counterfeit
 Counterfeit System for books Using hyperledger fabric
 
+The composer backend project is found here
+` https://github.com/Evin-Ngoa/book-counterfeit-composer `
 
 <img src="data:image/png;base64, 
 {!! base64_encode(QrCode::format('png')->merge('https://www.w3adda.com/wp-content/uploads/2019/07/laravel.png', 0.3, true)
